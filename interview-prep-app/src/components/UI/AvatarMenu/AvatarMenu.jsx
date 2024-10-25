@@ -3,6 +3,14 @@ import { motion } from 'framer-motion'; // Імпортуємо motion
 import styles from './AvatarMenu.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  FaBell,
+  FaBook,
+  FaHome,
+  FaTrophy,
+  FaUserFriends,
+} from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa6';
 
 const menuIcons = {
   people: require('./people.svg').default,

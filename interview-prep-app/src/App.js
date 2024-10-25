@@ -28,6 +28,7 @@ import BuyPremium from './pages/BuyPremium/BuyPremium';
 import PeopleProfilePage from './pages/PeopleProfilePage/PeopleProfilePage';
 import LookFolder from './pages/Folders/LookFolder/LookFolder';
 import CreateEditFolder from './pages/Folders/CreateEditFolder/CreateEditFolder';
+import CreateEditSet from './pages/Sets/CreateEditSet/CreateEditSet';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -71,7 +72,10 @@ function App() {
       />
 
       <Route path="/createFolder" element={<CreateEditFolder />} />
-      {/* Додай інші сторінки за потреби */}
+      <Route
+        path="/createSet"
+        element={<CreateEditSet editOrCreate={'edit'} />}
+      />
     </Routes>
   );
 }

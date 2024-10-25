@@ -1,0 +1,134 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.optionRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.label {
+  width: 330px;
+  color: black;
+  font-size: var(--web-23-regular-font-size);
+  font-family: var(--web-font-family);
+  font-weight: 400;
+  min-width: 330px;
+}
+
+.dropdown {
+  height: 35px; /* Висота списку */
+  padding: 5px 10px;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  font-size: var(--web-18-regular-font-size);
+  font-family: var(--web-font-family);
+  cursor: pointer;
+  width: 150px; /* Можна залишити або змінити за потребою */
+  -webkit-appearance: none; /* Скидаємо стиль браузера для Chrome/Safari */
+  -moz-appearance: none; /* Скидаємо стиль браузера для Firefox */
+  appearance: none; /* Скидаємо стиль браузера для інших */
+}
+
+.categoryList {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 65%; /* Розмір для другого стовпчика */
+}
+
+.categoryItem {
+  padding: 5px 10px;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 500;
+  font-family: var(--web-font-family);
+}
+
+.editButton {
+  color: black;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  height: 35px; /* Встановлюємо висоту кнопки такою ж, як у dropdown */
+  padding: 0 10px;
+  display: flex;
+  align-items: center; /* Центруємо текст/іконку по вертикалі */
+  justify-content: center; /* Центруємо текст/іконку по горизонталі */
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categoryOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.applyButton {
+  padding: 10px 20px;
+  background: #e5e5e5;
+  border-radius: 15px;
+  font-size: var(--web-20-regular-font-size);
+  font-family: var(--web-font-family);
+}
+
+@media (max-width: 900px) {
+  .label {
+    width: 280px;
+    min-width: 280px;
+  }
+
+  .categoryItem,
+  .label {
+    font-size: var(--web-20-regular-font-size);
+  }
+}
+
+@media (max-width: 700px) {
+  .label {
+    width: 230px;
+    min-width: 230px;
+  }
+
+  .categoryItem,
+  .label {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .optionRow {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .label {
+    width: 150px;
+    min-width: 150px;
+  }
+}

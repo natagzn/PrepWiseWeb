@@ -133,5 +133,17 @@
   "Create": "Create",
   "Update": "Update",
   "Was chosen": "Was chosen",
-  "sets": "sets"
+  "sets": "sets",
+  "create_a_set": "Create a set",
+  "update_a_set": "Update a set",
+  "Title": "Title",
+  "Visibility": "Visibility",
+  "Level of set": "Level of set",
+  "Category of set": "Category of set",
+
+  "ADD QUESTION CARD": "ADD QUESTION CARD",
+  "Enter a question": "Enter a question",
+  "Question": "Question",
+  "Answer": "Answer",
+  "Enter an answer": "Enter an answer"
 }
