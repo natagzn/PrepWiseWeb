@@ -1,0 +1,215 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--web-font-family);
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 40px;
+}
+
+.columnLeft {
+  width: 490px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.columnRight {
+  width: 376px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 15px;
+  width: fit-content;
+}
+
+.folderTitle {
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 700;
+  color: black;
+  word-wrap: break-word;
+  align-self: stretch;
+}
+
+.inputField {
+  align-self: stretch;
+  height: 46px;
+  padding: 9px 14px;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputText {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc; /* Ставимо рамку */
+  border-radius: 15px; /* Краї */
+  font-size: var(--web-23-regular-font-size);
+  color: #5a5a5a;
+}
+
+.createUpdateButton,
+.createUpdateButtonFooter,
+.cancelButton {
+  height: 48px;
+  padding: 7px 30px;
+  background: var(--landingdark-blue);
+  border-radius: 15px;
+  border: 1px solid black;
+  color: white;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.buttonBlock {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.cancelButton {
+  width: 100%;
+  max-width: 300px;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  border: 1px solid var(--landingdark-blue);
+  color: var(--landingdark-blue);
+}
+.createUpdateButtonFooter {
+  width: 100%;
+  max-width: 300px;
+}
+
+.setsCount {
+  color: black;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 400;
+  word-wrap: break-word;
+  align-self: stretch;
+}
+
+.questionSets {
+  margin-top: 20px;
+  width: 90%;
+  align-self: center;
+}
+
+.footer {
+  display: none;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+/* При малих екранах верхня кнопка пропадає, а футер з'являється */
+@media (max-width: 1000px) {
+  .buttonBlock {
+    display: none;
+  }
+  .group {
+    gap: 20px;
+  }
+  .columnRight {
+    text-align: center;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 10px 20px;
+  }
+
+  .createUpdateButtonFooter,
+  .cancelButton {
+    max-width: 200px;
+  }
+}
+
+/* Для екранів менше 900px */
+@media (max-width: 900px) {
+  .folderTitle {
+    font-size: var(--web-30-regular-font-size);
+  }
+  .inputText,
+  .setsCount {
+    font-size: var(--web-23-regular-font-size);
+  }
+}
+
+/* Для екранів менше 700px */
+@media (max-width: 700px) {
+  .group {
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+  }
+
+  .columnLeft,
+  .columnRight {
+    width: 100%;
+    text-align: center;
+  }
+
+  .columnLeft {
+    order: 1;
+  }
+
+  .columnRight {
+    order: 2;
+  }
+
+  .setsCount,
+  .inputText {
+    text-align: center;
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .folderTitle {
+    font-size: var(--web-23-regular-font-size);
+  }
+
+  .createUpdateButtonFooter,
+  .cancelButton {
+    font-size: 15px;
+  }
+}
+
+.createUpdateButton,
+.createUpdateButtonFooter,
+.cancelButton {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.createUpdateButton:hover,
+.createUpdateButtonFooter:hover {
+  background-color: #34228a; /* Зелений колір при наведенні */
+  transform: scale(1.05); /* Збільшення кнопки */
+}
+
+.cancelButton:hover {
+  background-color: #d4d4d4; /* Червоний колір при наведенні */
+  transform: scale(1.05);
+}

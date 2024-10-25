@@ -1,0 +1,54 @@
+.textContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: row;
+  max-width: 80%;
+}
+
+.message {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600;
+  color: black;
+  margin-right: 10px;
+}
+
+.description {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 400;
+  color: #5a5a5a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date {
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 400;
+  color: #5a5a5a;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+@media (max-width: 1220px) {
+  .textGroup {
+    flex-direction: column;
+  }
+
+  .message {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .description {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .date {
+    font-size: var(--web-15-regular-font-size);
+  }
+}

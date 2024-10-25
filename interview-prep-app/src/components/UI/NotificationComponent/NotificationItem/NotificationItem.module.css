@@ -1,0 +1,27 @@
+.notificationItem {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-direction: row;
+  font-family: var(--web-font-family);
+}
+
+.notificationHeader {
+  flex-shrink: 0;
+}
+
+.notificationText {
+  flex-grow: 1;
+}
+
+@media (max-width: 1220px) {
+  .notificationItem {
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+    align-items: flex-start;
+  }
+}

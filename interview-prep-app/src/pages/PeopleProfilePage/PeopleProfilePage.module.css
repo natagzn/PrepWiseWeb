@@ -1,0 +1,273 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  gap: 40px;
+  font-family: var(--web-font-family);
+}
+
+/* Адаптивність для аватара */
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+}
+
+/* Адаптивність для блоку з інформацією про користувача */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 13px;
+  width: 813px;
+}
+
+/* Стиль для заголовку користувача */
+.userHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Адаптивність для імені користувача */
+.username {
+  color: black;
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.stats {
+  color: black;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 400;
+  width: fit-content;
+}
+
+/* Кнопка підписки/відписки */
+.followButton {
+  width: 200px;
+  height: 34px;
+  padding: 5px 10px;
+  background: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.followButtonText {
+  color: black;
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 400;
+}
+
+.description,
+.location {
+  color: black;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--maingray);
+  align-items: center;
+  text-align: center;
+  height: 60px; /* Встановлюємо фіксовану висоту для всього блоку вкладок */
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: var(--web-23-regular-font-size);
+  cursor: pointer;
+  position: relative;
+  color: var(--maingray);
+  height: 100%; /* Таб має займати всю висоту батьківського контейнера */
+  display: flex;
+  align-items: center; /* Центрування тексту вертикально */
+}
+
+.tab:hover {
+  color: var(--mainblack);
+}
+
+.active {
+  font-weight: bold;
+  color: var(--mainblack);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 4px;
+  width: 100%;
+  background-color: var(--landingdark-blue);
+}
+
+/* Адаптивність для планшетів та смартфонів */
+@media (max-width: 1024px) {
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .userInfo {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .username {
+    font-size: var(--web-23-regular-font-size);
+  }
+
+  .stats {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .followButton {
+    width: 150px;
+    height: 30px;
+    padding: 5px;
+  }
+
+  .followButtonText {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .description,
+  .location {
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .userInfo {
+    gap: 8px;
+  }
+
+  .username {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .stats {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .followButton {
+    width: 140px;
+    height: 28px;
+  }
+
+  .followButtonText {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .description,
+  .location {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .tabContent {
+    padding: 10px;
+  }
+
+  .libraryPage {
+    padding: 10px;
+  }
+
+  .tab {
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 550px) {
+  .userHeader {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .userInfo {
+    align-items: center;
+  }
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%; /* Додамо ширину для адаптивності */
+  text-align: center;
+  position: relative; /* Для внутрішнього позиціонування */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Щоб модальне вікно було поверх всього */
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.confirmButton,
+.cancelButton {
+  background-color: var(--landingdark-blue);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmButton:hover,
+.cancelButton:hover {
+  opacity: 0.8;
+}
+
+.resourcesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.questionSetsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

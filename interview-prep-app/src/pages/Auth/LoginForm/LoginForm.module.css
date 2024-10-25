@@ -1,0 +1,116 @@
+/* LoginForm.module.css */
+
+.inputContainer {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+}
+
+.inputWrapper {
+  width: 100%;
+  border: 1px solid var(--mainblack);
+  border-radius: 15px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 400;
+}
+
+.forgotPassword {
+  width: 100%;
+  text-align: left;
+  color: var(--mainblue);
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 500;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 15px;
+  background: var(--mainyellow);
+  border-radius: 15px;
+  border: 1px solid var(--maingray-opacity-50);
+  color: var(--mainblack);
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.orSeparator {
+  width: 60%;
+  position: relative;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.orLine {
+  width: 100%;
+  height: 1px;
+  background: var(--light-gray);
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.orText {
+  position: relative;
+  background: var(--mainwhite);
+  padding: 0 10px;
+  color: var(--maingray);
+  font-size: var(--web-20-regular-font-size);
+}
+
+.googleButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(90, 90, 90, 0.7);
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  justify-content: center;
+  min-width: 300px;
+  gap: 10px;
+}
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.signupPrompt {
+  width: 60%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.signupLink {
+  color: var(--mainblue);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: var(--web-16-regular-font-size);
+  }
+
+  .forgotPassword,
+  .loginButton {
+    font-size: var(--web-16-regular-font-size);
+  }
+
+  .inputContainer {
+    gap: 7px;
+  }
+}

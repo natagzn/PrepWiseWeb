@@ -1,0 +1,120 @@
+.container {
+  width: 440px;
+  height: 180px;
+  padding: 19px 14px;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 10px;
+  font-family: var(--web-font-family);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 35.64px;
+  height: 23px;
+  background-image: url('./Vector.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 10px;
+}
+
+.folderName {
+  color: black;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.likeIcon {
+  min-width: 23px;
+  height: 20px;
+}
+
+.items {
+  color: #5a5a5a;
+  font-size: var(--web-15-regular-font-size);
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.date {
+  color: #5a5a5a;
+  font-size: var(--web-15-regular-font-size);
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .container {
+    height: 100px;
+    padding: 10px;
+  }
+
+  .icon {
+    width: 32px;
+    height: 20px;
+  }
+
+  .folderName {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .items {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .date {
+    font-size: var(--web-13-regular-font-size);
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    height: 100px;
+    width: 360px;
+  }
+
+  .folderName {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .likeIcon {
+    min-width: 18px;
+    height: auto;
+  }
+
+  .items {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .date {
+    font-size: var(--web-13-regular-font-size);
+  }
+}

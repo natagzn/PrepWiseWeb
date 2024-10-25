@@ -1,0 +1,97 @@
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.peoplePage {
+  width: 600px;
+  height: 520px;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: var(--web-23-regular-font-size); /* Очищено на існуючу змінну */
+  cursor: pointer;
+  color: var(--maingray);
+  position: absolute;
+  padding: 5px;
+}
+
+.closeButton:hover {
+  color: var(--mainblack);
+}
+
+.username {
+  font-size: var(--web-23-regular-font-size); /* Очищено на існуючу змінну */
+  font-family: var(--web-font-family);
+  flex-grow: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+}
+
+.tab {
+  padding: 0px 20px;
+  cursor: pointer;
+  position: relative;
+  color: var(--maingray);
+  font-size: var(--web-18-regular-font-size); /* Очищено на існуючу змінну */
+  font-family: var(--web-font-family);
+}
+
+.tab:hover {
+  color: var(--mainblack);
+}
+
+.active {
+  font-weight: bold;
+  color: var(--mainblack);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background-color: var(--maingreen);
+}
+
+.tabContent {
+}
+
+@media (max-width: 500px) {
+  .tab {
+    font-size: var(--web-15-regular-font-size);
+    padding: 0 10px;
+    text-align: center;
+  }
+  .username {
+    font-size: var(--web-18-regular-font-size);
+  }
+}

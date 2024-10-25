@@ -1,0 +1,374 @@
+.settingsContainer {
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--web-font-family);
+}
+
+.title {
+  font-size: var(--web-30-regular-font-size);
+  margin: 20px 0;
+  text-align: left;
+  font-weight: bold;
+  padding-left: 0;
+}
+
+.personalInfoBlock {
+  background: var(--mainwhite);
+  box-shadow: var(--shadow);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.personalInfoTitle {
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 600;
+}
+
+.personalInfoContent {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.profilePictureBlock {
+  flex: 0 0 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.profileLabel {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.iconEdit {
+  cursor: pointer;
+  width: 30px; /* Adjusted width */
+  height: 30px; /* Adjusted height */
+}
+
+.iconEdit img {
+  width: 100%; /* Make the image take the full width of the icon block */
+  height: auto; /* Maintain aspect ratio */
+}
+.personalDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  font-size: var(--web-20-regular-font-size);
+}
+
+.detailsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detailsTable td {
+  padding: 10px;
+}
+
+.detailLabel {
+  font-weight: 600; /* Змінено на 400 */
+  text-align: left;
+  width: 30%;
+}
+
+.detailValue {
+  font-weight: 400; /* Змінено на 400 */
+  text-align: left;
+  width: 70%;
+  max-width: 370px;
+  text-wrap: wrap; /* This property doesn't exist, so we remove it */
+  white-space: normal; /* Allow text to wrap to the next line */
+  overflow-wrap: break-word; /* Break long words onto the next line */
+}
+
+.languageBlock {
+  margin-top: 15px;
+  background: var(--mainwhite);
+  box-shadow: var(--shadow);
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 60px;
+}
+
+.languageLabel {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600; /* Змінено на 400 */
+}
+
+.languageValue {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 400; /* Змінено на 400 */
+  width: 180px;
+}
+
+.logoutBlock {
+  margin-top: 15px;
+  background: var(--mainwhite);
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  max-height: 60px;
+}
+
+.logoutTitle {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600; /* Змінено на 400 */
+  color: var(--mainblack);
+}
+
+.logoutButton {
+  background-color: var(--mainyellow);
+  color: var(--mainblack);
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 400; /* Змінено на 400 */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  max-height: 46px;
+}
+
+.logoutButton:hover {
+  background-color: #baab3a;
+}
+
+.premiumBlock {
+  margin-top: 15px;
+  background: linear-gradient(
+    90deg,
+    var(--landingdark-blue) 0%,
+    var(--landingpurple) 100%
+  );
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border-radius: 15px;
+  color: var(--mainwhite);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 60px;
+}
+
+.premiumLabel {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 400; /* Змінено на 400 */
+}
+
+.premiumUpgradeButton {
+  background-color: var(--mainyellow);
+  padding: 8px 30px;
+  border-radius: 15px;
+  color: var(--mainblack);
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 400; /* Змінено на 400 */
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  max-height: 46px;
+}
+
+.deleteAccountBlock {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--mainwhite);
+  padding: 15px;
+  border-radius: 15px;
+  max-height: 60px;
+  box-shadow: var(--shadow);
+}
+
+.deleteLabel {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600; /* Змінено на 400 */
+}
+
+.deleteDescription {
+  color: #5a5a5a;
+  font-size: var(--web-20-regular-font-size);
+}
+
+.deleteButton {
+  background-color: #ec221f;
+  color: var(--mainwhite);
+  padding: 8px 15px;
+  border-radius: 15px;
+  font-size: var(--web-18-regular-font-size);
+  border: 1px solid #c00f0c;
+  cursor: pointer;
+  width: 180px;
+  max-height: 46px;
+}
+
+.logoutButton,
+.premiumUpgradeButton,
+.deleteButton,
+.languageValue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.languageBlock {
+  margin-top: 15px;
+  background: var(--mainwhite);
+  box-shadow: var(--shadow);
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 60px;
+}
+
+.languageLabel {
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 600;
+}
+
+.languageSelect {
+  padding: 10px;
+  font-size: var(--web-18-regular-font-size);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  width: 180px;
+}
+
+@media (max-width: 768px) {
+  .settingsContainer {
+    width: 90%;
+  }
+
+  .personalInfoContent {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .personalInfoBlock {
+    max-height: 1200px;
+  }
+
+  .profileLabel {
+    font-size: var(--web-18-regular-font-size);
+    text-align: center;
+  }
+
+  .personalDetails {
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 1110px) {
+  .deleteDescription {
+    display: none;
+  }
+}
+
+@media (max-width: 570px) {
+  .deleteDescription {
+    display: none;
+  }
+
+  .premiumBlock {
+    flex-direction: column;
+    max-height: fit-content;
+    gap: 5px;
+  }
+
+  .logoutBlock {
+    flex-direction: column;
+    max-height: fit-content;
+    gap: 5px;
+  }
+
+  .deleteAccountBlock {
+    flex-direction: column;
+    max-height: fit-content;
+    gap: 5px;
+  }
+
+  .logoutButton,
+  .premiumUpgradeButton,
+  .deleteButton,
+  .languageValue {
+    width: 100%;
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 570px) {
+  .detailsTable {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .detailsTable tr {
+    display: flex;
+    flex-direction: column; /* Зміна рядків на стовпчики */
+    margin-bottom: 10px; /* Відступ між рядками */
+  }
+
+  .detailLabel,
+  .detailValue {
+    width: 100%; /* Зробити ширину 100% для блоків */
+    text-align: left; /* Вирівнювання тексту */
+    max-width: 250px;
+  }
+
+  .detailLabel {
+    font-weight: bold; /* Можна виділити назву */
+    margin-bottom: 5px; /* Відступ між назвою та значенням */
+  }
+
+  .iconEdit {
+    width: 25px;
+    height: 25px;
+  }
+
+  .settingsContainer {
+    padding: 10px 5px;
+  }
+
+  .title,
+  .personalInfoTitle {
+    text-align: center;
+  }
+}

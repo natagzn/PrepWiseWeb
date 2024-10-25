@@ -1,0 +1,53 @@
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin-top: 30px;
+  font-size: var(--web-30-regular-font-size);
+  font-weight: bold;
+  align-self: flex-start;
+  margin-left: 20px;
+}
+
+.notificationsContainer {
+  width: 90%;
+  padding: 30px;
+  background: var(--mainwhite);
+  box-shadow: var(--shadow);
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.notificationsListContainer {
+  background-color: var(--mainwhite);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin: 20px;
+  width: 98%;
+}
+
+.separator {
+  width: 100%;
+  height: 2px;
+  opacity: 0.5;
+  background-color: var(--maingray);
+  margin: 10px 0;
+}
+
+.peopleBlock {
+  cursor: pointer;
+}
+
+@media (max-width: 1220px) {
+  .title {
+    align-self: center;
+    margin-top: 10px;
+    font-size: var(--web-23-regular-font-size);
+  }
+}

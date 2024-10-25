@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --blueeeeee: rgba(191, 194, 212, 1);
+  --landing-page-h1-font-family: 'Noto Sans', Helvetica;
+  --landing-page-h1-font-size: 40px;
+  --landing-page-h2-font-family: 'Noto Sans', Helvetica;
+  --landing-page-h2-font-size: 30px;
+  --landing-page-h3-font-family: 'Noto Sans Bengali', Helvetica;
+  --landing-page-h3-font-size: 28px;
+  --landing-page-h4-font-family: 'Noto Sans', Helvetica;
+  --landing-page-h4-font-size: 26px;
+  --landing-page-h5-font-family: 'Noto Sans', Helvetica;
+  --landing-page-h5-font-size: 20px;
+  --landing-page-h6-font-family: 'Noto Sans', Helvetica;
+  --landing-page-h6-font-size: 20px;
+  --landingdark-blue: #1d1352;
+  --landinglight-blue: rgba(206, 211, 237, 1);
+  --landinglight-yellow: rgba(255, 248, 196, 1);
+  --landingpurple: rgba(171, 173, 206, 1);
+  --light-gray: rgba(229, 229, 229, 1);
+  --lightlight: rgba(241, 241, 241, 1);
+  --mainbackground: rgba(233, 232, 240, 1);
+  --mainblack: rgba(0, 0, 0, 1);
+  --maingray: rgba(90, 90, 90, 1);
+  --maingreen: rgba(20, 66, 80, 1);
+  --mainlight-blue: rgba(175, 190, 209, 1);
+  --mainred: rgba(249, 111, 93, 1);
+  --mainwhite: rgba(255, 255, 255, 1);
+  --mainyellow: rgba(244, 224, 77, 1);
+  --shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  --shadow-top: 0px -4px 10px 0px rgba(0, 0, 0, 0.1);
+  --web-font-family: 'Noto Sans', Helvetica;
+  --web-10-regular-font-size: 10px;
+  --web-13-regular-font-size: 13px;
+  --web-15-regular-font-size: 15px;
+  --web-18-regular-font-size: 18px;
+  --web-20-regular-font-size: 20px;
+  --web-23-light-font-size: 23px;
+  --web-23-regular-font-size: 23px;
+  --web-30-regular-font-size: 30px;
+  --web-35-regular-font-size: 35px;
+  --web-40-regular-font-size: 40px;
+  --x: rgba(214, 219, 225, 1);
+}
+
+body {
+  background-color: aliceblue;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}

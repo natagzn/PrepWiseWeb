@@ -1,0 +1,155 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: var(--web-font-family);
+}
+
+.group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 40px;
+}
+
+.columnLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.columnRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  justify-content: center;
+}
+
+.folderName {
+  color: black;
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 700;
+}
+
+.setsCount {
+  color: black;
+  font-size: var(--web-30-regular-font-size);
+}
+
+.groupInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.saveNot {
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: 30px;
+  transition: height 0.3s ease;
+}
+
+.visibility {
+  color: #5a5a5a;
+  font-size: var(--web-23-regular-font-size);
+}
+
+.threeDots {
+  cursor: pointer;
+}
+
+.sortContainer {
+  width: 212px;
+  transition: width 0.3s ease;
+  font-size: var(--web-23-regular-font-size);
+  display: flex;
+  justify-content: center;
+}
+
+.questionSets {
+  margin-top: 20px;
+  width: 90%;
+  align-self: center;
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .folderName {
+    font-size: var(--web-30-regular-font-size);
+  }
+  .setsCount,
+  .visibility {
+    font-size: var(--web-23-regular-font-size);
+  }
+  .icon,
+  .saveNot {
+    height: 25px;
+  }
+  .sortContainer {
+    width: 180px;
+    font-size: var(--web-20-regular-font-size);
+  }
+}
+
+@media (max-width: 900px) {
+  .folderName {
+    font-size: var(--web-23-regular-font-size);
+  }
+  .setsCount,
+  .visibility {
+    font-size: var(--web-20-regular-font-size);
+  }
+  .icon,
+  .saveNot {
+    height: 20px;
+  }
+  .sortContainer {
+    width: 150px;
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 600px) {
+  .group {
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    align-self: center;
+  }
+  .columnRight {
+    align-items: center;
+  }
+  .folderName {
+    font-size: var(--web-20-regular-font-size);
+  }
+  .setsCount,
+  .visibility {
+    font-size: var(--web-18-regular-font-size);
+  }
+  .icon,
+  .saveNot {
+    height: 18px;
+  }
+  .sortContainer {
+    width: 100%;
+    font-size: var(--web-16-regular-font-size);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .group {
+    width: 100%;
+    padding: 10px;
+  }
+}

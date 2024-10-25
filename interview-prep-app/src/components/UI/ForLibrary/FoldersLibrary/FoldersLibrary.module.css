@@ -1,0 +1,67 @@
+.foldersWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.filterSortWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.sortComponent {
+  width: 250px;
+}
+
+.filterComponent {
+  width: 90px;
+}
+
+.search {
+  max-width: 500px;
+  width: 500px;
+}
+
+.foldersList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+@media (max-width: 520px) {
+  .filterSortWrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .leftGroup {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .search {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .questionSetsWrapper {
+    align-items: center;
+  }
+}

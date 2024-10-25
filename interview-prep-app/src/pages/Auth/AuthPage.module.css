@@ -1,0 +1,162 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: var(--mainwhite);
+  font-family: var(--web-font-family);
+}
+
+.image {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 35px;
+}
+
+.loginGap {
+  gap: 35px;
+}
+
+.registerGap {
+  gap: 25px;
+}
+
+.logo {
+  text-align: center;
+  color: var(--mainblue);
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 400;
+}
+
+.welcome {
+  text-align: center;
+  color: var(--mainblack);
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 400;
+}
+
+.toggleButton {
+  width: 85%;
+  padding: 15px;
+  background: var(--mainyellow);
+  border-radius: 15px;
+  border: 1px solid rgba(90, 90, 90, 0.5);
+  color: var(--mainblack);
+  font-size: var(--web-18-regular-font-size);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.orSeparator {
+  width: 60%;
+  position: relative;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.orLine {
+  width: 100%;
+  height: 1px;
+  background: var(--light-gray);
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.orText {
+  position: relative;
+  background: var(--mainwhite);
+  padding: 0 10px;
+  color: var(--maingray);
+  font-size: var(--web-20-regular-font-size);
+}
+
+.googleButton {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(90, 90, 90, 0.7);
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  justify-content: center;
+  min-width: 300px;
+}
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.signupPrompt {
+  width: 60%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.signupLink {
+  color: var(--mainblue);
+  font-weight: 600;
+}
+
+@media (max-width: 870px) {
+  .logo {
+    font-size: var(--web-30-regular-font-size);
+  }
+
+  .welcome {
+    font-size: var(--web-30-regular-font-size);
+  }
+
+  .toggleButton {
+    font-size: var(--web-16-regular-font-size);
+  }
+
+  .orText,
+  .signupPrompt {
+    font-size: var(--web-16-regular-font-size);
+  }
+
+  .loginGap {
+    gap: 20px;
+  }
+
+  .registerGap {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 710px) {
+  .container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .formContainer {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .loginGap {
+    gap: 15px;
+  }
+
+  .registerGap {
+    gap: 7px;
+  }
+}

@@ -1,0 +1,120 @@
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centered {
+  justify-content: center;
+}
+
+.search {
+  width: 80%;
+  margin-top: 10px;
+  display: none;
+}
+
+.recommendationTitle {
+  font-size: var(--web-30-regular-font-size); /* Використано змінну */
+  font-weight: bold;
+  padding: 10px 40px;
+  width: 100%;
+  text-align: left;
+}
+
+.title {
+  font-size: var(--web-23-regular-font-size); /* Використано змінну */
+  font-weight: 500;
+  margin: 15px 40px;
+}
+
+.questionSets,
+.resources {
+  width: 100%;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 30px;
+}
+
+.questionSetContainer,
+.resourceContainer {
+  display: flex;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.questionSetComponent,
+.resourceComponent {
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.arrowLeft,
+.arrowRight {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-size: var(--web-40-regular-font-size); /* Використано змінну */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arrowLeft {
+  left: 0px;
+}
+
+.arrowRight {
+  right: 10px;
+}
+
+.carousel:hover .arrowLeft,
+.carousel:hover .arrowRight {
+  opacity: 1;
+}
+
+@media (min-width: 940px) {
+  .questionSetComponent,
+  .resourceComponent {
+    flex: 0 0 calc(33.33% - 20px);
+  }
+}
+
+@media (min-width: 600px) and (max-width: 940px) {
+  .questionSetComponent,
+  .resourceComponent {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  .questionSetComponent,
+  .resourceComponent {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .search {
+    display: block;
+  }
+
+  .recommendationTitle,
+  .title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .questionSetComponent {
+    flex: 0 0 100%;
+  }
+}

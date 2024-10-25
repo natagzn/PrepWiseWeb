@@ -1,0 +1,19 @@
+.languageSwitcher {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.langButton {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: #204268;
+  cursor: pointer;
+}
+
+.langButton:hover {
+  text-decoration: underline;
+}

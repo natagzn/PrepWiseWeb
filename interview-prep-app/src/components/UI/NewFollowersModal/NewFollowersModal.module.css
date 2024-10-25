@@ -1,0 +1,148 @@
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.modalContainer {
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-height: 80vh; /* Додати обмеження по висоті */
+  display: flex;
+  flex-direction: column;
+  font-family: var(--web-font-family);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalTitle {
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 700;
+  color: black;
+}
+
+.closeButton {
+  font-size: var(--web-20-regular-font-size);
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+}
+
+.followersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto; /* Додаємо вертикальну прокрутку */
+  max-height: calc(100vh - 180px); /* Обмежуємо максимальну висоту списку */
+  padding-right: 10px; /* Додаємо внутрішній відступ, щоб уникнути накладання з прокруткою */
+}
+
+.followerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  border: 1px solid #e5e5e5;
+}
+
+.avatar {
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+}
+
+.followerInfo {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.username {
+  font-size: var(--web-20-regular-font-size);
+  color: black;
+  font-weight: 400;
+}
+
+.requestTime {
+  font-size: 14px;
+  color: #5a5a5a;
+  font-weight: 300;
+}
+
+.followButton {
+  background-color: #144250;
+  color: white;
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 500;
+  padding: 5px 19px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 150px;
+}
+
+/* Адаптивність для маленьких екранів */
+@media (max-width: 768px) {
+  .modalContainer {
+    width: 100%;
+    max-width: 90%;
+    max-height: 90vh;
+    padding: 15px;
+  }
+
+  .modalTitle {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .closeButton {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .followersList {
+    max-height: calc(100vh - 160px); /* Зменшуємо висоту на менших екранах */
+  }
+
+  .followButton {
+    width: 140px;
+    font-size: var(--web-18-regular-font-size);
+  }
+}
+
+@media (max-width: 530px) {
+  .modalContainer {
+    width: 100%;
+    max-width: 98%;
+    max-height: 90vh;
+    padding: 15px 5px;
+  }
+
+  .followButton {
+    width: 100px;
+    font-size: var(--web-13-regular-font-size);
+    padding: 5px;
+  }
+
+  .username {
+    font-size: var(--web-15-regular-font-size);
+  }
+}

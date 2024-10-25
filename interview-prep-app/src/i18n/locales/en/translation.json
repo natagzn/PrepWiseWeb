@@ -1,0 +1,137 @@
+{
+  "people": "People",
+  "favorite": "Favorite",
+  "home": "Home",
+  "logout": "Log out",
+  "feedback": "Help and feedback",
+  "library": "Library",
+  "notifications": "Notifications",
+  "achievements": "Achievments",
+  "settings": "Settings",
+
+  "welcome_back": "Welcome back!",
+  "sign_up": "Sign up!",
+  "or": "or",
+  "continue_with_google": "Continue with Google",
+  "no_account": "Don't have an account? ",
+  "already_have_account": "Already have an account? ",
+  "log_in": "Log In",
+  "sign_up": "Sign Up",
+
+  "email_or_username": "Email/Username",
+  "password": "Password",
+  "forgot_password": "Forgot password?",
+  "log_in": "Log in",
+
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm Password",
+  "sign_up": "Sign up",
+
+  "enter_your_request": "Enter your request...",
+  "recommended_from_your_following": "Recommended from your following",
+  "question_sets": "Question sets",
+  "resources": "Resources",
+
+  "following": "Following",
+  "followers": "Followers",
+  "friends": "Friends",
+
+  "your_library": "Your Library",
+  "folders": "Folders",
+  "shared": "Shared",
+
+  "category": "Category",
+  "article_book": "Article/Book",
+  "description": "Description",
+  "report": "Report",
+  "options": "Options",
+  "without_category": "Without category",
+
+  "level": "Level",
+  "questions": "questions",
+  "categories": "Categories",
+  "public": "Public",
+  "private": "Private",
+  "not_specified": "Not specified",
+
+  "free_trial": "Free 7-day trial",
+
+  "search_user": "Search user...",
+  "no_users_found": "No users found",
+
+  "created_new_old": "Created (new -> old)",
+  "created_old_new": "Created (old -> new)",
+  "name_A_Z": "Name (A -> Z)",
+  "name_Z_A": "Name (Z -> A)",
+  "search_resources": "Search your resources...",
+  "search_folders": "Search your folders...",
+  "search_sets": "Search your sets...",
+
+  "filter": "Filter",
+  "apply": "Apply",
+  "cancel": "Cancel",
+
+  "reset_password": "Enter the email to reset your password",
+  "email_confirmation": "Confirm email",
+  "new_password": "New password",
+  "enter_new_password": "Enter new password",
+  "password_confirmation": "Password conformation",
+
+  "confirm": "Confirm",
+  "passwords_do_not_match": "Password do not match",
+
+  "confirm_email": "Confirm email",
+  "enter_code": "Enter the code you received by email",
+
+  "personal_information": "Personal information",
+  "avatar": "Profile picture",
+  "location": "Location",
+  "language": "Language",
+
+  "delete_akk": "Delete account",
+  "delete_desc": "This will delete all your data and cannot be undone",
+
+  "edit_information": "Edit information",
+  "save": "Save",
+
+  "buy_premium": "Buy Premium",
+  "you_will_receive": "You will receive",
+  "unlimited_search_results": "unlimited search results",
+  "unlimited_sets": "unlimited sets",
+  "unlimited_questions": "unlimited number of questions in the set",
+  "share_access": "the ability to share access to the set",
+  "monthly": "Monthly",
+  "annual": "Annual",
+  "amount_billed_today": "Amount billed today",
+  "billed_annually": "Billed annually at US$11.99, that’s like",
+  "that_is": "that’s like",
+  "month": "month",
+  "get_prepwise_premium": "Get PrepWise Premium",
+  "start_with_trial": "Start with a 7-day free trial",
+  "start_free_trial": "Start your free trial",
+
+  "new_followers": "New followers",
+  "followed_from": "followed from",
+
+  "follow_back": "Follow back",
+  "follow": "Follow",
+  "followings": "Followings",
+  "followers_profile": "Followers",
+
+  "unfollow_confirmation": "Are you sure you want to unfollow this user?",
+  "yes": "Yes",
+  "no": "No",
+
+  "A-Z": "A-Z",
+  "Z-A": "Z-A",
+
+  "create_a_folder": "Create a folder",
+  "update_a_folder": "Update a folder",
+  "enter_a_title": "Enter a title",
+  "Create": "Create",
+  "Update": "Update",
+  "Was chosen": "Was chosen",
+  "sets": "sets"
+}

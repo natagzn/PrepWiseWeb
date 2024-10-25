@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "react-app", // для підтримки правил ESLint для React
+    "plugin:prettier/recommended" // інтеграція Prettier з ESLint
+  ],
+  "rules": {
+    "prettier/prettier": "error" // помилки форматування будуть відображатись в ESLint
+  }
+}

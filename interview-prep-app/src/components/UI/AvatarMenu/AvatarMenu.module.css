@@ -1,0 +1,177 @@
+.avatarContainer {
+  position: relative;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.menuPanel {
+  position: absolute;
+  left: -210px;
+  top: 110%;
+  width: 255px;
+  height: auto;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  border: 1px solid #e5e5e5;
+  z-index: 10;
+  font-family: var(--web-font-family);
+}
+
+.menu {
+  background: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.userIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  color: #1e1e1e;
+  font-size: var(--web-15-regular-font-size);
+  font-weight: 600;
+}
+
+.email {
+  color: black;
+  font-size: var(--web-13-regular-font-size);
+  font-weight: 300;
+}
+
+.separator {
+  border: 0.5px solid #e5e5e5;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: var(--web-15-regular-font-size);
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.menuIcon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  background-color: white;
+}
+
+.homeIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 17px;
+}
+
+.modalOverlay {
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .menuPanel {
+    width: 230px;
+    left: -185px;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menuItem {
+    font-size: var(--web-15-regular-font-size);
+    gap: 8px;
+  }
+
+  .userIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menuIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menuItem img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .username {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .email {
+    font-size: var(--web-10-regular-font-size);
+  }
+
+  .menu {
+    gap: 7px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menuPanel {
+    width: 200px;
+    left: -155px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menuItem {
+    font-size: var(--web-13-regular-font-size);
+    gap: 5px;
+  }
+
+  .userIcon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .menuIcon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .username {
+    font-size: var(--web-10-regular-font-size);
+  }
+
+  .email {
+    font-size: var(--web-10-regular-font-size);
+  }
+
+  .menu {
+    gap: 5px;
+  }
+}

@@ -1,0 +1,69 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 600;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: var(--web-18-regular-font-size);
+  color: var(--maingray);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.codeInputContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.codeInput {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid var(--mainblack);
+  border-radius: 10px;
+}
+
+.confirmButton {
+  width: 300px;
+  padding: 15px;
+  background: var(--mainyellow);
+  border-radius: 15px;
+  border: none;
+  color: var(--mainblack);
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.loginPrompt {
+  font-size: var(--web-18-regular-font-size);
+  color: var(--maingray);
+}
+
+.loginLink {
+  color: var(--mainblue);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelButton {
+  width: 300px;
+  padding: 15px;
+  background: var(--mainwhite);
+  border-radius: 15px;
+  border: 2px solid rgba(90, 90, 90, 0.5);
+  color: var(--mainblack);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+}

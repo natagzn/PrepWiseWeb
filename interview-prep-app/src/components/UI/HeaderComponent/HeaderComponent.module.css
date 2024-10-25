@@ -1,0 +1,157 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--landingdark-blue);
+  width: 100%;
+  font-family: var(--web-font-family);
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  color: white;
+  font-size: var(--web-30-regular-font-size);
+  font-weight: 500;
+}
+
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.plus-icon,
+.premium-box,
+.avatar {
+  display: flex;
+  align-items: center;
+}
+
+.premium-box {
+  background: #f4e04d;
+  padding: 5px 15px;
+  border-radius: 8px;
+}
+
+.premium-text {
+  color: black;
+  font-size: var(--web-15-regular-font-size);
+  font-weight: 500;
+}
+
+.plus-box {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 1px black solid;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.modalContent {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+@media (max-width: 1200px) {
+  .logo {
+    font-size: var(--web-23-regular-font-size);
+  }
+
+  .premium-text {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .plus-box {
+    width: 38px;
+    height: 38px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search {
+    display: none;
+  }
+  .right-group {
+    gap: 15px;
+  }
+
+  .logo {
+    font-size: var(--web-23-regular-font-size);
+  }
+
+  .premium-box {
+    padding: 4px 10px;
+  }
+
+  .premium-text {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .plus-box {
+    width: 35px;
+    height: 35px;
+  }
+
+  .avatar img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .right-group {
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .premium-box {
+    padding: 3px 8px;
+  }
+
+  .premium-text {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .plus-box {
+    width: 30px;
+    height: 30px;
+  }
+
+  .avatar img {
+    width: 40px;
+    height: 40px;
+  }
+}

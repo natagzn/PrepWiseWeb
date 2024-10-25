@@ -1,0 +1,69 @@
+.questionSetsWrapper {
+  margin: 0 auto;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.filterSortWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  height: fit-content;
+  min-width: 400px;
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.sortComponent {
+  width: 250px;
+}
+
+.filterComponent {
+  width: 90px;
+  margin-right: 15px;
+}
+
+.search {
+  max-width: 500px;
+  width: 500px;
+}
+
+@media (max-width: 768px) {
+  .filterSortWrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .leftGroup {
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .search {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .questionSetsWrapper {
+    align-items: center;
+  }
+}
+
+.questionSetsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

@@ -1,0 +1,16 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.count {
+  font-size: 16px;
+  color: black;
+}
