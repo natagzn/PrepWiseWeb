@@ -50,7 +50,14 @@ const QuestionSetComponent = (props) => {
         {/* Іконка лайку, якщо є */}
         {typeof props.isLiked !== 'undefined' && (
           <div className={styles.likeIcon}>
-            <SaveNot state={props.isLiked} />
+            <SaveNot
+              state={props.isLiked}
+              type="set"
+              id={props.id}
+              handleUnlikeSet={
+                props.handleUnlikeSet ? props.handleUnlikeSet : undefined
+              }
+            />
           </div>
         )}
       </div>

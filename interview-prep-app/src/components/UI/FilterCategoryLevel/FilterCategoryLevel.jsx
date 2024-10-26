@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './FilterCategoryLevel.module.css';
-
 import { useTranslation } from 'react-i18next';
 
 const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
@@ -14,14 +13,14 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
     filters.forEach((filter) => {
       initialFilters[filter.name] = Array.isArray(selectedFilters[filter.name])
         ? selectedFilters[filter.name]
-        : []; // Гарантуємо, що це масив
+        : [];
     });
     setLocalSelectedFilters(initialFilters);
   }, [filters, selectedFilters]);
 
   const toggleFilter = (filterName, value) => {
     setLocalSelectedFilters((prev) => {
-      const currentValues = prev[filterName] || []; // Гарантуємо, що це масив
+      const currentValues = prev[filterName] || [];
       return {
         ...prev,
         [filterName]: currentValues.includes(value)
@@ -50,16 +49,25 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
   const handleClose = () => {
     const initialFilters = {};
     filters.forEach((filter) => {
-      initialFilters[filter.name] = selectedFilters[filter.name] || []; // Гарантуємо, що це масив
+      initialFilters[filter.name] = selectedFilters[filter.name] || [];
     });
     setLocalSelectedFilters(initialFilters);
     setIsModalOpen(false);
   };
 
+  // Calculate the total number of applied filters
+  const appliedFiltersCount = Object.values(selectedFilters).reduce(
+    (acc, filter) => acc + filter.length,
+    0
+  );
+
   return (
     <div>
       <div className={styles.filterButton} onClick={() => setIsModalOpen(true)}>
         {t('filter')}
+        {appliedFiltersCount > 0 && (
+          <span className={styles.filterBadge}>{appliedFiltersCount}</span>
+        )}
       </div>
 
       {isModalOpen && (

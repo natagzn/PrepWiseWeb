@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './QuestionSetsLibrary.module.css';
+import styles from './QuestionSetsForFavorite.module.css';
 import QuestionSetComponent from '../../QuestionSetComponent/QuestionSetComponent';
 import SortComponent from '../../SortComponent/SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel/FilterCategoryLevel';
@@ -8,9 +8,11 @@ import questionSetsData from '../../../../questionSetsData.json';
 
 import { useTranslation } from 'react-i18next';
 
-const QuestionSetsLibrary = () => {
+const QuestionSetsForFavorite = () => {
   const { t } = useTranslation();
-  const [questionSets, setQuestionSets] = useState([]);
+  const [questionSets, setQuestionSets] = useState(
+    questionSetsData.filter((set) => set.isLiked)
+  );
   const [loadedSets, setLoadedSets] = useState(8);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,10 +23,6 @@ const QuestionSetsLibrary = () => {
     { label: t('name_A_Z'), value: 'nameAsc' },
     { label: t('name_Z_A'), value: 'nameDesc' },
   ];
-
-  useEffect(() => {
-    setQuestionSets(questionSetsData); // Встановлюємо дані з JSON-файлу
-  }, []);
 
   const handleSortChange = (value) => {
     setSelectedSortingOption(value);
@@ -142,6 +140,11 @@ const QuestionSetsLibrary = () => {
     setSearchTerm(value);
   };
 
+  // Функція для видалення лайку
+  const handleUnlikeSet = (id) => {
+    setQuestionSets((prevSets) => prevSets.filter((set) => set.id !== id));
+  };
+
   return (
     <div className={styles.questionSetsWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -185,6 +188,7 @@ const QuestionSetsLibrary = () => {
                 visibility={set.visibility}
                 style={{ width: '500px' }}
                 id={set.id}
+                handleUnlikeSet={handleUnlikeSet}
               />
             </div>
           ))}
@@ -193,4 +197,4 @@ const QuestionSetsLibrary = () => {
   );
 };
 
-export default QuestionSetsLibrary;
+export default QuestionSetsForFavorite;

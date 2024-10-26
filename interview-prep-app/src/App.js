@@ -29,6 +29,7 @@ import PeopleProfilePage from './pages/PeopleProfilePage/PeopleProfilePage';
 import LookFolder from './pages/Folders/LookFolder/LookFolder';
 import CreateEditFolder from './pages/Folders/CreateEditFolder/CreateEditFolder';
 import CreateEditSet from './pages/Sets/CreateEditSet/CreateEditSet';
+import FavoritePage from './pages/FavoritePage/FavoritePage';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -76,6 +77,8 @@ function App() {
         path="/createSet"
         element={<CreateEditSet editOrCreate={'edit'} />}
       />
+
+      <Route path="/favorite" element={<FavoritePage />} />
     </Routes>
   );
 }

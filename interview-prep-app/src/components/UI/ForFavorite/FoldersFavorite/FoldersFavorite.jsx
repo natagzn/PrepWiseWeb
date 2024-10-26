@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import styles from './FoldersLibrary.module.css';
+import styles from './FoldersFavorite.module.css';
 import { FolderComponent } from '../../FolderComponent/FolderComponent';
 import SortComponent from '../../SortComponent/SortComponent';
 import SearchComponent from '../../SearchComponent/SearchComponent';
 import foldersData from '../../../../foldersData.json';
 import { useTranslation } from 'react-i18next';
 
-const FoldersLibrary = () => {
+const FoldersFavorite = () => {
   const { t } = useTranslation();
-  const [folders, setFolders] = useState(foldersData);
+  const [folders, setFolders] = useState(
+    foldersData.filter((folder) => folder.isLiked) // Ініціалізація тільки лайкнутими елементами
+  );
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -21,6 +23,12 @@ const FoldersLibrary = () => {
 
   const handleSearchClick = (value) => {
     setSearchTerm(value);
+  };
+
+  const handleLikeFolder = (id) => {
+    setFolders((prevFolders) =>
+      prevFolders.filter((folder) => folder.id !== id)
+    );
   };
 
   const sortedFolders = () => {
@@ -74,6 +82,7 @@ const FoldersLibrary = () => {
             itemsCount={folder.itemsCount}
             date={folder.date}
             isLiked={folder.isLiked}
+            handleLikeFolder={handleLikeFolder}
           />
         ))}
       </div>
@@ -81,4 +90,4 @@ const FoldersLibrary = () => {
   );
 };
 
-export default FoldersLibrary;
+export default FoldersFavorite;
