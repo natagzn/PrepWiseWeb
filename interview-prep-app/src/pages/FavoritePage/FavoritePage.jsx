@@ -31,7 +31,7 @@ const FavoritePage = () => {
     <div>
       <HeaderComponent />
       <div className={styles.libraryPage}>
-        <h1 className={styles.header}>{t('Favorite')}</h1>{' '}
+        <h1 className={styles.header}>{t('favorite')}</h1>{' '}
         {/* Додаємо переклад заголовка */}
         <div className={styles.tabs}>
           <div
