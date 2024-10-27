@@ -1,0 +1,134 @@
+[
+  {
+    "id": 0,
+    "title": "Book1 Author A.A.",
+    "categories": ["HTML", "CSS", "Web"],
+    "username": "user0",
+    "date": "2023-04-01",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 1,
+    "title": "Book2 Author B.B.",
+    "categories": ["Mobile", "App Dev"],
+    "username": "user1",
+    "date": "2023-05-10",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 2,
+    "title": "Article3 C.C.",
+    "categories": ["App Dev"],
+    "username": "user2",
+    "date": "2023-07-15",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 3,
+    "title": "Book4 Author D.D.",
+    "categories": ["Linux", "Systems"],
+    "username": "user3",
+    "date": "2023-08-20",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 4,
+    "title": "Book5 Author E.E.",
+    "categories": ["Systems"],
+    "username": "user4",
+    "date": "2023-09-25",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 5,
+    "title": "Book6 Author F.F.",
+    "categories": ["Python", "Algorithms"],
+    "username": "user5",
+    "date": "2023-01-12",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 6,
+    "title": "Article7 G.G.",
+    "categories": ["Algorithms"],
+    "username": "user6",
+    "date": "2023-03-22",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 7,
+    "title": "Book8 Author H.H.",
+    "categories": ["Python", "Algorithms"],
+    "username": "user7",
+    "date": "2023-02-18",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 8,
+    "title": "Article9 I.I.",
+    "categories": ["Python", "Algorithms"],
+    "username": "user8",
+    "date": "2023-06-11",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 9,
+    "title": "Book10 Author J.J.",
+    "categories": ["Cloud", "IT"],
+    "username": "user9",
+    "date": "2023-07-19",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 10,
+    "title": "Article11 K.K.",
+    "categories": "Development",
+    "username": "user10",
+    "date": "2023-10-05",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": true
+  },
+  {
+    "id": 11,
+    "title": "Book12 Author L.L.",
+    "categories": ["Cloud", "IT"],
+    "username": "user11",
+    "date": "2023-09-12",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "isLiked": false
+  },
+  {
+    "id": 12,
+    "title": "Article13 M.M.",
+    "categories": ["Cloud", "IT"],
+    "username": "user12",
+    "date": "2023-04-28",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 13,
+    "title": "Book14 Author N.N.",
+    "categories": ["Cloud", "IT"],
+    "username": "user13",
+    "date": "2023-08-03",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 14,
+    "title": "Article15 O.O.",
+    "categories": ["IT"],
+    "username": "user14",
+    "date": "2023-05-07",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  }
+]

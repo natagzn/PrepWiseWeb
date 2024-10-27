@@ -165,7 +165,7 @@ const QuestionSetsForFavorite = () => {
         </div>
         <div className={styles.search}>
           <SearchComponent
-            placeholder={t('search_sets')}
+            placeholder={t('search_favorite_sets')}
             onClick={handleSearchClick} // Передаємо обробник
           />
         </div>

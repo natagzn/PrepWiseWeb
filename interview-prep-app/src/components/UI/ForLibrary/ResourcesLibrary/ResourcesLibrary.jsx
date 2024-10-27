@@ -4,19 +4,20 @@ import ResourceComponent from '../../ResourceComponent/ResourceComponent';
 import SortComponent from '../../SortComponent/SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel/FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent/SearchComponent';
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
+import resourcesData from '../../../../resources.json';
 
 const ResourcesLibrary = () => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
   const [resources, setResources] = useState([]);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   const sortingOptions = [
-    { label: t('created_new_old'), value: 'createdDesc' }, // Переклад
-    { label: t('created_old_new'), value: 'createdAsc' }, // Переклад
-    { label: t('name_A_Z'), value: 'nameAsc' }, // Переклад
-    { label: t('name_Z_A'), value: 'nameDesc' }, // Переклад
+    { label: t('created_new_old'), value: 'createdDesc' },
+    { label: t('created_old_new'), value: 'createdAsc' },
+    { label: t('name_A_Z'), value: 'nameAsc' },
+    { label: t('name_Z_A'), value: 'nameDesc' },
   ];
 
   const handleSortChange = (value) => {
@@ -24,42 +25,7 @@ const ResourcesLibrary = () => {
   };
 
   useEffect(() => {
-    const resourceTitles = [
-      'Book1 Author A.A.',
-      'Book2 Author B.B.',
-      'Article3 C.C.',
-      'Book4 Author D.D.',
-      'Book5 Author E.E.',
-    ];
-
-    const categories = [
-      'Development',
-      'Design',
-      'Marketing',
-      'Science',
-      'Arts',
-    ];
-
-    const generateRandomDate = () => {
-      const start = new Date(2023, 0, 1);
-      const end = new Date();
-      const date = new Date(
-        start.getTime() + Math.random() * (end.getTime() - start.getTime())
-      );
-      return date.toISOString().split('T')[0];
-    };
-
-    setResources(
-      Array.from({ length: 5 }, (_, index) => ({
-        id: index,
-        title: resourceTitles[index % resourceTitles.length],
-        category: categories[index % categories.length],
-        username: 'user' + index,
-        date: generateRandomDate(),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        isLiked: index % 2 === 0,
-      }))
-    );
+    setResources(resourcesData);
   }, []);
 
   const [selectedFilters, setSelectedFilters] = useState({
@@ -134,7 +100,7 @@ const ResourcesLibrary = () => {
         </div>
         <div className={styles.search}>
           <SearchComponent
-            placeholder={t('search_resources')} // Переклад
+            placeholder={t('search_resources')}
             onClick={handleSearchClick}
           />
         </div>
@@ -143,11 +109,13 @@ const ResourcesLibrary = () => {
         {filteredResources().map((resource) => (
           <ResourceComponent
             key={resource.id}
+            id={resource.id}
             title={resource.title}
-            category={resource.category}
+            categories={resource.categories}
             username={resource.username}
             date={resource.date}
             description={resource.description}
+            isLiked={resource.isLiked}
           />
         ))}
       </div>

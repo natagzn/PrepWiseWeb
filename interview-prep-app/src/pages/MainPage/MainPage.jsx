@@ -122,6 +122,7 @@ const MainPage = () => {
             {questionSets.map((set) => (
               <div key={set.id} style={{ flex: `0 0 ${100 / visibleItems}%` }}>
                 <QuestionSetComponent
+                  id={set.id}
                   questionsCount={set.questionsCount}
                   categories={set.categories}
                   username={set.username}
@@ -171,6 +172,7 @@ const MainPage = () => {
               >
                 <ResourceComponent
                   key={resource.id}
+                  id={resource.id}
                   title={resource.title}
                   category={resource.category}
                   username={resource.username}

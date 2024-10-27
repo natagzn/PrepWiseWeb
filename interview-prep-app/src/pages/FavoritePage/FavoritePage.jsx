@@ -7,6 +7,7 @@ import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
 import FoldersFavorite from '../../components/UI/ForFavorite/FoldersFavorite/FoldersFavorite';
 import QuestionSetsForFavorite from '../../components/UI/ForFavorite/QuestionSetsForFavorite/QuestionSetsForFavorite';
+import ResourcesForFavorite from '../../components/UI/ForFavorite/ResourcesForFavorite/ResourcesForFavorite';
 
 const FavoritePage = () => {
   const { t } = useTranslation(); // Отримуємо функцію t для перекладів
@@ -20,7 +21,7 @@ const FavoritePage = () => {
       case 'folders':
         return <FoldersFavorite />;
       case 'resources':
-        return <ResourcesLibrary />;
+        return <ResourcesForFavorite />;
       default:
         return null;
     }

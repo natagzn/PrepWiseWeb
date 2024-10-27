@@ -145,5 +145,8 @@
   "Enter a question": "Введіть питання",
   "Question": "Питання",
   "Answer": "Відповідь",
-  "Enter an answer": "Введіть відповідь"
+  "Enter an answer": "Введіть відповідь",
+  "search_favorite_resource": "Пошук улюблених ресурсів...",
+  "search_favorite_folders": "Пошук улюблених папок...",
+  "search_favorite_sets": "Пошук улюблених сетів..."
 }

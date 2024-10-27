@@ -145,5 +145,8 @@
   "Enter a question": "Enter a question",
   "Question": "Question",
   "Answer": "Answer",
-  "Enter an answer": "Enter an answer"
+  "Enter an answer": "Enter an answer",
+  "search_favorite_resource": "Search favorite resource...",
+  "search_favorite_folders": "Search favorite folders...",
+  "search_favorite_sets": "Search favorite sets..."
 }

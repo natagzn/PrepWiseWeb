@@ -1,43 +1,55 @@
 import React, { useState } from 'react';
 import LikeButton from './LikeButton';
 import DislikeButton from './DislikeButton';
-import likedIcon from './liked.svg'; // Шлях до іконки "liked"
-import notLikedIcon from './notliked.svg'; // Шлях до іконки "not liked"
-import dislikedIcon from './disliked.svg'; // Шлях до іконки "disliked"
-import notDislikedIcon from './notdisliked.svg'; // Шлях до іконки "not disliked"
+import likedIcon from './liked.svg';
+import notLikedIcon from './notliked.svg';
+import dislikedIcon from './disliked.svg';
+import notDislikedIcon from './notdisliked.svg';
 
-function LikeDislikeToggle() {
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
-  const [likeCount, setLikeCount] = useState(10); // Початкове значення лайків
-  const [dislikeCount, setDislikeCount] = useState(2); // Початкове значення дизлайків
+function LikeDislikeToggle({ id, isLiked, onRemove }) {
+  const [liked, setLiked] = useState(isLiked === true);
+  const [disliked, setDisliked] = useState(isLiked === false);
+  const [likeCount, setLikeCount] = useState(10);
+  const [dislikeCount, setDislikeCount] = useState(2);
+
+  const like = () => {
+    setLiked(true);
+    setLikeCount(likeCount + 1);
+    console.log('Like ' + id);
+  };
+
+  const dislike = () => {
+    setDisliked(true);
+    setDislikeCount(dislikeCount + 1);
+    console.log('Dislike ' + id);
+    if (onRemove) onRemove(); // виклик onRemove при дизлайку
+  };
+
+  const deleteLike = () => {
+    setLiked(false);
+    setLikeCount(likeCount - 1);
+    console.log('Delete like ' + id);
+    if (onRemove) onRemove(); // виклик onRemove при знятті лайку
+  };
+
+  const deleteDislike = () => {
+    setDisliked(false);
+    setDislikeCount(dislikeCount - 1);
+    console.log('Delete dislike ' + id);
+  };
 
   const handleLike = () => {
     if (disliked) {
-      setDisliked(false);
-      setDislikeCount(dislikeCount - 1);
+      deleteDislike();
     }
-    if (!liked) {
-      setLiked(true);
-      setLikeCount(likeCount + 1);
-    } else {
-      setLiked(false);
-      setLikeCount(likeCount - 1);
-    }
+    liked ? deleteLike() : like();
   };
 
   const handleDislike = () => {
     if (liked) {
-      setLiked(false);
-      setLikeCount(likeCount - 1);
+      deleteLike();
     }
-    if (!disliked) {
-      setDisliked(true);
-      setDislikeCount(dislikeCount + 1);
-    } else {
-      setDisliked(false);
-      setDislikeCount(dislikeCount - 1);
-    }
+    disliked ? deleteDislike() : dislike();
   };
 
   return (

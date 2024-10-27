@@ -68,7 +68,7 @@ const FoldersFavorite = () => {
         </div>
         <div className={styles.search}>
           <SearchComponent
-            placeholder={t('search_folders')}
+            placeholder={t('search_favorite_folders')}
             onClick={handleSearchClick}
           />
         </div>
