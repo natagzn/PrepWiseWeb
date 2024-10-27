@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import styles from './AuthPage.module.css';
-import placeholderImage from './backgroundLogin.png';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../components/UI/LanguageSwitcher/LanguageSwitcher';
 import PasswordReset from './PasswordReset/PasswordReset';
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
 import NewPassword from './NewPassword/NewPassword'; // Import NewPassword component
-import googleIcon from './google.svg';
 
 const AuthPage = () => {
   const { t } = useTranslation();
@@ -42,7 +40,11 @@ const AuthPage = () => {
 
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={placeholderImage} alt="Placeholder" />
+      <img
+        className={styles.image}
+        src="/img/backgroundLogin.png"
+        alt="Placeholder"
+      />
       <div
         className={`${styles.formContainer} ${isLogin ? styles.loginGap : styles.registerGap}`}
       >
@@ -80,7 +82,7 @@ const AuthPage = () => {
             </div>
             <div className={styles.googleButton}>
               <img
-                src={googleIcon}
+                src="/icons/google.svg"
                 alt="Google Icon"
                 className={styles.googleIcon}
               />

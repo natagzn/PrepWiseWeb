@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Імпорт useNavigate
 import styles from './AuthTemplate.module.css';
-import placeholderImage from '../../../pages/Auth/backgroundLogin.png';
 import LanguageSwitcher from '../../UI/LanguageSwitcher/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +19,11 @@ const AuthTemplate = ({ children, isLogin }) => {
 
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={placeholderImage} alt="Placeholder" />
+      <img
+        className={styles.image}
+        src="/img/backgroundLogin.png"
+        alt="Placeholder"
+      />
       <div className={styles.formContainer}>
         <div className={styles.header}>
           <LanguageSwitcher />

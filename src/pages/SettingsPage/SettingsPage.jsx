@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './SettingsPage.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
-import editIcon from './edit.svg';
 import EditModal from './EditModal/EditModal';
 import LanguageSwitcher from '../../components/UI/LanguageSwitcher/LanguageSwitcher';
 import { motion } from 'framer-motion';
@@ -62,7 +61,11 @@ const SettingsPage = () => {
                 />
               )}
               <div className={styles.iconEdit}>
-                <img src={editIcon} onClick={handleClick} alt="Edit icon" />{' '}
+                <img
+                  src="/icons/edit.svg"
+                  onClick={handleClick}
+                  alt="Edit icon"
+                />{' '}
                 {/* Add alt attribute */}
               </div>
             </div>

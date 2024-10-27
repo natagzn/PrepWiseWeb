@@ -3,9 +3,6 @@ import styles from './LookFolder.module.css';
 import { SaveNot } from '../../../components/UI/SaveNot/SaveNot';
 import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
 import SortComponent from '../../../components/UI/SortComponent/SortComponent';
-import publicIcon from '../public.svg';
-import privateIcon from '../private.svg';
-import dots from '../dots.svg';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders/QuestionSetsComponentForFolders';
 import { useTranslation } from 'react-i18next';
 
@@ -55,13 +52,17 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
               <SaveNot />
             </div>
             <img
-              src={visibility === 'Public' ? publicIcon : privateIcon}
+              src={
+                visibility === 'Public'
+                  ? '/icons/public.svg'
+                  : '/icons/private.svg'
+              }
               alt="visibility"
               className={styles.icon}
             />
             <div className={styles.visibility}>{visibility}</div>
             <div className={styles.threeDots}>
-              <img src={dots} alt="dots" className={styles.icon} />
+              <img src="/icons/dots.svg" alt="dots" className={styles.icon} />
             </div>
           </div>
           <div className={styles.sortContainer}>

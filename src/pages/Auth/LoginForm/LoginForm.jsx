@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import styles from './LoginForm.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate/AuthTemplate';
-import googleIcon from '../google.svg';
 import { useNavigate } from 'react-router-dom'; // Імпортуємо useNavigate
 import { nav } from 'framer-motion/client';
 
@@ -90,7 +89,7 @@ const LoginForm = () => {
           <span className={styles.orText}>{t('or')}</span>
         </div>
         <div className={styles.googleButton}>
-          <img src={googleIcon} alt="Google Icon" />
+          <img src="/icons/google.svg" alt="Google Icon" />
           <span>{t('continue_with_google')}</span>
         </div>
       </div>

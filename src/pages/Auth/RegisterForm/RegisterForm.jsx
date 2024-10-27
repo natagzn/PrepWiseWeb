@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'; // Імпортуємо motion
 import styles from './RegisterForm.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate/AuthTemplate';
-import googleIcon from '../google.svg';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // Правильний імпорт
 import 'react-toastify/dist/ReactToastify.css'; // Імпортуємо стилі Toast
@@ -128,7 +127,7 @@ const RegisterForm = () => {
           <span className={styles.orText}>{t('or')}</span>
         </div>
         <div className={styles.googleButton}>
-          <img src={googleIcon} alt="Google Icon" />
+          <img src="/icons/google.svg" alt="Google Icon" />
           <span>{t('continue_with_google')}</span>
         </div>
       </div>

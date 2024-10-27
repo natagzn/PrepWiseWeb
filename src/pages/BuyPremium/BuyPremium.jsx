@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './BuyPremium.module.css';
 import { useTranslation } from 'react-i18next';
-import iconBack from './back.svg';
-import like from './like.svg';
 import { motion } from 'framer-motion';
 import FooterComponent from '../../components/UI/FooterComponent/FooterComponent';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +26,7 @@ function BuyPremium() {
       <div className={styles.premiumInfo}>
         <div className={styles.topBar}>
           <img
-            src={iconBack}
+            src="/icons/back.svg"
             className={styles.backIcon}
             alt="back"
             onClick={handleBackClick} // Add click handler
@@ -45,19 +43,19 @@ function BuyPremium() {
             <h3>{t('you_will_receive')}:</h3>
             <ul>
               <li>
-                <img src={like} className={styles.like} alt="like" />
+                <img src="/icons/like.svg" className={styles.like} alt="like" />
                 {t('unlimited_search_results')}
               </li>
               <li>
-                <img src={like} className={styles.like} alt="like" />
+                <img src="/icons/like.svg" className={styles.like} alt="like" />
                 {t('unlimited_sets')}
               </li>
               <li>
-                <img src={like} className={styles.like} alt="like" />
+                <img src="/icons/like.svg" className={styles.like} alt="like" />
                 {t('unlimited_questions')}
               </li>
               <li>
-                <img src={like} className={styles.like} alt="like" />
+                <img src="/icons/like.svg" className={styles.like} alt="like" />
                 {t('share_access')}
               </li>
             </ul>
