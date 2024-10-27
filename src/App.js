@@ -12,7 +12,7 @@ import AvatarMenu from './components/UI/AvatarMenu/AvatarMenu';
 import NotificationsList from './components/UI/NotificationComponent/NotificationList/NotificationList';
 import AuthPage from './pages/Auth/AuthPage';
 import MainPage from './pages/MainPage/MainPage';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import YourLibraryPage from './pages/YourLibraryPage/YourLibraryPage';
 import NotificationPage from './pages/NotificationPage/NotificationPage';
 
@@ -44,6 +44,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
       <Route path="/confirmEmail" element={<ConfirmEmail />} />
@@ -79,6 +80,8 @@ function App() {
       />
 
       <Route path="/favorite" element={<FavoritePage />} />
+
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
