@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import FooterComponent from '../../components/UI/FooterComponent/FooterComponent';
+import FooterComponent from '../../components/UI/FooterComponent';
 import { useNavigate } from 'react-router-dom';
 
 function BuyPremium() {

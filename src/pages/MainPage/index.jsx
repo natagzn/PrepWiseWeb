@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
-import SearchComponent from '../../components/UI/SearchComponent/SearchComponent';
-import QuestionSetComponent from '../../components/UI/QuestionSetComponent/QuestionSetComponent';
-import ResourceComponent from '../../components/UI/ResourceComponent/ResourceComponent';
+import HeaderComponent from '../../components/UI/HeaderComponent';
+import SearchComponent from '../../components/UI/SearchComponent';
+import QuestionSetComponent from '../../components/UI/QuestionSetComponent';
+import ResourceComponent from '../../components/UI/ResourceComponent';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
 
 const MainPage = () => {

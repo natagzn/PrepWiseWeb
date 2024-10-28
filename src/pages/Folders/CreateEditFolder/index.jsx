@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
-import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders/QuestionSetsComponentForFolders';
+import HeaderComponent from '../../../components/UI/HeaderComponent';
+import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

@@ -1,13 +1,13 @@
 // NotificationItem.js
-import NotificationHeader from '../NotificationHeader/NotificationHeader';
-import NotificationText from '../NotificationText/NotificationText';
+import NotificationHeader from '../NotificationHeader';
+import NotificationText from '../NotificationText/';
 import styles from './NotificationItem.module.css';
 
 // Імпортуємо іконки
-import threatIcon from '../thr.svg'; // Змініть на актуальний шлях
-import awardIcon from '../award.svg'; // Змініть на актуальний шлях
-import answerIcon from '../answer.svg'; // Змініть на актуальний шлях
-import peopleIcon from '../peple.svg'; // Змініть на актуальний шлях
+import threatIcon from '../../../assets/NotifactionComponent/thr.svg'; // Змініть на актуальний шлях
+import awardIcon from '../../../assets/NotifactionComponent/award.svg'; // Змініть на актуальний шлях
+import answerIcon from '../../../assets/NotifactionComponent/answer.svg'; // Змініть на актуальний шлях
+import peopleIcon from '../../../assets/NotifactionComponent/peple.svg'; // Змініть на актуальний шлях
 
 const iconSettings = {
   Threat: { color: '#FF9900', icon: threatIcon },

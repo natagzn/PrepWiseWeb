@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary/QuestionSetsLibrary';
-import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary/FoldersLibrary';
+import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary';
+import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary';
 import SharedComponent from '../../components/UI/ForLibrary/SharedComponent/SharedLibrary';
 import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/ResourcesLibrary';
-import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
+import HeaderComponent from '../../components/UI/HeaderComponent';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
 
 const YourLibraryPage = () => {

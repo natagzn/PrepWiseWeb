@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SearchComponent from '../SearchComponent/SearchComponent';
-import PeopleComponent from '../PeopleComponent/PeopleComponent';
+import SearchComponent from '../SearchComponent';
+import PeopleComponent from '../PeopleComponent';
 import styles from './style.module.css';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
 

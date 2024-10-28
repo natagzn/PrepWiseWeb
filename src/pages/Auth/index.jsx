@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../../components/UI/LanguageSwitcher/LanguageSwitcher';
+import LanguageSwitcher from '../../components/UI/LanguageSwitcher';
 import PasswordReset from './PasswordReset';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';

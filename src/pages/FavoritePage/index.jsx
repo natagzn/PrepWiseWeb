@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary/QuestionSetsLibrary';
-import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary/FoldersLibrary';
+import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary';
+import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary';
 import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/ResourcesLibrary';
-import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
+import HeaderComponent from '../../components/UI/HeaderComponent';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
-import FoldersFavorite from '../../components/UI/ForFavorite/FoldersFavorite/FoldersFavorite';
-import QuestionSetsForFavorite from '../../components/UI/ForFavorite/QuestionSetsForFavorite/QuestionSetsForFavorite';
-import ResourcesForFavorite from '../../components/UI/ForFavorite/ResourcesForFavorite/ResourcesForFavorite';
+import FoldersFavorite from '../../components/UI/ForFavorite/FoldersFavorite';
+import QuestionSetsForFavorite from '../../components/UI/ForFavorite/QuestionSetsForFavorite';
+import ResourcesForFavorite from '../../components/UI/ForFavorite/ResourcesForFavorite';
 
 const FavoritePage = () => {
   const { t } = useTranslation(); // Отримуємо функцію t для перекладів

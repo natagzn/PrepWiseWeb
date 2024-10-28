@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify'; // Імпортуємо 
 import 'react-toastify/dist/ReactToastify.css'; // Імпортуємо стилі
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
-import AuthTemplate from '../../../components/layout/AuthTemplate/AuthTemplate';
+import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
 
 const NewPassword = () => {

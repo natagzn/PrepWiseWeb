@@ -1,22 +1,22 @@
 import './App.css';
 import { useTranslation } from 'react-i18next';
-import { FolderComponent } from './components/UI/FolderComponent/FolderComponent';
-import { SaveNot } from './components/UI/SaveNot/SaveNot';
-import QuestionSetComponent from './components/UI/QuestionSetComponent/QuestionSetComponent'; // Змінити на default імпорт
+import { FolderComponent } from './components/UI/FolderComponent';
+import { SaveNot } from './components/UI/SaveNot';
+import QuestionSetComponent from './components/UI/QuestionSetComponent'; // Змінити на default імпорт
 
-import ResourceComponent from './components/UI/ResourceComponent/ResourceComponent';
-import HeaderComponent from './components/UI/HeaderComponent/HeaderComponent';
+import ResourceComponent from './components/UI/ResourceComponent';
+import HeaderComponent from './components/UI/HeaderComponent';
 import { tr } from 'framer-motion/client';
-import SearchComponent from './components/UI/SearchComponent/SearchComponent';
-import AvatarMenu from './components/UI/AvatarMenu/AvatarMenu';
-import NotificationsList from './components/UI/NotificationComponent/NotificationList/NotificationList';
+import SearchComponent from './components/UI/SearchComponent';
+import AvatarMenu from './components/UI/AvatarMenu';
+import NotificationsList from './components/UI/NotificationComponent/NotificationList';
 import AuthPage from './pages/Auth';
 import MainPage from './pages/MainPage';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import YourLibraryPage from './pages/YourLibraryPage';
 import NotificationPage from './pages/NotificationPage';
 
-import PeopleComponent from './components/UI/PeopleComponent/PeopleComponent';
+import PeopleComponent from './components/UI/PeopleComponent';
 import PeoplePage from './pages/PeoplePage';
 import SettingsPage from './pages/SettingsPage';
 import LoginForm from './pages/Auth/LoginForm';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // Імпортуємо motion для анімацій
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
-import AuthTemplate from '../../../components/layout/AuthTemplate/AuthTemplate';
+import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
 
 const PasswordReset = () => {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
+import HeaderComponent from '../../components/UI/HeaderComponent';
 import Modal from 'react-modal';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import QuestionSetComponent from '../../components/UI/QuestionSetComponent/QuestionSetComponent';
-import ResourceComponent from '../../components/UI/ResourceComponent/ResourceComponent';
+import QuestionSetComponent from '../../components/UI/QuestionSetComponent';
+import ResourceComponent from '../../components/UI/ResourceComponent';
 
 Modal.setAppElement('#root');
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './ResourcesLibrary.module.css';
+import styles from './styles.module.css';
 import ResourceComponent from '../../ResourceComponent';
 import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
@@ -7,7 +7,7 @@ import SearchComponent from '../../SearchComponent';
 import { useTranslation } from 'react-i18next';
 import resourcesData from '../../../../resources.json';
 
-const ResourcesLibrary = () => {
+const ResourcesForFavorite = () => {
   const { t } = useTranslation();
   const [resources, setResources] = useState([]);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
@@ -25,7 +25,8 @@ const ResourcesLibrary = () => {
   };
 
   useEffect(() => {
-    setResources(resourcesData);
+    const likedResources = resourcesData.filter((resource) => resource.isLiked);
+    setResources(likedResources);
   }, []);
 
   const [selectedFilters, setSelectedFilters] = useState({
@@ -80,6 +81,13 @@ const ResourcesLibrary = () => {
     setSearchTerm(value);
   };
 
+  // Видалення ресурсу зі сторінки при знятті лайку або дизлайку
+  const handleRemoveResource = (id) => {
+    setResources((prevResources) =>
+      prevResources.filter((resource) => resource.id !== id)
+    );
+  };
+
   return (
     <div className={styles.resourcesWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -100,7 +108,7 @@ const ResourcesLibrary = () => {
         </div>
         <div className={styles.search}>
           <SearchComponent
-            placeholder={t('search_resources')}
+            placeholder={t('search_favorite_resource')}
             onClick={handleSearchClick}
           />
         </div>
@@ -116,6 +124,7 @@ const ResourcesLibrary = () => {
             date={resource.date}
             description={resource.description}
             isLiked={resource.isLiked}
+            onRemove={() => handleRemoveResource(resource.id)} // передача функції видалення
           />
         ))}
       </div>
@@ -123,4 +132,4 @@ const ResourcesLibrary = () => {
   );
 };
 
-export default ResourcesLibrary;
+export default ResourcesForFavorite;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
-import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
+import HeaderComponent from '../../../components/UI/HeaderComponent';
 import VisibilityLevelCategories from './VisibilityLevelCategories';
 import CreateQuestionAnswer from './CreateQuestionAnswer';
 

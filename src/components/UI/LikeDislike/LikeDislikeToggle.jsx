@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import LikeButton from './LikeButton';
 import DislikeButton from './DislikeButton';
-import likedIcon from './liked.svg';
-import notLikedIcon from './notliked.svg';
-import dislikedIcon from './disliked.svg';
-import notDislikedIcon from './notdisliked.svg';
 
 function LikeDislikeToggle({ id, isLiked, onRemove }) {
   const [liked, setLiked] = useState(isLiked === true);
@@ -58,15 +54,15 @@ function LikeDislikeToggle({ id, isLiked, onRemove }) {
         liked={liked}
         onClick={handleLike}
         count={likeCount}
-        likedIcon={likedIcon}
-        notLikedIcon={notLikedIcon}
+        likedIcon="/icons/liked.svg"
+        notLikedIcon="/icons/notliked.svg"
       />
       <DislikeButton
         disliked={disliked}
         onClick={handleDislike}
         count={dislikeCount}
-        dislikedIcon={dislikedIcon}
-        notDislikedIcon={notDislikedIcon}
+        dislikedIcon="/icons/disliked.svg"
+        notDislikedIcon="/icons/notdisliked.svg"
       />
     </div>
   );
