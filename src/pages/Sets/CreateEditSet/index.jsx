@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import styles from './CreateEditSet.module.css';
+import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
-import VisibilityLevelCategories from './VisibilityLevelCategories/VisibilityLevelCategories';
-import CreateQuestionAnswer from './CreateQuestionAnswer/CreateQuestionAnswer';
+import VisibilityLevelCategories from './VisibilityLevelCategories';
+import CreateQuestionAnswer from './CreateQuestionAnswer';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();

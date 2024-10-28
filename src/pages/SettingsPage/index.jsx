@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './SettingsPage.module.css';
+import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
-import EditModal from './EditModal/EditModal';
+import EditModal from './EditModal';
 import LanguageSwitcher from '../../components/UI/LanguageSwitcher/LanguageSwitcher';
 import { motion } from 'framer-motion';
 

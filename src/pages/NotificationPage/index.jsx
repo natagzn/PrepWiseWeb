@@ -1,6 +1,6 @@
 // NotificationPage.js
 import React, { useState } from 'react';
-import styles from './NotificationPage.module.css'; // Імпорт стилів
+import styles from './styles.module.css'; // Імпорт стилів
 import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
 import NotificationItem from '../../components/UI/NotificationComponent/NotificationItem/NotificationItem';
 import NotificationsList from '../../components/UI/NotificationComponent/NotificationList/NotificationList';

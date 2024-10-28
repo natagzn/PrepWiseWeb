@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './FavoritePage.module.css';
+import styles from './styles.module.css';
 import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary/QuestionSetsLibrary';
 import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary/FoldersLibrary';
 import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/ResourcesLibrary';

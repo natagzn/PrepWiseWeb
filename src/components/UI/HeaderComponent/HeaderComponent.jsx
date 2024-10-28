@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'; // Підключаємо ReactDOM для ст
 import styles from './HeaderComponent.module.css'; // Підключення CSS файлу
 import AvatarMenu from '../AvatarMenu/AvatarMenu';
 import SearchComponent from '../SearchComponent/SearchComponent';
-import PeoplePage from '../../../pages/PeoplePage/PeoplePage';
+import PeoplePage from '../../../pages/PeoplePage';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
 
 const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {

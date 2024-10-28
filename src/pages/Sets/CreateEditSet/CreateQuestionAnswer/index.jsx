@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './CreateQuestionAnswer.module.css';
+import styles from './styles.module.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { useTransform } from 'framer-motion';

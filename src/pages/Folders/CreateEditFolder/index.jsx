@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './CreateEditFolder.module.css';
+import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders/QuestionSetsComponentForFolders';
 import { useNavigate } from 'react-router-dom';

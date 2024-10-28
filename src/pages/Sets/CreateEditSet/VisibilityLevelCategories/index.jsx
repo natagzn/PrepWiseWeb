@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './VisibilityLevelCategories.module.css';
+import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { FaPen } from 'react-icons/fa';
 

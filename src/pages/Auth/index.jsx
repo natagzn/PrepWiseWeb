@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import styles from './AuthPage.module.css';
+import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../components/UI/LanguageSwitcher/LanguageSwitcher';
-import PasswordReset from './PasswordReset/PasswordReset';
-import LoginForm from './LoginForm/LoginForm';
-import RegisterForm from './RegisterForm/RegisterForm';
-import NewPassword from './NewPassword/NewPassword'; // Import NewPassword component
+import PasswordReset from './PasswordReset';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import NewPassword from './NewPassword'; // Import NewPassword component
 
 const AuthPage = () => {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import styles from './LoginForm.module.css';
+import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate/AuthTemplate';
 import { useNavigate } from 'react-router-dom'; // Імпортуємо useNavigate

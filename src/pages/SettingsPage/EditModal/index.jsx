@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
-import styles from './EditModal.module.css';
+import styles from './styles.module.css';
 
 const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   const { t } = useTranslation();

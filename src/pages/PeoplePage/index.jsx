@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './PeoplePage.module.css';
+import styles from './styles.module.css';
 import FollowingComponent from '../../components/UI/ForPeoplePage/FollowingComponent';
 import FollowersComponent from '../../components/UI/ForPeoplePage/FollowersComponent';
 import FriendsComponent from '../../components/UI/ForPeoplePage/FriendsComponent';

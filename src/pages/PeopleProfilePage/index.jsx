@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './PeopleProfilePage.module.css';
+import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
 import Modal from 'react-modal';
 import { motion } from 'framer-motion';

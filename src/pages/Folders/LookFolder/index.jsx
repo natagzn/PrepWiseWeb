@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './LookFolder.module.css';
+import styles from './styles.module.css';
 import { SaveNot } from '../../../components/UI/SaveNot/SaveNot';
 import HeaderComponent from '../../../components/UI/HeaderComponent/HeaderComponent';
 import SortComponent from '../../../components/UI/SortComponent/SortComponent';

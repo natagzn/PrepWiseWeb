@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './BuyPremium.module.css';
+import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import FooterComponent from '../../components/UI/FooterComponent/FooterComponent';

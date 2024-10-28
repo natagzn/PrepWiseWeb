@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './MainPage.module.css';
+import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent/HeaderComponent';
 import SearchComponent from '../../components/UI/SearchComponent/SearchComponent';
 import QuestionSetComponent from '../../components/UI/QuestionSetComponent/QuestionSetComponent';
