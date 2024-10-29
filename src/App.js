@@ -31,6 +31,8 @@ import CreateEditFolder from './pages/Folders/CreateEditFolder';
 import CreateEditSet from './pages/Sets/CreateEditSet';
 import FavoritePage from './pages/FavoritePage';
 import LookSet from 'pages/Sets/LookSet';
+import FlashcardPage from 'pages/FlashcardsPage';
+import ResultFlashcards from 'pages/FlashcardsPage/ResultPage';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -84,6 +86,8 @@ function App() {
       <Route path="/lookSet" element={<LookSet />} />
 
       <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="/flashcards" element={<FlashcardPage setId={1} />} />
+      <Route path="/flashcard/result" element={<ResultFlashcards />} />
     </Routes>
   );
 }

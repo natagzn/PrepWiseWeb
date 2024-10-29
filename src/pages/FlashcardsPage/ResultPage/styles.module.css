@@ -1,0 +1,238 @@
+/* styles.module.css */
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Мінімальна висота контейнера - 100% висоти вікна */
+  font-family: var(--web-font-family);
+}
+
+.contentWrapper {
+  flex: 1; /* Займає все залишкове місце */
+  display: flex;
+  flex-direction: column; /* Стовпчик для вмісту */
+  width: 100%; /* Займає 100% ширини */
+  text-align: center;
+}
+
+.comment {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.infoBlock {
+  text-align: center;
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.questionCount,
+.setTitle {
+  font-size: var(--web-23-regular-font-size);
+  margin: 0;
+  font-weight: 600;
+}
+
+.progressInfo {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
+  min-height: 265px;
+}
+
+.circularChart {
+  max-height: 165px;
+  min-height: 165px;
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.circularChart svg {
+  max-height: 165px;
+  min-height: 165px;
+}
+
+.progressPercent {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.progressDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stillLearning,
+.know {
+  width: 300px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--web-font-family);
+  font-size: var(--web-23-regular-font-size);
+  border-radius: 15px;
+  font-weight: 600;
+}
+
+.stillLearning {
+  background-color: rgba(255, 165, 0, 0.2); /* Напівпрозорий оранжевий */
+  color: #c36c02; /* Оранжевий текст */
+}
+
+.know {
+  background-color: rgba(0, 128, 0, 0.2); /* Напівпрозорий зелений */
+  color: #265828; /* Зелений текст */
+}
+
+.label {
+  text-align: left;
+}
+
+.count {
+  text-align: right;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 20px;
+  padding: 20px;
+}
+
+.leftColumn {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightColumn {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  width: 400px;
+  padding: 10px 20px;
+  font-size: var(--web-20-regular-font-size);
+  font-family: var(--web-font-family);
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 54.5px;
+}
+
+.restart {
+  background-color: var(--landingdark-blue);
+}
+
+.return {
+  background-color: transparent;
+  border: 1px solid var(--landingdark-blue);
+  color: var(--landingdark-blue);
+}
+
+.commentColumn {
+  font-size: var(--web-20-regular-font-size);
+  color: black;
+  text-align: left;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column; /* Відображення кнопок у стовпчик */
+  justify-content: center; /* Центрування кнопок по вертикалі */
+  align-items: center; /* Центрування кнопок по горизонталі */
+  height: 100%; /* Використання всієї висоти для вертикального центрування */
+  gap: 10px; /* Проміжок між кнопками */
+}
+
+@media (max-width: 1000px) {
+  .button {
+    width: 100%; /* На малих екранах кнопки займають всю ширину */
+  }
+
+  .mainContent {
+    flex-direction: column; /* Змінюємо напрямок на стовпчик на малих екранах */
+    align-items: center; /* Центруємо контент по горизонталі */
+    gap: 10px;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    gap: 20px;
+    width: 100%;
+  }
+
+  .buttonContainer {
+    flex-direction: row;
+  }
+
+  .button {
+    width: fit-content;
+  }
+
+  .progressInfo {
+    min-height: min-content;
+    flex-wrap: wrap;
+  }
+
+  .comment {
+    font-size: 24px; /* Зменшення шрифту коментарів на малих екранах */
+  }
+
+  .questionCount,
+  .setTitle {
+    font-size: var(
+      --web-20-regular-font-size
+    ); /* Зменшення шрифту заголовків */
+  }
+
+  .progressPercent {
+    font-size: 1.2em; /* Зменшення шрифту проценту прогресу */
+  }
+
+  .stillLearning,
+  .know {
+    font-size: var(
+      --web-20-regular-font-size
+    ); /* Зменшення шрифту для статусів */
+  }
+
+  .button {
+    font-size: var(--web-18-regular-font-size); /* Зменшення шрифту кнопок */
+  }
+}
+
+@media (max-width: 465px) {
+  .buttonContainer {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 300px;
+  }
+
+  .mainContent {
+    gap: 40px;
+  }
+}

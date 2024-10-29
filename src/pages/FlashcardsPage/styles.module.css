@@ -1,0 +1,260 @@
+.progressBarContainer {
+  width: 100%;
+  height: 10px;
+  background-color: var(--light-gray); /* колір фону */
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: var(--landingdark-blue); /* колір заповнення */
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.flashcardPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 98vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  background-color: #f3f3f3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.setTitle {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  font-size: var(--web-23-regular-font-size);
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.setTitleText {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--web-20-regular-font-size);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: opacity 0.3s;
+}
+
+.setTitle:hover .setTitleText {
+  visibility: visible;
+  opacity: 1;
+}
+
+.questionProgress {
+  position: absolute;
+  font-size: var(--web-20-regular-font-size);
+  font-weight: 600;
+  text-align: center;
+  left: 50%;
+}
+.statusContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px 0;
+  align-items: center;
+}
+
+.statusItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--web-23-regular-font-size);
+}
+
+.statusCount {
+  width: 65px;
+  height: 39px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid;
+  font-size: var(--web-23-regular-font-size);
+}
+
+.stillLearningText {
+  color: #ff9900;
+}
+
+.stillLearningCount {
+  color: #ff9900;
+  border-color: #ff9900;
+  background: rgba(255, 153, 0, 0.2);
+}
+
+.knowText {
+  color: #319f43;
+}
+
+.knowCount {
+  color: #319f43;
+  border-color: #319f43;
+  background: rgba(49, 159, 67, 0.2);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+  padding: 20px;
+}
+
+.centerButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerButton {
+  width: 65px;
+  height: 56px;
+  border-radius: 15px;
+  border: 0.5px solid #5a5a5a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  background-color: transparent;
+}
+
+.incorrectButton {
+  color: #e33629;
+}
+
+.correctButton {
+  color: #319f43;
+}
+
+.incorrectButton:hover {
+  background-color: rgba(227, 54, 41, 0.2);
+}
+
+.correctButton:hover {
+  background-color: rgba(49, 159, 67, 0.2);
+}
+
+.prevQuestionButton {
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.footerIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.flashcard {
+  position: relative; /* Встановлюємо відносну позицію для контейнера іконки */
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Налаштування затемнення */
+  z-index: 9; /* Поверх усіх елементів, але під меню */
+}
+
+/* Стилі меню */
+.menu {
+  position: absolute;
+  bottom: 100%; /* Розташування над іконкою */
+  left: 50%; /* Вирівнюємо по центру */
+  transform: translate(
+    -50%,
+    -8px
+  ); /* Центруємо по горизонталі та піднімаємо трохи */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Тінь над меню */
+  z-index: 10; /* Щоб меню було зверху overlay */
+  width: max-content;
+}
+
+.menu button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #333;
+}
+
+.menu button:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 900px) {
+  .questionProgress {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .setTitle {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .statusCount {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .stillLearningText,
+  .knowText,
+  .stillLearningCount,
+  .knowCount {
+    font-size: 20px;
+  }
+
+  .footerButton {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .knowText,
+  .stillLearningText {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .centerButtons {
+    gap: 10px;
+  }
+}
