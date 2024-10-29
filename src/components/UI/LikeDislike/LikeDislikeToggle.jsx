@@ -54,15 +54,15 @@ function LikeDislikeToggle({ id, isLiked, onRemove }) {
         liked={liked}
         onClick={handleLike}
         count={likeCount}
-        likedIcon="/icons/liked.svg"
-        notLikedIcon="/icons/notliked.svg"
+        likedIcon="/icons/LikeDislike/liked.svg"
+        notLikedIcon="/icons/LikeDislike/notliked.svg"
       />
       <DislikeButton
         disliked={disliked}
         onClick={handleDislike}
         count={dislikeCount}
-        dislikedIcon="/icons/disliked.svg"
-        notDislikedIcon="/icons/notdisliked.svg"
+        dislikedIcon="/icons/LikeDislike/disliked.svg"
+        notDislikedIcon="/icons/LikeDislike/notdisliked.svg"
       />
     </div>
   );

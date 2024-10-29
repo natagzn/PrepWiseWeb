@@ -1,0 +1,168 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  font-family: var(--web-font-family);
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: var(--web-35-regular-font-size);
+  font-weight: 700;
+  color: black;
+}
+
+.optionsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.likeIcon {
+  display: flex;
+  align-items: center;
+  width: 23px;
+  height: 23px;
+}
+
+.visibilityContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.visibilityIcon {
+  width: 23px;
+  height: 23px;
+}
+
+.visibilityInfo {
+  font-size: var(--web-23-regular-font-size);
+  color: black;
+}
+
+.optionsIcon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.authorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--web-23-regular-font-size);
+  color: black;
+}
+
+.separator {
+  color: #5a5a5a;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--web-20-regular-font-size);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.category {
+  background: #e5e5e5;
+  padding: 2px 10px;
+  border-radius: 15px;
+  font-size: var(--web-20-regular-font-size);
+  color: black;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: var(--web-20-regular-font-size);
+}
+
+/* Медіа-запити для адаптивності */
+@media (max-width: 800px) {
+  .title {
+    font-size: var(--web-30-regular-font-size);
+  }
+
+  .visibilityInfo,
+  .authorRow,
+  .level,
+  .category,
+  .categories {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .separator {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .optionsIcon {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: var(--web-23-regular-font-size);
+  }
+
+  .visibilityInfo,
+  .authorRow,
+  .level,
+  .category,
+  .categories {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .separator {
+    font-size: var(--web-13-regular-font-size);
+  }
+
+  .optionsIcon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .visibilityInfo,
+  .authorRow,
+  .level,
+  .category,
+  .categories {
+    font-size: var(--web-15-regular-font-size);
+  }
+
+  .separator {
+    font-size: var(--web-12-regular-font-size);
+  }
+
+  .optionsIcon {
+    font-size: 16px;
+  }
+}

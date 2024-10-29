@@ -1,0 +1,91 @@
+.modalContainer {
+  width: 430px;
+  height: 500px;
+  padding: 14px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 15px;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: center; /* Центруємо заголовок */
+  width: 100%;
+  align-items: center;
+  position: relative; /* Додаємо позицію для кнопки */
+  margin-bottom: 20px;
+}
+
+.closeButton {
+  position: absolute; /* Змінюємо позицію на абсолютну */
+  left: 10px; /* Відступ від лівого краю */
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.modalTitle {
+  font-size: 23px;
+  font-weight: 400;
+  font-family: 'Noto Sans', Helvetica;
+  margin-bottom: 0px;
+}
+
+.friendsList {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 350px; /* Встановлюємо максимальну висоту для списку друзів */
+  overflow-y: auto; /* Додаємо вертикальну прокрутку */
+}
+
+.friendItem {
+  width: 100%;
+  padding: 10px 14px;
+  background: white;
+  border-radius: 15px;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friendInfo {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.friendName {
+  margin-left: 10px;
+  font-size: 18px;
+  font-family: 'Noto Sans', Helvetica;
+  color: black;
+}
+
+.askButton {
+  padding: 6px 11px;
+  background: #144250;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.askButton:disabled {
+  background: var(--maingray);
+  cursor: default;
+}

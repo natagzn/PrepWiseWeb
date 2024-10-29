@@ -2,12 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import Modal from 'react-modal';
-import { useTransform } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 Modal.setAppElement('#root');
 
-const CreateQuestionAnswer = ({ index, onDelete }) => {
+const CreateQuestionAnswer = ({ id, index, onDelete }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +60,7 @@ const CreateQuestionAnswer = ({ index, onDelete }) => {
   };
 
   const handleDelete = () => {
-    onDelete(index);
+    onDelete(id);
     closeModal();
   };
 
@@ -69,7 +68,7 @@ const CreateQuestionAnswer = ({ index, onDelete }) => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <span>{index + 1}</span> {/* Відображення порядкового номера */}
+          <span>{index}</span> {/* Відображення порядкового номера */}
           <FaTrashAlt className={styles.trashIcon} onClick={openModal} />
         </div>
 

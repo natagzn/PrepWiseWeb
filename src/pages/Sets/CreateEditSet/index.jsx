@@ -13,7 +13,11 @@ function CreateEditSet({ editOrCreate }) {
   const [setTitle, setSetTitle] = useState(
     editOrCreate === 'edit' ? 'Set number 1' : ''
   );
-  const [questions, setQuestions] = useState([{}, {}, {}]); // Масив для питань
+  const [questions, setQuestions] = useState([
+    { id: 1, question: '', answer: '' },
+    { id: 2, question: '', answer: '' },
+    { id: 3, question: '', answer: '' },
+  ]);
 
   const handleTitleChange = (e) => {
     setSetTitle(e.target.value);
@@ -33,13 +37,20 @@ function CreateEditSet({ editOrCreate }) {
     navigate('/sets');
   };
 
-  const handleDeleteQuestion = (index) => {
-    const updatedQuestions = questions.filter((_, i) => i !== index); // Видалення питання за індексом
-    setQuestions(updatedQuestions); // Оновлення стану
+  const handleDeleteQuestion = (id) => {
+    const updatedQuestions = questions.filter((q) => q.id !== id);
+    setQuestions(updatedQuestions);
+
+    //додати запит АПІ
   };
 
   const addQuestionCard = () => {
-    setQuestions((prevQuestions) => [...prevQuestions, {}]); // Додавання нового питання
+    const newId =
+      questions.length > 0 ? questions[questions.length - 1].id + 1 : 1;
+    setQuestions((prevQuestions) => [
+      ...prevQuestions,
+      { id: newId, question: '', answer: '' },
+    ]);
   };
 
   return (
@@ -66,10 +77,11 @@ function CreateEditSet({ editOrCreate }) {
       </div>
 
       <div className={styles.questions}>
-        {questions.map((_, index) => (
+        {questions.map((question, index) => (
           <CreateQuestionAnswer
-            key={index}
-            index={index}
+            key={question.id}
+            id={question.id}
+            index={index + 1} // Порядковий номер для відображення
             onDelete={handleDeleteQuestion}
           />
         ))}

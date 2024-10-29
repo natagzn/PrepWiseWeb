@@ -21,7 +21,7 @@ const SortComponent = ({ sortingOptions, onSortChange }) => {
         {selectedOption.label}
       </div>
       <img
-        src="/icons/open.svg"
+        src="/icons/SortComponent/open.svg"
         alt="Open"
         className={styles.openIcon}
         onClick={toggleOptionsVisibility}

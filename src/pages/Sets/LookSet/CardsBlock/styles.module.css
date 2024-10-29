@@ -1,0 +1,51 @@
+.cardBlockContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 20px;
+  padding-bottom: 16px;
+}
+
+.sortDiv {
+  width: 200px;
+}
+
+.categoryBlock {
+  margin-bottom: 20px;
+}
+
+.categoryTitle {
+  font-size: var(--web-23-regular-font-size);
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.stillLearningTitle {
+  color: orange;
+  padding-left: 20px;
+  font-weight: 400;
+}
+
+.alreadyKnowTitle {
+  color: green;
+  padding-left: 20px;
+  font-weight: 400;
+}
+
+.categoryMessage {
+  font-size: var(--web-18-regular-font-size);
+  margin-bottom: 10px;
+  padding-left: 20px;
+}

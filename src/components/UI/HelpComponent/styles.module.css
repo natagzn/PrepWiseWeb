@@ -1,0 +1,60 @@
+.helpComponent {
+  position: relative;
+  display: inline-block;
+}
+
+.helpComponent img {
+  cursor: pointer;
+}
+
+.optionsWindow {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  width: max-content;
+  z-index: 1000;
+}
+
+.optionButton {
+  padding: 10px 15px;
+  color: #000;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: left;
+  font-family: var(--web-font-family);
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Відступ між іконкою і текстом */
+}
+
+.optionButton:hover {
+  background: #f0f0f0;
+}
+
+.separator {
+  height: 1px;
+  background-color: #ddd;
+  width: 100%;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Напівпрозорий фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Вищий порядок, щоб вікно з'являлося над іншими елементами */
+}

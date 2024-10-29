@@ -1,0 +1,101 @@
+.modalContainer {
+  max-width: 600px; /* Ви можете налаштувати ширину на свій смак */
+  height: 500px; /* Фіксована висота */
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.title {
+  color: black;
+  font-size: 30px;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 700;
+}
+
+.closeButton {
+  color: black;
+  font-size: 30px;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.answersList {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.answerCard {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #e0e0e0; /* При бажанні можна додати рамку */
+  border-radius: 8px;
+  margin-bottom: 10px; /* Відстань між картками */
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 5px; /* Відстань між аватаром та іменем */
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  max-width: 120px; /* Залиште цю ширину, або налаштуйте на ваш смак */
+  word-wrap: break-word; /* Дозволяє переносити текст на нові рядки */
+  width: 120px;
+}
+
+.userInfoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.username {
+  font-weight: bold;
+  word-break: break-word; /* Дозволяє переносити довгі слова */
+  width: 120px;
+}
+
+.date {
+  font-size: 0.8em;
+  color: #888; /* Сірий колір для дати */
+}
+
+.answerText {
+  flex-grow: 1; /* Дозволяє тексту відповіді займати залишок простору */
+  padding: 5px; /* Відстань всередині текстового блоку */
+  background-color: #f9f9f9; /* Фон для тексту відповіді */
+  border-radius: 5px;
+}
+.separator {
+  border: 1px solid black;
+  width: 100%;
+}

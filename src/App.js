@@ -30,6 +30,7 @@ import LookFolder from './pages/Folders/LookFolder';
 import CreateEditFolder from './pages/Folders/CreateEditFolder';
 import CreateEditSet from './pages/Sets/CreateEditSet';
 import FavoritePage from './pages/FavoritePage';
+import LookSet from 'pages/Sets/LookSet';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -80,6 +81,7 @@ function App() {
       />
 
       <Route path="/favorite" element={<FavoritePage />} />
+      <Route path="/lookSet" element={<LookSet />} />
 
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>

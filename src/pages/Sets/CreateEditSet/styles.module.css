@@ -60,7 +60,7 @@
   border: 1px solid var(--maingray); /* Ставимо рамку */
   border-radius: 15px; /* Краї */
   font-size: var(--web-18-regular-font-size);
-  color: #5a5a5a;
+  color: black;
   max-width: 480px;
 }
 

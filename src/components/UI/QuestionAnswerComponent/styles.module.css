@@ -1,0 +1,114 @@
+.card {
+  width: 100%;
+  height: auto;
+  align-self: center;
+  padding: 15px 25px;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 10px;
+  position: relative; /* Для позиціонування іконки */
+}
+
+.question,
+.answer {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  font-size: var(--web-23-regular-font-size);
+  font-family: var(--web-font-family);
+  word-wrap: break-word;
+  font-weight: 400;
+  color: black;
+}
+
+.question {
+  width: 239px;
+  border-right: 2px solid gray;
+  padding-right: 35px;
+  height: auto;
+}
+
+.answer {
+  width: 942px;
+  padding: 0px 35px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* Стилі для статусів */
+.know {
+  background: green;
+}
+
+.stilllearning {
+  background: orange;
+}
+
+/* Медіа-запити для адаптивності */
+@media (max-width: 1200px) {
+  .question,
+  .answer {
+    font-size: calc(var(--web-23-regular-font-size) * 0.9);
+  }
+
+  .question {
+    padding-right: 20px;
+  }
+
+  .answer {
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .question,
+  .answer {
+    font-size: calc(var(--web-23-regular-font-size) * 0.8);
+  }
+
+  .question {
+    padding-right: 15px;
+  }
+
+  .answer {
+    padding-left: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column; /* Переход на column для мобільних екранів */
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .question,
+  .answer {
+    font-size: calc(var(--web-23-regular-font-size) * 0.7);
+    width: 100%; /* Займає повну ширину в column компоновці */
+    padding: 0;
+    border-right: none; /* Вимикаємо border */
+    padding: 0px 30px;
+  }
+
+  .question {
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray; /* Нижній border замість правого для кращої видимості */
+  }
+
+  .icon {
+    top: 10px;
+    right: 10px;
+  }
+}

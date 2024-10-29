@@ -19,13 +19,13 @@ function ResourceComponent(props) {
           </div>
           {props.report ? (
             <img
-              src="/icons/EditModal/report.svg"
+              src="/icons/ResourceComponent/report.svg"
               alt={t('report')}
               className={styles.icon}
             />
           ) : (
             <img
-              src="/icons/EditModal/three-dots.svg"
+              src="/icons/ResourceComponent/three-dots.svg"
               alt={t('options')}
               className={styles.icon}
             />
