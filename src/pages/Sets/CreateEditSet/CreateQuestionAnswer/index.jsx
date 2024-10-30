@@ -68,7 +68,7 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <span>{index}</span> {/* Відображення порядкового номера */}
+          <span>{index}</span>
           <FaTrashAlt className={styles.trashIcon} onClick={openModal} />
         </div>
 
@@ -76,25 +76,25 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
           <div className={styles.inputColumn}>
             <textarea
               className={styles.inputArea}
-              placeholder={t('Enter a question')}
+              placeholder={t('enterQuestion')}
               value={question}
               onChange={(e) => handleTextChange(e, setQuestion)}
               ref={questionRef}
               rows={1}
             />
-            <label>{t('Question')}</label>
+            <label>{t('questionLabel')}</label>
           </div>
 
           <div className={styles.inputColumn}>
             <textarea
               className={styles.inputArea}
-              placeholder={t('Enter an answer')}
+              placeholder={t('enterAnswer')}
               value={answer}
               onChange={(e) => handleTextChange(e, setAnswer)}
               ref={answerRef}
               rows={1}
             />
-            <label>{t('Answer')}</label>
+            <label>{t('answerLabel')}</label>
           </div>
         </div>
       </div>
@@ -103,17 +103,17 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel="Confirm Delete"
+        contentLabel={t('confirmDelete')}
         className={styles.modal}
         overlayClassName={styles.overlay}
       >
-        <p className={styles.questionModal}>Чи ви дійсно хочете видалити?</p>
+        <p className={styles.questionModal}>{t('confirmDeleteQuestion')}</p>
         <div className={styles.blockButtonsConfirm}>
           <button onClick={handleDelete} className={styles.confirmButton}>
-            Так
+            {t('yes')}
           </button>
           <button onClick={closeModal} className={styles.cancelButton}>
-            Ні
+            {t('no')}
           </button>
         </div>
       </Modal>

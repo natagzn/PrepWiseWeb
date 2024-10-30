@@ -64,7 +64,6 @@
 }
 
 .questionProgress {
-  position: absolute;
   font-size: var(--web-20-regular-font-size);
   font-weight: 600;
   text-align: center;

@@ -20,6 +20,9 @@
 
 .sortDiv {
   width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .categoryBlock {
@@ -48,4 +51,10 @@
   font-size: var(--web-18-regular-font-size);
   margin-bottom: 10px;
   padding-left: 20px;
+}
+
+@media (max-width: 600px) {
+  .header {
+    font-size: 23px;
+  }
 }

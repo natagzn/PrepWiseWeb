@@ -45,7 +45,7 @@
 }
 
 body {
-  background-color: aliceblue;
+  background-color: var(--blueeeeee);
   margin: 0;
   height: 100vh;
   overflow: hidden;

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 
 function SetQuickReviewComponent({ questionsAnswers }) {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const knownCount = questionsAnswers.filter((q) => q.status === 'know').length;
@@ -11,9 +13,6 @@ function SetQuickReviewComponent({ questionsAnswers }) {
   const totalCount = knownCount + stillLearningCount;
 
   const knownPercentage = totalCount ? (knownCount / totalCount) * 100 : 0;
-  const stillLearningPercentage = totalCount
-    ? (stillLearningCount / totalCount) * 100
-    : 0;
 
   const nextQuestion = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % questionsAnswers.length);
@@ -28,8 +27,7 @@ function SetQuickReviewComponent({ questionsAnswers }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sliderHeader}>Quick review of questions</div>
-      {/* Перший стовпець - слайдер з картками */}
+      <div className={styles.sliderHeader}>{t('quickReviewTitle')}</div>
       <div className={styles.mainContent}>
         <div className={styles.sliderContainer}>
           <div className={styles.slider}>
@@ -45,10 +43,9 @@ function SetQuickReviewComponent({ questionsAnswers }) {
           </div>
         </div>
 
-        {/* Другий стовпець - діаграма прогресу та кнопка "Study flashcards" */}
         <div className={styles.progressContainer}>
           <div className={styles.progressBlock}>
-            <div className={styles.progressTitle}>Progress learning</div>
+            <div className={styles.progressTitle}>{t('progressTitle')}</div>
             <div className={styles.progressInfo}>
               <div className={styles.circularChart}>
                 <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
@@ -82,18 +79,20 @@ function SetQuickReviewComponent({ questionsAnswers }) {
                 </svg>
               </div>
               <div className={styles.progressDetails}>
-                <div className={styles.known}>Known: {knownCount}</div>
+                <div className={styles.known}>
+                  {t('known')}: {knownCount}
+                </div>
                 <div className={styles.stillLearning}>
-                  Still learning: <span>{stillLearningCount}</span>
+                  {t('stillLearning')}: <span>{stillLearningCount}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.studyButton}>
             <div className={styles.buttonIcon}>
-              <img src="icons/flashcards.svg" alt="flascards" />
+              <img src="icons/flashcards.svg" alt="flashcards" />
             </div>
-            <div className={styles.buttonText}>Study flashcards</div>
+            <div className={styles.buttonText}>{t('studyFlashcards')}</div>
           </div>
         </div>
       </div>

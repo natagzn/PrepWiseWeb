@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 import AskFriendsForHelp from '../AskFriendsForHelp'; // Імпорт компонента модального вікна
 import AnswersModal from '../AnswersHelpQuestion';
+import { useTranslation } from 'react-i18next';
 
 function HelpComponent({ userId, questionId }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false); // Стан для відображення модального вікна запиту допомоги
   const [showAnswersModal, setShowAnswersModal] = useState(false); // Стан для відображення модального вікна відповідей
+
+  const { t } = useTranslation();
 
   const toggleWindow = () => {
     setIsOpen((prev) => !prev);
@@ -44,7 +47,7 @@ function HelpComponent({ userId, questionId }) {
               alt="ask for help"
               className={styles.icon}
             />
-            Ask for help
+            {t('Ask for help')}
           </div>
           <div className={styles.separator} />
           <div
@@ -56,7 +59,7 @@ function HelpComponent({ userId, questionId }) {
               alt="look answer"
               className={styles.icon}
             />
-            Look answer
+            {t('Look answer')}
           </div>
         </div>
       )}

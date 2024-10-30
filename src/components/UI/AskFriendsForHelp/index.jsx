@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import SearchComponent from '../SearchComponent';
+import { useTranslation } from 'react-i18next';
 
 const AskFriendsForHelp = ({ userId, questionId, onClose }) => {
   const [askedFriends, setAskedFriends] = useState([]);
   const [friends, setFriends] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
+
+  const { t } = useTranslation();
 
   // Генерація друзів для демонстрації
   useEffect(() => {
@@ -40,9 +43,12 @@ const AskFriendsForHelp = ({ userId, questionId, onClose }) => {
         <button className={styles.closeButton} onClick={onClose}>
           X
         </button>
-        <h2 className={styles.modalTitle}>Ask friends for help</h2>
+        <h2 className={styles.modalTitle}>{t('Ask friends for help')}</h2>
       </div>
-      <SearchComponent placeholder="Find by username" onClick={handleSearch} />
+      <SearchComponent
+        placeholder={t('Find by username')}
+        onClick={handleSearch}
+      />
       <div className={styles.friendsList}>
         {filteredFriends.map((friend) => (
           <div key={friend.id} className={styles.friendItem}>

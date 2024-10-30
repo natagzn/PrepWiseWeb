@@ -148,5 +148,80 @@
   "Enter an answer": "Enter an answer",
   "search_favorite_resource": "Search favorite resource...",
   "search_favorite_folders": "Search favorite folders...",
-  "search_favorite_sets": "Search favorite sets..."
+  "search_favorite_sets": "Search favorite sets...",
+
+  "questionsCount": "Questions ({{count}})",
+  "noLearningYet": "You haven't started learning any terms yet.",
+  "stillLearningTitle": "Still learning ({{count}})",
+  "learningEncouragement": "You've started learning these terms. Keep it up!",
+  "notKnown": "You don’t know any questions yet.",
+  "alreadyKnowTitle": "Already know ({{count}})",
+  "knowingPerfectly": "You know these questions perfectly!",
+  "sortingOptions": {
+    "original": "Original",
+    "alphabetical": "Alphabetical",
+    "yourStats": "Your stats"
+  },
+
+  "quickReviewTitle": "Quick review of questions",
+  "progressTitle": "Progress learning",
+  "known": "Known",
+  "stillLearning": "Still learning",
+  "studyFlashcards": "Study flashcards",
+
+  "enterQuestion": "Enter a question",
+  "questionLabel": "Question",
+  "enterAnswer": "Enter an answer",
+  "answerLabel": "Answer",
+  "confirmDelete": "Confirm Delete",
+  "confirmDeleteQuestion": "Are you sure you want to delete?",
+
+  "know": "Know",
+  "restartFlashcards": "Restart flashcards",
+  "flipToQuestion": "Flip to question",
+  "flipToAnswer": "Flip to answer",
+  "closeFlashcards": "Close flashcards",
+
+  "phrases": {
+    "low": [
+      "Don't give up! Practice makes perfect!",
+      "Just the beginning, keep pushing!",
+      "You're on your way, keep practicing!",
+      "Every mistake is a step closer to success!",
+      "Great start! Keep working on it!"
+    ],
+    "medium": [
+      "You're doing well, keep it up!",
+      "Almost there! Just a bit more effort!",
+      "Solid progress! Don't stop now!",
+      "You're improving! Keep up the great work!",
+      "On the right track! Stay focused!",
+      "Keep pushing, you're almost there!",
+      "Doing great! Just a little more practice!",
+      "You're making progress, keep it going!",
+      "Fantastic effort! Stay consistent!",
+      "You're halfway there! Don't give up!"
+    ],
+    "high": [
+      "Amazing! You're a pro at this!",
+      "Almost perfect! Well done!",
+      "Outstanding! Keep up the excellent work!",
+      "Master level! You've got this!",
+      "You crushed it! Fantastic job!",
+      "Exceptional work! Keep it up!",
+      "Incredible! You're unstoppable!"
+    ]
+  },
+  "progressHeader": "How you're doing:",
+  "knowLabel": "Know",
+  "stillLearningLabel": "Still learning",
+  "nextStepsHeader": "Next steps:",
+  "restartButton": "Restart Flashcards",
+  "returnButton": "Return to Set",
+
+  "Answers": "Answers",
+  "Ask friends for help": "Ask friends for help",
+  "Find by username": "Find by username",
+  "Ask for help": "Ask for help",
+  "Look answer": "Look answer"
 }

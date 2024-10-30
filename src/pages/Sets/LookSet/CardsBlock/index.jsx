@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import QuestionAnswerComponent from 'components/UI/QuestionAnswerComponent';
 import SortComponent from 'components/UI/SortComponent';
 
-const sortingOptions = [
-  { label: 'Original', value: 'original' },
-  { label: 'Alphabetical', value: 'alphabetical' },
-  { label: 'Your stats', value: 'yourStats' },
-];
-
 const CardBlock = ({ questionsAnswers }) => {
+  const { t } = useTranslation();
   const [sortedQuestions, setSortedQuestions] = useState(questionsAnswers);
   const [selectedSort, setSelectedSort] = useState('original');
+
+  const sortingOptions = [
+    { label: t('sortingOptions.original'), value: 'original' },
+    { label: t('sortingOptions.alphabetical'), value: 'alphabetical' },
+    { label: t('sortingOptions.yourStats'), value: 'yourStats' },
+  ];
 
   const handleSortChange = (sortOption) => {
     setSelectedSort(sortOption);
@@ -42,7 +44,7 @@ const CardBlock = ({ questionsAnswers }) => {
   return (
     <div>
       <div className={styles.header}>
-        <span>Questions({questionsAnswers.length})</span>
+        <span>{t('questionsCount', { count: questionsAnswers.length })}</span>
         <div className={styles.sortDiv}>
           <SortComponent
             sortingOptions={sortingOptions}
@@ -53,51 +55,59 @@ const CardBlock = ({ questionsAnswers }) => {
 
       {selectedSort === 'yourStats' ? (
         <div>
-          {/* Блок Still learning */}
-          <div className={styles.categoryBlock}>
-            <h3
-              className={`${styles.categoryTitle} ${styles.stillLearningTitle}`}
-            >
-              Still learning ({stillLearningQuestions.length})
-            </h3>
-            <p className={styles.categoryMessage}>
-              You've started learning these terms. Keep it up!
-            </p>
-            <div className={styles.cardBlockContainer}>
-              {stillLearningQuestions.map((item) => (
-                <QuestionAnswerComponent
-                  id={item.id}
-                  key={item.id}
-                  question={item.question}
-                  answer={item.answer}
-                  status={item.status}
-                />
-              ))}
+          {/* Перевірка на відсутність Still learning */}
+          {stillLearningQuestions.length === 0 ? (
+            <p className={styles.categoryMessage}>{t('noLearningYet')}</p>
+          ) : (
+            <div className={styles.categoryBlock}>
+              <h3
+                className={`${styles.categoryTitle} ${styles.stillLearningTitle}`}
+              >
+                {t('stillLearningTitle', {
+                  count: stillLearningQuestions.length,
+                })}
+              </h3>
+              <p className={styles.categoryMessage}>
+                {t('learningEncouragement')}
+              </p>
+              <div className={styles.cardBlockContainer}>
+                {stillLearningQuestions.map((item) => (
+                  <QuestionAnswerComponent
+                    id={item.id}
+                    key={item.id}
+                    question={item.question}
+                    answer={item.answer}
+                    status={item.status}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Блок Already know */}
-          <div className={styles.categoryBlock}>
-            <h3
-              className={`${styles.categoryTitle} ${styles.alreadyKnowTitle}`}
-            >
-              Already know ({alreadyKnowQuestions.length})
-            </h3>
-            <p className={styles.categoryMessage}>
-              You know these questions perfectly!
-            </p>
-            <div className={styles.cardBlockContainer}>
-              {alreadyKnowQuestions.map((item) => (
-                <QuestionAnswerComponent
-                  id={item.id}
-                  key={item.id}
-                  question={item.question}
-                  answer={item.answer}
-                  status={item.status}
-                />
-              ))}
+          {/* Перевірка на відсутність Already know */}
+          {alreadyKnowQuestions.length === 0 ? (
+            <p className={styles.categoryMessage}>{t('notKnown')}</p>
+          ) : (
+            <div className={styles.categoryBlock}>
+              <h3
+                className={`${styles.categoryTitle} ${styles.alreadyKnowTitle}`}
+              >
+                {t('alreadyKnowTitle', { count: alreadyKnowQuestions.length })}
+              </h3>
+              <p className={styles.categoryMessage}>{t('knowingPerfectly')}</p>
+              <div className={styles.cardBlockContainer}>
+                {alreadyKnowQuestions.map((item) => (
+                  <QuestionAnswerComponent
+                    id={item.id}
+                    key={item.id}
+                    question={item.question}
+                    answer={item.answer}
+                    status={item.status}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <div className={styles.cardBlockContainer}>

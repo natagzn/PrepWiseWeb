@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Flashcard from 'components/UI/Flashcard';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function FlashcardPage({ setId, onClose }) {
   const [flashcards, setFlashcards] = useState([]);
@@ -12,6 +13,8 @@ function FlashcardPage({ setId, onClose }) {
   const [statusHistory, setStatusHistory] = useState([]);
   const [menuVisible, setMenuVisible] = useState(false);
   const [flip, setFlip] = useState(false);
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -176,13 +179,13 @@ function FlashcardPage({ setId, onClose }) {
           <div className={`${styles.statusCount} ${styles.stillLearningCount}`}>
             {stillLearningCount}
           </div>
-          <span className={styles.stillLearningText}>Still learning</span>
+          <span className={styles.stillLearningText}>{t('stillLearning')}</span>
         </div>
         <div className={styles.questionProgress}>
           {`${currentIndex + 1} / ${flashcards.length}`}
         </div>
         <div className={styles.statusItem}>
-          <span className={styles.knowText}>Know</span>
+          <span className={styles.knowText}>{t('know')}</span>
           <div className={`${styles.statusCount} ${styles.knowCount}`}>
             {knowCount}
           </div>
@@ -198,15 +201,17 @@ function FlashcardPage({ setId, onClose }) {
               src="/icons/flashcards_gray.svg"
               className={styles.footerIcon}
               alt="flashcard"
-              onClick={() => setMenuVisible((prev) => !prev)} // Викликаємо toggleMenu
+              onClick={() => setMenuVisible((prev) => !prev)}
             />
             {menuVisible && (
               <div className={styles.menu}>
-                <button onClick={handleRestart}>Restart flashcards</button>
-                <button onClick={() => setFlip((prev) => !prev)}>
-                  {flip ? 'Facial - Question' : 'Facial - Answer'}
+                <button onClick={handleRestart}>
+                  {t('restartFlashcards')}
                 </button>
-                <button onClick={onClose}>Close flashcards</button>
+                <button onClick={() => setFlip((prev) => !prev)}>
+                  {flip ? t('flipToQuestion') : t('flipToAnswer')}
+                </button>
+                <button onClick={onClose}>{t('closeFlashcards')}</button>
               </div>
             )}
           </div>

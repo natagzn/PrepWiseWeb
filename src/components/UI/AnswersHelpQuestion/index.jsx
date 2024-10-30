@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import { useTranslation } from 'react-i18next';
 
 const AnswerCard = ({ avatar, username, date, answer }) => (
   <div className={styles.answerCard}>
@@ -20,6 +21,8 @@ const AnswerCard = ({ avatar, username, date, answer }) => (
 
 const AnswersModal = ({ questionID, onClose }) => {
   // Згенеровані відповіді для тестування
+
+  const { t } = useTranslation();
   const answers = [
     {
       avatar: '/path/to/avatar1.jpg',
@@ -56,7 +59,7 @@ const AnswersModal = ({ questionID, onClose }) => {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Answers</h2>
+        <h2 className={styles.title}>{t('Answers')}</h2>
         <button className={styles.closeButton} onClick={onClose}>
           X
         </button>

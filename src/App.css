@@ -38,7 +38,7 @@
 }
 
 #root {
-  background-color: var(--blueeeeee);
+  background-color: var(--landinglight-blue);
   margin: 0; /* Відміняє відступи за замовчуванням */
   height: 100vh; /* Висота на весь екран */
   overflow: hidden; /* Сховає прокрутку, якщо вона з'явиться */
