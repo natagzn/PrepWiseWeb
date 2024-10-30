@@ -68,13 +68,19 @@
   font-weight: 600;
   text-align: center;
   left: 50%;
+  align-self: center;
 }
+
 .statusContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 10px 20px 0;
   align-items: center;
+}
+
+.statusContainer:has(:only-child) {
+  justify-content: center;
 }
 
 .statusItem {
@@ -123,6 +129,16 @@
   padding: 20px;
 }
 
+.navButton {
+  font-size: 23px;
+  font-weight: 500;
+  border-radius: 30px;
+}
+
+.navButton:hover {
+  background-color: rgba(90, 90, 90, 0.2);
+}
+
 .centerButtons {
   display: flex;
   gap: 20px;
@@ -163,6 +179,13 @@
   border: none;
   color: #000;
   cursor: pointer;
+}
+
+.buttonEmpty {
+  display: block;
+
+  width: 51px;
+  height: 44px;
 }
 
 .footerIcon {

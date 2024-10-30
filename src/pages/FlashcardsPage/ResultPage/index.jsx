@@ -9,11 +9,20 @@ function ResultFlashcards() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { setId, stillLearningCount = 0, knowCount = 0 } = location.state || {};
+  const {
+    setId,
+    stillLearningCount = 0,
+    knowCount = 0,
+    isAuthor,
+  } = location.state || {};
 
   const setName = t('setName', { setId }); // Translation for set name with dynamic ID
   const totalCount = stillLearningCount + knowCount;
-  const knowPercentage = totalCount > 0 ? (knowCount / totalCount) * 100 : 0;
+  const knowPercentage = isAuthor
+    ? totalCount > 0
+      ? (knowCount / totalCount) * 100
+      : 0
+    : 100;
 
   const phrases = {
     low: [
@@ -59,7 +68,11 @@ function ResultFlashcards() {
   const comment = getRandomComment(knowPercentage);
 
   const handleRestart = () => {
-    navigate(`/flashcards`);
+    navigate(`/flashcards`, {
+      state: {
+        isAuthor: isAuthor,
+      },
+    });
   };
 
   const handleReturnToSet = () => {
@@ -87,7 +100,7 @@ function ResultFlashcards() {
                     cx="100"
                     cy="100"
                     r="90"
-                    stroke="#c36c02"
+                    stroke="#FF9900"
                     strokeWidth="20"
                     fill="none"
                   />
@@ -95,7 +108,7 @@ function ResultFlashcards() {
                     cx="100"
                     cy="100"
                     r="90"
-                    stroke="#265828"
+                    stroke="#31A659"
                     strokeWidth="20"
                     fill="none"
                     strokeDasharray={`${knowPercentage * 5.65} ${564.48}`}
@@ -115,15 +128,19 @@ function ResultFlashcards() {
               </div>
               <div className={styles.progressDetails}>
                 <div className={styles.know}>
-                  <span className={styles.label}>{t('knowLabel')}</span>
+                  <span className={styles.label}>
+                    {isAuthor ? t('knowLabel') : t('completedLabel')}
+                  </span>
                   <span className={styles.count}>{knowCount}</span>
                 </div>
-                <div className={styles.stillLearning}>
-                  <span className={styles.label}>
-                    {t('stillLearningLabel')}
-                  </span>
-                  <span className={styles.count}>{stillLearningCount}</span>
-                </div>
+                {isAuthor && (
+                  <div className={styles.stillLearning}>
+                    <span className={styles.label}>
+                      {t('stillLearningLabel')}
+                    </span>
+                    <span className={styles.count}>{stillLearningCount}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

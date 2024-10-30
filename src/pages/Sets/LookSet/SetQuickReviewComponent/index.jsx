@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
+import { useNavigate } from 'react-router-dom';
 
-function SetQuickReviewComponent({ questionsAnswers }) {
+function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   const knownCount = questionsAnswers.filter((q) => q.status === 'know').length;
   const stillLearningCount = questionsAnswers.filter(
@@ -23,6 +25,11 @@ function SetQuickReviewComponent({ questionsAnswers }) {
       (prevIndex) =>
         (prevIndex - 1 + questionsAnswers.length) % questionsAnswers.length
     );
+  };
+
+  const handleFlashcards = () => {
+    // Використання navigate для перенаправлення на сторінку Flashcards
+    navigate('/flashcards', { state: { setId, isAuthor } });
   };
 
   return (
@@ -88,7 +95,7 @@ function SetQuickReviewComponent({ questionsAnswers }) {
               </div>
             </div>
           </div>
-          <div className={styles.studyButton}>
+          <div className={styles.studyButton} onClick={handleFlashcards}>
             <div className={styles.buttonIcon}>
               <img src="icons/flashcards.svg" alt="flashcards" />
             </div>

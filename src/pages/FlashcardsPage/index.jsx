@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Flashcard from 'components/UI/Flashcard';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-function FlashcardPage({ setId, onClose }) {
+function FlashcardPage({ setId }) {
   const [flashcards, setFlashcards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [setTitle, setSetTitle] = useState('');
@@ -14,9 +14,16 @@ function FlashcardPage({ setId, onClose }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [flip, setFlip] = useState(false);
 
+  const location = useLocation();
+  const { isAuthor } = location.state || {};
+
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+
+  const onClose = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     console.log('Init set');
@@ -99,10 +106,33 @@ function FlashcardPage({ setId, onClose }) {
                 ? stillLearningCount + 1
                 : stillLearningCount,
             knowCount: newStatus === 'know' ? knowCount + 1 : knowCount,
+            isAuthor: isAuthor,
           },
         });
       }
       return newIndex;
+    });
+  };
+
+  const handleNavigateFlashcard = (direction) => {
+    setCurrentIndex((prevIndex) => {
+      if (direction === 'prev') {
+        // Якщо індекс 0, залишаємося на початковій картці
+        return prevIndex === 0 ? 0 : prevIndex - 1;
+      } else {
+        // Якщо досягнуто останньої картки, перенаправляємо на сторінку результатів
+        if (prevIndex + 1 === flashcards.length) {
+          navigate('/flashcard/result', {
+            state: {
+              setId: setId,
+              isAuthor: false,
+            },
+          });
+          return prevIndex; // Залишаємо індекс незмінним, бо відбудеться перенаправлення
+        }
+        // Переходимо до наступної картки
+        return prevIndex + 1;
+      }
     });
   };
 
@@ -175,21 +205,34 @@ function FlashcardPage({ setId, onClose }) {
         />
       </div>
       <div className={styles.statusContainer}>
-        <div className={styles.statusItem}>
-          <div className={`${styles.statusCount} ${styles.stillLearningCount}`}>
-            {stillLearningCount}
+        {isAuthor && (
+          <>
+            <div className={styles.statusItem}>
+              <div
+                className={`${styles.statusCount} ${styles.stillLearningCount}`}
+              >
+                {stillLearningCount}
+              </div>
+              <span className={styles.stillLearningText}>
+                {t('stillLearning')}
+              </span>
+            </div>
+            <div className={styles.questionProgress}>
+              {`${currentIndex + 1} / ${flashcards.length}`}
+            </div>
+            <div className={styles.statusItem}>
+              <span className={styles.knowText}>{t('know')}</span>
+              <div className={`${styles.statusCount} ${styles.knowCount}`}>
+                {knowCount}
+              </div>
+            </div>
+          </>
+        )}
+        {!isAuthor && (
+          <div className={styles.questionProgress}>
+            {`${currentIndex + 1} / ${flashcards.length}`}
           </div>
-          <span className={styles.stillLearningText}>{t('stillLearning')}</span>
-        </div>
-        <div className={styles.questionProgress}>
-          {`${currentIndex + 1} / ${flashcards.length}`}
-        </div>
-        <div className={styles.statusItem}>
-          <span className={styles.knowText}>{t('know')}</span>
-          <div className={`${styles.statusCount} ${styles.knowCount}`}>
-            {knowCount}
-          </div>
-        </div>
+        )}
       </div>
       {currentFlashcard && (
         <Flashcard flashcard={currentFlashcard} flip={flip} />
@@ -215,25 +258,48 @@ function FlashcardPage({ setId, onClose }) {
               </div>
             )}
           </div>
-          <button
-            className={`${styles.footerButton} ${styles.incorrectButton}`}
-            onClick={() => handleStatusChange('stilllearning')}
-          >
-            X
-          </button>
-          <button
-            className={`${styles.footerButton} ${styles.correctButton}`}
-            onClick={() => handleStatusChange('know')}
-          >
-            ✓
-          </button>
-          <button className={styles.prevQuestionButton} onClick={handleBack}>
-            <img
-              src="icons/back_black.svg"
-              alt="Previous"
-              className={styles.icon}
-            />
-          </button>
+          {isAuthor ? (
+            <>
+              <button
+                className={`${styles.footerButton} ${styles.incorrectButton}`}
+                onClick={() => handleStatusChange('stilllearning')}
+              >
+                X
+              </button>
+              <button
+                className={`${styles.footerButton} ${styles.correctButton}`}
+                onClick={() => handleStatusChange('know')}
+              >
+                ✓
+              </button>
+              <button
+                className={styles.prevQuestionButton}
+                onClick={handleBack}
+              >
+                <img
+                  src="icons/back_black.svg"
+                  alt="Previous"
+                  className={styles.icon}
+                />
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className={`${styles.footerButton} ${styles.navButton}`}
+                onClick={() => handleNavigateFlashcard('prev')}
+              >
+                &lt;
+              </button>
+              <button
+                className={`${styles.footerButton} ${styles.navButton}`}
+                onClick={() => handleNavigateFlashcard('next')}
+              >
+                &gt;
+              </button>
+              <div className={styles.buttonEmpty}></div>
+            </>
+          )}
         </div>
       </footer>
     </div>

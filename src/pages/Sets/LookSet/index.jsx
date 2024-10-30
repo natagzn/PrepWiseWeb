@@ -17,6 +17,7 @@ function LookSet() {
   const visibility = 'Public'; // або "Private" для тестування
   const onSave = () => alert('Set saved!');
   const isLiked = false;
+  const isAuthor = false;
 
   // Список об'єктів Question/Answer
   const questionsAnswers = [
@@ -67,11 +68,16 @@ function LookSet() {
           categories={categories}
           visibility={visibility}
           onSave={onSave}
+          isAuthor={isAuthor}
         />
         <div className={styles.separator} />
-        <SetQuickReviewComponent questionsAnswers={questionsAnswers} />
+        <SetQuickReviewComponent
+          questionsAnswers={questionsAnswers}
+          setId={id}
+          isAuthor={isAuthor}
+        />
         <div className={styles.separator} />
-        <CardBlock questionsAnswers={questionsAnswers} />
+        <CardBlock questionsAnswers={questionsAnswers} isAuthor={isAuthor} />
       </div>
     </div>
   );
