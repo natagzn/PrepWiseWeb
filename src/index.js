@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './i18n/i18n';
 import { LanguageProvider } from './context/LanguageContext';
 import { BrowserRouter } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css'; // Імпорт стилів
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

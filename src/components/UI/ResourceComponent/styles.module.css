@@ -68,6 +68,18 @@
   width: fit-content;
 }
 
+.iconButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
 .articleInfo {
   display: flex;
   align-items: top;

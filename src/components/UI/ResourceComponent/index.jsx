@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 import LikeDislikeToggle from '../LikeDislike/LikeDislikeToggle';
 import { useTranslation } from 'react-i18next';
+import ReportComponent from '../ReportComponent';
 
 function ResourceComponent(props) {
   const { t } = useTranslation();
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+  // Відкриття і закриття модального вікна репорта
+  const openReportModal = () => setIsReportModalOpen(true);
+  const closeReportModal = () => setIsReportModalOpen(false);
 
   // Забезпечуємо, що categories завжди буде масивом
   const categories = Array.isArray(props.categories) ? props.categories : [];
@@ -18,11 +24,13 @@ function ResourceComponent(props) {
             <div className={styles.username}>{props.username}</div>
           </div>
           {props.report ? (
-            <img
-              src="/icons/ResourceComponent/report.svg"
-              alt={t('report')}
-              className={styles.icon}
-            />
+            <button onClick={openReportModal} className={styles.iconButton}>
+              <img
+                src="/icons/ResourceComponent/report.svg"
+                alt={t('report')}
+                className={styles.icon}
+              />
+            </button>
           ) : (
             <img
               src="/icons/ResourceComponent/three-dots.svg"
@@ -61,6 +69,11 @@ function ResourceComponent(props) {
           </div>
         </div>
       </div>
+
+      {/* Відображення модального вікна при відкритті */}
+      {isReportModalOpen && (
+        <ReportComponent type="resource" onClose={closeReportModal} />
+      )}
     </div>
   );
 }

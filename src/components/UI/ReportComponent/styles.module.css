@@ -1,0 +1,146 @@
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 600px;
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  font-size: var(--web-23-regular-font-size);
+  color: black;
+  font-family: var(--web-font-family);
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.subheader {
+  font-weight: 400;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 400;
+}
+
+.inlineOtherInput {
+  width: 350px;
+  margin-left: 8px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: var(--web-18-regular-font-size);
+
+  max-height: 60px;
+}
+
+.radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid black;
+  cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.reportButton,
+.okButton {
+  width: 200px;
+  height: 52px;
+  background: #1d1352;
+  color: white;
+  font-weight: 400;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .modal {
+    width: 90%;
+    font-size: 20px; /* зменшення шрифту для середніх екранів */
+  }
+
+  .inlineOtherInput,
+  .otherInput {
+    font-size: 16px;
+  }
+
+  .reportButton {
+    width: 150px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    width: 95%;
+    padding: 20px;
+    font-size: 18px; /* ще менший шрифт для маленьких екранів */
+  }
+
+  .header {
+    font-size: 20px;
+  }
+
+  .inlineOtherInput {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .reportButton {
+    width: 140px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .radio {
+    width: 20px;
+    height: 20px;
+  }
+}

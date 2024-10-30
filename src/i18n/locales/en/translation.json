@@ -224,5 +224,20 @@
   "Find by username": "Find by username",
   "Ask for help": "Ask for help",
   "Look answer": "Look answer",
-  "completedLabel": "Completed"
+  "completedLabel": "Completed",
+
+  "reportThis": "Report",
+  "whyReport": "Why are you reporting this?",
+  "reasons": [
+    "It contains inaccurate information",
+    "It is inappropriate",
+    "It is being used to cheat",
+    "It violates my intellectual property rights",
+    "Other"
+  ],
+  "describeReason": "Describe your reason...",
+  "reportButton": "Report",
+  "text reported": "Thank you for letting us know. In the near future, the administrator will review your complaint and take appropriate actions.",
+  "Please select a reporting reason.": "Please select a reporting reason.",
+  "Please provide a description for your reason.": "Please provide a description for your reason."
 }
