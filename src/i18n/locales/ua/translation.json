@@ -72,6 +72,7 @@
   "filter": "Фільтр",
   "apply": "Застосувати",
   "cancel": "Скасувати",
+  "Cancel": "Скасувати",
 
   "reset_password": "Введіть пошту для скидання паролю",
   "email_confirmation": "Підтвердити пошту",
@@ -239,5 +240,12 @@
   "reportButton": "Поскаржитись",
   "text reported": "Дякуємо, що повідомили нас. Скоро адміністратор розгляне вашу скаргу та вжене відповідних заходів.",
   "Please select a reporting reason.": "Будь ласка оберіть причину скарги.",
-  "Please provide a description for your reason.": "Будь ласка додайте опис до Вашої скарги."
+  "Please provide a description for your reason.": "Будь ласка додайте опис до Вашої скарги.",
+
+  "Your answer": "Ваша відповідь",
+  "Type your answer here...": "Напишіть відповідь тут...",
+  "Send": "Надіслати",
+  "Question from": "Питання від",
+  "Your answer was sent successfully!": "Вашу відповідь успішно надіслано!",
+  "Please type your answer before sending!": "Будь ласка напишіть вашу відповідь перед надсиланням"
 }

@@ -72,6 +72,7 @@
   "filter": "Filter",
   "apply": "Apply",
   "cancel": "Cancel",
+  "Cancel": "Cancel",
 
   "reset_password": "Enter the email to reset your password",
   "email_confirmation": "Confirm email",
@@ -239,5 +240,12 @@
   "reportButton": "Report",
   "text reported": "Thank you for letting us know. In the near future, the administrator will review your complaint and take appropriate actions.",
   "Please select a reporting reason.": "Please select a reporting reason.",
-  "Please provide a description for your reason.": "Please provide a description for your reason."
+  "Please provide a description for your reason.": "Please provide a description for your reason.",
+
+  "Your answer": "Your answer",
+  "Type your answer here...": "Type your answer here...",
+  "Send": "Send",
+  "Question from": "Question from",
+  "Your answer was sent successfully!": "Your answer was sent successfully!",
+  "Please type your answer before sending!": "Please type your answer before sending"
 }

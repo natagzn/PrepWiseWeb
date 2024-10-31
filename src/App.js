@@ -1,5 +1,7 @@
 import './App.css';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FolderComponent } from './components/UI/FolderComponent';
 import { SaveNot } from './components/UI/SaveNot';
 import QuestionSetComponent from './components/UI/QuestionSetComponent'; // Змінити на default імпорт
@@ -9,7 +11,6 @@ import HeaderComponent from './components/UI/HeaderComponent';
 import { tr } from 'framer-motion/client';
 import SearchComponent from './components/UI/SearchComponent';
 import AvatarMenu from './components/UI/AvatarMenu';
-import NotificationsList from './components/UI/NotificationComponent/NotificationList';
 import AuthPage from './pages/Auth';
 import MainPage from './pages/MainPage';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -46,69 +47,56 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/register" element={<RegisterForm />} />
-      <Route path="/confirmEmail" element={<ConfirmEmail />} />
+    <>
+      {/* Додаємо ToastContainer один раз на рівні App */}
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/confirmEmail" element={<ConfirmEmail />} />
 
-      <Route path="/passwordreset" element={<PasswordReset />} />
-      <Route path="/newpassword" element={<NewPassword />} />
+        <Route path="/passwordreset" element={<PasswordReset />} />
+        <Route path="/newpassword" element={<NewPassword />} />
 
-      <Route path="/home" element={<MainPage />} />
-      <Route path="/library" element={<YourLibraryPage />} />
-      <Route path="/notifications" element={<NotificationPage />} />
-      <Route path="/people" element={<PeoplePage />} />
-      <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/home" element={<MainPage />} />
+        <Route path="/library" element={<YourLibraryPage />} />
+        <Route path="/notifications" element={<NotificationPage />} />
+        <Route path="/people" element={<PeoplePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
 
-      <Route path="/buyPremium" element={<BuyPremium />} />
-      <Route path="/profileUser" element={<PeopleProfilePage />} />
+        <Route path="/buyPremium" element={<BuyPremium />} />
+        <Route path="/profileUser" element={<PeopleProfilePage />} />
 
-      <Route
-        path="/folder"
-        element={
-          <LookFolder
-            folderName="Folder name"
-            visibility="Public"
-            count="2"
-            countQ="11"
-          />
-        }
-      />
+        <Route
+          path="/folder"
+          element={
+            <LookFolder
+              folderName="Folder name"
+              visibility="Public"
+              count="2"
+              countQ="11"
+            />
+          }
+        />
 
-      <Route path="/createFolder" element={<CreateEditFolder />} />
-      <Route
-        path="/createSet"
-        element={<CreateEditSet editOrCreate={'edit'} />}
-      />
+        <Route path="/createFolder" element={<CreateEditFolder />} />
+        <Route
+          path="/createSet"
+          element={<CreateEditSet editOrCreate={'edit'} />}
+        />
 
-      <Route path="/favorite" element={<FavoritePage />} />
-      <Route path="/lookSet" element={<LookSet />} />
+        <Route path="/favorite" element={<FavoritePage />} />
+        <Route path="/lookSet" element={<LookSet />} />
 
-      <Route path="*" element={<Navigate to="/login" replace />} />
-      <Route path="/flashcards" element={<FlashcardPage setId={1} />} />
-      <Route path="/flashcard/result" element={<ResultFlashcards />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/flashcards" element={<FlashcardPage setId={1} />} />
+        <Route path="/flashcard/result" element={<ResultFlashcards />} />
+      </Routes>
+
+      <ToastContainer />
+    </>
   );
 }
-
-/* <div
-      style={{
-        width: '100vw',
-      }}
-    >
-      
-        <QuestionSetComponent
-          questionsCount={10}
-          categories={['Without category', 'Second']}
-          username="username"
-          date="12.10.2002"
-          level="trainee"
-        />
-      
-
-      <FolderComponent />
-      <ResourceComponent />
-    </div>*/
 
 export default App;

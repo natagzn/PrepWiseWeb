@@ -131,7 +131,6 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
