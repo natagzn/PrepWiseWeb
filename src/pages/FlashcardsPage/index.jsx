@@ -70,14 +70,13 @@ function FlashcardPage({ setId }) {
       },
     ];
 
-    // Перезаписуємо `flashcards` лише з картками `stilllearning`, якщо viewOrStudy === 'study'
-    if (viewOrStudy === 'study') {
-      setFlashcards(
-        initialFlashcards.filter((card) => card.status === 'stilllearning')
-      );
-    } else {
-      setFlashcards(initialFlashcards); // залишаємо всі картки, якщо viewOrStudy не 'study'
-    }
+    setFlashcards((prevCards) =>
+      shuffleFlashcards(
+        viewOrStudy === 'study'
+          ? initialFlashcards.filter((card) => card.status === 'stilllearning')
+          : initialFlashcards
+      )
+    );
   }, [setId, viewOrStudy]);
 
   const handleStatusChange = (newStatus) => {

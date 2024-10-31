@@ -88,6 +88,8 @@
   align-items: center;
   gap: 10px;
   font-size: var(--web-23-regular-font-size);
+  width: 232.5px;
+  justify-content: flex-end;
 }
 
 .statusCount {
@@ -272,6 +274,10 @@
   .knowText,
   .stillLearningText {
     display: none;
+  }
+
+  .statusItem {
+    width: auto;
   }
 }
 
