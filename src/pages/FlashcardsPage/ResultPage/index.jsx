@@ -5,6 +5,9 @@ import styles from './styles.module.css';
 import HeaderComponent from 'components/UI/HeaderComponent';
 import FooterComponent from 'components/UI/FooterComponent';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function ResultFlashcards() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -13,16 +16,18 @@ function ResultFlashcards() {
     setId,
     stillLearningCount = 0,
     knowCount = 0,
-    isAuthor,
+    viewOrStudy,
+    countAll = 0,
   } = location.state || {};
 
-  const setName = t('setName', { setId }); // Translation for set name with dynamic ID
+  const setName = t('setName', { setId });
   const totalCount = stillLearningCount + knowCount;
-  const knowPercentage = isAuthor
-    ? totalCount > 0
-      ? (knowCount / totalCount) * 100
-      : 0
-    : 100;
+  const knowPercentage =
+    viewOrStudy === 'study'
+      ? totalCount > 0
+        ? (knowCount / totalCount) * 100
+        : 0
+      : 100;
 
   const phrases = {
     low: [
@@ -68,15 +73,24 @@ function ResultFlashcards() {
   const comment = getRandomComment(knowPercentage);
 
   const handleRestart = () => {
+    if (viewOrStudy === 'study' && stillLearningCount === 0) {
+      toast.info(t('result flashcards - know all'), { autoClose: 5000 });
+      return;
+    }
     navigate(`/flashcards`, {
       state: {
-        isAuthor: isAuthor,
+        viewOrStudy: viewOrStudy,
+        setId: setId,
       },
     });
   };
 
   const handleReturnToSet = () => {
-    navigate(`/lookSet`);
+    navigate(`/lookSet`, {
+      state: {
+        setId: setId,
+      },
+    });
   };
 
   return (
@@ -85,9 +99,11 @@ function ResultFlashcards() {
       <div className={styles.contentWrapper}>
         <div className={styles.infoBlock}>
           <h2 className={styles.setTitle}>{setName}</h2>
-          <div
-            className={styles.questionCount}
-          >{`${totalCount} / ${totalCount}`}</div>
+          <div className={styles.questionCount}>
+            {totalCount !== 0
+              ? `${totalCount} / ${totalCount}`
+              : `${countAll} / ${countAll}`}
+          </div>
         </div>
         <div className={styles.comment}>{comment}</div>
         <div className={styles.mainContent}>
@@ -129,11 +145,15 @@ function ResultFlashcards() {
               <div className={styles.progressDetails}>
                 <div className={styles.know}>
                   <span className={styles.label}>
-                    {isAuthor ? t('knowLabel') : t('completedLabel')}
+                    {viewOrStudy === 'study'
+                      ? t('knowLabel')
+                      : t('completedLabel')}
                   </span>
-                  <span className={styles.count}>{knowCount}</span>
+                  <span className={styles.count}>
+                    {countAll !== 0 ? countAll : knowCount}
+                  </span>
                 </div>
-                {isAuthor && (
+                {viewOrStudy === 'study' && (
                   <div className={styles.stillLearning}>
                     <span className={styles.label}>
                       {t('stillLearningLabel')}

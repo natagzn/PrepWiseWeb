@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
-import AskFriendsForHelp from '../AskFriendsForHelp'; // Імпорт компонента модального вікна
+import AskFriendsForHelp from '../AskFriendsForHelp';
 import AnswersModal from '../AnswersHelpQuestion';
 import { useTranslation } from 'react-i18next';
 
 function HelpComponent({ userId, questionId }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false); // Стан для відображення модального вікна запиту допомоги
-  const [showAnswersModal, setShowAnswersModal] = useState(false); // Стан для відображення модального вікна відповідей
-
+  const [showModal, setShowModal] = useState(false);
+  const [showAnswersModal, setShowAnswersModal] = useState(false);
   const { t } = useTranslation();
+  const helpRef = useRef(null); // Реф для HelpComponent
 
   const toggleWindow = () => {
     setIsOpen((prev) => !prev);
@@ -17,23 +17,42 @@ function HelpComponent({ userId, questionId }) {
 
   const handleOptionClick = (option) => {
     if (option === 'option1') {
-      setShowModal(true); // Відкриваємо модальне вікно запиту допомоги
+      setShowModal(true);
     } else if (option === 'option2') {
-      setShowAnswersModal(true); // Відкриваємо модальне вікно відповідей
+      setShowAnswersModal(true);
     }
     setIsOpen(false);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Закриваємо модальне вікно запиту допомоги
+    setShowModal(false);
   };
 
   const handleCloseAnswersModal = () => {
-    setShowAnswersModal(false); // Закриваємо модальне вікно відповідей
+    setShowAnswersModal(false);
   };
 
+  // Обробник для закриття компонента при кліку поза межами
+  const handleClickOutside = (event) => {
+    if (helpRef.current && !helpRef.current.contains(event.target)) {
+      setIsOpen(false); // Закриваємо вікно опцій
+      setShowModal(false); // Закриваємо модальне вікно запиту допомоги
+      setShowAnswersModal(false); // Закриваємо модальне вікно відповідей
+    }
+  };
+
+  useEffect(() => {
+    // Додаємо обробник подій при монтуванні компонента
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Очищення обробника подій при розмонтуванні
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={styles.helpComponent}>
+    <div className={styles.helpComponent} ref={helpRef}>
       <img src="/icons/help.svg" alt="help" onClick={toggleWindow} />
 
       {isOpen && (
@@ -64,7 +83,6 @@ function HelpComponent({ userId, questionId }) {
         </div>
       )}
 
-      {/* Модальне вікно запиту допомоги */}
       {showModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -77,13 +95,11 @@ function HelpComponent({ userId, questionId }) {
         </div>
       )}
 
-      {/* Модальне вікно відповідей */}
       {showAnswersModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <AnswersModal
               answers={[
-                // Тут ви можете замінити на фактичні дані відповідей
                 {
                   avatar: '/path/to/avatar1.jpg',
                   username: 'User1',

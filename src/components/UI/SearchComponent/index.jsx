@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import styles from './styles.module.css'; // Використовуємо `styles` для правильного імпорту
+import styles from './styles.module.css';
 
 const SearchComponent = ({ placeholder, onClick }) => {
   const inputRef = useRef(null);
@@ -10,9 +10,14 @@ const SearchComponent = ({ placeholder, onClick }) => {
   };
 
   const handleBlur = () => {
-    // Якщо поле вводу порожнє, викликаємо onClick
     if (inputValue.trim() === '') {
       onClick(''); // Передаємо порожній рядок для очищення результатів
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onClick(inputValue); // Викликаємо onClick при натисканні Enter
     }
   };
 
@@ -23,7 +28,8 @@ const SearchComponent = ({ placeholder, onClick }) => {
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        onBlur={handleBlur} // Додаємо обробник onBlur
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown} // Додаємо обробник onKeyDown
         placeholder={inputValue ? '' : placeholder}
         className={styles['search-input']}
       />

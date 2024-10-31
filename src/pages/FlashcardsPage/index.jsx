@@ -15,14 +15,18 @@ function FlashcardPage({ setId }) {
   const [flip, setFlip] = useState(false);
 
   const location = useLocation();
-  const { isAuthor } = location.state || {};
+  const { viewOrStudy } = location.state || {};
 
   const { t } = useTranslation();
 
   const navigate = useNavigate();
 
   const onClose = () => {
-    navigate(-1);
+    navigate(`/lookSet`, {
+      state: {
+        setId: setId,
+      },
+    });
   };
 
   useEffect(() => {
@@ -30,8 +34,9 @@ function FlashcardPage({ setId }) {
 
     // Приклад заголовка, який може прийти з props
     setSetTitle('title');
-    // Ініціалізація карточок
-    setFlashcards([
+
+    // Ініціалізація флешкарток
+    const initialFlashcards = [
       {
         id: 0,
         question: 'What is JavaScript?',
@@ -63,8 +68,17 @@ function FlashcardPage({ setId }) {
         answer: 'let is block scoped, var is function scoped.',
         status: 'know',
       },
-    ]);
-  }, [setId]);
+    ];
+
+    // Перезаписуємо `flashcards` лише з картками `stilllearning`, якщо viewOrStudy === 'study'
+    if (viewOrStudy === 'study') {
+      setFlashcards(
+        initialFlashcards.filter((card) => card.status === 'stilllearning')
+      );
+    } else {
+      setFlashcards(initialFlashcards); // залишаємо всі картки, якщо viewOrStudy не 'study'
+    }
+  }, [setId, viewOrStudy]);
 
   const handleStatusChange = (newStatus) => {
     const currentFlashcard = flashcards[currentIndex];
@@ -106,7 +120,7 @@ function FlashcardPage({ setId }) {
                 ? stillLearningCount + 1
                 : stillLearningCount,
             knowCount: newStatus === 'know' ? knowCount + 1 : knowCount,
-            isAuthor: isAuthor,
+            viewOrStudy: viewOrStudy,
           },
         });
       }
@@ -125,7 +139,8 @@ function FlashcardPage({ setId }) {
           navigate('/flashcard/result', {
             state: {
               setId: setId,
-              isAuthor: false,
+              viewOrStudy: viewOrStudy,
+              countAll: flashcards.length,
             },
           });
           return prevIndex; // Залишаємо індекс незмінним, бо відбудеться перенаправлення
@@ -205,7 +220,7 @@ function FlashcardPage({ setId }) {
         />
       </div>
       <div className={styles.statusContainer}>
-        {isAuthor && (
+        {viewOrStudy === 'study' && (
           <>
             <div className={styles.statusItem}>
               <div
@@ -228,7 +243,7 @@ function FlashcardPage({ setId }) {
             </div>
           </>
         )}
-        {!isAuthor && (
+        {viewOrStudy === 'view' && (
           <div className={styles.questionProgress}>
             {`${currentIndex + 1} / ${flashcards.length}`}
           </div>
@@ -248,9 +263,11 @@ function FlashcardPage({ setId }) {
             />
             {menuVisible && (
               <div className={styles.menu}>
-                <button onClick={handleRestart}>
-                  {t('restartFlashcards')}
-                </button>
+                {viewOrStudy === 'view' && (
+                  <button onClick={handleRestart}>
+                    {t('restartFlashcards')}
+                  </button>
+                )}
                 <button onClick={() => setFlip((prev) => !prev)}>
                   {flip ? t('flipToQuestion') : t('flipToAnswer')}
                 </button>
@@ -258,7 +275,7 @@ function FlashcardPage({ setId }) {
               </div>
             )}
           </div>
-          {isAuthor ? (
+          {viewOrStudy === 'study' ? (
             <>
               <button
                 className={`${styles.footerButton} ${styles.incorrectButton}`}

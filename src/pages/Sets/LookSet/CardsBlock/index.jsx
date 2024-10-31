@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import QuestionAnswerComponent from 'components/UI/QuestionAnswerComponent';
 import SortComponent from 'components/UI/SortComponent';
 
-const CardBlock = ({ questionsAnswers }) => {
+const CardBlock = ({ questionsAnswers, isAuthor }) => {
   const { t } = useTranslation();
   const [sortedQuestions, setSortedQuestions] = useState(questionsAnswers);
   const [selectedSort, setSelectedSort] = useState('original');
@@ -12,8 +12,14 @@ const CardBlock = ({ questionsAnswers }) => {
   const sortingOptions = [
     { label: t('sortingOptions.original'), value: 'original' },
     { label: t('sortingOptions.alphabetical'), value: 'alphabetical' },
-    { label: t('sortingOptions.yourStats'), value: 'yourStats' },
   ];
+
+  if (isAuthor) {
+    sortingOptions.push({
+      label: t('sortingOptions.yourStats'),
+      value: 'yourStats',
+    });
+  }
 
   const handleSortChange = (sortOption) => {
     setSelectedSort(sortOption);
@@ -78,6 +84,7 @@ const CardBlock = ({ questionsAnswers }) => {
                     question={item.question}
                     answer={item.answer}
                     status={item.status}
+                    help={isAuthor}
                   />
                 ))}
               </div>
@@ -103,6 +110,7 @@ const CardBlock = ({ questionsAnswers }) => {
                     question={item.question}
                     answer={item.answer}
                     status={item.status}
+                    help={isAuthor}
                   />
                 ))}
               </div>
@@ -118,6 +126,7 @@ const CardBlock = ({ questionsAnswers }) => {
               question={item.question}
               answer={item.answer}
               status={item.status}
+              help={isAuthor}
             />
           ))}
         </div>

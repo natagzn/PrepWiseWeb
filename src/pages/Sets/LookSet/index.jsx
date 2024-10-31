@@ -17,7 +17,7 @@ function LookSet() {
   const visibility = 'Public'; // або "Private" для тестування
   const onSave = () => alert('Set saved!');
   const isLiked = false;
-  const isAuthor = false;
+  const isAuthor = true;
 
   // Список об'єктів Question/Answer
   const questionsAnswers = [

@@ -247,5 +247,8 @@
   "Send": "Надіслати",
   "Question from": "Питання від",
   "Your answer was sent successfully!": "Вашу відповідь успішно надіслано!",
-  "Please type your answer before sending!": "Будь ласка напишіть вашу відповідь перед надсиланням"
+  "Please type your answer before sending!": "Будь ласка напишіть вашу відповідь перед надсиланням",
+
+  "viewFlashcards": "Переглянути картки",
+  "result flashcards - know all": "Ви вже знаєте всі картки. Якщо Ви хочете пройти їх заново - скиньте прогрес у налаштуванні сету"
 }

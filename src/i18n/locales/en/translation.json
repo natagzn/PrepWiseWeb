@@ -247,5 +247,8 @@
   "Send": "Send",
   "Question from": "Question from",
   "Your answer was sent successfully!": "Your answer was sent successfully!",
-  "Please type your answer before sending!": "Please type your answer before sending"
+  "Please type your answer before sending!": "Please type your answer before sending",
+  "viewFlashcards": "View flashcards",
+
+  "result flashcards - know all": "You already know all the cards. If you want to review them again, reset your progress in the set settings."
 }
