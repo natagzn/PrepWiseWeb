@@ -4,6 +4,7 @@ import HeaderComponent from '../../../components/UI/HeaderComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SearchComponent from 'components/UI/SearchComponent';
 
 const CreateEditFolder = ({
   folderName,
@@ -25,6 +26,7 @@ const CreateEditFolder = ({
   const navigate = useNavigate();
 
   const [folderTitle, setFolderTitle] = useState(folderName || '');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [selectedSets, setSelectedSets] = useState(
     questionSetsData.filter((set) => set.isAdded)
@@ -57,6 +59,17 @@ const CreateEditFolder = ({
 
   const handleCancel = () => {
     navigate(-1);
+  };
+
+  const [filteredQuestionSets, setFilteredQuestionSets] =
+    useState(questionSetsData);
+
+  const filterQuestionSets = (term) => {
+    setSearchTerm(term); // Оновлюємо searchTerm
+    const filteredSets = questionSetsData.filter((set) =>
+      set.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredQuestionSets(filteredSets);
   };
 
   return (
@@ -100,7 +113,18 @@ const CreateEditFolder = ({
       </div>
 
       <div className={styles.questionSets}>
-        {questionSetsData.map((set) => (
+        <div className={styles.search}>
+          <div className={styles.textSearch}>
+            {searchTerm.length > 0 ? `Searched by name: ${searchTerm}` : ''}
+          </div>
+          <div className={styles.searchComponentContainer}>
+            <SearchComponent
+              placeholder={t('search_sets')}
+              onClick={(term) => filterQuestionSets(term)} // Передаємо введене значення
+            />
+          </div>
+        </div>
+        {filteredQuestionSets.map((set) => (
           <QuestionSetsComponentForFolders
             key={set.id}
             name={set.name}

@@ -117,6 +117,26 @@
   text-align: center;
 }
 
+.search {
+  display: flex; /* Використовуємо флекс для вирівнювання блоків */
+  justify-content: space-between; /* Вирівнюємо елементи зліва та справа */
+  align-items: center; /* Вирівнюємо по вертикалі */
+  margin-bottom: 10px; /* Відступ знизу */
+}
+
+.textSearch {
+  flex: 1;
+  max-width: 350px;
+  text-wrap: wrap;
+}
+
+.searchComponentContainer {
+  margin-left: 10px;
+  min-width: 200px;
+  flex: 1;
+  max-width: 400px;
+}
+
 /* При малих екранах верхня кнопка пропадає, а футер з'являється */
 @media (max-width: 1000px) {
   .buttonBlock {

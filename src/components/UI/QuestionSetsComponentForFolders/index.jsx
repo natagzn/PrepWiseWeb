@@ -10,6 +10,7 @@ const QuestionSetsComponentForFolders = ({
   isAdded,
   link,
   onToggle,
+  date,
 }) => {
   const { t } = useTranslation();
   return (
@@ -29,24 +30,28 @@ const QuestionSetsComponentForFolders = ({
           </div>
         </div>
       </div>
-      <motion.div
-        className={styles.addedIcon}
-        onClick={onToggle}
-        whileHover={{ scale: 1.1 }}
-        transition={{ type: 'spring', stiffness: 300 }}
-      >
+      <div className={styles.rightContainer}>
+        <div className={styles.date}>{date}</div>
+
         {typeof isAdded !== 'undefined' && (
-          <img
-            src={
-              isAdded
-                ? '/icons/QuestionSetsComponentForFolders/iconAdded.svg'
-                : '/icons/QuestionSetsComponentForFolders/iconAdd.svg'
-            }
-            alt={isAdded ? 'added' : 'add'}
-            className={styles.actionIcon}
-          />
+          <motion.div
+            className={styles.addedIcon}
+            onClick={onToggle}
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            <img
+              src={
+                isAdded
+                  ? '/icons/QuestionSetsComponentForFolders/iconAdded.svg'
+                  : '/icons/QuestionSetsComponentForFolders/iconAdd.svg'
+              }
+              alt={isAdded ? 'added' : 'add'}
+              className={styles.actionIcon}
+            />
+          </motion.div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 };

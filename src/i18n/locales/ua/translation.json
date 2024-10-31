@@ -65,9 +65,9 @@
   "created_old_new": "Дата (старі -> нові)",
   "name_A_Z": "Назва (А -> Я)",
   "name_Z_A": "Назва (Я -> А)",
-  "search_resources": "Пошук ваших ресурсів...",
-  "search_folders": "Пошук ваших папок...",
-  "search_sets": "Пошук ваших сетів...",
+  "search_resources": "Пошук ресурсів...",
+  "search_folders": "Пошук папок...",
+  "search_sets": "Пошук сетів...",
 
   "filter": "Фільтр",
   "apply": "Застосувати",

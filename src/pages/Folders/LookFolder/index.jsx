@@ -11,15 +11,78 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
 
   // Початковий порядок sets
   const initialQuestionSetsData = [
-    { id: 1, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
-    { id: 2, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
-    { id: 3, name: 'Set 3', count: 20, isAdded: true, author: 'me' },
-    { id: 4, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
-    { id: 5, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
-    { id: 6, name: 'Set 3', count: 20, isAdded: true, author: 'me' },
-    { id: 7, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
-    { id: 8, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
-    { id: 9, name: 'Set 3', count: 20, isAdded: true, author: 'me' },
+    {
+      id: 1,
+      name: 'Set 1',
+      count: 10,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 2,
+      name: 'Set 2',
+      count: 15,
+      isAdded: false,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 3,
+      name: 'Set 3',
+      count: 20,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 4,
+      name: 'Set 1',
+      count: 10,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 5,
+      name: 'Set 2',
+      count: 15,
+      isAdded: false,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 6,
+      name: 'Set 3',
+      count: 20,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 7,
+      name: 'Set 1',
+      count: 10,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 8,
+      name: 'Set 2',
+      count: 15,
+      isAdded: false,
+      author: 'me',
+      date: '10-11-2024',
+    },
+    {
+      id: 9,
+      name: 'Set 3',
+      count: 20,
+      isAdded: true,
+      author: 'me',
+      date: '10-11-2024',
+    },
   ];
 
   const [questionSetsData, setQuestionSetsData] = useState(
@@ -84,6 +147,7 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
             questionCount={set.count}
             author={set.author}
             link={'#'}
+            date={set.date}
           />
         ))}
       </div>
