@@ -283,5 +283,8 @@
 
   "Please enter a title and select at least one set.": "Будь ласка введеіть заголовок та хоча би 1 сет",
   "Folder created successfully": "Папку створено успішно",
-  "Folder updated successfully": "Папку оновлено успішно"
+  "Folder updated successfully": "Папку оновлено успішно",
+
+  "Activity calendar": "Календар активності",
+  "calendar": "Календар"
 }

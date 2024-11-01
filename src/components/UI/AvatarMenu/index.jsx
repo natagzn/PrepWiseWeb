@@ -1,16 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion'; // Імпортуємо motion
+import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  FaBell,
-  FaBook,
-  FaHome,
-  FaTrophy,
-  FaUserFriends,
-} from 'react-icons/fa';
-import { FaHeart } from 'react-icons/fa6';
 
 const menuIcons = {
   people: require('../../assets/AvatarMenu/people.svg').default,
@@ -18,7 +10,8 @@ const menuIcons = {
   home: require('../../assets/AvatarMenu/home.svg').default,
   library: require('../../assets/AvatarMenu/library.svg').default,
   notifications: require('../../assets/AvatarMenu/notification.svg').default,
-  achievements: require('../../assets/AvatarMenu/achievment.svg').default,
+  //achievements: require('../../assets/AvatarMenu/achievment.svg').default,
+  calendar: require('../../assets/AvatarMenu/calendar.svg').default,
   settings: require('../../assets/AvatarMenu/settings.svg').default,
 };
 
@@ -28,10 +21,10 @@ const menuLinks = {
   settings: '/settings',
   library: '/library',
   notifications: '/notifications',
-  achievements: '/achievements',
 };
 
-const AvatarMenu = ({ onOpenPeoplePage }) => {
+const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
+  // Додаємо пропс для модального вікна календаря
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
@@ -70,10 +63,10 @@ const AvatarMenu = ({ onOpenPeoplePage }) => {
         <motion.div
           className={styles.menuPanel}
           ref={menuRef}
-          initial={{ opacity: 0, y: -10 }} // Початкове положення
-          animate={{ opacity: 1, y: 0 }} // Анімація при відкритті
-          exit={{ opacity: 0, y: -10 }} // Анімація при закритті
-          transition={{ duration: 0.2 }} // Час анімації
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
         >
           <div className={styles.menu}>
             <div className={styles.userInfo}>
@@ -88,43 +81,64 @@ const AvatarMenu = ({ onOpenPeoplePage }) => {
               </div>
             </div>
             <div className={styles.separator} />
-            {Object.entries(menuIcons).map(([key, src]) =>
-              key === 'people' ? (
-                <motion.div
-                  key={key}
-                  className={styles.menuItem}
-                  onClick={onOpenPeoplePage}
-                  whileHover={{ scale: 1.05 }} // Збільшення при наведенні
-                  transition={{ duration: 0.2 }} // Час анімації
-                >
-                  <img className={styles.menuIcon} src={src} alt={key} />
-                  {t(key)}
-                </motion.div>
-              ) : (
-                <Link to={menuLinks[key]} key={key} className={styles.menuItem}>
+            {Object.entries(menuIcons).map(([key, src]) => {
+              if (key === 'people') {
+                return (
                   <motion.div
-                    whileHover={{ scale: 1.05 }} // Збільшення при наведенні
-                    transition={{ duration: 0.2 }} // Час анімації
+                    key={key}
+                    className={styles.menuItem}
+                    onClick={onOpenPeoplePage}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <img className={styles.menuIcon} src={src} alt={key} />
                     {t(key)}
                   </motion.div>
-                </Link>
-              )
-            )}
+                );
+              } else if (key === 'calendar') {
+                return (
+                  <motion.div
+                    key={key}
+                    className={styles.menuItem}
+                    onClick={onOpenCalendarModal} // Викликаємо onOpenCalendarModal при натисканні
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img className={styles.menuIcon} src={src} alt={key} />
+                    {t(key)}
+                  </motion.div>
+                );
+              } else {
+                return (
+                  <Link
+                    to={menuLinks[key]}
+                    key={key}
+                    className={styles.menuItem}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img className={styles.menuIcon} src={src} alt={key} />
+                      {t(key)}
+                    </motion.div>
+                  </Link>
+                );
+              }
+            })}
             <div className={styles.separator} />
             <motion.div
               className={`${styles.menuItem} ${styles.logoutItem}`}
               onClick={handleLogout}
-              whileHover={{ scale: 1.05 }} // Збільшення при наведенні
-              transition={{ duration: 0.2 }} // Час анімації
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
             >
               {t('logout')}
             </motion.div>
             <motion.div
               className={`${styles.menuItem} ${styles.feedbackItem}`}
-              whileHover={{ scale: 1.05 }} // Збільшення при наведенні
-              transition={{ duration: 0.2 }} // Час анімації
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
             >
               {t('feedback', 'Help and feedback')}
             </motion.div>

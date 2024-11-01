@@ -283,5 +283,8 @@
 
   "Please enter a title and select at least one set.": "Please enter a title and select at least one set.",
   "Folder created successfully": "Folder created successfully",
-  "Folder updated successfully": "Folder updated successfully"
+  "Folder updated successfully": "Folder updated successfully",
+
+  "Activity calendar": "Activity calendar",
+  "calendar": "Calendar"
 }
