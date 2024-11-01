@@ -31,17 +31,14 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
   };
 
   const handleApply = () => {
-    const filtersToApply = {
-      categories: Array.isArray(localSelectedFilters.categories)
-        ? localSelectedFilters.categories
-        : [],
-      levels: Array.isArray(localSelectedFilters.levels)
-        ? localSelectedFilters.levels
-        : [],
-      visibility: Array.isArray(localSelectedFilters.visibility)
-        ? localSelectedFilters.visibility
-        : [],
-    };
+    const filtersToApply = {};
+    filters.forEach((filter) => {
+      filtersToApply[filter.name] = Array.isArray(
+        localSelectedFilters[filter.name]
+      )
+        ? localSelectedFilters[filter.name]
+        : [];
+    });
     onApply(filtersToApply);
     setIsModalOpen(false);
   };
@@ -73,23 +70,31 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <h2>Filter</h2>
+            <h2>{t('filter')}</h2>
             {filters.map((filter) => (
               <div key={filter.name}>
-                <h3>{filter.label}:</h3>
-                {filter.options.map((option) => (
-                  <div key={option}>
-                    <input
-                      type="checkbox"
-                      checked={
-                        localSelectedFilters[filter.name]?.includes(option) ||
-                        false
-                      }
-                      onChange={() => toggleFilter(filter.name, option)}
-                    />
-                    {option}
-                  </div>
-                ))}
+                <h3>{t(filter.label)}:</h3>
+                <div className={styles.checkboxGroup}>
+                  {' '}
+                  {/* Новий контейнер для checkbox'ів */}
+                  {filter.options.map((option) => (
+                    <div key={option} className={styles.checkboxItem}>
+                      {' '}
+                      {/* Доданий клас для кожного checkbox'а */}
+                      <input
+                        type="checkbox"
+                        id={option} // додайте id для зв'язування з label
+                        checked={
+                          localSelectedFilters[filter.name]?.includes(option) ||
+                          false
+                        }
+                        onChange={() => toggleFilter(filter.name, option)}
+                      />
+                      <label htmlFor={option}>{option}</label>{' '}
+                      {/* Використання label для покращення доступності */}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
 

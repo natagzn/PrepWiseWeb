@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary';
 import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary';
-import SharedComponent from '../../components/UI/ForLibrary/SharedComponent/SharedLibrary';
+
 import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/ResourcesLibrary';
 import HeaderComponent from '../../components/UI/HeaderComponent';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import SharedSetsLibrary from 'components/UI/ForLibrary/SharedSetsLibrary';
 
 const YourLibraryPage = () => {
   const { t } = useTranslation(); // Отримуємо функцію t для перекладів
@@ -19,7 +20,7 @@ const YourLibraryPage = () => {
       case 'folders':
         return <FoldersLibrary />;
       case 'shared':
-        return <SharedComponent />;
+        return <SharedSetsLibrary />;
       case 'resources':
         return <ResourcesLibrary />;
       default:

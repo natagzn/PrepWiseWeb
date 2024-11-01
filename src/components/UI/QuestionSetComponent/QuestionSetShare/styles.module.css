@@ -1,0 +1,40 @@
+.usersInfo {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+}
+
+.title {
+  max-width: 220px;
+}
+
+.savedIcon {
+  gap: 0px;
+}
+
+.coauthors {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .usersInfo {
+    font-size: 15px;
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 400px) {
+  .usersInfo {
+    font-size: 13px;
+    max-width: 60%;
+  }
+}
