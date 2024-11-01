@@ -1,0 +1,142 @@
+.plus-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.plus-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.options-box {
+  width: 255px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 15px;
+  border: 1px #e5e5e5 solid;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.options-content {
+  width: 225px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.title {
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%; /* Займає 100% ширини батьківського контейнера */
+}
+
+.divider {
+  width: 100%; /* Займає 100% ширини батьківського контейнера */
+  height: 0;
+  border: 0.5px #e5e5e5 solid;
+}
+
+.option {
+  width: 225px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.icon-container {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  font-family: var(--web-font-family);
+}
+
+.black-dot {
+  width: 18.75px;
+  height: 18.75px;
+  background: black;
+  position: absolute;
+  left: 0.5px;
+  top: 2.62px;
+}
+
+.square {
+  width: 20px;
+  height: 17.5px;
+  background: black;
+  border: 1.2px black solid;
+}
+
+.option-text {
+  width: 115px;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+@media (max-width: 900px) {
+  .plus-box {
+    width: 35px;
+    height: 35px;
+  }
+  .options-box {
+    width: 200px;
+  }
+  .options-content {
+    width: 190px;
+  }
+  .title {
+    font-size: 14px;
+  }
+  .divider {
+    width: 190px;
+  } /* Зменшено для адаптивності */
+  .option-text {
+    font-size: 14px;
+  }
+  .option {
+    height: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .plus-box {
+    width: 30px;
+    height: 30px;
+  }
+  .options-box {
+    width: 180px;
+  }
+  .options-content {
+    width: 170px;
+  }
+  .title {
+    font-size: 12px;
+  }
+  .divider {
+    width: 170px;
+  } /* Зменшено для адаптивності */
+  .option-text {
+    font-size: 12px;
+  }
+  .option {
+    height: 18px;
+  }
+}

@@ -5,9 +5,10 @@ import AvatarMenu from '../AvatarMenu';
 import SearchComponent from '../SearchComponent';
 import PeoplePage from '../../../pages/PeoplePage';
 import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import PlusButton from '../PlusButton';
 
 const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
   const [isPeoplePageOpen, setIsPeoplePageOpen] = useState(false);
 
   const openPeoplePage = () => {
@@ -39,11 +40,7 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
           </div>
         )}
 
-        {showPlus && (
-          <div className={styles['plus-icon']}>
-            <div className={styles['plus-box']}></div>
-          </div>
-        )}
+        {showPlus && <PlusButton />}
 
         <div className={styles.avatar}>
           <AvatarMenu onOpenPeoplePage={openPeoplePage} />

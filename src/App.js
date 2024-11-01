@@ -93,8 +93,6 @@ function App() {
         <Route path="/flashcards" element={<FlashcardPage setId={1} />} />
         <Route path="/flashcard/result" element={<ResultFlashcards />} />
       </Routes>
-
-      <ToastContainer />
     </>
   );
 }

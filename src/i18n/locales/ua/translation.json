@@ -250,5 +250,38 @@
   "Please type your answer before sending!": "Будь ласка напишіть вашу відповідь перед надсиланням",
 
   "viewFlashcards": "Переглянути картки",
-  "result flashcards - know all": "Ви вже знаєте всі картки. Якщо Ви хочете пройти їх заново - скиньте прогрес у налаштуванні сету"
+  "result flashcards - know all": "Ви вже знаєте всі картки. Якщо Ви хочете пройти їх заново - скиньте прогрес у налаштуванні сету",
+
+  "Add new": "Створити",
+  "Question set": "Список питань",
+  "Folder": "Папка",
+  "Resource": "Ресурс",
+
+  "New question": "Нове питання",
+  "Enter your question": "Введіть своє питання",
+  "Enter your answer": "Введіть свою відповідь (якщо знаєте)",
+  "Choose set": "Оберіть сет",
+  "Question is required!": "Питання є обов'язковим!",
+  "Question created successfully!": "Питання створено успішно!",
+  "Select a Set": "Оберіть сет",
+  "Close": "Закрити",
+
+  "Name, description, level, and category are required!": "Назва, опис, рівень та категорія є обов'язковими!",
+  "Resource created successfully!": "Ресурс створено успішно!",
+  "New Resource": "Новий Ресурс",
+  "Enter name of the article/book": "Введіть назву статті/книги",
+  "Name of Article/Book": "Назва статті/книги",
+  "Enter description": "Введіть опис",
+  "Description": "Опис",
+  "Choose category": "Оберіть категорію",
+  "Select level": "Оберіть рівень",
+
+  "Please enter a title.": "Будь ласка введіть заголовок.",
+  "All questions must be filled.": "Всі питання повинні бути заповнені",
+  "You can't create set without questions": "Ви не можете створити сет без питань.",
+  "Set created successfully!": "Сет створено успішно!",
+
+  "Please enter a title and select at least one set.": "Будь ласка введеіть заголовок та хоча би 1 сет",
+  "Folder created successfully": "Папку створено успішно",
+  "Folder updated successfully": "Папку оновлено успішно"
 }

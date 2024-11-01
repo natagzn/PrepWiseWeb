@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SearchComponent from 'components/UI/SearchComponent';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const CreateEditFolder = ({
-  folderName,
-  visibility,
-  questionSetsData,
-  editOrCreate,
-}) => {
+const CreateEditFolder = ({ folderName, visibility, questionSetsData }) => {
   questionSetsData = [
     { id: 1, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
     { id: 2, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
@@ -24,16 +21,35 @@ const CreateEditFolder = ({
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { editOrCreate, folderId } = location.state || {};
 
   const [folderTitle, setFolderTitle] = useState(folderName || '');
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [selectedSets, setSelectedSets] = useState(
-    questionSetsData.filter((set) => set.isAdded)
-  );
+  const [selectedSets, setSelectedSets] = useState([]);
 
   const count = selectedSets.length;
   const countQ = selectedSets.reduce((acc, set) => acc + set.count, 0);
+
+  useEffect(() => {
+    if (editOrCreate === 'edit') {
+      fetchFolderData(folderId); // Витягуємо дані про папку
+    }
+  }, [editOrCreate, folderId]);
+
+  const fetchFolderData = (id) => {
+    // Фіктивна функція для отримання даних про папку за ID
+    const folderData = {
+      title: 'Example Folder Title', // Приклад заголовка
+      addedSetIds: [1, 3, 5], // Приклад ID доданих сетів
+    };
+
+    setFolderTitle(folderData.title); // Встановлюємо заголовок
+    const addedSets = questionSetsData.filter((set) =>
+      folderData.addedSetIds.includes(set.id)
+    );
+    setSelectedSets(addedSets); // Встановлюємо вибрані сети
+  };
 
   const toggleSetSelection = (setId) => {
     setSelectedSets((prevSelectedSets) => {
@@ -50,32 +66,49 @@ const CreateEditFolder = ({
   };
 
   const handleCreate = () => {
-    console.log('Creating folder with sets:', selectedSets);
+    if (!folderTitle.trim() || selectedSets.length === 0) {
+      toast.error(t('Please enter a title and select at least one set.'));
+      return;
+    }
+
+    console.log('Creating folder with sets:', selectedSets, folderTitle);
+    // Логіка створення папки
+
+    toast.success(t('Folder created successfully'));
+    navigate('/home');
   };
 
   const handleUpdate = () => {
-    console.log('Updating folder with sets:', selectedSets);
+    if (!folderTitle.trim() || selectedSets.length === 0) {
+      toast.error(t('Please enter a title and select at least one set.'));
+      return;
+    }
+
+    console.log('Updating folder with sets:', selectedSets, folderTitle);
+    // Логіка оновлення папки
+
+    toast.success(t('Folder updated successfully'));
+    navigate('/home');
   };
 
   const handleCancel = () => {
     navigate(-1);
   };
 
-  const [filteredQuestionSets, setFilteredQuestionSets] =
-    useState(questionSetsData);
-
   const filterQuestionSets = (term) => {
-    setSearchTerm(term); // Оновлюємо searchTerm
+    setSearchTerm(term);
     const filteredSets = questionSetsData.filter((set) =>
       set.name.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredQuestionSets(filteredSets);
   };
 
+  const [filteredQuestionSets, setFilteredQuestionSets] =
+    useState(questionSetsData);
+
   return (
     <div className={styles.container}>
       <HeaderComponent />
-
       <div className={styles.group}>
         <div className={styles.columnLeft}>
           <div className={styles.folderTitle}>
@@ -83,7 +116,6 @@ const CreateEditFolder = ({
               ? t('create_a_folder')
               : t('update_a_folder')}
           </div>
-          {/* Просто інпут поле без обгортки */}
           <input
             type="text"
             value={folderTitle}
@@ -111,7 +143,6 @@ const CreateEditFolder = ({
           </div>
         </div>
       </div>
-
       <div className={styles.questionSets}>
         <div className={styles.search}>
           <div className={styles.textSearch}>
@@ -120,7 +151,7 @@ const CreateEditFolder = ({
           <div className={styles.searchComponentContainer}>
             <SearchComponent
               placeholder={t('search_sets')}
-              onClick={(term) => filterQuestionSets(term)} // Передаємо введене значення
+              onClick={(term) => filterQuestionSets(term)}
             />
           </div>
         </div>
@@ -135,8 +166,6 @@ const CreateEditFolder = ({
           />
         ))}
       </div>
-
-      {/* Footer з кнопкою Update */}
       <div className={styles.footer}>
         <button
           onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}

@@ -250,5 +250,38 @@
   "Please type your answer before sending!": "Please type your answer before sending",
   "viewFlashcards": "View flashcards",
 
-  "result flashcards - know all": "You already know all the cards. If you want to review them again, reset your progress in the set settings."
+  "result flashcards - know all": "You already know all the cards. If you want to review them again, reset your progress in the set settings.",
+
+  "Add new": "Add new",
+  "Question set": "Question set",
+  "Folder": "Folder",
+  "Resource": "Resource",
+
+  "New question": "New question",
+  "Enter your question": "Enter your question",
+  "Enter your answer": "Enter your answer (if know)",
+  "Choose set": "Choose set",
+  "Question is required!": "Question is required!",
+  "Question created successfully!": "Question created successfully!",
+  "Select a Set": "Select a Set",
+  "Close": "Close",
+
+  "Name, description, level, and category are required!": "Name, description, level, and category are required!",
+  "Resource created successfully!": "Resource created successfully!",
+  "New Resource": "New Resource",
+  "Enter name of the article/book": "Enter name of the article/book",
+  "Name of Article/Book": "Name of Article/Book",
+  "Enter description": "Enter description",
+  "Description": "Description",
+  "Choose category": "Choose category",
+  "Select level": "Select level",
+
+  "Please enter a title.": "Please enter a title.",
+  "All questions must be filled.": "All questions must be filled.",
+  "You can't create set without questions": "You can't create set without questions",
+  "Set created successfully!": "Set created successfully!",
+
+  "Please enter a title and select at least one set.": "Please enter a title and select at least one set.",
+  "Folder created successfully": "Folder created successfully",
+  "Folder updated successfully": "Folder updated successfully"
 }

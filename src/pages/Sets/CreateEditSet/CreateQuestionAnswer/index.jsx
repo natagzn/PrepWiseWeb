@@ -6,13 +6,18 @@ import { useTranslation } from 'react-i18next';
 
 Modal.setAppElement('#root');
 
-const CreateQuestionAnswer = ({ id, index, onDelete }) => {
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+const CreateQuestionAnswer = ({
+  question,
+  answer,
+  onDelete,
+  onQuestionChange,
+  onAnswerChange,
+  index,
+  id,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const questionRef = useRef(null);
   const answerRef = useRef(null);
-
   const { t } = useTranslation();
 
   const handleTextChange = (e, setText) => {
@@ -21,43 +26,19 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  const updateHeight = (ref) => {
-    if (ref.current) {
-      ref.current.style.height = 'auto';
-      ref.current.style.height = `${ref.current.scrollHeight}px`;
-    }
-  };
-
   useEffect(() => {
-    const questionObserver = new ResizeObserver(() => {
-      requestAnimationFrame(() => updateHeight(questionRef));
-    });
-
-    const answerObserver = new ResizeObserver(() => {
-      requestAnimationFrame(() => updateHeight(answerRef));
-    });
-
-    if (questionRef.current) {
-      questionObserver.observe(questionRef.current);
-    }
-
-    if (answerRef.current) {
-      answerObserver.observe(answerRef.current);
-    }
-
-    return () => {
-      questionObserver.disconnect();
-      answerObserver.disconnect();
+    const updateHeight = (ref) => {
+      if (ref.current) {
+        ref.current.style.height = 'auto';
+        ref.current.style.height = `${ref.current.scrollHeight}px`;
+      }
     };
-  }, []);
+    updateHeight(questionRef);
+    updateHeight(answerRef);
+  }, [question, answer]);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleDelete = () => {
     onDelete(id);
@@ -71,26 +52,24 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
           <span>{index}</span>
           <FaTrashAlt className={styles.trashIcon} onClick={openModal} />
         </div>
-
         <div className={styles.inputRow}>
           <div className={styles.inputColumn}>
             <textarea
               className={styles.inputArea}
               placeholder={t('enterQuestion')}
               value={question}
-              onChange={(e) => handleTextChange(e, setQuestion)}
+              onChange={(e) => onQuestionChange(e.target.value)}
               ref={questionRef}
               rows={1}
             />
             <label>{t('questionLabel')}</label>
           </div>
-
           <div className={styles.inputColumn}>
             <textarea
               className={styles.inputArea}
               placeholder={t('enterAnswer')}
               value={answer}
-              onChange={(e) => handleTextChange(e, setAnswer)}
+              onChange={(e) => onAnswerChange(e.target.value)}
               ref={answerRef}
               rows={1}
             />
@@ -98,8 +77,6 @@ const CreateQuestionAnswer = ({ id, index, onDelete }) => {
           </div>
         </div>
       </div>
-
-      {/* Модальне вікно для підтвердження видалення */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}

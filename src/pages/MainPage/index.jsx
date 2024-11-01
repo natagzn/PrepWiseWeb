@@ -32,7 +32,7 @@ const MainPage = () => {
 
   const categories = ['Development', 'Design', 'Marketing', 'Science', 'Arts'];
 
-  const resources = Array.from({ length: 5 }, (_, index) => ({
+  const resources = Array.from({ length: 6 }, (_, index) => ({
     id: index,
     title: resourceTitles[index % resourceTitles.length],
     category: categories[index % categories.length],
@@ -91,7 +91,7 @@ const MainPage = () => {
 
   return (
     <div className={styles.mainPage}>
-      <HeaderComponent showSearch={true} showPremium={true} />
+      <HeaderComponent showSearch={true} showPremium={true} showPlus={true} />
       <div className={styles.search}>
         <SearchComponent placeholder={t('enter_your_request')} />{' '}
         {/* Перекладено placeholder */}

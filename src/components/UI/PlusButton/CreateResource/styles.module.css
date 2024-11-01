@@ -1,0 +1,167 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Зробити впевненим, що елемент зверху */
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  z-index: 1001;
+  margin: 20px;
+  font-family: var(--web-font-family);
+}
+
+.title {
+  text-align: center;
+  color: black;
+  font-size: 30px; /* Зменшити шрифт на малих екранах */
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  color: #5a5a5a;
+  font-size: 18px;
+  padding-left: 7px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 60px; /* Мінімальна висота інпуту */
+  border: none; /* Видаляємо всі бордери */
+  border-bottom: 2px solid #5a5a5a; /* Додаємо тільки нижню лінію */
+  padding: 7px;
+  font-size: 23px; /* Зменшити шрифт на малих екранах */
+  resize: none; /* Забороняємо ручне зміщення розміру */
+  overflow: hidden;
+  height: fit-content;
+}
+
+.textarea:focus {
+  outline: none; /* Прибираємо обрамлення при фокусі */
+  border-bottom-color: #3a3a3a; /* Колір нижнього бордера при фокусі */
+}
+
+.chooseCategories {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  width: 100%;
+  gap: 20px;
+}
+
+.chooseCategories button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--web-18-regular-font-size);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.buttonBlock {
+  display: flex;
+  width: fit-content;
+  gap: 10px;
+  flex: 1;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.createButton,
+.cancelButton {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #5a5a5a;
+  cursor: pointer;
+}
+
+.createButton {
+  background: var(--landingdark-blue);
+  color: white;
+}
+
+.cancelButton {
+  border: 1px solid var(--landingdark-blue);
+  color: var(--landingdark-blue);
+}
+
+/* Адаптивні стилі */
+@media (max-width: 600px) {
+  .title {
+    font-size: 24px; /* Зменшити розмір шрифту для заголовка */
+  }
+
+  label {
+    font-size: 16px; /* Зменшити шрифт для міток */
+  }
+
+  .textarea {
+    font-size: 20px; /* Зменшити шрифт для текстових полів */
+  }
+}
+
+@media (max-width: 550px) {
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buttonBlock {
+    width: 100%;
+    justify-content: space-around;
+    max-width: none;
+  }
+
+  .chooseSet button {
+    width: 100%;
+  }
+}
+.chooseLevel {
+  font-family: var(--web-font-family);
+  font-size: var(--web-18-regular-font-size);
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  padding: 5px 10px;
+  background: var(--mainwhite);
+  border-radius: 5px;
+  border: 1px solid var(--light-gray);
+  cursor: pointer;
+  height: 47px;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--mainblack);
+}
+
+@media (max-width: 768px) {
+  .select {
+    font-size: var(--web-15-regular-font-size);
+    padding: 5px 15px;
+  }
+}

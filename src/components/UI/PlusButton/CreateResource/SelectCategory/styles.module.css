@@ -1,0 +1,62 @@
+/* Загальні стилі для модального вікна */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 20px;
+}
+
+.categoryList {
+  margin-top: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--landingdark-blue);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid var(--landingdark-blue);
+  color: var(--landingdark-blue);
+  border-radius: 5px;
+  cursor: pointer;
+}

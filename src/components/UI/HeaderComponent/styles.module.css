@@ -26,7 +26,6 @@
   gap: 20px;
 }
 
-.plus-icon,
 .premium-box,
 .avatar {
   display: flex;
@@ -43,13 +42,6 @@
   color: black;
   font-size: var(--web-15-regular-font-size);
   font-weight: 500;
-}
-
-.plus-box {
-  width: 40px;
-  height: 40px;
-  background: white;
-  border: 1px black solid;
 }
 
 .modalOverlay {
@@ -86,11 +78,6 @@
     font-size: var(--web-13-regular-font-size);
   }
 
-  .plus-box {
-    width: 38px;
-    height: 38px;
-  }
-
   .avatar {
     width: 40px;
     height: 40px;
@@ -117,11 +104,6 @@
     font-size: var(--web-13-regular-font-size);
   }
 
-  .plus-box {
-    width: 35px;
-    height: 35px;
-  }
-
   .avatar img {
     width: 40px;
     height: 40px;
@@ -143,11 +125,6 @@
 
   .premium-text {
     font-size: var(--web-13-regular-font-size);
-  }
-
-  .plus-box {
-    width: 30px;
-    height: 30px;
   }
 
   .avatar img {
