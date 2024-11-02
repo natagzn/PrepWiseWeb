@@ -1,12 +1,48 @@
+.globalSearchBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.title {
+  font-size: var(--web-23-regular-font-size);
+  font-weight: 500;
+}
+
+.titleBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.viewAll {
+  color: var(--landingdark-blue);
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.blockSearch {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blockResult {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slick-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mainPage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-}
-
-.centered {
-  justify-content: center;
 }
 
 .search {
@@ -16,34 +52,11 @@
 }
 
 .recommendationTitle {
-  font-size: var(--web-30-regular-font-size); /* Використано змінну */
+  font-size: var(--web-30-regular-font-size);
   font-weight: bold;
   padding: 10px 40px;
   width: 100%;
   text-align: left;
-}
-
-.title {
-  font-size: var(--web-23-regular-font-size); /* Використано змінну */
-  font-weight: 500;
-  margin: 15px 40px;
-}
-
-.notFound {
-  margin: 10px 60px;
-  font-size: var(--web-20-regular-font-size);
-  color: var(--maingray);
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.questionSets,
-.resources {
-  width: 100%;
-}
-
-.resources {
-  margin-bottom: 40px;
 }
 
 .carousel {
@@ -51,20 +64,19 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 0 30px;
+  justify-content: space-around;
 }
 
-.questionSetContainer,
-.resourceContainer {
+.container {
   display: flex;
+  justify-content: space-around;
   transition: transform 0.3s ease;
   width: 100%;
 }
 
-.questionSetComponent,
 .resourceComponent {
-  box-sizing: border-box;
-  margin: 10px;
+  flex: 0 0 calc(33.33% - 20px); /* або 50% для двох на ряд */
+  margin: 10px; /* Встановіть відступи для кращого відображення */
 }
 
 .arrowLeft,
@@ -76,7 +88,7 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  font-size: var(--web-40-regular-font-size); /* Використано змінну */
+  font-size: var(--web-40-regular-font-size);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -94,27 +106,20 @@
   opacity: 1;
 }
 
-.footer {
-  margin-top: auto;
-  width: 100%;
-}
 @media (min-width: 940px) {
-  .questionSetComponent,
-  .resourceComponent {
+  .questionSetComponent {
     flex: 0 0 calc(33.33% - 20px);
   }
 }
 
 @media (min-width: 600px) and (max-width: 940px) {
-  .questionSetComponent,
-  .resourceComponent {
+  .questionSetComponent {
     flex: 0 0 calc(50% - 20px);
   }
 }
 
 @media (max-width: 600px) {
-  .questionSetComponent,
-  .resourceComponent {
+  .questionSetComponent {
     flex: 0 0 100%;
   }
 }
@@ -128,9 +133,25 @@
   .title {
     text-align: center;
   }
+
+  .title {
+    font-size: var(--web-20-regular-font-size);
+  }
+
+  .viewAll {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 480px) {
+  .title {
+    font-size: var(--web-18-regular-font-size);
+  }
+
+  .viewAll {
+    font-size: 18px;
+  }
+
   .questionSetComponent {
     flex: 0 0 100%;
   }

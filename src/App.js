@@ -34,6 +34,7 @@ import FavoritePage from './pages/FavoritePage';
 import LookSet from 'pages/Sets/LookSet';
 import FlashcardPage from 'pages/FlashcardsPage';
 import ResultFlashcards from 'pages/FlashcardsPage/ResultPage';
+import GlobalSearchPage from 'pages/GlobalSearch';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -65,8 +66,8 @@ function App() {
         <Route path="/people" element={<PeoplePage />} />
         <Route path="/settings" element={<SettingsPage />} />
 
-        <Route path="/buyPremium" element={<BuyPremium />} />
-        <Route path="/profileUser" element={<PeopleProfilePage />} />
+        <Route path="/lookPremium" element={<BuyPremium />} />
+        <Route path="/profileUser/:id" element={<PeopleProfilePage />} />
 
         <Route
           path="/lookFolder"
@@ -104,6 +105,8 @@ function App() {
         <Route path="*" element={<Navigate to="/login" replace />} />
         <Route path="/flashcards" element={<FlashcardPage setId={1} />} />
         <Route path="/flashcard/result" element={<ResultFlashcards />} />
+
+        <Route path="/search/:searchBy" element={<GlobalSearchPage />} />
       </Routes>
     </>
   );

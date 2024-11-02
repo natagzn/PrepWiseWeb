@@ -11,13 +11,13 @@ const SearchComponent = ({ placeholder, onClick }) => {
 
   const handleBlur = () => {
     if (inputValue.trim() === '') {
-      onClick(''); // Передаємо порожній рядок для очищення результатів
+      onClick('');
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      onClick(inputValue); // Викликаємо onClick при натисканні Enter
+      onClick(inputValue);
     }
   };
 
@@ -29,7 +29,7 @@ const SearchComponent = ({ placeholder, onClick }) => {
         value={inputValue}
         onChange={handleInputChange}
         onBlur={handleBlur}
-        onKeyDown={handleKeyDown} // Додаємо обробник onKeyDown
+        onKeyDown={handleKeyDown}
         placeholder={inputValue ? '' : placeholder}
         className={styles['search-input']}
       />

@@ -60,10 +60,18 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  background-color: var(--landingdark-blue);
+  color: white;
+}
+
+.followButtonAlt {
+  background-color: white;
+  color: var(--landingdark-blue);
+  border: 1px solid var(--landingdark-blue);
 }
 
 .followButtonText {
-  color: black;
   font-size: var(--web-18-regular-font-size);
   font-weight: 400;
 }
@@ -116,6 +124,9 @@
   background-color: var(--landingdark-blue);
 }
 
+.noResultsMessage {
+  margin-top: 40px;
+}
 /* Адаптивність для планшетів та смартфонів */
 @media (max-width: 1024px) {
   .avatar {

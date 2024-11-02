@@ -1,0 +1,123 @@
+.searchPage {
+  font-family: var(--web-font-family);
+  padding: 10px 20px;
+  align-self: center;
+  min-height: 100vh;
+}
+
+.searchBlock {
+  display: none;
+  margin-left: auto;
+}
+
+.header {
+  font-size: var(--web-35-regular-font-size);
+  margin: 0px 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    font-size: var(--web-30-regular-font-size);
+    margin-bottom: 7px;
+  }
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--maingray);
+  align-items: center;
+  text-align: center;
+  height: 60px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: var(--web-23-regular-font-size);
+  cursor: pointer;
+  position: relative;
+  color: var(--maingray);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.tab:hover {
+  color: var(--mainblack);
+}
+
+.active {
+  font-weight: bold;
+  color: var(--mainblack);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 4px;
+  width: 100%;
+  background-color: var(--landingdark-blue);
+}
+
+.tabContent {
+  margin-top: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .tab {
+    font-size: var(--web-18-regular-font-size);
+    padding: 8px;
+  }
+
+  .searchPage {
+    padding: 10px;
+  }
+
+  .tabContent {
+    padding: 10px;
+  }
+
+  .header {
+    font-size: var(--web-23-light-font-size);
+    margin-bottom: 5px;
+  }
+
+  .searchBlock {
+    display: flex;
+    width: 350px;
+    align-self: flex-end;
+    margin: 10px;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 460px) {
+  .searchPage {
+    padding: 5px;
+  }
+
+  .searchBlock {
+    align-self: center;
+    margin-right: auto;
+  }
+
+  .header {
+    text-align: center;
+  }
+
+  .tabContent {
+    padding: 0px;
+  }
+}

@@ -321,5 +321,24 @@
   "Are you sure you want to delete this resource?": "Ви впевнені що хочете видалити цей ресурс?",
   "Resource has been deleted successfully!": "Ресурс успішно видалено!",
   "Are you sure you want to delete this folder?": "Ви впевнені що хочете видалити папку?",
-  "Folder has been deleted successfully!": "Папку успішно видалено!"
+  "Folder has been deleted successfully!": "Папку успішно видалено!",
+
+  "special_characters_not_allowed": "Не можна використовувати спеціальні символи",
+  "results_for": "Результати для ‘{{searchBy}}’ - Всі результати",
+  "allResults": "Всі",
+  "questionSets": "Модулі",
+  "users": "Люди",
+
+  "no_question_sets_message": "Ви ще не підписані на жодного користувача або жоден користувач нічого не опублікував.",
+  "no_resources_message": "Жодних ресурсів не знайдено. Спробуйте підписатись на нових людей.",
+  "no_question_sets_message_search": "Не знайдено потрібних модулів",
+  "no_resources_message_search": "Не знайдено потрібних ресурсів",
+  "no_users_message_search": "Не знайдено потрібних користувачів",
+
+  "premium_message": "Хочете отримати більше? Розширений пошук та інші функції доступні лише у PrepWise Premium. Натисніть 'Переглянути', щоб дізнатися більше про наші преміум-пропозиції.",
+  "Look": "Переглянути",
+
+  "follower": "Підписник",
+  "no_question_sets_profile": "Ще немає публічних модулів.",
+  "no_resources_profile": "Ще немає ресурсів."
 }

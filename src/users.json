@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "username": "john_doe",
+    "profilePicture": "https://example.com/profile1.jpg",
+    "resourcesCount": 5,
+    "setsCount": 10
+  },
+  {
+    "id": 2,
+    "username": "jane_smith",
+    "profilePicture": "https://example.com/profile2.jpg",
+    "resourcesCount": 3,
+    "setsCount": 7
+  },
+  {
+    "id": 3,
+    "username": "alex_johnson",
+    "profilePicture": "https://example.com/profile3.jpg",
+    "resourcesCount": 8,
+    "setsCount": 4
+  },
+  {
+    "id": 4,
+    "username": "alex_johnson1",
+    "profilePicture": "https://example.com/profile3.jpg",
+    "resourcesCount": 8,
+    "setsCount": 4
+  },
+  {
+    "id": 5,
+    "username": "longlonglonglonglonglonglonglong",
+    "profilePicture": "https://example.com/profile3.jpg",
+    "resourcesCount": 18,
+    "setsCount": 42
+  },
+  {
+    "id": 6,
+    "username": "alex_johnson2",
+    "profilePicture": "https://example.com/profile3.jpg",
+    "resourcesCount": 8,
+    "setsCount": 4
+  }
+]

@@ -6,14 +6,15 @@ import SearchComponent from '../SearchComponent';
 import PeoplePage from '../../../pages/PeoplePage';
 import { useTranslation } from 'react-i18next';
 import PlusButton from '../PlusButton';
-import Calendar from 'react-calendar';
-import CalendarModal from '../CalendarModal';
 import CalendarComponent from '../CalendarModal';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
   const { t } = useTranslation();
   const [isPeoplePageOpen, setIsPeoplePageOpen] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // Додаємо стан для календаря
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openPeoplePage = () => {
     setIsPeoplePageOpen(true);
@@ -24,11 +25,23 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
   };
 
   const openCalendar = () => {
-    setIsCalendarOpen(true); // Відкриваємо календар
+    setIsCalendarOpen(true);
   };
 
   const closeCalendar = () => {
-    setIsCalendarOpen(false); // Закриваємо календар
+    setIsCalendarOpen(false);
+  };
+
+  const handleSearch = (searchTerm) => {
+    const invalidCharacters = /[\/\\.#?]/; // Регулярний вираз для символів "/", "\", ".", "#" і "?"
+
+    if (searchTerm.trim() === '') {
+      toast.error(t('enter_your_request'));
+    } else if (invalidCharacters.test(searchTerm)) {
+      toast.error(t('special_characters_not_allowed'));
+    } else {
+      navigate(`/search/${encodeURIComponent(searchTerm)}`);
+    }
   };
 
   return (
@@ -40,7 +53,10 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
       <div className={styles['right-group']}>
         {showSearch && (
           <div className={styles['search']}>
-            <SearchComponent placeholder={t('enter_your_request')} />
+            <SearchComponent
+              placeholder={t('enter_your_request')}
+              onClick={handleSearch}
+            />
           </div>
         )}
 
@@ -57,7 +73,6 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
             onOpenPeoplePage={openPeoplePage}
             onOpenCalendarModal={openCalendar}
           />{' '}
-          {/* Передаємо пропс для відкриття календаря */}
         </div>
       </div>
 
@@ -76,7 +91,6 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
           <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
               <CalendarComponent onClose={closeCalendar} />{' '}
-              {/* Ваше модальне вікно календаря */}
             </div>
           </div>,
           document.body

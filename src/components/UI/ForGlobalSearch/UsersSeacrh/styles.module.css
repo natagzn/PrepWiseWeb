@@ -1,0 +1,21 @@
+.resourcesWrapper {
+  margin: 0 auto;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.resourcesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .resourcesList {
+    justify-content: center;
+  }
+}

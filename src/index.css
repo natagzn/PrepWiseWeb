@@ -49,4 +49,13 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  font-family: var(--web-font-family);
+}
+
+.noResultsMessage {
+  text-align: center;
+  width: 100%;
+  font-size: var(--web-18-regular-font-size);
+  color: var(--maingray);
+  margin-bottom: 60px;
 }

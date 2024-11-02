@@ -9,12 +9,8 @@ function ResourceComponent(props) {
   const { t } = useTranslation();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
-  // Відкриття і закриття модального вікна репорта
   const openReportModal = () => setIsReportModalOpen(true);
   const closeReportModal = () => setIsReportModalOpen(false);
-
-  // Забезпечуємо, що categories завжди буде масивом
-  const categories = Array.isArray(props.categories) ? props.categories : [];
 
   return (
     <div className={styles.wrapper}>
@@ -39,16 +35,13 @@ function ResourceComponent(props) {
           )}
         </div>
         <div className={styles.categoryContainer}>
-          {categories.length > 0 ? (
-            categories.map((category, index) => (
-              <div key={index} className={styles.categoryText}>
-                {category}
-              </div>
-            ))
+          {props.category ? (
+            <div className={styles.categoryText}>{props.category}</div>
           ) : (
             <div className={styles.categoryText}>{t('without_category')}</div>
           )}
         </div>
+
         <div className={styles.articleInfo}>
           <div className={styles.articleLabel}>{t('article_book')}:</div>
           <div className={styles.articleTitle}>{props.title}</div>

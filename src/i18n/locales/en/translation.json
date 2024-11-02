@@ -319,5 +319,25 @@
   "Are you sure you want to delete this resource?": "Are you sure you want to delete this resource?",
   "Resource has been deleted successfully!": "Resource has been deleted successfully!",
   "Are you sure you want to delete this folder?": "Are you sure you want to delete this folder?",
-  "Folder has been deleted successfully!": "Folder has been deleted successfully!"
+  "Folder has been deleted successfully!": "Folder has been deleted successfully!",
+
+  "special_characters_not_allowed": "Special characters not allowed",
+  "results_for": "Results for ‘{{searchBy}}’ - All results",
+  "allResults": "All results",
+  "questionSets": "Question sets",
+  "users": "Users",
+
+  "no_question_sets_message": "You are not subscribed to any users, or no user has published anything yet.",
+  "no_resources_message": "No resources found. Try subscribing to new people.",
+  "no_question_sets_message_search": "No question sets found.",
+  "no_resources_message_search": "No resources found.",
+  "no_users_message_search": "No users found.",
+
+  "premium_message": "Want to get more? Advanced search and other features are only available in PrepWise Premium. Click 'View' to find out more about our premium offers.",
+  "Look": "Look",
+
+  "follower": "Follower",
+
+  "no_question_sets_profile": "No public question sets.",
+  "no_resources_profile": "No resources yet."
 }

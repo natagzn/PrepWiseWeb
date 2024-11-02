@@ -111,7 +111,7 @@ const ResourcesLibrary = () => {
             key={resource.id}
             id={resource.id}
             title={resource.title}
-            categories={resource.categories}
+            category={resource.category}
             username={resource.username}
             date={resource.date}
             description={resource.description}

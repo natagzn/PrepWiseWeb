@@ -4,12 +4,12 @@ import HeaderComponent from '../../components/UI/HeaderComponent';
 import SearchComponent from '../../components/UI/SearchComponent';
 import QuestionSetComponent from '../../components/UI/QuestionSetComponent';
 import ResourceComponent from '../../components/UI/ResourceComponent';
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
+import FooterComponent from 'components/UI/FooterComponent';
 
 const MainPage = () => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
 
-  // Залишаємо питання і ресурси без змін
   const questionSets = Array.from({ length: 6 }, (_, index) => ({
     id: index,
     questionsCount: 10,
@@ -93,104 +93,126 @@ const MainPage = () => {
     <div className={styles.mainPage}>
       <HeaderComponent showSearch={true} showPremium={true} showPlus={true} />
       <div className={styles.search}>
-        <SearchComponent placeholder={t('enter_your_request')} />{' '}
-        {/* Перекладено placeholder */}
+        <SearchComponent placeholder={t('enter_your_request')} />
       </div>
 
       <h2 className={styles.recommendationTitle}>
-        {t('recommended_from_your_following')} {/* Перекладено заголовок */}
+        {t('recommended_from_your_following')}
       </h2>
 
       <div className={styles.questionSets}>
-        <h2 className={styles.title}>{t('question_sets')}</h2>{' '}
-        {/* Перекладено заголовок секції */}
-        <div className={styles.carousel}>
-          <button
-            onClick={handleQuestionScrollLeft}
-            className={styles.arrowLeft}
-            disabled={currentQuestionIndex === 0}
-          >
-            &lt;
-          </button>
-          <div
-            className={styles.questionSetContainer}
-            style={{
-              display: 'flex',
-              transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
-            }}
-          >
-            {questionSets.map((set) => (
-              <div key={set.id} style={{ flex: `0 0 ${100 / visibleItems}%` }}>
-                <QuestionSetComponent
-                  id={set.id}
-                  questionsCount={set.questionsCount}
-                  categories={set.categories}
-                  username={set.username}
-                  date={set.date}
-                  level={set.level}
-                  isLiked={set.isLiked}
-                  visibility={set.visibility}
-                  title={set.title}
-                />
-              </div>
-            ))}
+        <h2 className={styles.title}>{t('question_sets')}</h2>
+
+        {questionSets.length > 0 ? (
+          <div className={styles.carousel}>
+            <button
+              onClick={handleQuestionScrollLeft}
+              className={styles.arrowLeft}
+              disabled={currentQuestionIndex === 0}
+            >
+              &lt;
+            </button>
+            <div
+              className={styles.questionSetContainer}
+              style={{
+                display: 'flex',
+                transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
+              }}
+            >
+              {questionSets.map((set) => (
+                <div
+                  key={set.id}
+                  style={{
+                    flex: `0 0 ${100 / visibleItems}%`,
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <QuestionSetComponent
+                    id={set.id}
+                    questionsCount={set.questionsCount}
+                    categories={set.categories}
+                    username={set.username}
+                    date={set.date}
+                    level={set.level}
+                    isLiked={set.isLiked}
+                    visibility={set.visibility}
+                    title={set.title}
+                  />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={handleQuestionScrollRight}
+              className={styles.arrowRight}
+              disabled={
+                currentQuestionIndex >= questionSets.length - visibleItems
+              }
+            >
+              &gt;
+            </button>
           </div>
-          <button
-            onClick={handleQuestionScrollRight}
-            className={styles.arrowRight}
-            disabled={
-              currentQuestionIndex >= questionSets.length - visibleItems
-            }
-          >
-            &gt;
-          </button>
-        </div>
+        ) : (
+          <p className={styles.notFound}>{t('no_question_sets_message')}</p>
+        )}
       </div>
 
       <div className={styles.resources}>
-        <h2 className={styles.title}>{t('resources')}</h2>{' '}
-        {/* Перекладено заголовок секції */}
-        <div className={styles.carousel}>
-          <button
-            onClick={handleResourceScrollLeft}
-            className={styles.arrowLeft}
-            disabled={currentResourceIndex === 0}
-          >
-            &lt;
-          </button>
-          <div
-            className={styles.resourceContainer}
-            style={{
-              display: 'flex',
-              transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
-            }}
-          >
-            {resources.map((resource) => (
-              <div
-                key={resource.id}
-                style={{ flex: `0 0 ${100 / visibleItems}%` }}
-              >
-                <ResourceComponent
+        <h2 className={styles.title}>{t('resources')}</h2>
+
+        {resources.length > 0 ? (
+          <div className={styles.carousel}>
+            <button
+              onClick={handleResourceScrollLeft}
+              className={styles.arrowLeft}
+              disabled={currentResourceIndex === 0}
+            >
+              &lt;
+            </button>
+            <div
+              className={styles.resourceContainer}
+              style={{
+                display: 'flex',
+                transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
+              }}
+            >
+              {resources.map((resource) => (
+                <div
                   key={resource.id}
-                  id={resource.id}
-                  title={resource.title}
-                  category={resource.category}
-                  username={resource.username}
-                  date={resource.date}
-                  description={resource.description}
-                  report={true}
-                />
-              </div>
-            ))}
+                  style={{
+                    flex: `0 0 ${100 / visibleItems}%`,
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ResourceComponent
+                    key={resource.id}
+                    id={resource.id}
+                    title={resource.title}
+                    category={resource.category}
+                    username={resource.username}
+                    date={resource.date}
+                    description={resource.description}
+                    report={true}
+                  />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={handleResourceScrollRight}
+              className={styles.arrowRight}
+              disabled={currentResourceIndex >= resources.length - visibleItems}
+            >
+              &gt;
+            </button>
           </div>
-          <button
-            onClick={handleResourceScrollRight}
-            className={styles.arrowRight}
-            disabled={currentResourceIndex >= resources.length - visibleItems}
-          >
-            &gt;
-          </button>
-        </div>
+        ) : (
+          <p className={styles.notFound}>{t('no_resources_message')}</p>
+        )}
+      </div>
+
+      <div className={styles.footer}>
+        <FooterComponent />
       </div>
     </div>
   );

@@ -86,19 +86,50 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
               </div>
             </div>
             <div className={styles.separator} />
-            {Object.entries(menuIcons).map(([key, src]) =>
-              key === 'support' ? (
-                <motion.div
-                  key={key}
-                  className={styles.menuItem}
-                  onClick={() => setIsSupportModalOpen(true)} // Open Support Modal
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <img className={styles.menuIcon} src={src} alt={key} />
-                  {t(key)}
-                </motion.div>
-              ) : (
+            {Object.entries(menuIcons).map(([key, src]) => {
+              if (key === 'support') {
+                return (
+                  <motion.div
+                    key={key}
+                    className={styles.menuItem}
+                    onClick={() => setIsSupportModalOpen(true)}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img className={styles.menuIcon} src={src} alt={key} />
+                    {t(key)}
+                  </motion.div>
+                );
+              }
+              if (key === 'people') {
+                return (
+                  <motion.div
+                    key={key}
+                    className={styles.menuItem}
+                    onClick={onOpenPeoplePage}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img className={styles.menuIcon} src={src} alt={key} />
+                    {t(key)}
+                  </motion.div>
+                );
+              }
+              if (key === 'calendar') {
+                return (
+                  <motion.div
+                    key={key}
+                    className={styles.menuItem}
+                    onClick={onOpenCalendarModal}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img className={styles.menuIcon} src={src} alt={key} />
+                    {t(key)}
+                  </motion.div>
+                );
+              }
+              return (
                 <Link
                   to={menuLinks[key] || '#'}
                   key={key}
@@ -112,8 +143,8 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
                     {t(key)}
                   </motion.div>
                 </Link>
-              )
-            )}
+              );
+            })}
             <div className={styles.separator} />
             <motion.div
               className={`${styles.menuItem} ${styles.logoutItem}`}
