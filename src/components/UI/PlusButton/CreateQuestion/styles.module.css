@@ -79,7 +79,6 @@ label {
   display: flex;
   width: fit-content;
   gap: 10px;
-  flex: 1;
 }
 
 .createButton,

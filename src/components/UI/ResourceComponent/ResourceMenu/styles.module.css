@@ -1,0 +1,91 @@
+.menuWrapper {
+  position: relative;
+}
+
+.dotsButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.menuContainer {
+  position: absolute;
+  top: 100%; /* Контейнер починається одразу під іконкою */
+  right: 0; /* Вирівнювання по правому краю іконки */
+  width: max-content;
+  background: white;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
+  border-radius: 15px;
+  padding: 5px 10px;
+  z-index: 2000;
+
+  font-size: 18px;
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px 0;
+  color: #5a5a5a;
+}
+
+.menuItem:hover {
+  background-color: #f0f0f0;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 600px) {
+  .menuContainer {
+    padding: 10px;
+  }
+
+  .menuItem {
+    padding: 3px 0;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .dotsButton {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dotsButton {
+    font-size: 18px;
+  }
+
+  .menuContainer {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .dotsButton {
+    font-size: 16px;
+  }
+
+  .menuContainer {
+    font-size: 13px;
+  }
+}

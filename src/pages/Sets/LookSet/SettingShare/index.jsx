@@ -7,11 +7,11 @@ import SearchComponent from 'components/UI/SearchComponent';
 function SettingsShare({ onClose, id }) {
   const { t } = useTranslation();
   const [friends, setFriends] = useState([
-    { id: 1, username: 'username1', accessLevel: 'None' },
-    { id: 2, username: 'username2', accessLevel: 'None' },
-    { id: 3, username: 'username3', accessLevel: 'Edit' },
-    { id: 4, username: 'username2', accessLevel: 'None' },
-    { id: 5, username: 'username3', accessLevel: 'Edit' },
+    { id: 1, username: 'username1', accessLevel: t('None') },
+    { id: 2, username: 'username2', accessLevel: t('None') },
+    { id: 3, username: 'username3', accessLevel: t('Edit') },
+    { id: 4, username: 'username2', accessLevel: t('None') },
+    { id: 5, username: 'username3', accessLevel: t('View') },
   ]);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -72,9 +72,9 @@ function SettingsShare({ onClose, id }) {
                   }
                   className={styles.accessDropdown}
                 >
-                  <option value="None">None</option>
-                  <option value="View">View</option>
-                  <option value="Edit">Edit</option>
+                  <option value="None">{t('None')}</option>
+                  <option value="View">{t('View')}</option>
+                  <option value="Edit">{t('Edit')}</option>
                 </select>
               </div>
             ))

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import SupportRequestModal from '../SupportRequestModal';
 
 const menuIcons = {
   people: require('../../assets/AvatarMenu/people.svg').default,
@@ -10,9 +11,9 @@ const menuIcons = {
   home: require('../../assets/AvatarMenu/home.svg').default,
   library: require('../../assets/AvatarMenu/library.svg').default,
   notifications: require('../../assets/AvatarMenu/notification.svg').default,
-  //achievements: require('../../assets/AvatarMenu/achievment.svg').default,
   calendar: require('../../assets/AvatarMenu/calendar.svg').default,
   settings: require('../../assets/AvatarMenu/settings.svg').default,
+  support: require('../../assets/AvatarMenu/support.svg').default,
 };
 
 const menuLinks = {
@@ -24,9 +25,9 @@ const menuLinks = {
 };
 
 const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
-  // Додаємо пропс для модального вікна календаря
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -50,6 +51,10 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleSendSupportRequest = async (supportText) => {
+    console.log('Support request sent:', supportText);
+  };
 
   return (
     <div className={styles.avatarContainer}>
@@ -81,51 +86,34 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
               </div>
             </div>
             <div className={styles.separator} />
-            {Object.entries(menuIcons).map(([key, src]) => {
-              if (key === 'people') {
-                return (
+            {Object.entries(menuIcons).map(([key, src]) =>
+              key === 'support' ? (
+                <motion.div
+                  key={key}
+                  className={styles.menuItem}
+                  onClick={() => setIsSupportModalOpen(true)} // Open Support Modal
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <img className={styles.menuIcon} src={src} alt={key} />
+                  {t(key)}
+                </motion.div>
+              ) : (
+                <Link
+                  to={menuLinks[key] || '#'}
+                  key={key}
+                  className={styles.menuItem}
+                >
                   <motion.div
-                    key={key}
-                    className={styles.menuItem}
-                    onClick={onOpenPeoplePage}
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
                     <img className={styles.menuIcon} src={src} alt={key} />
                     {t(key)}
                   </motion.div>
-                );
-              } else if (key === 'calendar') {
-                return (
-                  <motion.div
-                    key={key}
-                    className={styles.menuItem}
-                    onClick={onOpenCalendarModal} // Викликаємо onOpenCalendarModal при натисканні
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <img className={styles.menuIcon} src={src} alt={key} />
-                    {t(key)}
-                  </motion.div>
-                );
-              } else {
-                return (
-                  <Link
-                    to={menuLinks[key]}
-                    key={key}
-                    className={styles.menuItem}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <img className={styles.menuIcon} src={src} alt={key} />
-                      {t(key)}
-                    </motion.div>
-                  </Link>
-                );
-              }
-            })}
+                </Link>
+              )
+            )}
             <div className={styles.separator} />
             <motion.div
               className={`${styles.menuItem} ${styles.logoutItem}`}
@@ -135,15 +123,14 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
             >
               {t('logout')}
             </motion.div>
-            <motion.div
-              className={`${styles.menuItem} ${styles.feedbackItem}`}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              {t('feedback', 'Help and feedback')}
-            </motion.div>
           </div>
         </motion.div>
+      )}
+      {isSupportModalOpen && (
+        <SupportRequestModal
+          onClose={() => setIsSupportModalOpen(false)}
+          onSendSupportRequest={handleSendSupportRequest}
+        />
       )}
     </div>
   );

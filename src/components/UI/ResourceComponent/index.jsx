@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import LikeDislikeToggle from '../LikeDislike/LikeDislikeToggle';
 import { useTranslation } from 'react-i18next';
 import ReportComponent from '../ReportComponent';
+import ResourceMenu from './ResourceMenu';
 
 function ResourceComponent(props) {
   const { t } = useTranslation();
@@ -32,11 +33,9 @@ function ResourceComponent(props) {
               />
             </button>
           ) : (
-            <img
-              src="/icons/ResourceComponent/three-dots.svg"
-              alt={t('options')}
-              className={styles.icon}
-            />
+            <div className={styles.icon}>
+              <ResourceMenu id={props.id} />
+            </div>
           )}
         </div>
         <div className={styles.categoryContainer}>

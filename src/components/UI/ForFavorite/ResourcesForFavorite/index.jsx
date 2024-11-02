@@ -83,9 +83,9 @@ const ResourcesForFavorite = () => {
 
   // Видалення ресурсу зі сторінки при знятті лайку або дизлайку
   const handleRemoveResource = (id) => {
-    setResources((prevResources) =>
+    /*setResources((prevResources) =>
       prevResources.filter((resource) => resource.id !== id)
-    );
+    );*/
   };
 
   return (
@@ -124,7 +124,7 @@ const ResourcesForFavorite = () => {
             date={resource.date}
             description={resource.description}
             isLiked={resource.isLiked}
-            onRemove={() => handleRemoveResource(resource.id)} // передача функції видалення
+            /*onRemove={() => handleRemoveResource(resource.id)} */
           />
         ))}
       </div>

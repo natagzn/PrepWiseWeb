@@ -1,0 +1,88 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 90%;
+  max-width: 600px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.instruction {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.input {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  border: 1px solid #5a5a5a;
+  background: #f9f9f9;
+  padding: 10px;
+  font-size: 1rem;
+  resize: none;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.sendButton {
+  padding: 8px 18px;
+  background-color: #1d1352;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cancelButton {
+  padding: 8px 18px;
+  background: none;
+  color: #1d1352;
+  border: 1px solid #1d1352;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .instruction {
+    font-size: 1rem;
+  }
+
+  .sendButton,
+  .cancelButton {
+    font-size: 0.9rem;
+    padding: 6px 16px;
+  }
+}

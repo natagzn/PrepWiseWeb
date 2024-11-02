@@ -141,9 +141,9 @@ const QuestionSetsForFavorite = () => {
   };
 
   // Функція для видалення лайку
-  const handleUnlikeSet = (id) => {
+  /*const handleUnlikeSet = (id) => {
     setQuestionSets((prevSets) => prevSets.filter((set) => set.id !== id));
-  };
+  };*/
 
   return (
     <div className={styles.questionSetsWrapper}>
@@ -188,7 +188,7 @@ const QuestionSetsForFavorite = () => {
                 visibility={set.visibility}
                 style={{ width: '500px' }}
                 id={set.id}
-                handleUnlikeSet={handleUnlikeSet}
+                /*handleUnlikeSet={handleUnlikeSet}*/
               />
             </div>
           ))}

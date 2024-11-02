@@ -5,25 +5,16 @@ import styles from './styles.module.css';
 import ConfirmationModal from 'components/UI/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 
-const FolderMenu = ({ id, isAuthor, isCoauthor }) => {
+const ResourceMenu = ({ id }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isResetModalOpen, setResetModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [isReportOpen, setReportOpen] = useState(false);
-  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
-  const [isShareOpen, setShareOpen] = useState(false);
   const menuRef = useRef(null);
   const iconRef = useRef(null);
 
   // Function to open/close menu
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
-
-  const handleEdit = () => {
-    navigate(`/editFolder/${id}`);
-    setMenuOpen(false);
-  };
 
   const handleDelete = () => {
     setDeleteModalOpen(true);
@@ -31,22 +22,17 @@ const FolderMenu = ({ id, isAuthor, isCoauthor }) => {
   };
 
   const handleModalCancel = () => {
-    setResetModalOpen(false);
     setDeleteModalOpen(false);
-    setReportOpen(false);
-    setFolderModalOpen(false);
-    setShareOpen(false);
   };
 
   const handleModalConfirmDelete = () => {
     console.log('Delete action confirmed');
-    toast.success(t('Folder has been deleted successfully!'));
+    toast.success(t('Resource has been deleted successfully!'));
     handleModalCancel();
-    navigate(-1);
+    window.location.reload();
   };
 
   const menuItems = [
-    { icon: '/icons/menu/IconEdit.svg', label: t('edit'), action: handleEdit },
     {
       icon: '/icons/menu/IconDelete.svg',
       label: t('delete'),
@@ -102,10 +88,10 @@ const FolderMenu = ({ id, isAuthor, isCoauthor }) => {
         isOpen={isDeleteModalOpen}
         onRequestClose={handleModalCancel}
         onConfirm={handleModalConfirmDelete}
-        text={t('Are you sure you want to delete this folder?')}
+        text={t('Are you sure you want to delete this resource?')}
       />
     </div>
   );
 };
 
-export default FolderMenu;
+export default ResourceMenu;

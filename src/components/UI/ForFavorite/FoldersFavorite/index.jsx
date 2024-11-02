@@ -25,11 +25,11 @@ const FoldersFavorite = () => {
     setSearchTerm(value);
   };
 
-  const handleLikeFolder = (id) => {
+  /*const handleLikeFolder = (id) => {
     setFolders((prevFolders) =>
       prevFolders.filter((folder) => folder.id !== id)
     );
-  };
+  };*/
 
   const sortedFolders = () => {
     let filteredFolders = folders.filter((folder) =>
@@ -82,7 +82,7 @@ const FoldersFavorite = () => {
             itemsCount={folder.itemsCount}
             date={folder.date}
             isLiked={folder.isLiked}
-            handleLikeFolder={handleLikeFolder}
+            /*handleLikeFolder={handleLikeFolder}*/
           />
         ))}
       </div>
