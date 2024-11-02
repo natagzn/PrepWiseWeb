@@ -1,0 +1,59 @@
+/* styles.module.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 30px 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.yes {
+  background-color: var(--landingdark-blue);
+  color: white;
+}
+
+.no {
+  border: 1px solid var(--landingdark-blue);
+}
+
+/* Адаптивні стилі */
+@media (max-width: 600px) {
+  .modal {
+    font-size: 14px; /* Зменшений шрифт для малих екранів */
+    padding: 15px; /* Менше відступи для компактності */
+  }
+
+  button {
+    padding: 8px 12px; /* Менше відступи для кнопок */
+  }
+}

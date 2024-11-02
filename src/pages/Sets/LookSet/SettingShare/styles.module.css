@@ -1,0 +1,137 @@
+.modalBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modalContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  min-height: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--web-font-family);
+  font-size: 18px;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: var(--web-23-regular-font-size);
+  cursor: pointer;
+  color: var(--maingray);
+  position: absolute;
+  padding: 5px;
+}
+
+.closeButton:hover {
+  color: var(--mainblack);
+}
+
+.title {
+  font-size: var(--web-23-regular-font-size);
+  flex-grow: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.searchInput {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.friendsList {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 300px; /* Встановлює максимальну висоту, після якої з'являється прокрутка */
+  padding-right: 5px; /* Додає трохи відступу справа для зручності прокрутки */
+}
+
+.friendsList p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.followerItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.avatar {
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.followerInfo {
+  flex: 1;
+}
+
+.accessDropdown {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.confirmButton,
+.cancelButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+.confirmButton {
+  background-color: var(--landingdark-blue);
+  color: white;
+}
+
+.cancelButton {
+  color: var(--landingdark-blue);
+  border: 1px solid var(--landingdark-blue);
+}
+
+@media (max-width: 480px) {
+  .modalContainer {
+    width: 90%;
+  }
+  .modalTitle {
+    font-size: 18px;
+  }
+}

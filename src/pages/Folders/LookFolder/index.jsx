@@ -5,9 +5,12 @@ import HeaderComponent from '../../../components/UI/HeaderComponent';
 import SortComponent from '../../../components/UI/SortComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
 import { useTranslation } from 'react-i18next';
+import { FolderComponent } from 'components/UI/FolderComponent';
+import FolderMenu from '../FolderMenu';
 
 const LookFolder = ({ folderName, visibility, count, countQ }) => {
   const { t } = useTranslation();
+  const id = 2;
 
   // Початковий порядок sets
   const initialQuestionSetsData = [
@@ -125,7 +128,7 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
             />
             <div className={styles.visibility}>{visibility}</div>
             <div className={styles.threeDots}>
-              <img src="/icons/dots.svg" alt="dots" className={styles.icon} />
+              <FolderMenu id={id} />
             </div>
           </div>
           <div className={styles.sortContainer}>

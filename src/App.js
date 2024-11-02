@@ -69,7 +69,7 @@ function App() {
         <Route path="/profileUser" element={<PeopleProfilePage />} />
 
         <Route
-          path="/folder"
+          path="/lookFolder"
           element={
             <LookFolder
               folderName="Folder name"
@@ -80,9 +80,21 @@ function App() {
           }
         />
 
-        <Route path="/createFolder" element={<CreateEditFolder />} />
+        <Route
+          path="/createFolder"
+          element={<CreateEditFolder editOrCreate={'create'} />}
+        />
+        <Route
+          path="/editFolder/:id"
+          element={<CreateEditFolder editOrCreate={'edit'} />}
+        />
         <Route
           path="/createSet"
+          element={<CreateEditSet editOrCreate={'create'} />}
+        />
+
+        <Route
+          path="/editSet/:id"
           element={<CreateEditSet editOrCreate={'edit'} />}
         />
 

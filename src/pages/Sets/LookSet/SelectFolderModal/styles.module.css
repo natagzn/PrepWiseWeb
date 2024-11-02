@@ -1,0 +1,78 @@
+/* styles.module.css */
+
+/* Overlay styles for modal background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 20px;
+}
+
+.setList {
+  margin-top: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.setItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.setItem:hover {
+  background-color: #f0f0f0;
+}
+
+.close {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--landingdark-blue);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive font scaling */
+.modalContent,
+.setList,
+.setItem,
+.close {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .modalContent,
+  .setList,
+  .setItem,
+  .close {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent,
+  .setList,
+  .setItem,
+  .close {
+    font-size: 12px;
+  }
+}

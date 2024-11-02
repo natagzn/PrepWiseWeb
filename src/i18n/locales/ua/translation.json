@@ -31,7 +31,7 @@
 
   "enter_your_request": "Введіть свій запит...",
   "recommended_from_your_following": "Рекомендовані з ваших підписок",
-  "question_sets": "Набори запитань",
+  "question_sets": "Модулі",
   "resources": "Ресурси",
 
   "following": "Підписки",
@@ -67,7 +67,7 @@
   "name_Z_A": "Назва (Я -> А)",
   "search_resources": "Пошук ресурсів...",
   "search_folders": "Пошук папок...",
-  "search_sets": "Пошук сетів...",
+  "search_sets": "Пошук модулів...",
 
   "filter": "Фільтр",
   "apply": "Застосувати",
@@ -100,7 +100,7 @@
   "buy_premium": "Купити Преміум",
   "you_will_receive": "Ви отримаєте",
   "unlimited_search_results": "необмежену кількість результатів пошуку",
-  "unlimited_sets": "необмежену кількість наборів",
+  "unlimited_sets": "необмежену кількість модулів",
   "unlimited_questions": "необмежену кількість запитань у наборі",
   "share_access": "можливість поділитися доступом до набору",
   "monthly": "Місячний",
@@ -132,15 +132,15 @@
   "Create": "Створити",
   "Update": "Оновити",
   "Was chosen": "Було обрано",
-  "sets": "списків",
+  "sets": "модулів",
 
-  "create_a_set": "Створення сету",
-  "update_a_set": "Оновлення сету",
+  "create_a_set": "Створення модуля",
+  "update_a_set": "Оновлення модуля",
 
   "Title": "Назва",
   "Visibility": "Доступність",
-  "Level of set": "Рівень сету",
-  "Category of set": "Категорії сету",
+  "Level of set": "Рівень модуля",
+  "Category of set": "Категорії модуля",
 
   "ADD QUESTION CARD": "ДОДАТИ НОВЕ ПИТАННЯ",
   "Enter a question": "Введіть питання",
@@ -149,11 +149,11 @@
   "Enter an answer": "Введіть відповідь",
   "search_favorite_resource": "Пошук улюблених ресурсів...",
   "search_favorite_folders": "Пошук улюблених папок...",
-  "search_favorite_sets": "Пошук улюблених сетів...",
+  "search_favorite_sets": "Пошук улюблених модулів...",
 
   "questionsCount": "Питання ({{count}})",
   "noLearningYet": "Ви ще не почали вивчати жоден термін.",
-  "stillLearningTitle": "Ще вивчається ({{count}})",
+  "stillLearningTitle": "Ще вивчаю ({{count}})",
   "learningEncouragement": "Ви почали вивчати ці терміни. Продовжуйте в тому ж дусі!",
   "notKnown": "Ви ще не знаєте жодного питання.",
   "alreadyKnowTitle": "Вже знаю ({{count}})",
@@ -167,7 +167,7 @@
   "quickReviewTitle": "Швидкий огляд питань",
   "progressTitle": "Прогрес вивчення",
   "known": "Знаю",
-  "stillLearning": "Ще вивчається",
+  "stillLearning": "Ще вивчаю",
   "studyFlashcards": "Вчити картки",
 
   "enterQuestion": "Введіть питання",
@@ -215,7 +215,7 @@
   },
   "progressHeader": "Ваші успіхи:",
   "knowLabel": "Знаю",
-  "stillLearningLabel": "Все ще вивчаю",
+  "stillLearningLabel": "Ще вивчаю",
   "nextStepsHeader": "Наступні кроки:",
   "restartButton": "Перезапустити флеш-картки",
   "returnButton": "Повернутися до набору",
@@ -253,17 +253,17 @@
   "result flashcards - know all": "Ви вже знаєте всі картки. Якщо Ви хочете пройти їх заново - скиньте прогрес у налаштуванні сету",
 
   "Add new": "Створити",
-  "Question set": "Список питань",
+  "Question set": "Модуль",
   "Folder": "Папка",
   "Resource": "Ресурс",
 
   "New question": "Нове питання",
   "Enter your question": "Введіть своє питання",
   "Enter your answer": "Введіть свою відповідь (якщо знаєте)",
-  "Choose set": "Оберіть сет",
+  "Choose set": "Оберіть модуль",
   "Question is required!": "Питання є обов'язковим!",
   "Question created successfully!": "Питання створено успішно!",
-  "Select a Set": "Оберіть сет",
+  "Select a Set": "Оберіть модуль",
   "Close": "Закрити",
 
   "Name, description, level, and category are required!": "Назва, опис, рівень та категорія є обов'язковими!",
@@ -278,13 +278,30 @@
 
   "Please enter a title.": "Будь ласка введіть заголовок.",
   "All questions must be filled.": "Всі питання повинні бути заповнені",
-  "You can't create set without questions": "Ви не можете створити сет без питань.",
-  "Set created successfully!": "Сет створено успішно!",
+  "You can't create set without questions": "Ви не можете створити модуль без питань.",
+  "Set created successfully!": "Модуль створено успішно!",
 
   "Please enter a title and select at least one set.": "Будь ласка введеіть заголовок та хоча би 1 сет",
   "Folder created successfully": "Папку створено успішно",
   "Folder updated successfully": "Папку оновлено успішно",
 
   "Activity calendar": "Календар активності",
-  "calendar": "Календар"
+  "calendar": "Календар",
+  "Are you sure you want to reset your progress?": "Ви впевнені що хочете скинути прогрес?",
+  "Progress has been reset successfully!": "Прогрес успішно скинуто!",
+  "edit": "Редагувати",
+  "share": "Поширення",
+  "export to pdf": "Експортувати у pdf",
+  "reset progress": "Скинути прогрес",
+  "add to folder": "Додати до папки",
+  "delete": "Видалити",
+  "Are you sure you want to delete this set?": "Ви впевнені що хочете видалити цей модуль?",
+  "Set has been deleted successfully!": "Набір видалено успішно!",
+  "Select the folder to add to": "Оберіть папку в яку додати",
+  "Set added to": "Модуль доданий до",
+
+  "no_friends": "Ви ще не маєте друзів",
+  "no_search_results": "Не знайдено",
+  "search_friends": "Пошук друзів...",
+  "Access": "Доступ"
 }

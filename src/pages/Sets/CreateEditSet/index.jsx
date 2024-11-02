@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.css';
@@ -8,11 +8,10 @@ import HeaderComponent from '../../../components/UI/HeaderComponent';
 import VisibilityLevelCategories from './VisibilityLevelCategories';
 import CreateQuestionAnswer from './CreateQuestionAnswer';
 
-function CreateEditSet() {
+function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { editOrCreate, setId } = location.state || {};
+  const { setId } = useParams();
 
   const [setTitle, setSetTitle] = useState('');
   const [questions, setQuestions] = useState([
@@ -78,7 +77,7 @@ function CreateEditSet() {
 
     console.log(setTitle, questions);
     toast.success(t('Set created successfully!'));
-    navigate('/sets');
+    navigate(-1);
   };
 
   const handleUpdate = () => {
@@ -121,10 +120,10 @@ function CreateEditSet() {
     } else {
       toast.info(t('No changes made.'));
     }
-    navigate('/home');
+    navigate(-1);
   };
 
-  const handleCancel = () => navigate('/home');
+  const handleCancel = () => navigate(-1);
 
   const handleDeleteQuestion = (id) => {
     const updatedQuestions = questions.filter((q) => q.id !== id);

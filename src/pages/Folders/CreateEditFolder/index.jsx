@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SearchComponent from 'components/UI/SearchComponent';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const CreateEditFolder = ({ folderName, visibility, questionSetsData }) => {
+const CreateEditFolder = ({
+  folderName,
+  visibility,
+  questionSetsData,
+  editOrCreate,
+}) => {
   questionSetsData = [
     { id: 1, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
     { id: 2, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
@@ -22,7 +27,7 @@ const CreateEditFolder = ({ folderName, visibility, questionSetsData }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { editOrCreate, folderId } = location.state || {};
+  const { id } = useParams();
 
   const [folderTitle, setFolderTitle] = useState(folderName || '');
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,9 +38,9 @@ const CreateEditFolder = ({ folderName, visibility, questionSetsData }) => {
 
   useEffect(() => {
     if (editOrCreate === 'edit') {
-      fetchFolderData(folderId); // Витягуємо дані про папку
+      fetchFolderData(id); // Витягуємо дані про папку
     }
-  }, [editOrCreate, folderId]);
+  }, [editOrCreate, id]);
 
   const fetchFolderData = (id) => {
     // Фіктивна функція для отримання даних про папку за ID
