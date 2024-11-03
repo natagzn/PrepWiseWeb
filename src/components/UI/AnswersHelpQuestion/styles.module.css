@@ -1,5 +1,5 @@
 .modalContainer {
-  max-width: 600px; /* Ви можете налаштувати ширину на свій смак */
+  max-width: 600px;
   height: 500px; /* Фіксована висота */
   padding: 20px;
   background: white;
@@ -23,14 +23,13 @@
 .title {
   color: black;
   font-size: 30px;
-  font-family: 'Noto Sans', sans-serif;
   font-weight: 700;
 }
 
 .closeButton {
   color: black;
   font-size: 30px;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: var(--web-font-family);
   font-weight: 400;
   background: none;
   border: none;
@@ -50,9 +49,9 @@
 .answerCard {
   display: flex;
   padding: 10px;
-  border: 1px solid #e0e0e0; /* При бажанні можна додати рамку */
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  margin-bottom: 10px; /* Відстань між картками */
+  margin-bottom: 10px;
   gap: 10px;
 }
 
@@ -60,15 +59,15 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-bottom: 5px; /* Відстань між аватаром та іменем */
+  margin-bottom: 5px;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
   margin-right: 15px;
-  max-width: 120px; /* Залиште цю ширину, або налаштуйте на ваш смак */
-  word-wrap: break-word; /* Дозволяє переносити текст на нові рядки */
+  max-width: 120px;
+  word-wrap: break-word;
   width: 120px;
 }
 
@@ -80,19 +79,19 @@
 
 .username {
   font-weight: bold;
-  word-break: break-word; /* Дозволяє переносити довгі слова */
+  word-break: break-word;
   width: 120px;
 }
 
 .date {
   font-size: 0.8em;
-  color: #888; /* Сірий колір для дати */
+  color: #888;
 }
 
 .answerText {
-  flex-grow: 1; /* Дозволяє тексту відповіді займати залишок простору */
-  padding: 5px; /* Відстань всередині текстового блоку */
-  background-color: #f9f9f9; /* Фон для тексту відповіді */
+  flex-grow: 1;
+  padding: 5px;
+  background-color: #f9f9f9;
   border-radius: 5px;
 }
 .separator {

@@ -51,7 +51,7 @@ const SharedSetsLibrary = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: [
         'JavaScript',
         'Programming',
@@ -83,7 +83,7 @@ const SharedSetsLibrary = () => {
     },
     {
       name: 'levels',
-      label: 'Level',
+      label: 'level',
       options: ['Junior', 'Middle', 'Senior'],
     },
     {
@@ -179,26 +179,30 @@ const SharedSetsLibrary = () => {
 
       {/* Сети питань */}
       <div className={styles.questionSetsGrid}>
-        {sortedQuestionSets()
-          .slice(0, loadedSets)
-          .map((set) => (
-            <div key={set.id}>
-              <QuestionSetShare
-                questionsCount={set.questionsCount}
-                title={set.title}
-                categories={set.categories}
-                username={set.username}
-                date={set.date}
-                level={set.level}
-                isLiked={set.isLiked}
-                shared={set.shared}
-                usernameAuthor={set.usernameAuthor}
-                coauthors={set.coauthors}
-                style={{ width: '500px' }}
-                id={set.id}
-              />
-            </div>
-          ))}
+        {sortedQuestionSets().length === 0 ? (
+          <div className="noResultsMessage">{t('no_shared_yet_lib')} </div>
+        ) : (
+          sortedQuestionSets()
+            .slice(0, loadedSets)
+            .map((set) => (
+              <div key={set.id}>
+                <QuestionSetShare
+                  questionsCount={set.questionsCount}
+                  title={set.title}
+                  categories={set.categories}
+                  username={set.username}
+                  date={set.date}
+                  level={set.level}
+                  isLiked={set.isLiked}
+                  shared={set.shared}
+                  usernameAuthor={set.usernameAuthor}
+                  coauthors={set.coauthors}
+                  style={{ width: '500px' }}
+                  id={set.id}
+                />
+              </div>
+            ))
+        )}
       </div>
     </div>
   );

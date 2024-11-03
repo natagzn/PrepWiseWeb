@@ -15,7 +15,7 @@
 }
 
 .columnLeft {
-  width: 70%; /* Це значення зміниться в медіа-запиті */
+  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -42,23 +42,23 @@
 }
 
 .inputField {
-  display: flex; /* Розташовуємо елементи в один рядок */
-  align-items: center; /* Вирівнюємо вертикально по центру */
-  gap: 20px; /* Додаємо відстань між заголовком та інпутом */
-  width: 100%; /* Щоб контейнер займав всю ширину */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
 }
 
 .label {
   font-size: var(--web-23-regular-font-size);
   color: black;
-  width: 330px; /* Фіксована ширина для .label */
+  width: 330px;
 }
 
 .inputText {
-  flex-grow: 1; /* Змушує інпут займати все вільне місце */
+  flex-grow: 1;
   padding: 5px;
-  border: 1px solid var(--maingray); /* Ставимо рамку */
-  border-radius: 15px; /* Краї */
+  border: 1px solid var(--maingray);
+  border-radius: 15px;
   font-size: var(--web-18-regular-font-size);
   color: black;
   max-width: 480px;
@@ -78,12 +78,6 @@
   cursor: pointer;
   width: 180px;
 }
-
-/*.buttonBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}*/
 
 .cancelButton {
   width: 100%;
@@ -108,19 +102,18 @@
   margin-bottom: 20px;
 }
 
-/*кнопка для додавання*/
 .addQuestionButton {
   width: 100%;
-  padding: 10px 0; /* Вирівнюємо відступи по вертикалі */
+  padding: 10px 0;
   background: white;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer; /* Додаємо курсор для вказівника */
-  margin-top: 20px; /* Відступ зверху */
-  border: 1px solid transparent; /* Прозорий кордон, щоб кнопка виглядала нормально */
+  cursor: pointer;
+  margin-top: 20px;
+  border: 1px solid transparent;
 }
 
 .buttonText {
@@ -130,9 +123,9 @@
 }
 
 .buttonBorder {
-  width: 100%; /* Лінія займає всю ширину */
-  border-top: 2px solid #144250; /* Змінюємо на верхню лінію */
-  margin-top: 5px; /* Відступ між текстом і лінією */
+  width: 100%;
+  border-top: 2px solid var(--landingdark-blue);
+  margin-top: 5px;
 }
 
 .footer {
@@ -144,17 +137,16 @@
   justify-content: space-around;
 }
 
-/* При малих екранах верхня кнопка пропадає, а футер з'являється */
 @media (max-width: 1200px) {
   .columnRight {
     display: none;
   }
   .group {
-    width: 100%; /* Змінюємо ширину групи на 100% */
+    width: 100%;
   }
 
   .columnLeft {
-    width: 100%; /* Задаємо ширину для лівого стовпця на всю ширину */
+    width: 100%;
   }
 
   .columnRight {
@@ -205,8 +197,8 @@
   }
 
   .inputText {
-    width: 100%; /* Займає всю доступну ширину в контейнері */
-    flex-shrink: 1; /* Дозволяє інпуту скорочуватись у flex-контейнері */
+    width: 100%;
+    flex-shrink: 1;
   }
 
   .createUpdateButton,
@@ -239,11 +231,11 @@
 
 .createUpdateButton:hover,
 .createUpdateButtonFooter:hover {
-  background-color: #34228a; /* Зелений колір при наведенні */
-  transform: scale(1.05); /* Збільшення кнопки */
+  background-color: #34228a;
+  transform: scale(1.05);
 }
 
 .cancelButton:hover {
-  background-color: #d4d4d4; /* Червоний колір при наведенні */
+  background-color: #d4d4d4;
   transform: scale(1.05);
 }

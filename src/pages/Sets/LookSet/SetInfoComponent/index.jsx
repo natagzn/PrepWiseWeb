@@ -17,12 +17,7 @@ const SetInfoComponent = (props) => {
   } = props;
 
   const { t } = useTranslation();
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const optionsIconRef = useRef(null); // Реєструємо реф для трьох крапок
-
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const date = '2024-10-10';
 
   return (
     <>
@@ -65,6 +60,8 @@ const SetInfoComponent = (props) => {
           <span>
             {questionCount} {t('questions')}
           </span>
+          <span className={styles.separator}>|</span>
+          <span>{date}</span>
         </div>
 
         <div className={styles.level}>

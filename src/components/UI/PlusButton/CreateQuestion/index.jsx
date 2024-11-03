@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
-import SortComponent from 'components/UI/SortComponent';
-import SelectSetModal from './SelectSetModal'; // Імпорт нового компонента
+import SelectSetModal from './SelectSetModal';
 import { toast } from 'react-toastify';
 
 const CreateQuestion = ({ isOpen, onClose }) => {

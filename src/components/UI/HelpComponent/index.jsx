@@ -35,17 +35,15 @@ function HelpComponent({ userId, questionId }) {
   // Обробник для закриття компонента при кліку поза межами
   const handleClickOutside = (event) => {
     if (helpRef.current && !helpRef.current.contains(event.target)) {
-      setIsOpen(false); // Закриваємо вікно опцій
-      setShowModal(false); // Закриваємо модальне вікно запиту допомоги
-      setShowAnswersModal(false); // Закриваємо модальне вікно відповідей
+      setIsOpen(false);
+      setShowModal(false);
+      setShowAnswersModal(false);
     }
   };
 
   useEffect(() => {
-    // Додаємо обробник подій при монтуванні компонента
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Очищення обробника подій при розмонтуванні
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

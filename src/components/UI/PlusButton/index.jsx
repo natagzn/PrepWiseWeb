@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
-import CreateQuestion from './CreateQuestion'; // Імпорт компоненту CreateQuestion
-import CreateResource from './CreateResource'; // Імпорт компоненту CreateResource
+import CreateQuestion from './CreateQuestion';
+import CreateResource from './CreateResource';
 import { useNavigate } from 'react-router-dom';
 
 function PlusButton() {

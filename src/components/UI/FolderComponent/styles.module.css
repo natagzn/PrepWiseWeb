@@ -51,7 +51,7 @@
 }
 
 .items {
-  color: #5a5a5a;
+  color: var(--maingray);
   font-size: var(--web-15-regular-font-size);
   font-weight: 400;
   margin-top: 5px;
@@ -66,7 +66,7 @@
 }
 
 .date {
-  color: #5a5a5a;
+  color: var(--maingray);
   font-size: var(--web-15-regular-font-size);
   font-weight: 400;
 }

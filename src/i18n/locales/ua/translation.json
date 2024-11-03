@@ -295,6 +295,7 @@
   "reset progress": "Скинути прогрес",
   "add to folder": "Додати до папки",
   "delete": "Видалити",
+  "Delete": "Видалити",
   "Are you sure you want to delete this set?": "Ви впевнені що хочете видалити цей модуль?",
   "Set has been deleted successfully!": "Набір видалено успішно!",
   "Select the folder to add to": "Оберіть папку в яку додати",
@@ -340,5 +341,56 @@
 
   "follower": "Підписник",
   "no_question_sets_profile": "Ще немає публічних модулів.",
-  "no_resources_profile": "Ще немає ресурсів."
+  "no_resources_profile": "Ще немає ресурсів.",
+
+  "Manage categories": "Управління категоріями",
+  "Category name": "Назва категорії",
+  "Actions": "Дії",
+  "Edit category": "Редагувати категорію",
+  "delete_category_confirmation": "Ви дійсно хочете видалити категорію \"{{name}}\"?",
+  "levels": "Рівні",
+  "Manage levels": "Управління рівнями",
+  "Level name": "Назва рівня",
+  "Edit level": "Редагувати рівень",
+  "delete_level_confirmation": "Ви дійсно хочете видалити рівень \"{{name}}\"?",
+
+  "complaints": "Скарги",
+  "Manage complaints": "Управління скаргами",
+  "User ID": "ID користувача",
+  "Complaint Type": "Тип скарги",
+  "Context": "Скарга",
+  "Date": "Дата",
+
+  "are_you_sure_delete": "Ви впевнені, що хочете видалити цей ресурс?",
+  "access": "Доступ",
+  "user": "Користувач",
+  "questions_in_set": "Питання в наборі",
+  "are_you_sure_delete_set": "Ви впевнені, що хочете видалити цей набір?",
+
+  "support_response_subject": "Support Response",
+  "greeting": "Доброго дня",
+  "feedback_thanks": "Дякуємо за ваш відгук. Ми переглянули ваше звернення і готові допомогти.",
+  "best_regards": "З найкращими побажаннями",
+  "support_team": "Команда підтримки \"PrepWise\"",
+  "error_opening_gmail": "Не вдалося відкрити Gmail. Перевірте налаштування браузера.",
+  "Support Managment": "Служба підтримки",
+
+  "supports": "Підтримка",
+  "current_subscription": "Поточний Premium",
+  "purchase_date": "Дата придбання",
+  "subscription_type": "Тип",
+  "no_current_subscription": "Немає поточної підписки",
+  "previous_subscriptions": "Попередні підписки Premium",
+  "no_previous_subscriptions": "Немає попередніх підписок",
+  "view_subscriptions": "Переглянути типи Premium",
+
+  "no_folders_message": "Не знайдено папок.",
+  "no_question_sets_message_lib": "Не знайдено модулів.",
+  "no_resources_message_lib": "Не знайдено ресурсів.",
+  "no_shared_yet_lib": "Не знайдено поширених модулів.",
+
+  "no_folders_message_fav": "Не знайдено улюблених папок.",
+  "no_question_sets_message_fav": "Не улюблених знайдено модулів.",
+  "no_resources_message_fav": "Не знайдено улюблених ресурсів.",
+  "Type": "Тип"
 }

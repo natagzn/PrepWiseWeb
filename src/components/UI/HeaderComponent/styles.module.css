@@ -33,7 +33,7 @@
 }
 
 .premium-box {
-  background: #f4e04d;
+  background: var(--mainyellow);
   padding: 5px 15px;
   border-radius: 8px;
 }

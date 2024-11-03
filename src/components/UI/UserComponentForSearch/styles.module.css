@@ -25,7 +25,7 @@
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  width: 100px; /* Фіксована ширина лівої частини */
+  width: 100px;
   max-height: 100%;
 }
 
@@ -38,7 +38,7 @@
 .username {
   text-align: center;
   color: black;
-  font-size: 16px; /* Базовий шрифт */
+  font-size: 16px;
   font-weight: 500;
   max-width: 80px;
   max-height: 50px;
@@ -53,7 +53,7 @@
 .separator {
   width: 2px;
   height: 135px;
-  background: #e5e5e5;
+  background: var(--light-gray);
 }
 
 .actionsContainer {
@@ -68,7 +68,7 @@
 .viewProfileButton {
   height: 31px;
   padding: 1px 13px;
-  background: #1d1352;
+  background: var(--landingdark-blue);
   border-radius: 15px;
   color: white;
   font-size: 18px;
@@ -92,8 +92,6 @@
   font-weight: 400;
   text-align: center;
 }
-
-/* Media queries for responsiveness */
 
 @media (max-width: 600px) {
   .userContainer {

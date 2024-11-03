@@ -134,7 +134,6 @@ const SetMenu = ({ id, isAuthor, isCoauthor }) => {
 
   return (
     <div className={styles.menuWrapper}>
-      {/* Icon with three dots */}
       <button ref={iconRef} onClick={toggleMenu} className={styles.dotsButton}>
         ⋮
       </button>

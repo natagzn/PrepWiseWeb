@@ -29,13 +29,13 @@
 
 .question {
   font-size: 1.2rem;
-  color: #333;
+  color: var(--maingray);
   margin-bottom: 20px;
 }
 
 .answerLabel {
   font-size: 1.2rem;
-  color: #333;
+  color: var(--maingray);
   margin-top: 15px;
 }
 
@@ -43,7 +43,7 @@
   width: 100%;
   height: 150px;
   border-radius: 15px;
-  border: 1px solid #5a5a5a;
+  border: 1px solid var(--maingray);
   background: #f1f1f1;
   padding: 10px;
   font-size: 1rem;
@@ -58,7 +58,7 @@
 
 .sendButton {
   padding: 10px 20px;
-  background-color: #1d1352;
+  background-color: var(--landingdark-blue);
   color: white;
   border: none;
   border-radius: 15px;
@@ -69,8 +69,8 @@
 .cancelButton {
   padding: 10px 20px;
   background: none;
-  color: #1d1352;
-  border: 1px solid #1d1352;
+  color: var(--landingdark-blue);
+  border: 1px solid var(--landingdark-blue);
   border-radius: 15px;
   font-size: 1rem;
   cursor: pointer;

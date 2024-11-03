@@ -1,5 +1,5 @@
 .footer {
-  background-color: var(--landingdark-blue); /* Use the same color as header */
+  background-color: var(--landingdark-blue);
   color: var(--mainwhite);
   padding: 20px;
   text-align: center;
@@ -27,7 +27,7 @@
 }
 
 .link:hover {
-  color: var(--mainyellow); /* Change to a different color on hover */
+  color: var(--mainyellow);
 }
 
 .socialMedia {

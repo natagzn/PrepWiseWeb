@@ -20,8 +20,6 @@ const AnswerCard = ({ avatar, username, date, answer }) => (
 );
 
 const AnswersModal = ({ questionID, onClose }) => {
-  // Згенеровані відповіді для тестування
-
   const { t } = useTranslation();
   const answers = [
     {

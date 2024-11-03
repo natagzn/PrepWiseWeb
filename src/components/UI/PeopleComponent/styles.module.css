@@ -35,7 +35,7 @@
 .followButton {
   height: 32px;
   padding: 7px 16px;
-  background: #144250;
+  background: var(--landingdark-blue);
   border-radius: 15px;
   display: flex;
   justify-content: center;

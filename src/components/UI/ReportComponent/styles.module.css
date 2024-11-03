@@ -67,7 +67,7 @@
   margin-left: 8px;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--light-gray);
   font-size: var(--web-18-regular-font-size);
 
   max-height: 60px;
@@ -87,7 +87,7 @@
 .okButton {
   width: 200px;
   height: 52px;
-  background: #1d1352;
+  background: var(--landingdark-blue);
   color: white;
   font-weight: 400;
   border-radius: 15px;
@@ -103,7 +103,7 @@
 @media (max-width: 768px) {
   .modal {
     width: 90%;
-    font-size: 20px; /* зменшення шрифту для середніх екранів */
+    font-size: 20px;
   }
 
   .inlineOtherInput,
@@ -121,7 +121,7 @@
   .modal {
     width: 95%;
     padding: 20px;
-    font-size: 18px; /* ще менший шрифт для маленьких екранів */
+    font-size: 18px;
   }
 
   .header {

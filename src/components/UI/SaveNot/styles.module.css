@@ -1,14 +1,14 @@
 .save-not {
-  width: 100%; /* Встановіть ширину відповідно до розміру серця */
-  height: 100%; /* Встановіть висоту відповідно до розміру серця */
+  width: 100%;
+  height: 100%;
   position: relative;
-  border-radius: 5px; /* Закруглені кути, якщо потрібно */
-  overflow: hidden; /* Сховати вихід за межі */
-  cursor: pointer; /* Зміна курсора при наведенні */
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .heart-icon {
-  width: 100%; /* Зображення заповнює весь контейнер */
-  height: 100%; /* Автоматична висота для збереження пропорцій */
-  display: block; /* Встановити в блок, щоб прибрати зайві пробіли */
+  width: 100%;
+  height: 100%;
+  display: block;
 }

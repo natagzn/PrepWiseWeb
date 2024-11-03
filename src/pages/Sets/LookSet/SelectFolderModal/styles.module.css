@@ -1,6 +1,5 @@
 /* styles.module.css */
 
-/* Overlay styles for modal background */
 .overlay {
   position: fixed;
   top: 0;
@@ -51,7 +50,6 @@
   cursor: pointer;
 }
 
-/* Responsive font scaling */
 .modalContent,
 .setList,
 .setItem,

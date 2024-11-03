@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ style }) => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lang) => {
@@ -14,12 +14,14 @@ const LanguageSwitcher = () => {
       <button
         onClick={() => changeLanguage('en')}
         className={styles.langButton}
+        style={{ ...style }}
       >
         EN
       </button>
       <button
         onClick={() => changeLanguage('ua')}
         className={styles.langButton}
+        style={{ ...style }}
       >
         UA
       </button>

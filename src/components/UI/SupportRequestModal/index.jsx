@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom'; // Import ReactDOM for portals
+import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -47,7 +47,6 @@ const SupportRequestModal = ({ onClose, onSendSupportRequest }) => {
   };
 
   return ReactDOM.createPortal(
-    // Use portal to render the modal
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <h2 className={styles.title}>{t('Support Request')}</h2>

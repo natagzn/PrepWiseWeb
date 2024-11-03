@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  height: auto; /* Висота адаптується автоматично */
+  height: auto;
   display: flex;
   align-items: center;
   background: white;
@@ -10,7 +10,7 @@
   overflow: hidden;
   padding: 5px 15px;
   font-family: var(--web-font-family);
-  min-height: 70px; /* Мінімальна висота */
+  min-height: 70px;
 }
 
 .iconContainer {
@@ -34,7 +34,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  word-wrap: break-word; /* Автоматичний перенос слів на новий рядок */
+  word-wrap: break-word;
 }
 
 .setName {
@@ -51,7 +51,7 @@
   font-size: var(--web-18-regular-font-size);
   gap: 2px;
   transition: font-size 0.3s ease;
-  flex-wrap: wrap; /* Дозволяє тексту переходити на новий рядок */
+  flex-wrap: wrap;
 }
 
 .author {
@@ -75,16 +75,14 @@
 
 .rightContainer {
   display: flex;
-  align-items: center; /* Вирівнювання по центру по вертикалі */
-  margin-left: auto; /* Автоматичний лівий відступ для прикріплення до правого краю */
+  align-items: center;
+  margin-left: auto;
 }
 
 .date {
   color: var(--maingray);
-  font-size: var(
-    --web-18-regular-font-size
-  ); /* Задайте бажаний розмір шрифту */
-  margin-left: 10px; /* Відступ між іконкою і датою */
+  font-size: var(--web-18-regular-font-size);
+  margin-left: 10px;
 }
 
 /* Адаптивність */

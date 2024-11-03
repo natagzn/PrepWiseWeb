@@ -81,7 +81,7 @@ const QuestionSetsSearch = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: [
         'JavaScript',
         'Programming',
@@ -113,7 +113,7 @@ const QuestionSetsSearch = () => {
     },
     {
       name: 'levels',
-      label: 'Level',
+      label: 'level',
       options: ['Junior', 'Middle', 'Senior'],
     },
     {

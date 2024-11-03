@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent';
 import EditModal from './EditModal';
-import LanguageSwitcher from '../../components/UI/LanguageSwitcher';
 import { motion } from 'framer-motion';
+import InfoPremiumModal from './InfoPremiumModal';
+import { useUser } from 'context/UserContext';
 
 const SettingsPage = () => {
-  const { t, i18n } = useTranslation(); // Destructure 't' for translations
+  const { t, i18n } = useTranslation();
 
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isPremiumModalOpen, setPremiumModalOpen] = useState(false);
   const [userData, setUserData] = useState({
     username: 'sofiyalev06',
     email: 'sofiyalev06@gmail.com',
@@ -18,10 +20,12 @@ const SettingsPage = () => {
     avatar: null,
   });
 
+  const { user_id } = useUser();
+
   const handleLanguageChange = (event) => {
     const selectedLanguage = event.target.value;
     i18n.changeLanguage(selectedLanguage);
-    localStorage.setItem('language', selectedLanguage); // Зберігаємо вибір мови
+    localStorage.setItem('language', selectedLanguage);
   };
 
   const handleClick = () => {
@@ -30,7 +34,10 @@ const SettingsPage = () => {
 
   const handleSave = (updatedData) => {
     setUserData(updatedData);
-    // Here you can also add your API call to save the updated data
+  };
+
+  const handlePremiumClick = () => {
+    setPremiumModalOpen(true);
   };
 
   return (
@@ -38,11 +45,11 @@ const SettingsPage = () => {
       <HeaderComponent showSearch={true} showPremium={true} />
 
       <div className={styles.settingsContainer}>
-        <h1 className={styles.title}>{t('settings')}</h1>{' '}
+        <h1 className={styles.title}>{t('settings')}</h1>
         {/* Personal Information Block */}
         <div className={styles.personalInfoBlock}>
           <div className={styles.personalInfoTitle}>
-            {t('personal_information')} {/* Correct translation usage */}
+            {t('personal_information')}
           </div>
           <div className={styles.personalInfoContent}>
             <div className={styles.profilePictureBlock}>
@@ -66,7 +73,6 @@ const SettingsPage = () => {
                   onClick={handleClick}
                   alt="Edit icon"
                 />{' '}
-                {/* Add alt attribute */}
               </div>
             </div>
             <div className={styles.separator}></div>
@@ -102,7 +108,7 @@ const SettingsPage = () => {
           <select
             className={styles.languageSelect}
             onChange={handleLanguageChange}
-            value={i18n.language} // Keep the selected language in sync
+            value={i18n.language}
           >
             <option value="en">English</option>
             <option value="ua">Українська</option>
@@ -113,10 +119,11 @@ const SettingsPage = () => {
           <div className={styles.premiumLabel}>PrepWise Premium</div>
           <motion.div
             className={styles.premiumUpgradeButton}
-            whileHover={{ scale: 1.05, backgroundColor: '#dbc946' }} // Анімація при наведенні
+            whileHover={{ scale: 1.05, backgroundColor: '#dbc946' }}
             transition={{ duration: 0.15 }}
+            onClick={handlePremiumClick}
           >
-            Upgrade
+            {t('Look')}
           </motion.div>
         </div>
         {/* Log out Block */}
@@ -136,7 +143,7 @@ const SettingsPage = () => {
           <div className={styles.deleteDescription}>{t('delete_desc')}</div>
           <motion.div
             className={styles.deleteButton}
-            whileHover={{ scale: 1.05, backgroundColor: '#ec221f' }} // Зміна кольору для кнопки видалення
+            whileHover={{ scale: 1.05, backgroundColor: '#ec221f' }}
             transition={{ duration: 0.15 }}
           >
             {t('delete_akk')}
@@ -149,6 +156,11 @@ const SettingsPage = () => {
         onClose={() => setModalOpen(false)}
         userData={userData}
         onSave={handleSave}
+      />
+      <InfoPremiumModal
+        isOpen={isPremiumModalOpen}
+        onClose={() => setPremiumModalOpen(false)}
+        user_id={user_id}
       />
     </div>
   );

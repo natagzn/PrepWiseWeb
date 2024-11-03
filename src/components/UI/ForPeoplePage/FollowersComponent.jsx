@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styles from './style.module.css';
 import SearchComponent from '../SearchComponent';
 import PeopleComponent from '../PeopleComponent';
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
 
 function FollowersComponent({ users }) {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
   // Фільтрація користувачів за запитом пошуку
@@ -21,7 +21,6 @@ function FollowersComponent({ users }) {
   return (
     <div className={styles.padding}>
       <SearchComponent placeholder={t('search_user')} onClick={handleSearch} />{' '}
-      {/* Використовуємо переклад */}
       <div className={styles.container}>
         {filteredPeople.length > 0 ? (
           filteredPeople.map((person) => (
@@ -32,7 +31,7 @@ function FollowersComponent({ users }) {
             />
           ))
         ) : (
-          <p>{t('no_users_found')}</p> // Використовуємо переклад для повідомлення
+          <p>{t('no_users_found')}</p>
         )}
       </div>
     </div>

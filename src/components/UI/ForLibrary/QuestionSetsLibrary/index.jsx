@@ -46,7 +46,7 @@ const QuestionSetsLibrary = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: [
         'JavaScript',
         'Programming',
@@ -78,7 +78,7 @@ const QuestionSetsLibrary = () => {
     },
     {
       name: 'levels',
-      label: 'Level',
+      label: 'level',
       options: ['Junior', 'Middle', 'Senior'],
     },
     {
@@ -170,24 +170,30 @@ const QuestionSetsLibrary = () => {
 
       {/* Сети питань */}
       <div className={styles.questionSetsGrid}>
-        {sortedQuestionSets()
-          .slice(0, loadedSets)
-          .map((set) => (
-            <div key={set.id}>
-              <QuestionSetComponent
-                questionsCount={set.questionsCount}
-                title={set.title}
-                categories={set.categories}
-                username={set.username}
-                date={set.date}
-                level={set.level}
-                isLiked={set.isLiked}
-                visibility={set.visibility}
-                style={{ width: '500px' }}
-                id={set.id}
-              />
-            </div>
-          ))}
+        {sortedQuestionSets().length === 0 ? (
+          <div className="noResultsMessage">
+            {t('no_question_sets_message_lib')}
+          </div>
+        ) : (
+          sortedQuestionSets()
+            .slice(0, loadedSets)
+            .map((set) => (
+              <div key={set.id}>
+                <QuestionSetComponent
+                  questionsCount={set.questionsCount}
+                  title={set.title}
+                  categories={set.categories}
+                  username={set.username}
+                  date={set.date}
+                  level={set.level}
+                  isLiked={set.isLiked}
+                  visibility={set.visibility}
+                  style={{ width: '500px' }}
+                  id={set.id}
+                />
+              </div>
+            ))
+        )}
       </div>
     </div>
   );

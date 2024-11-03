@@ -98,11 +98,11 @@ function CreateEditSet({ editOrCreate }) {
       if (initialQuestion) {
         // Логіка оновлення запитань у базі даних
         console.log(`Updating question ID ${question.id}`);
-        // тут ви можете викликати API для оновлення запитання
+        // API для оновлення запитання
       } else {
         // Логіка для створення нового запитання
         console.log('Creating new question:', question);
-        // тут ви можете викликати API для створення нового запитання
+        //API для створення нового запитання
       }
     });
 
@@ -110,7 +110,7 @@ function CreateEditSet({ editOrCreate }) {
     initialQuestionsIds.forEach((id) => {
       if (!updatedQuestionsIds.includes(id)) {
         console.log(`Deleting question ID ${id}`);
-        // тут ви можете викликати API для видалення запитання
+        // API для видалення запитання
       }
     });
 

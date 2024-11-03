@@ -20,8 +20,6 @@ const AskFriendsForHelp = ({ userId, questionId, onClose }) => {
       { id: 5, name: 'Alice Johnson2', avatar: '/avatars/alice.png' },
     ];
 
-    // Тут ви можете реалізувати логіку фільтрації за userId
-    // Наприклад, для демонстрації ми просто встановлюємо генеровані друзі
     setFriends(generatedFriends);
     setFilteredFriends(generatedFriends);
   }, [userId]);

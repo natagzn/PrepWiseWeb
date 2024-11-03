@@ -25,19 +25,18 @@
   border-bottom: 2px solid var(--maingray);
   align-items: center;
   text-align: center;
-  height: 60px; /* Встановлюємо фіксовану висоту для всього блоку вкладок */
+  height: 60px;
 }
 
-/* Адаптивність для вкладок */
 .tab {
   padding: 10px 20px;
   font-size: var(--web-23-regular-font-size);
   cursor: pointer;
   position: relative;
   color: var(--maingray);
-  height: 100%; /* Таб має займати всю висоту батьківського контейнера */
+  height: 100%;
   display: flex;
-  align-items: center; /* Центрування тексту вертикально */
+  align-items: center;
 }
 
 @media (max-width: 768px) {

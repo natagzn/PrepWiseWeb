@@ -19,7 +19,7 @@
   padding: 20px;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
-  max-height: 80vh; /* Додати обмеження по висоті */
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
   font-family: var(--web-font-family);
@@ -49,9 +49,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto; /* Додаємо вертикальну прокрутку */
-  max-height: calc(100vh - 180px); /* Обмежуємо максимальну висоту списку */
-  padding-right: 10px; /* Додаємо внутрішній відступ, щоб уникнути накладання з прокруткою */
+  overflow-y: auto;
+  max-height: calc(100vh - 180px);
+  padding-right: 10px;
 }
 
 .followerItem {
@@ -89,7 +89,7 @@
 }
 
 .followButton {
-  background-color: #144250;
+  background-color: var(--landingdark-blue);
   color: white;
   font-size: var(--web-20-regular-font-size);
   font-weight: 500;
@@ -119,7 +119,7 @@
   }
 
   .followersList {
-    max-height: calc(100vh - 160px); /* Зменшуємо висоту на менших екранах */
+    max-height: calc(100vh - 160px);
   }
 
   .followButton {

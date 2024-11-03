@@ -17,7 +17,7 @@
 }
 
 .mainContent > * {
-  margin-right: 30px; /* Мінімальна відстань між елементами */
+  margin-right: 30px;
 }
 
 /* Останньому елементу не потрібен правий відступ */
@@ -31,7 +31,7 @@
   font-family: var(--web-font-family);
   font-weight: 700;
   display: flex;
-  justify-content: space-between; /* Додає кнопку праворуч */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -69,18 +69,16 @@
 .cardText {
   color: black;
   font-size: 30px;
-  font-family: 'Noto Sans';
   font-weight: 400;
-  width: 90%; /* Текст займатиме 90% ширини блоку */
+  width: 90%;
   text-align: center;
   text-wrap: wrap;
   overflow: hidden;
 
-  /* Обмеження висоти на 90% батьківського блоку */
   max-height: 90%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 7; /* Максимальна кількість рядків, корегуйте за необхідністю */
+  -webkit-line-clamp: 7; /* Максимальна кількість рядків */
 }
 
 .progressContainer {
@@ -107,7 +105,6 @@
 .progressTitle {
   color: black;
   font-size: 30px;
-  font-family: 'Noto Sans';
   font-weight: 400;
 }
 
@@ -143,7 +140,6 @@
 }
 .progressDetails {
   font-size: 23px;
-  font-family: 'Noto Sans';
   min-width: 160px;
 }
 
@@ -191,23 +187,22 @@
 .buttonText {
   color: white;
   font-size: 23px;
-  font-family: 'Noto Sans';
   font-weight: 400;
 }
 
 @media (max-width: 900px) {
   .mainContent {
     flex-direction: column;
-    gap: 20px; /* gap працюватиме як відступ між елементами */
+    gap: 20px;
   }
 
   .mainContent > * {
-    margin-right: 0; /* Вимикаємо правий відступ для колонкової орієнтації */
-    width: 100%; /* Компоненти займуть всю ширину */
+    margin-right: 0;
+    width: 100%;
   }
   .sliderContainer {
-    width: 100%; /* Займатиме всю ширину при малих екранах */
-    max-width: 100%; /* Запобігає виходу за межі mainContent */
+    width: 100%;
+    max-width: 100%;
   }
 
   .progressContainer {
@@ -221,23 +216,23 @@
 
 @media (max-width: 900px) {
   .sliderHeader {
-    font-size: 28px; /* Зменшуємо заголовок слайдера */
+    font-size: 28px;
   }
 
   .cardText {
-    font-size: 24px; /* Зменшуємо текст картки */
+    font-size: 24px;
   }
 
   .progressTitle,
   .progressPercent {
-    font-size: 25px; /* Зменшуємо розмір шрифту заголовків і відсотків */
+    font-size: 25px;
   }
 
   .progressDetails {
-    font-size: 20px; /* Зменшуємо деталі прогресу */
+    font-size: 20px;
   }
   .buttonText {
-    font-size: 24px; /* Зменшуємо розмір тексту кнопки */
+    font-size: 24px;
   }
 }
 
@@ -248,7 +243,7 @@
   }
 
   .progressPercent {
-    font-size: 20px; /* Adjust font size for smaller screens */
+    font-size: 20px;
   }
 
   .progressBlock {
@@ -271,46 +266,46 @@
 
 @media (max-width: 600px) {
   .sliderHeader {
-    font-size: 24px; /* Зменшуємо заголовок слайдера */
+    font-size: 24px;
   }
 
   .cardText {
-    font-size: 20px; /* Зменшуємо текст картки */
+    font-size: 20px;
   }
 
   .progressTitle,
   .progressPercent {
-    font-size: 20px; /* Зменшуємо розмір шрифту заголовків і відсотків */
+    font-size: 20px;
   }
 
   .progressDetails {
-    font-size: 20px; /* Зменшуємо деталі прогресу */
+    font-size: 20px;
   }
   .buttonText {
-    font-size: 20px; /* Зменшуємо розмір тексту кнопки */
+    font-size: 20px;
   }
 }
 
 @media (max-width: 400px) {
   .sliderHeader {
-    font-size: 20px; /* Зменшуємо заголовок слайдера */
+    font-size: 20px;
   }
 
   .cardText {
-    font-size: 18px; /* Зменшуємо текст картки */
+    font-size: 18px;
   }
 
   .progressTitle,
   .progressPercent {
-    font-size: 18px; /* Зменшуємо розмір шрифту заголовків і відсотків */
+    font-size: 18px;
   }
 
   .progressDetails,
   .known,
   .stillLearning {
-    font-size: 18px; /* Зменшуємо деталі прогресу */
+    font-size: 18px;
   }
   .buttonText {
-    font-size: 18px; /* Зменшуємо розмір тексту кнопки */
+    font-size: 18px;
   }
 }

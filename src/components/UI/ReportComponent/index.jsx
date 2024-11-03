@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { toast, ToastContainer } from 'react-toastify'; // Імпортуємо ToastContainer і toast
-import 'react-toastify/dist/ReactToastify.css'; // Імпортуємо стилі
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.css';
 
 const ReportComponent = ({ type, onClose }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState('');
   const [otherText, setOtherText] = useState('');
-  const [isReported, setIsReported] = useState(false); // Стан для перевірки, чи було надіслано репорт
+  const [isReported, setIsReported] = useState(false);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
     if (option !== 'other') {
-      setOtherText(''); // Очистити текст при зміні вибору
+      setOtherText('');
     }
   };
 
@@ -32,7 +32,6 @@ const ReportComponent = ({ type, onClose }) => {
 
     // Перевірка, чи обрано радіо-баттон
     if (!selectedOption) {
-      // Виводимо повідомлення про помилку, якщо нічого не обрано
       toast.error(t('Please select a reporting reason.'));
       return;
     }
@@ -43,7 +42,6 @@ const ReportComponent = ({ type, onClose }) => {
         selectedOption.toLowerCase() === 'інше') &&
       otherText.trim() === ''
     ) {
-      // Виводимо повідомлення про помилку, якщо текстове поле порожнє
       toast.error(t('Please provide a description for your reason.'));
       return;
     }
@@ -71,7 +69,7 @@ const ReportComponent = ({ type, onClose }) => {
   };
 
   const handleClose = () => {
-    setIsReported(false); // Повернення до початкового стану при закритті
+    setIsReported(false);
     onClose();
   };
 
@@ -132,7 +130,6 @@ const ReportComponent = ({ type, onClose }) => {
           </button>
         )}
       </div>
-      <ToastContainer /> {/* Контейнер для відображення сповіщень */}
     </div>,
     document.body
   );

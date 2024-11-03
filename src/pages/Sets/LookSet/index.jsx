@@ -7,14 +7,13 @@ import HeaderComponent from 'components/UI/HeaderComponent';
 import CardBlock from './CardsBlock';
 
 function LookSet() {
-  // Параметри для SetInfoComponent
   const id = 2;
   const title = 'Title of Set';
   const author = 'nahalkaanna';
   const questionCount = 5;
   const level = 'Junior';
   const categories = ['JavaScript', 'FullStack'];
-  const visibility = 'Public'; // або "Private" для тестування
+  const visibility = 'Public';
   const onSave = () => alert('Set saved!');
   const isLiked = false;
   const isAuthor = true;

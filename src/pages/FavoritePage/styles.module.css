@@ -10,7 +10,6 @@
   font-weight: bold;
 }
 
-/* Адаптивність для заголовка */
 @media (max-width: 1200px) {
   .header {
     font-size: var(--web-30-regular-font-size);
@@ -25,7 +24,7 @@
   border-bottom: 2px solid var(--maingray);
   align-items: center;
   text-align: center;
-  height: 60px; /* Встановлюємо фіксовану висоту для всього блоку вкладок */
+  height: 60px;
 }
 
 /* Адаптивність для вкладок */
@@ -35,9 +34,9 @@
   cursor: pointer;
   position: relative;
   color: var(--maingray);
-  height: 100%; /* Таб має займати всю висоту батьківського контейнера */
+  height: 100%;
   display: flex;
-  align-items: center; /* Центрування тексту вертикально */
+  align-items: center;
 }
 
 @media (max-width: 768px) {
@@ -77,7 +76,6 @@
   justify-content: center;
 }
 
-/* Адаптивність для контенту вкладки */
 @media (max-width: 768px) {
   .tabContent {
     padding: 10px;

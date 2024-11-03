@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { toast, ToastContainer } from 'react-toastify'; // Імпортуємо ToastContainer і toast
-import 'react-toastify/dist/ReactToastify.css'; // Імпортуємо стилі
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
@@ -24,8 +24,8 @@ const NewPassword = () => {
       navigate('/home');
     } else {
       toast.error(t('passwords_do_not_match'), {
-        position: 'top-right', // Позиція повідомлення
-        autoClose: 5000, // Автоматичне закриття через 5 секунд
+        position: 'top-right',
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -102,9 +102,6 @@ const NewPassword = () => {
           </motion.button>
         </div>
       </AuthTemplate>
-
-      {/* Контейнер для відображення сповіщень */}
-      <ToastContainer />
     </>
   );
 };

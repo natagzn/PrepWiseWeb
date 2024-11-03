@@ -44,7 +44,7 @@ const QuestionSetsForFavorite = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: [
         'JavaScript',
         'Programming',
@@ -76,7 +76,7 @@ const QuestionSetsForFavorite = () => {
     },
     {
       name: 'levels',
-      label: 'Level',
+      label: 'level',
       options: ['Junior', 'Middle', 'Senior'],
     },
     {
@@ -144,7 +144,6 @@ const QuestionSetsForFavorite = () => {
   /*const handleUnlikeSet = (id) => {
     setQuestionSets((prevSets) => prevSets.filter((set) => set.id !== id));
   };*/
-
   return (
     <div className={styles.questionSetsWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -166,32 +165,36 @@ const QuestionSetsForFavorite = () => {
         <div className={styles.search}>
           <SearchComponent
             placeholder={t('search_favorite_sets')}
-            onClick={handleSearchClick} // Передаємо обробник
+            onClick={handleSearchClick}
           />
         </div>
       </div>
 
-      {/* Сети питань */}
       <div className={styles.questionSetsGrid}>
-        {sortedQuestionSets()
-          .slice(0, loadedSets)
-          .map((set) => (
-            <div key={set.id}>
-              <QuestionSetComponent
-                questionsCount={set.questionsCount}
-                title={set.title}
-                categories={set.categories}
-                username={set.username}
-                date={set.date}
-                level={set.level}
-                isLiked={set.isLiked}
-                visibility={set.visibility}
-                style={{ width: '500px' }}
-                id={set.id}
-                /*handleUnlikeSet={handleUnlikeSet}*/
-              />
-            </div>
-          ))}
+        {sortedQuestionSets().length === 0 ? (
+          <div className="noResultsMessage">
+            {t('no_question_sets_message_fav')}
+          </div>
+        ) : (
+          sortedQuestionSets()
+            .slice(0, loadedSets)
+            .map((set) => (
+              <div key={set.id}>
+                <QuestionSetComponent
+                  questionsCount={set.questionsCount}
+                  title={set.title}
+                  categories={set.categories}
+                  username={set.username}
+                  date={set.date}
+                  level={set.level}
+                  isLiked={set.isLiked}
+                  visibility={set.visibility}
+                  style={{ width: '500px' }}
+                  id={set.id}
+                />
+              </div>
+            ))
+        )}
       </div>
     </div>
   );

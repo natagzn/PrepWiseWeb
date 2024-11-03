@@ -5,11 +5,11 @@ import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary';
 
 import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/ResourcesLibrary';
 import HeaderComponent from '../../components/UI/HeaderComponent';
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
 import SharedSetsLibrary from 'components/UI/ForLibrary/SharedSetsLibrary';
 
 const YourLibraryPage = () => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('questionSets');
 
   // Функція для рендерингу компонентів залежно від активної вкладки
@@ -33,32 +33,30 @@ const YourLibraryPage = () => {
       <HeaderComponent />
       <div className={styles.libraryPage}>
         <h1 className={styles.header}>{t('your_library')}</h1>{' '}
-        {/* Додаємо переклад заголовка */}
         <div className={styles.tabs}>
           <div
             className={`${styles.tab} ${activeTab === 'questionSets' ? styles.active : ''}`}
             onClick={() => setActiveTab('questionSets')}
           >
             {t('question_sets')}{' '}
-            {/* Використовуємо переклад для Question Sets */}
           </div>
           <div
             className={`${styles.tab} ${activeTab === 'folders' ? styles.active : ''}`}
             onClick={() => setActiveTab('folders')}
           >
-            {t('folders')} {/* Використовуємо переклад для Folders */}
+            {t('folders')}
           </div>
           <div
             className={`${styles.tab} ${activeTab === 'shared' ? styles.active : ''}`}
             onClick={() => setActiveTab('shared')}
           >
-            {t('shared')} {/* Використовуємо переклад для Shared */}
+            {t('shared')}
           </div>
           <div
             className={`${styles.tab} ${activeTab === 'resources' ? styles.active : ''}`}
             onClick={() => setActiveTab('resources')}
           >
-            {t('resources')} {/* Використовуємо переклад для Resources */}
+            {t('resources')}
           </div>
         </div>
         <div className={styles.tabContent}>{renderActiveTabContent()}</div>

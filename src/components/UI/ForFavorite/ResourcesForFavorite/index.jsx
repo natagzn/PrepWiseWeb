@@ -40,7 +40,7 @@ const ResourcesForFavorite = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: ['Development', 'Design', 'Marketing', 'Science', 'Arts'],
     },
   ];
@@ -114,19 +114,25 @@ const ResourcesForFavorite = () => {
         </div>
       </div>
       <div className={styles.resourcesList}>
-        {filteredResources().map((resource) => (
-          <ResourceComponent
-            key={resource.id}
-            id={resource.id}
-            title={resource.title}
-            category={resource.category}
-            username={resource.username}
-            date={resource.date}
-            description={resource.description}
-            isLiked={resource.isLiked}
-            /*onRemove={() => handleRemoveResource(resource.id)} */
-          />
-        ))}
+        {filteredResources().length === 0 ? (
+          <div className="noResultsMessage">
+            {t('no_resources_message_fav')}
+          </div>
+        ) : (
+          filteredResources().map((resource) => (
+            <ResourceComponent
+              key={resource.id}
+              id={resource.id}
+              title={resource.title}
+              category={resource.category}
+              username={resource.username}
+              date={resource.date}
+              description={resource.description}
+              isLiked={resource.isLiked}
+              /*onRemove={() => handleRemoveResource(resource.id)} */
+            />
+          ))
+        )}
       </div>
     </div>
   );

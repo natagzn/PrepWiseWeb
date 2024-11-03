@@ -20,8 +20,9 @@
   max-width: 400px;
   width: 100%;
   margin: 20px;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
+  font-family: var(--web-font-family);
 }
 
 .buttonContainer {
@@ -49,11 +50,11 @@ button {
 /* Адаптивні стилі */
 @media (max-width: 600px) {
   .modal {
-    font-size: 14px; /* Зменшений шрифт для малих екранів */
-    padding: 15px; /* Менше відступи для компактності */
+    font-size: 14px;
+    padding: 15px;
   }
 
   button {
-    padding: 8px 12px; /* Менше відступи для кнопок */
+    padding: 8px 12px;
   }
 }

@@ -12,11 +12,12 @@ import ResourcesSearch from 'components/UI/ForGlobalSearch/ResourcesSearch';
 
 import ModalPremium from './ModalPremium';
 import UsersSearch from 'components/UI/ForGlobalSearch/UsersSeacrh';
+import { useUser } from 'context/UserContext';
 
 const GlobalSearchPage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('allResults');
-  const [isPremium, setIsPremium] = useState(false);
+  const { isPremium, setIsPremium } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { searchBy } = useParams();

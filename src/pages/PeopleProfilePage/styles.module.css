@@ -8,14 +8,12 @@
   font-family: var(--web-font-family);
 }
 
-/* Адаптивність для аватара */
 .avatar {
   width: 120px;
   height: 120px;
   border-radius: 9999px;
 }
 
-/* Адаптивність для блоку з інформацією про користувача */
 .userInfo {
   display: flex;
   flex-direction: column;
@@ -25,7 +23,6 @@
   width: 813px;
 }
 
-/* Стиль для заголовку користувача */
 .userHeader {
   display: flex;
   justify-content: space-between;
@@ -34,7 +31,6 @@
   flex-wrap: wrap;
 }
 
-/* Адаптивність для імені користувача */
 .username {
   color: black;
   font-size: var(--web-35-regular-font-size);
@@ -49,7 +45,6 @@
   width: fit-content;
 }
 
-/* Кнопка підписки/відписки */
 .followButton {
   width: 200px;
   height: 34px;
@@ -91,7 +86,7 @@
   border-bottom: 2px solid var(--maingray);
   align-items: center;
   text-align: center;
-  height: 60px; /* Встановлюємо фіксовану висоту для всього блоку вкладок */
+  height: 60px;
 }
 
 .tab {
@@ -100,9 +95,9 @@
   cursor: pointer;
   position: relative;
   color: var(--maingray);
-  height: 100%; /* Таб має займати всю висоту батьківського контейнера */
+  height: 100%;
   display: flex;
-  align-items: center; /* Центрування тексту вертикально */
+  align-items: center;
 }
 
 .tab:hover {
@@ -127,7 +122,7 @@
 .noResultsMessage {
   margin-top: 40px;
 }
-/* Адаптивність для планшетів та смартфонів */
+
 @media (max-width: 1024px) {
   .avatar {
     width: 100px;
@@ -231,9 +226,9 @@
   padding: 20px;
   border-radius: 10px;
   max-width: 500px;
-  width: 90%; /* Додамо ширину для адаптивності */
+  width: 90%;
   text-align: center;
-  position: relative; /* Для внутрішнього позиціонування */
+  position: relative;
 }
 
 .overlay {
@@ -246,7 +241,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Щоб модальне вікно було поверх всього */
+  z-index: 999;
 }
 
 .modalButtons {

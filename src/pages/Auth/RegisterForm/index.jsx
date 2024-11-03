@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // Імпортуємо motion
+import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify'; // Правильний імпорт
-import 'react-toastify/dist/ReactToastify.css'; // Імпортуємо стилі Toast
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладу
-  const [isLogin, setIsLogin] = useState(false); // Тут реєстрація, тому isLogin = false
-  const [username, setUsername] = useState(''); // Стан для ім'я користувача
-  const [email, setEmail] = useState(''); // Стан для email
-  const [password, setPassword] = useState(''); // Стан для пароля
-  const [confirmPassword, setConfirmPassword] = useState(''); // Стан для підтвердження пароля
+  const { t } = useTranslation();
+  const [isLogin, setIsLogin] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const toggleAuthMode = () => {
-    setIsLogin((prevMode) => !prevMode); // Функція для перемикання між режимами
+    setIsLogin((prevMode) => !prevMode);
   };
 
   const handleRegister = () => {
     // Перевіряємо, чи заповнені всі поля
     if (!username || !email || !password || !confirmPassword) {
-      toast.error(t('please_fill_all_fields')); // Виводимо повідомлення, якщо не заповнено
+      toast.error(t('please_fill_all_fields'));
       return;
     }
 
     // Перевірка паролів
     if (password !== confirmPassword) {
-      toast.error(t('passwords_do_not_match')); // Виводимо повідомлення, якщо паролі не співпадають
+      toast.error(t('passwords_do_not_match'));
       return;
     }
 
@@ -39,8 +39,8 @@ const RegisterForm = () => {
 
   // Налаштовуємо анімаційні параметри
   const inputVariants = {
-    hidden: { opacity: 0, y: -20 }, // Початковий стан (невидимий)
-    visible: { opacity: 1, y: 0 }, // Кінцевий стан (видимий)
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -55,10 +55,10 @@ const RegisterForm = () => {
         >
           <input
             type="text"
-            placeholder={t('username')} // Використовуємо t для перекладу
+            placeholder={t('username')}
             className={styles.input}
             value={username}
-            onChange={(e) => setUsername(e.target.value)} // Оновлюємо значення ім'я
+            onChange={(e) => setUsername(e.target.value)}
           />
         </motion.div>
 
@@ -67,14 +67,14 @@ const RegisterForm = () => {
           initial="hidden"
           animate="visible"
           variants={inputVariants}
-          transition={{ duration: 0.5, delay: 0.2 }} // Затримка для другого поля
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <input
             type="email"
-            placeholder={t('email')} // Використовуємо t для перекладу
+            placeholder={t('email')}
             className={styles.input}
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Оновлюємо значення email
+            onChange={(e) => setEmail(e.target.value)}
           />
         </motion.div>
 
@@ -83,14 +83,14 @@ const RegisterForm = () => {
           initial="hidden"
           animate="visible"
           variants={inputVariants}
-          transition={{ duration: 0.5, delay: 0.4 }} // Затримка для третього поля
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
           <input
             type="password"
-            placeholder={t('password')} // Використовуємо t для перекладу
+            placeholder={t('password')}
             className={styles.input}
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Оновлюємо значення пароля
+            onChange={(e) => setPassword(e.target.value)}
           />
         </motion.div>
 
@@ -99,14 +99,14 @@ const RegisterForm = () => {
           initial="hidden"
           animate="visible"
           variants={inputVariants}
-          transition={{ duration: 0.5, delay: 0.6 }} // Затримка для четвертого поля
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
           <input
             type="password"
-            placeholder={t('confirm_password')} // Використовуємо t для перекладу
+            placeholder={t('confirm_password')}
             className={styles.input}
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)} // Оновлюємо значення підтвердження пароля
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </motion.div>
 
@@ -115,10 +115,10 @@ const RegisterForm = () => {
           initial="hidden"
           animate="visible"
           variants={inputVariants}
-          transition={{ duration: 0.5, delay: 0.8 }} // Затримка для кнопки
-          onClick={handleRegister} // Викликаємо функцію реєстрації
+          transition={{ duration: 0.5, delay: 0.8 }}
+          onClick={handleRegister}
         >
-          {t('sign_up')} {/* Використовуємо t для перекладу */}
+          {t('sign_up')}
         </motion.button>
 
         {/* Нижній блок */}
@@ -131,9 +131,6 @@ const RegisterForm = () => {
           <span>{t('continue_with_google')}</span>
         </div>
       </div>
-
-      {/* Додаємо ToastContainer для відображення Toast-повідомлень */}
-      <ToastContainer />
     </AuthTemplate>
   );
 };

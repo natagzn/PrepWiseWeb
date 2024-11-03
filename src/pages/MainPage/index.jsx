@@ -6,9 +6,12 @@ import QuestionSetComponent from '../../components/UI/QuestionSetComponent';
 import ResourceComponent from '../../components/UI/ResourceComponent';
 import { useTranslation } from 'react-i18next';
 import FooterComponent from 'components/UI/FooterComponent';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const MainPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const questionSets = Array.from({ length: 6 }, (_, index) => ({
     id: index,
@@ -89,17 +92,33 @@ const MainPage = () => {
     );
   };
 
+  const handleSearch = (searchTerm) => {
+    const invalidCharacters = /[\/\\.#?]/; // Регулярний вираз для символів "/", "\", ".", "#" і "?"
+
+    if (searchTerm.trim() === '') {
+      toast.error(t('enter_your_request'));
+    } else if (invalidCharacters.test(searchTerm)) {
+      toast.error(t('special_characters_not_allowed'));
+    } else {
+      navigate(`/search/${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
   return (
     <div className={styles.mainPage}>
       <HeaderComponent showSearch={true} showPremium={true} showPlus={true} />
       <div className={styles.search}>
-        <SearchComponent placeholder={t('enter_your_request')} />
+        <SearchComponent
+          placeholder={t('enter_your_request')}
+          onClick={handleSearch}
+        />
       </div>
 
       <h2 className={styles.recommendationTitle}>
         {t('recommended_from_your_following')}
       </h2>
 
+      {/*Сети*/}
       <div className={styles.questionSets}>
         <h2 className={styles.title}>{t('question_sets')}</h2>
 
@@ -157,6 +176,7 @@ const MainPage = () => {
         )}
       </div>
 
+      {/*Ресурси*/}
       <div className={styles.resources}>
         <h2 className={styles.title}>{t('resources')}</h2>
 

@@ -1,15 +1,15 @@
 /* BuyPremium.module.css */
 .premiumPage {
   width: 100%;
-  height: fit-content; /* Full viewport height */
+  height: fit-content;
   font-family: var(--web-font-family);
   background: linear-gradient(
     90deg,
     var(--landingdark-blue) 0%,
     var(--landingpurple) 100%
   );
-  display: flex; /* Use flexbox layout */
-  flex-direction: column; /* Arrange children in a column */
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -28,7 +28,7 @@
 .premiumInfo {
   padding: 20px;
   position: relative;
-  flex-grow: 1; /* Allow this section to grow and fill available space */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -160,14 +160,14 @@
   }
 
   .featuresList {
-    width: 50%; /* Adjust width for medium screens */
-    max-width: 600px; /* Maximum width */
-    margin: 0 auto; /* Center block */
+    width: 50%;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .featuresList h3 {
     font-size: var(--web-30-regular-font-size);
-    text-align: center; /* Center the title */
+    text-align: center;
   }
 
   .featuresList li {
@@ -209,12 +209,12 @@
 
   .featuresList {
     width: 65%;
-    margin: 10px 0; /* Reduce space between blocks */
+    margin: 10px 0;
   }
 
   .featuresList h3 {
     font-size: var(--web-23-regular-font-size);
-    text-align: center; /* Center the title */
+    text-align: center;
   }
 
   .featuresList li {
@@ -277,13 +277,13 @@
   }
 
   .featuresList {
-    padding: 0 10px; /* Add some padding */
+    padding: 0 10px;
     width: 95%;
   }
 
   .featuresList h3 {
     font-size: var(--web-23-regular-font-size);
-    text-align: center; /* Center the title */
+    text-align: center;
   }
 
   .featuresList li {

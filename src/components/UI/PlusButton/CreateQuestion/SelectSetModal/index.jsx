@@ -14,7 +14,7 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
   useEffect(() => {
     const fetchSets = async () => {
       try {
-        const response = SetsData; // Вкажіть правильний шлях до вашого файлу
+        const response = SetsData; //  шлях до  файлу
         const data = SetsData;
         setSets(data);
       } catch (error) {

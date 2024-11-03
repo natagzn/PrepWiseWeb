@@ -56,10 +56,10 @@
 .inputText {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc; /* Ставимо рамку */
-  border-radius: 15px; /* Краї */
+  border: 1px solid var(--light-gray);
+  border-radius: 15px;
   font-size: var(--web-23-regular-font-size);
-  color: #5a5a5a;
+  color: var(--maingray);
 }
 
 .createUpdateButton,
@@ -118,10 +118,10 @@
 }
 
 .search {
-  display: flex; /* Використовуємо флекс для вирівнювання блоків */
-  justify-content: space-between; /* Вирівнюємо елементи зліва та справа */
-  align-items: center; /* Вирівнюємо по вертикалі */
-  margin-bottom: 10px; /* Відступ знизу */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .textSearch {
@@ -137,7 +137,6 @@
   max-width: 400px;
 }
 
-/* При малих екранах верхня кнопка пропадає, а футер з'являється */
 @media (max-width: 1000px) {
   .buttonBlock {
     display: none;
@@ -163,7 +162,6 @@
   }
 }
 
-/* Для екранів менше 900px */
 @media (max-width: 900px) {
   .folderTitle {
     font-size: var(--web-30-regular-font-size);
@@ -174,7 +172,6 @@
   }
 }
 
-/* Для екранів менше 700px */
 @media (max-width: 700px) {
   .group {
     flex-direction: column;
@@ -225,11 +222,11 @@
 
 .createUpdateButton:hover,
 .createUpdateButtonFooter:hover {
-  background-color: #34228a; /* Зелений колір при наведенні */
-  transform: scale(1.05); /* Збільшення кнопки */
+  background-color: #34228a;
+  transform: scale(1.05);
 }
 
 .cancelButton:hover {
-  background-color: #d4d4d4; /* Червоний колір при наведенні */
+  background-color: #d4d4d4;
   transform: scale(1.05);
 }

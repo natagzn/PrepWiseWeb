@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './styles.module.css'; // Імпорт стилів з CSS модуля
+import styles from './styles.module.css';
 
 export const SaveNot = ({
   state,
@@ -8,7 +8,7 @@ export const SaveNot = ({
   handleLikeFolder,
   handleUnlikeSet,
 }) => {
-  const [isSaved, setIsSaved] = useState(state); // Стан для збереження
+  const [isSaved, setIsSaved] = useState(state);
 
   // Функції для додавання та видалення лайку
   const likeResource = (id) => console.log(`Liked resource with id ${id}`);
@@ -53,9 +53,9 @@ export const SaveNot = ({
           isSaved
             ? '/icons/SaveNot/property-1-saved.svg'
             : '/icons/SaveNot/property-1-not-saved.svg'
-        } // Вибір зображення на основі стану
+        }
         alt="Save"
-        className={styles['heart-icon']} // Додано клас для стилізації
+        className={styles['heart-icon']}
       />
     </div>
   );

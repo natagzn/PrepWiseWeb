@@ -11,7 +11,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #ffffff;
+  background: white;
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -28,7 +28,7 @@
   font-family: var(--web-font-family);
   display: flex;
   align-items: center;
-  gap: 8px; /* Відступ між іконкою і текстом */
+  gap: 8px;
 }
 
 .optionButton:hover {
@@ -52,9 +52,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); /* Напівпрозорий фон */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Вищий порядок, щоб вікно з'являлося над іншими елементами */
+  z-index: 1000;
 }

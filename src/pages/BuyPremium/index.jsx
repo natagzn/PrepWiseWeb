@@ -4,15 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import FooterComponent from '../../components/UI/FooterComponent';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from 'context/UserContext';
 
 function BuyPremium() {
   const { t } = useTranslation();
+  const { isPremium } = useUser();
 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  // Function to handle back button click
   const handleBackClick = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate(-1);
   };
 
   return (
@@ -29,7 +30,7 @@ function BuyPremium() {
             src="/icons/back.svg"
             className={styles.backIcon}
             alt="back"
-            onClick={handleBackClick} // Add click handler
+            onClick={handleBackClick}
             style={{ cursor: 'pointer' }}
           />
           <h2 className={styles.pageTitle}>
@@ -66,49 +67,56 @@ function BuyPremium() {
             {/* Annual Subscription Block */}
             <motion.div
               className={styles.subscriptionBlock}
-              initial={{ opacity: 0, y: 20 }} // Start hidden
-              animate={{ opacity: 1, y: 0 }} // Animate to visible
-              transition={{ duration: 0.5 }} // Animation duration
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
               <h4>{t('annual')}</h4>
               <p>{t('billed_annually')}:</p>
               <p style={{ fontWeight: 'bold', fontSize: '1.4em' }}>
                 $0.99 / {t('month')}
               </p>
-              <p>{t('start_with_trial')}</p>
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: 'rgba(232, 211, 72, 0.8)',
-                }} // Change button color on hover
-                transition={{ duration: 0.2 }}
-              >
-                {t('start_free_trial')}
-              </motion.button>
+
+              {!isPremium && (
+                <>
+                  <p>{t('start_with_trial')}</p>
+                  <motion.button
+                    whileHover={{
+                      scale: 1.05,
+                      backgroundColor: 'rgba(232, 211, 72, 0.8)',
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t('start_free_trial')}
+                  </motion.button>
+                </>
+              )}
             </motion.div>
 
             {/* Monthly Subscription Block */}
             <motion.div
               className={styles.subscriptionBlock}
-              initial={{ opacity: 0, y: 20 }} // Start hidden
-              animate={{ opacity: 1, y: 0 }} // Animate to visible
-              transition={{ duration: 0.5, delay: 0.2 }} // Animation duration with delay
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
               <h4>{t('monthly')}</h4>
               <p>{t('amount_billed_today')}:</p>
               <p style={{ fontWeight: 'bold', fontSize: '1.4em' }}>
                 $1.99 / {t('month')}
               </p>
-              <motion.button
-                className={styles.secondButton}
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: 'rgba(255, 255, 0, 0.8)',
-                }} // Change button color on hover
-                transition={{ duration: 0.2 }}
-              >
-                {t('get_prepwise_premium')}
-              </motion.button>
+              {!isPremium && (
+                <motion.button
+                  className={styles.secondButton}
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(255, 255, 0, 0.8)',
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {t('get_prepwise_premium')}
+                </motion.button>
+              )}
             </motion.div>
           </div>
         </div>

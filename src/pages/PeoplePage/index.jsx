@@ -3,10 +3,10 @@ import styles from './styles.module.css';
 import FollowingComponent from '../../components/UI/ForPeoplePage/FollowingComponent';
 import FollowersComponent from '../../components/UI/ForPeoplePage/FollowersComponent';
 import FriendsComponent from '../../components/UI/ForPeoplePage/FriendsComponent';
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
 
 const PeoplePage = ({ username, onClose }) => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('following');
 
   // Списки користувачів для кожної вкладки
@@ -64,19 +64,19 @@ const PeoplePage = ({ username, onClose }) => {
             className={`${styles.tab} ${activeTab === 'following' ? styles.active : ''}`}
             onClick={() => setActiveTab('following')}
           >
-            {t('following')} ({followingList.length}) {/* Додаємо кількість */}
+            {t('following')} ({followingList.length})
           </div>
           <div
             className={`${styles.tab} ${activeTab === 'followers' ? styles.active : ''}`}
             onClick={() => setActiveTab('followers')}
           >
-            {t('followers')} ({followersList.length}) {/* Додаємо кількість */}
+            {t('followers')} ({followersList.length})
           </div>
           <div
             className={`${styles.tab} ${activeTab === 'friends' ? styles.active : ''}`}
             onClick={() => setActiveTab('friends')}
           >
-            {t('friends')} ({friendsList.length}) {/* Додаємо кількість */}
+            {t('friends')} ({friendsList.length})
           </div>
         </div>
 

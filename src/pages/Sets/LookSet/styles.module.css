@@ -2,27 +2,27 @@
   width: 98%;
   align-self: center;
   display: block;
-  margin: 0 auto; /* Додає автоматичні відступи зліва і справа для центрування */
+  margin: 0 auto;
 }
 
 .separator {
   width: 98%;
-  border: 1.5px black solid; /* Основна товщина лінії */
+  border: 1.5px black solid;
   margin: 0 auto;
 }
 
 @media (max-width: 600px) {
   .separator {
-    border: none; /* Скидаємо бордер */
-    height: 1px; /* Задаємо висоту лінії */
-    background-color: black; /* Задаємо фон для лінії */
+    border: none;
+    height: 1px;
+    background-color: black;
   }
 }
 
 @media (max-width: 400px) {
   .separator {
-    border: none; /* Скидаємо бордер */
-    height: 0.5px; /* Тонша лінія */
-    background-color: black; /* Задаємо фон для лінії */
+    border: none;
+    height: 0.5px;
+    background-color: black;
   }
 }

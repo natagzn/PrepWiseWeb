@@ -1,21 +1,21 @@
 .checkboxGroup {
   display: flex;
-  flex-direction: column; /* Розміщує елементи в стовпчик */
-  margin: 10px 0; /* Відступи навколо групи */
+  flex-direction: column;
+  margin: 10px 0;
 }
 
 .checkboxItem {
   display: flex;
-  align-items: center; /* Вертикальне вирівнювання */
-  margin: 5px 0; /* Відступи між чекбоксами */
+  align-items: center;
+  margin: 5px 0;
 }
 
 .checkboxItem input {
-  margin-right: 10px; /* Відступ праворуч від чекбокса */
+  margin-right: 10px;
 }
 
 .checkboxItem label {
-  cursor: pointer; /* Змінює курсор при наведенні на текст */
+  cursor: pointer;
 }
 
 .filterButton {
@@ -30,7 +30,7 @@
   cursor: pointer;
   font-size: var(--web-18-regular-font-size);
   font-family: var(--web-font-family);
-  position: relative; /* Для позиціювання лічильника */
+  position: relative;
 }
 
 .filterBadge {

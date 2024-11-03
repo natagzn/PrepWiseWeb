@@ -28,7 +28,7 @@
 .closeButton {
   background: none;
   border: none;
-  font-size: var(--web-23-regular-font-size); /* Очищено на існуючу змінну */
+  font-size: var(--web-23-regular-font-size);
   cursor: pointer;
   color: var(--maingray);
   position: absolute;
@@ -40,7 +40,7 @@
 }
 
 .username {
-  font-size: var(--web-23-regular-font-size); /* Очищено на існуючу змінну */
+  font-size: var(--web-23-regular-font-size);
   font-family: var(--web-font-family);
   flex-grow: 1;
   text-align: center;
@@ -51,7 +51,7 @@
   display: flex;
   justify-content: space-around;
   margin-bottom: 10px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--light-gray);
 }
 
 .tab {
@@ -59,7 +59,7 @@
   cursor: pointer;
   position: relative;
   color: var(--maingray);
-  font-size: var(--web-18-regular-font-size); /* Очищено на існуючу змінну */
+  font-size: var(--web-18-regular-font-size);
   font-family: var(--web-font-family);
 }
 

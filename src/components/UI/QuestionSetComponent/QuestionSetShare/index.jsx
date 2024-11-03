@@ -1,6 +1,6 @@
 import React from 'react';
-import globalStyles from '../styles.module.css'; // Перший модуль стилів
-import localStyles from './styles.module.css'; // Другий модуль стилів
+import globalStyles from '../styles.module.css';
+import localStyles from './styles.module.css';
 
 import { useTranslation } from 'react-i18next';
 import { SaveNot } from 'components/UI/SaveNot';

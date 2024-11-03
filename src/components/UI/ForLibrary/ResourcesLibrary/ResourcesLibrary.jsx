@@ -39,7 +39,7 @@ const ResourcesLibrary = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: ['Development', 'Design', 'Marketing', 'Science', 'Arts'],
     },
   ];
@@ -105,19 +105,26 @@ const ResourcesLibrary = () => {
           />
         </div>
       </div>
+
       <div className={styles.resourcesList}>
-        {filteredResources().map((resource) => (
-          <ResourceComponent
-            key={resource.id}
-            id={resource.id}
-            title={resource.title}
-            category={resource.category}
-            username={resource.username}
-            date={resource.date}
-            description={resource.description}
-            isLiked={resource.isLiked}
-          />
-        ))}
+        {filteredResources().length === 0 ? (
+          <div className="noResultsMessage">
+            {t('no_resources_message_lib')}
+          </div>
+        ) : (
+          filteredResources().map((resource) => (
+            <ResourceComponent
+              key={resource.id}
+              id={resource.id}
+              title={resource.title}
+              category={resource.category}
+              username={resource.username}
+              date={resource.date}
+              description={resource.description}
+              isLiked={resource.isLiked}
+            />
+          ))
+        )}
       </div>
     </div>
   );

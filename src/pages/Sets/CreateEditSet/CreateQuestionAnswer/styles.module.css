@@ -23,14 +23,14 @@
 
 .header span {
   font-size: 20px;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: var(--web-font-family);
 }
 
 .trashIcon {
-  width: 25px; /* Налаштуйте ширину */
-  height: 25px; /* Налаштуйте висоту */
-  cursor: pointer; /* Змінюємо курсор на pointer */
-  color: #5a5a5a; /* Налаштуйте колір, якщо потрібно */
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: var(--maingray);
 }
 
 .inputRow {
@@ -49,8 +49,8 @@
 
 .inputColumn label {
   font-size: 18px;
-  color: #5a5a5a;
-  font-family: 'Noto Sans', sans-serif;
+  color: var(--maingray);
+  font-family: var(--web-font-family);
   padding-left: 5px;
 }
 
@@ -59,9 +59,9 @@
   padding: 10px 5px;
   font-size: 20px;
   color: black;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: var(--web-font-family);
   border: none;
-  border-bottom: 2px solid #5a5a5a;
+  border-bottom: 2px solid var(--maingray);
   resize: none;
   overflow: hidden;
   height: fit-content;
@@ -83,7 +83,7 @@
   border-radius: 8px;
   width: 90%;
   max-width: 400px;
-  z-index: 1000; /* Пріоритет для модального вікна */
+  z-index: 1000;
 }
 
 .questionModal {
@@ -103,7 +103,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Пріоритет для фону */
+  z-index: 999;
 }
 
 .confirmButton,
@@ -115,7 +115,6 @@
   cursor: pointer;
 }
 
-/* Адаптивні стилі для середніх і малих екранів */
 @media (max-width: 768px) {
   .wrapper {
     gap: 10px;
@@ -126,7 +125,7 @@
   }
 
   .inputColumn {
-    width: 100%; /* Розтягнення колонки на всю ширину */
+    width: 100%;
   }
 
   .header span {

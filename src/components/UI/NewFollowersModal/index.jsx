@@ -53,13 +53,13 @@ export default function NewFollowersModal({ onClose }) {
               <motion.button
                 className={styles.followButton}
                 onClick={() => toggleFollow(follower.id)}
-                whileHover={{ scale: 1.1 }} // Анімація при наведенні
-                whileTap={{ scale: 0.95 }} // Анімація при натисканні
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 style={{
                   backgroundColor: follower.following
                     ? 'rgba(29, 19, 82, 1)'
                     : '#144250',
-                }} // Змінюємо колір залежно від статусу
+                }}
               >
                 {follower.following ? 'Friends' : 'Follow back'}
               </motion.button>

@@ -58,7 +58,7 @@
 }
 
 .visibility {
-  color: #5a5a5a;
+  color: var(--maingray);
   font-size: var(--web-23-regular-font-size);
 }
 

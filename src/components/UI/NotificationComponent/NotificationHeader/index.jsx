@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const NotificationHeader = ({ iconColor, title, count, icon }) => {
   // Перевірка, чи це awardIcon
-  const isAwardIcon = icon && icon.includes('award'); // Змінюйте на правильний шлях або назву, якщо потрібно
+  const isAwardIcon = icon && icon.includes('award');
 
   return (
     <div className={styles.headerContainer}>

@@ -47,6 +47,8 @@ const FoldersLibrary = () => {
     return filteredFolders;
   };
 
+  const displayedFolders = sortedFolders();
+
   return (
     <div className={styles.foldersWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -66,16 +68,20 @@ const FoldersLibrary = () => {
         </div>
       </div>
       <div className={styles.foldersList}>
-        {sortedFolders().map((folder) => (
-          <FolderComponent
-            key={folder.id}
-            id={folder.id}
-            folderName={folder.title}
-            itemsCount={folder.itemsCount}
-            date={folder.date}
-            isLiked={folder.isLiked}
-          />
-        ))}
+        {displayedFolders.length === 0 ? (
+          <div className="noResultsMessage">{t('no_folders_message')}</div>
+        ) : (
+          displayedFolders.map((folder) => (
+            <FolderComponent
+              key={folder.id}
+              id={folder.id}
+              folderName={folder.title}
+              itemsCount={folder.itemsCount}
+              date={folder.date}
+              isLiked={folder.isLiked}
+            />
+          ))
+        )}
       </div>
     </div>
   );

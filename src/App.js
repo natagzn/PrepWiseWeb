@@ -35,6 +35,12 @@ import LookSet from 'pages/Sets/LookSet';
 import FlashcardPage from 'pages/FlashcardsPage';
 import ResultFlashcards from 'pages/FlashcardsPage/ResultPage';
 import GlobalSearchPage from 'pages/GlobalSearch';
+import CategoryManagement from 'components/UI/AdminComponents/CategoryManagment';
+import LevelsManagement from 'components/UI/AdminComponents/LevelsManagment';
+import ComplaintsManagement from 'components/UI/AdminComponents/ComplaintsManagement';
+import ResourceDetail from 'components/UI/AdminComponents/ResourceDetail';
+import SetDetails from 'components/UI/AdminComponents/SetDetail';
+import SupportManagement from 'components/UI/AdminComponents/SupportManagment';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -107,6 +113,16 @@ function App() {
         <Route path="/flashcard/result" element={<ResultFlashcards />} />
 
         <Route path="/search/:searchBy" element={<GlobalSearchPage />} />
+
+        <Route path="/admin/categories" element={<CategoryManagement />} />
+        <Route path="/admin/levels" element={<LevelsManagement />} />
+        <Route path="/admin/complaints" element={<ComplaintsManagement />} />
+        <Route
+          path="/admin/resources/:resourceId"
+          element={<ResourceDetail />}
+        />
+        <Route path="/admin/set/:questionSetId" element={<SetDetails />} />
+        <Route path="/admin/supports" element={<SupportManagement />} />
       </Routes>
     </>
   );

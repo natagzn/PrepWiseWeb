@@ -42,18 +42,17 @@ function SettingsShare({ onClose, id }) {
           <h1 className={styles.title}>{t('share')}</h1>
         </div>
 
-        {/* Replacing Search Input with SearchComponent */}
         <SearchComponent
           placeholder={t('search_friends')}
-          onClick={handleSearch} // Pass handleSearch function to SearchComponent
+          onClick={handleSearch}
         />
 
         {/* Friends List or No Results Message */}
         <div className={styles.friendsList}>
           {friends.length === 0 ? (
-            <p>{t('no_friends')}</p> // Display message if no friends
+            <p>{t('no_friends')}</p>
           ) : filteredFriends.length === 0 ? (
-            <p>{t('no_search_results')}</p> // Display message if no search results
+            <p>{t('no_search_results')}</p>
           ) : (
             filteredFriends.map((follower) => (
               <div key={follower.id} className={styles.followerItem}>

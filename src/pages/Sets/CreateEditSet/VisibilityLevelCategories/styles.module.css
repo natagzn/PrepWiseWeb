@@ -22,14 +22,14 @@
 }
 
 .dropdown {
-  height: 35px; /* Висота списку */
+  height: 35px;
   padding: 5px 10px;
   background: var(--mainwhite);
   border-radius: 15px;
   font-size: var(--web-18-regular-font-size);
   font-family: var(--web-font-family);
   cursor: pointer;
-  width: 150px; /* Можна залишити або змінити за потребою */
+  width: 150px;
   -webkit-appearance: none; /* Скидаємо стиль браузера для Chrome/Safari */
   -moz-appearance: none; /* Скидаємо стиль браузера для Firefox */
   appearance: none; /* Скидаємо стиль браузера для інших */
@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 65%; /* Розмір для другого стовпчика */
+  width: 65%;
 }
 
 .categoryItem {
@@ -55,11 +55,11 @@
   color: black;
   background: var(--mainwhite);
   border-radius: 15px;
-  height: 35px; /* Встановлюємо висоту кнопки такою ж, як у dropdown */
+  height: 35px;
   padding: 0 10px;
   display: flex;
-  align-items: center; /* Центруємо текст/іконку по вертикалі */
-  justify-content: center; /* Центруємо текст/іконку по горизонталі */
+  align-items: center;
+  justify-content: center;
 }
 
 .modalBackdrop {
@@ -92,7 +92,7 @@
 
 .applyButton {
   padding: 10px 20px;
-  background: #e5e5e5;
+  background: var(--light-gray);
   border-radius: 15px;
   font-size: var(--web-20-regular-font-size);
   font-family: var(--web-font-family);

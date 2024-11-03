@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: stretch;
   gap: 10px;
-  position: relative; /* Для позиціонування іконки */
+  position: relative;
 }
 
 .question,
@@ -26,7 +26,7 @@
 
 .question {
   width: 239px;
-  border-right: 2px solid gray;
+  border-right: 2px solid var(--maingray);
   padding-right: 35px;
   height: auto;
 }
@@ -88,7 +88,7 @@
 
 @media (max-width: 768px) {
   .card {
-    flex-direction: column; /* Переход на column для мобільних екранів */
+    flex-direction: column;
     padding: 15px;
     gap: 20px;
   }
@@ -96,15 +96,15 @@
   .question,
   .answer {
     font-size: calc(var(--web-23-regular-font-size) * 0.7);
-    width: 100%; /* Займає повну ширину в column компоновці */
+    width: 100%;
     padding: 0;
-    border-right: none; /* Вимикаємо border */
+    border-right: none;
     padding: 0px 30px;
   }
 
   .question {
     padding-bottom: 10px;
-    border-bottom: 1px solid gray; /* Нижній border замість правого для кращої видимості */
+    border-bottom: 1px solid var(--maingray);
   }
 
   .icon {

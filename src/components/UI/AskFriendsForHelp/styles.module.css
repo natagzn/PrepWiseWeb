@@ -12,16 +12,16 @@
 
 .modalHeader {
   display: flex;
-  justify-content: center; /* Центруємо заголовок */
+  justify-content: center;
   width: 100%;
   align-items: center;
-  position: relative; /* Додаємо позицію для кнопки */
+  position: relative;
   margin-bottom: 20px;
 }
 
 .closeButton {
-  position: absolute; /* Змінюємо позицію на абсолютну */
-  left: 10px; /* Відступ від лівого краю */
+  position: absolute;
+  left: 10px;
   background: none;
   border: none;
   font-size: 24px;
@@ -42,8 +42,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 350px; /* Встановлюємо максимальну висоту для списку друзів */
-  overflow-y: auto; /* Додаємо вертикальну прокрутку */
+  max-height: 350px;
+  overflow-y: auto;
 }
 
 .friendItem {
@@ -77,7 +77,7 @@
 
 .askButton {
   padding: 6px 11px;
-  background: #144250;
+  background: var(--landingdark-blue);
   color: white;
   font-size: 18px;
   border: none;

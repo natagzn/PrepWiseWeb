@@ -11,6 +11,7 @@ import FolderMenu from '../FolderMenu';
 const LookFolder = ({ folderName, visibility, count, countQ }) => {
   const { t } = useTranslation();
   const id = 2;
+  const date = '2024-10-10';
 
   // Початковий порядок sets
   const initialQuestionSetsData = [
@@ -109,7 +110,7 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
         <div className={styles.columnLeft}>
           <div className={styles.folderName}>{folderName}</div>
           <div className={styles.setsCount}>
-            {count} {t('sets')} • {countQ} {t('questions')}
+            {count} {t('sets')} • {countQ} {t('questions')} • {date}
           </div>
         </div>
         <div className={styles.columnRight}>

@@ -1,12 +1,10 @@
 import React from 'react';
-import styles from './styles.module.css'; // Замініть на ваш шлях до стилів
+import styles from './styles.module.css';
 import { SaveNot } from '../SaveNot';
-
-// Іконки для видимості
-import { useTranslation } from 'react-i18next'; // Імпортуємо useTranslation
+import { useTranslation } from 'react-i18next';
 
 const QuestionSetComponent = (props) => {
-  const { t } = useTranslation(); // Отримуємо функцію t для перекладів
+  const { t } = useTranslation();
 
   return (
     <div className={styles.container}>
@@ -41,7 +39,7 @@ const QuestionSetComponent = (props) => {
               )}
             </div>
           ) : (
-            <span className={styles.visibilityInfo}>{t('not_specified')}</span> // або нічого не відображати
+            <span className={styles.visibilityInfo}>{t('not_specified')}</span>
           )}
         </div>
 

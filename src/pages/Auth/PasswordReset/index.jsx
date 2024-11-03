@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // Імпортуємо motion для анімацій
+import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
@@ -10,10 +10,9 @@ const PasswordReset = () => {
   const [isLogin] = useState(false);
   const navigate = useNavigate();
 
-  // Налаштовуємо анімаційні параметри
   const inputVariants = {
-    hidden: { opacity: 0, y: -20 }, // Початковий стан (невидимий)
-    visible: { opacity: 1, y: 0 }, // Кінцевий стан (видимий)
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   const hadleConfirm = () => {
@@ -43,7 +42,7 @@ const PasswordReset = () => {
         >
           <input
             type="email"
-            placeholder={t('email')} // Використовуємо t для перекладу
+            placeholder={t('email')}
             className={styles.input}
             required
           />

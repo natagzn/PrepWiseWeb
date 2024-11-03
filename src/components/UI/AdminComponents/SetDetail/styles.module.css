@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.flexContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .flexContainer {
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+  }
+
+  .leftBlock {
+    margin: 50px 20px;
+    height: auto;
+    width: 480px;
+  }
+
+  .rightBlock {
+    max-width: 100%;
+    height: 600px;
+    margin-bottom: 20px;
+  }
+}
+
+.leftBlock {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-right: 20px;
+  max-width: 480px;
+}
+
+.rightBlock {
+  flex: 2;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.button {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.questionList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.questionItem {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}

@@ -41,7 +41,7 @@ const ResourcesSearch = () => {
   const filters = [
     {
       name: 'categories',
-      label: 'Category',
+      label: 'categories',
       options: [
         'JavaScript',
         'Programming',

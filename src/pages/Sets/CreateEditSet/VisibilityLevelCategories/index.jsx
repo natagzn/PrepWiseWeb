@@ -4,29 +4,31 @@ import { useTranslation } from 'react-i18next';
 import { FaPen } from 'react-icons/fa';
 
 function VisibilityLevelCategories({
-  onCategoryChange,
-  onLevelChange,
-  onVisibilityChange,
-  initialLevel,
-  initialVisibility,
-  initialCategories,
+  onCategoryChange, // Callback для передачі обраних категорій
+  onLevelChange, // Callback для передачі обраного рівня
+  onVisibilityChange, // Callback для передачі обраної видимості
+  initialLevel, // Початковий рівень, переданий через пропси
+  initialVisibility, // Початкова видимість, передана через пропси
+  initialCategories, // Початкові категорії, передані через пропси
 }) {
-  const { t } = useTranslation();
-  const [visibility, setVisibility] = useState(initialVisibility || 'public');
+  const { t } = useTranslation(); // Функція для перекладу
+  const [visibility, setVisibility] = useState(initialVisibility || 'public'); // Стан для зберігання видимості
   const [level, setLevel] = useState(
     initialLevel || { id: 1, name: 'trainee' }
-  );
+  ); // Стан для зберігання рівня
   const [selectedCategoryIds, setSelectedCategoryIds] = useState(
-    initialCategories ? initialCategories.map((cat) => cat.id) : []
+    initialCategories ? initialCategories.map((cat) => cat.id) : [] // Стан для зберігання ID обраних категорій
   );
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // Стан для контролю модального вікна
 
   useEffect(() => {
+    // Оновлюємо стан при зміні початкових значень пропсів
     setVisibility(initialVisibility);
     setLevel(initialLevel);
     setSelectedCategoryIds(initialCategories.map((cat) => cat.id));
   }, [initialVisibility, initialLevel, initialCategories]);
 
+  // Доступні категорії
   const categories = [
     { id: 1, name: 'C#' },
     { id: 2, name: 'ASP .NET' },
@@ -34,6 +36,8 @@ function VisibilityLevelCategories({
     { id: 4, name: 'Python' },
     { id: 5, name: 'Java' },
   ];
+
+  // Доступні рівні
   const levels = [
     { id: 1, name: 'trainee' },
     { id: 2, name: 'junior' },
@@ -42,38 +46,45 @@ function VisibilityLevelCategories({
     { id: 5, name: 'team_lead' },
   ];
 
+  // Обробник для зміни видимості
   const handleVisibilityChange = (e) => {
     const selectedVisibility = e.target.value;
     setVisibility(selectedVisibility);
     onVisibilityChange(selectedVisibility); // Передаємо вибрану видимість
   };
 
+  // Обробник для зміни рівня
   const handleLevelChange = (e) => {
     const selectedLevel = levels.find((lvl) => lvl.name === e.target.value);
     setLevel(selectedLevel);
-    onLevelChange(selectedLevel);
+    onLevelChange(selectedLevel); // Передаємо вибраний рівень
   };
 
+  // Відкриває/закриває модальне вікно для вибору категорій
   const toggleCategoryModal = () =>
     setIsCategoryModalOpen(!isCategoryModalOpen);
 
+  // Додає або видаляє категорію з вибраних
   const handleCategorySelection = (categoryId) => {
     const updatedCategoryIds = selectedCategoryIds.includes(categoryId)
       ? selectedCategoryIds.filter((id) => id !== categoryId)
       : [...selectedCategoryIds, categoryId];
 
+    // Обмеження до 3 категорій
     if (updatedCategoryIds.length <= 3) {
       setSelectedCategoryIds(updatedCategoryIds);
       onCategoryChange(
         categories.filter((cat) => updatedCategoryIds.includes(cat.id))
-      );
+      ); // Передаємо вибрані категорії
     }
   };
 
+  // Застосовує вибрані категорії та закриває модальне вікно
   const handleApplyCategories = () => toggleCategoryModal();
 
   return (
     <div className={styles.container}>
+      {/* Вибір видимості */}
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Visibility')}:</div>
         <select
@@ -86,6 +97,7 @@ function VisibilityLevelCategories({
         </select>
       </div>
 
+      {/* Вибір рівня */}
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Level of set')}:</div>
         <select
@@ -101,6 +113,7 @@ function VisibilityLevelCategories({
         </select>
       </div>
 
+      {/* Вибір категорії */}
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Category of set')}:</div>
         <div className={styles.categoryList}>
@@ -117,6 +130,7 @@ function VisibilityLevelCategories({
         </div>
       </div>
 
+      {/* Модальне вікно для вибору категорій */}
       {isCategoryModalOpen && (
         <div className={styles.modalBackdrop}>
           <div className={styles.modal}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // Імпортуємо motion
+import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
@@ -29,7 +29,7 @@ const ConfirmEmail = () => {
     if (code.join('').length === 4) {
       console.log('Code confirmed:', code.join(''));
       // Перевірка введеного коду або інша логіка
-      navigate('/home'); // Наприклад, редирект після успіху
+      navigate('/home'); // редирект після успіху
     } else {
       console.log('Invalid code');
     }

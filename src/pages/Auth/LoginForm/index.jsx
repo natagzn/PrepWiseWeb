@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
-import { useNavigate } from 'react-router-dom'; // Імпортуємо useNavigate
-import { nav } from 'framer-motion/client';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../../context/UserContext';
 
 const LoginForm = () => {
   const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
-  const navigate = useNavigate(); // Ініціалізуємо useNavigate
+  const navigate = useNavigate();
+  const { setUserId, setIsPremium, setIsAdmin } = useUser(); // Використовуємо контекст
 
   const toggleAuthMode = () => {
     setIsLogin((prevMode) => !prevMode);
@@ -25,13 +26,16 @@ const LoginForm = () => {
   };
 
   const handleLogIn = () => {
+    // При успішному логіні встановлюємо значення в контекст
+    setUserId(1); // Замініть 1 на реальний user_id після логіну
+    setIsPremium(true); // Змінити на значення з сервера
+    setIsAdmin(false); // Змінити на значення з сервера
+
     navigate('/home');
   };
 
   return (
     <AuthTemplate isLogin={isLogin} toggleAuthMode={toggleAuthMode}>
-      {' '}
-      {/* Обгортаємо логін форму в шаблон */}
       <div className={styles.inputContainer}>
         <motion.div
           className={styles.inputWrapper}
@@ -67,7 +71,7 @@ const LoginForm = () => {
           animate="visible"
           variants={inputVariants}
           transition={{ duration: 0.5, delay: 0.4 }}
-          onClick={handleForgotPassword} // Використовуємо функцію для навігації
+          onClick={handleForgotPassword}
         >
           {t('forgot_password')}
         </motion.div>

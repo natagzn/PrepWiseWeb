@@ -8,13 +8,16 @@ import './i18n/i18n';
 import { LanguageProvider } from './context/LanguageContext';
 import { BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'; // Імпорт стилів
+import { UserProvider } from 'context/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <LanguageProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </UserProvider>
   </LanguageProvider>
 );
 

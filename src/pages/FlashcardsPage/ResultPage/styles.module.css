@@ -4,15 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* Мінімальна висота контейнера - 100% висоти вікна */
+  min-height: 100vh;
   font-family: var(--web-font-family);
 }
 
 .contentWrapper {
   flex: 1; /* Займає все залишкове місце */
   display: flex;
-  flex-direction: column; /* Стовпчик для вмісту */
-  width: 100%; /* Займає 100% ширини */
+  flex-direction: column;
+  width: 100%;
   text-align: center;
 }
 
@@ -87,13 +87,13 @@
 }
 
 .stillLearning {
-  background-color: rgba(255, 165, 0, 0.2); /* Напівпрозорий оранжевий */
-  color: #c36c02; /* Оранжевий текст */
+  background-color: rgba(255, 165, 0, 0.2);
+  color: #c36c02;
 }
 
 .know {
-  background-color: rgba(0, 128, 0, 0.2); /* Напівпрозорий зелений */
-  color: #265828; /* Зелений текст */
+  background-color: rgba(0, 128, 0, 0.2);
+  color: #265828;
 }
 
 .label {
@@ -159,21 +159,21 @@
 
 .buttonContainer {
   display: flex;
-  flex-direction: column; /* Відображення кнопок у стовпчик */
-  justify-content: center; /* Центрування кнопок по вертикалі */
-  align-items: center; /* Центрування кнопок по горизонталі */
-  height: 100%; /* Використання всієї висоти для вертикального центрування */
-  gap: 10px; /* Проміжок між кнопками */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 10px;
 }
 
 @media (max-width: 1000px) {
   .button {
-    width: 100%; /* На малих екранах кнопки займають всю ширину */
+    width: 100%;
   }
 
   .mainContent {
-    flex-direction: column; /* Змінюємо напрямок на стовпчик на малих екранах */
-    align-items: center; /* Центруємо контент по горизонталі */
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 
@@ -197,25 +197,21 @@
   }
 
   .comment {
-    font-size: 24px; /* Зменшення шрифту коментарів на малих екранах */
+    font-size: 24px;
   }
 
   .questionCount,
   .setTitle {
-    font-size: var(
-      --web-20-regular-font-size
-    ); /* Зменшення шрифту заголовків */
+    font-size: var(--web-20-regular-font-size);
   }
 
   .progressPercent {
-    font-size: 23px; /* Зменшення шрифту проценту прогресу */
+    font-size: 23px;
   }
 
   .stillLearning,
   .know {
-    font-size: var(
-      --web-20-regular-font-size
-    ); /* Зменшення шрифту для статусів */
+    font-size: var(--web-20-regular-font-size);
   }
 
   .button {

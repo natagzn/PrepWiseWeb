@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Зробити впевненим, що елемент зверху */
+  z-index: 1000;
 }
 
 .modalContent {
@@ -25,7 +25,7 @@
 .title {
   text-align: center;
   color: black;
-  font-size: 30px; /* Зменшити шрифт на малих екранах */
+  font-size: 30px;
 }
 
 .inputGroup {
@@ -35,26 +35,26 @@
 }
 
 label {
-  color: #5a5a5a;
+  color: var(--maingray);
   font-size: 18px;
   padding-left: 7px;
 }
 
 .textarea {
   width: 100%;
-  min-height: 60px; /* Мінімальна висота інпуту */
-  border: none; /* Видаляємо всі бордери */
-  border-bottom: 2px solid #5a5a5a; /* Додаємо тільки нижню лінію */
+  min-height: 60px;
+  border: none;
+  border-bottom: 2px solid var(--maingray);
   padding: 7px;
-  font-size: 23px; /* Зменшити шрифт на малих екранах */
-  resize: none; /* Забороняємо ручне зміщення розміру */
+  font-size: 23px;
+  resize: none;
   overflow: hidden;
   height: fit-content;
 }
 
 .textarea:focus {
-  outline: none; /* Прибираємо обрамлення при фокусі */
-  border-bottom-color: #3a3a3a; /* Колір нижнього бордера при фокусі */
+  outline: none;
+  border-bottom-color: #3a3a3a;
 }
 
 .chooseCategories {
@@ -92,7 +92,7 @@ label {
 .cancelButton {
   padding: 10px 20px;
   border-radius: 10px;
-  border: 1px solid #5a5a5a;
+  border: 1px solid var(--maingray);
   cursor: pointer;
 }
 
@@ -109,15 +109,15 @@ label {
 /* Адаптивні стилі */
 @media (max-width: 600px) {
   .title {
-    font-size: 24px; /* Зменшити розмір шрифту для заголовка */
+    font-size: 24px;
   }
 
   label {
-    font-size: 16px; /* Зменшити шрифт для міток */
+    font-size: 16px;
   }
 
   .textarea {
-    font-size: 20px; /* Зменшити шрифт для текстових полів */
+    font-size: 20px;
   }
 }
 

@@ -90,10 +90,10 @@ const NotificationPage = () => {
         {isModalOpen && <NewFollowersModal onClose={closeFollowersModal} />}
         {questionData && (
           <AnswerToQuestionModal
-            questionFrom={questionData.title} // передайте title для "from"
+            questionFrom={questionData.title}
             questionId={questionData.questionId}
             onClose={closeQuestionModal}
-            onSend={handleSendAnswer} // зміна тут
+            onSend={handleSendAnswer}
           />
         )}
       </div>

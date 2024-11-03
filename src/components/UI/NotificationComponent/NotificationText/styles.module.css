@@ -21,7 +21,7 @@
 .description {
   font-size: var(--web-20-regular-font-size);
   font-weight: 400;
-  color: #5a5a5a;
+  color: var(--maingray);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -30,7 +30,7 @@
 .date {
   font-size: var(--web-18-regular-font-size);
   font-weight: 400;
-  color: #5a5a5a;
+  color: var(--maingray);
   white-space: nowrap;
   margin-right: 10px;
 }

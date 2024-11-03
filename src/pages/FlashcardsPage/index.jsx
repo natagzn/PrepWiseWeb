@@ -32,10 +32,8 @@ function FlashcardPage({ setId }) {
   useEffect(() => {
     console.log('Init set');
 
-    // Приклад заголовка, який може прийти з props
     setSetTitle('title');
 
-    // Ініціалізація флешкарток
     const initialFlashcards = [
       {
         id: 0,

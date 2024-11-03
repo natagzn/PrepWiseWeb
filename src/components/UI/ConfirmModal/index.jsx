@@ -18,7 +18,7 @@ const ConfirmationModal = ({ isOpen, onRequestClose, onConfirm, text }) => {
   return ReactDOM.createPortal(
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <div className={styles.modal}>
-        <h3>{text}</h3>
+        <div>{text}</div>
         <div className={styles.buttonContainer}>
           <button onClick={onConfirm} className={styles.yes}>
             {t('yes')}

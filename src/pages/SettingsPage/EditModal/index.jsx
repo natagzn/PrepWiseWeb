@@ -52,7 +52,7 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   };
 
   const handleSave = () => {
-    // Перевіряємо, чи введена країна є в списку
+    // чи введена країна є в списку
     if (!countries.includes(locationInput)) {
       toast.error(t('invalid_location')); // Відображаємо повідомлення про помилку
       return;

@@ -64,13 +64,13 @@
 
 .iconEdit {
   cursor: pointer;
-  width: 30px; /* Adjusted width */
-  height: 30px; /* Adjusted height */
+  width: 30px;
+  height: 30px;
 }
 
 .iconEdit img {
-  width: 100%; /* Make the image take the full width of the icon block */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%;
+  height: auto;
 }
 .personalDetails {
   display: flex;
@@ -90,19 +90,19 @@
 }
 
 .detailLabel {
-  font-weight: 600; /* Змінено на 400 */
+  font-weight: 600;
   text-align: left;
   width: 30%;
 }
 
 .detailValue {
-  font-weight: 400; /* Змінено на 400 */
+  font-weight: 400;
   text-align: left;
   width: 70%;
   max-width: 370px;
-  text-wrap: wrap; /* This property doesn't exist, so we remove it */
-  white-space: normal; /* Allow text to wrap to the next line */
-  overflow-wrap: break-word; /* Break long words onto the next line */
+  text-wrap: wrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .languageBlock {
@@ -119,12 +119,12 @@
 
 .languageLabel {
   font-size: var(--web-20-regular-font-size);
-  font-weight: 600; /* Змінено на 400 */
+  font-weight: 600;
 }
 
 .languageValue {
   font-size: var(--web-20-regular-font-size);
-  font-weight: 400; /* Змінено на 400 */
+  font-weight: 400;
   width: 180px;
 }
 
@@ -142,7 +142,7 @@
 
 .logoutTitle {
   font-size: var(--web-20-regular-font-size);
-  font-weight: 600; /* Змінено на 400 */
+  font-weight: 600;
   color: var(--mainblack);
 }
 
@@ -152,7 +152,7 @@
   padding: 10px 15px;
   border-radius: 15px;
   font-size: var(--web-20-regular-font-size);
-  font-weight: 400; /* Змінено на 400 */
+  font-weight: 400;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -185,7 +185,7 @@
 
 .premiumLabel {
   font-size: var(--web-20-regular-font-size);
-  font-weight: 400; /* Змінено на 400 */
+  font-weight: 400;
 }
 
 .premiumUpgradeButton {
@@ -194,7 +194,7 @@
   border-radius: 15px;
   color: var(--mainblack);
   font-size: var(--web-20-regular-font-size);
-  font-weight: 400; /* Змінено на 400 */
+  font-weight: 400;
   width: 180px;
   display: flex;
   justify-content: center;
@@ -215,7 +215,7 @@
 
 .deleteLabel {
   font-size: var(--web-20-regular-font-size);
-  font-weight: 600; /* Змінено на 400 */
+  font-weight: 600;
 }
 
 .deleteDescription {
@@ -342,20 +342,20 @@
 
   .detailsTable tr {
     display: flex;
-    flex-direction: column; /* Зміна рядків на стовпчики */
-    margin-bottom: 10px; /* Відступ між рядками */
+    flex-direction: column;
+    margin-bottom: 10px;
   }
 
   .detailLabel,
   .detailValue {
-    width: 100%; /* Зробити ширину 100% для блоків */
-    text-align: left; /* Вирівнювання тексту */
+    width: 100%;
+    text-align: left;
     max-width: 250px;
   }
 
   .detailLabel {
-    font-weight: bold; /* Можна виділити назву */
-    margin-bottom: 5px; /* Відступ між назвою та значенням */
+    font-weight: bold;
+    margin-bottom: 5px;
   }
 
   .iconEdit {

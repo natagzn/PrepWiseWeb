@@ -73,18 +73,23 @@ const FoldersFavorite = () => {
           />
         </div>
       </div>
+
       <div className={styles.foldersList}>
-        {sortedFolders().map((folder) => (
-          <FolderComponent
-            key={folder.id}
-            id={folder.id}
-            folderName={folder.title}
-            itemsCount={folder.itemsCount}
-            date={folder.date}
-            isLiked={folder.isLiked}
-            /*handleLikeFolder={handleLikeFolder}*/
-          />
-        ))}
+        {sortedFolders().length === 0 ? (
+          <div className="noResultsMessage">{t('no_folders_message_fav')} </div>
+        ) : (
+          sortedFolders().map((folder) => (
+            <FolderComponent
+              key={folder.id}
+              id={folder.id}
+              folderName={folder.title}
+              itemsCount={folder.itemsCount}
+              date={folder.date}
+              isLiked={folder.isLiked}
+              /*handleLikeFolder={handleLikeFolder} */
+            />
+          ))
+        )}
       </div>
     </div>
   );

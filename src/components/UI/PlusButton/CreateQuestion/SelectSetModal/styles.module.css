@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Високий z-index, щоб перекривати інші елементи */
+  z-index: 1000;
 }
 
 .modalContent {
@@ -19,32 +19,32 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 400px; /* Встановіть ширину за потребою */
-  max-height: 80vh; /* Максимальна висота для модального вікна */
-  overflow-y: auto; /* Прокрутка, якщо вміст перевищує максимальну висоту */
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
   margin: 20px;
 }
 
 .setList {
   margin-top: 15px;
-  max-height: 200px; /* Висота для 5 сетів (можете налаштувати відповідно до висоти ваших елементів) */
-  overflow-y: auto; /* Прокрутка для списку, якщо елементів більше */
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .setItem {
   padding: 10px;
   cursor: pointer;
-  border-bottom: 1px solid #ddd; /* Лінія між елементами списку */
+  border-bottom: 1px solid #ddd;
 }
 
 .setItem:hover {
-  background-color: #f0f0f0; /* Підсвічування елемента при наведенні */
+  background-color: #f0f0f0;
 }
 
 .close {
   margin-top: 10px;
   padding: 10px;
-  background-color: var(--landingdark-blue); /* Основний колір кнопки */
+  background-color: var(--landingdark-blue);
   color: white;
   border: none;
   border-radius: 5px;

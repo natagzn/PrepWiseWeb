@@ -295,6 +295,7 @@
   "reset progress": "Reset progress",
   "add to folder": "Add to folder",
   "delete": "Delete",
+  "Delete": "Delete",
   "Are you sure you want to delete this set?": "Are you sure you want to delete this set?",
   "Set has been deleted successfully!": "Set has been deleted successfully!",
   "Select the folder to add to": "Select the folder to add to",
@@ -339,5 +340,50 @@
   "follower": "Follower",
 
   "no_question_sets_profile": "No public question sets.",
-  "no_resources_profile": "No resources yet."
+  "no_resources_profile": "No resources yet.",
+
+  "Manage categories": "Manage categories",
+  "Category name": "Category name",
+  "Actions": "Actions",
+  "Edit category": "Edit category",
+  "delete_category_confirmation": "Do you really want to delete the category \"{{name}}\"?",
+  "levels": "Levels",
+  "Manage levels": "Manage levels",
+  "Level name": "Level name",
+  "Edit level": "Edit level",
+  "delete_level_confirmation": "Do you really want to delete the level \"{{name}}\"?",
+
+  "complaints": "Complaints",
+  "Manage complaints": "Manage complaints",
+
+  "are_you_sure_delete": "Do you really want to delete this resource?",
+  "access": "Access",
+  "user": "User",
+  "questions_in_set": "Questions in set",
+  "are_you_sure_delete_set": "Do you really want to delete this set?",
+
+  "support_response_subject": "Support Response",
+  "greeting": "Hello",
+  "feedback_thanks": "Thank you for your feedback. We have reviewed your request and are ready to assist.",
+  "best_regards": "Best regards",
+  "support_team": "Support Team \"PrepWise\"",
+  "error_opening_gmail": "Could not open Gmail. Please check your browser settings.",
+
+  "supports": "Supports",
+  "current_subscription": "Current Premium",
+  "purchase_date": "Purchase date",
+  "subscription_type": "Premium type",
+  "no_current_subscription": "No current subscription",
+  "previous_subscriptions": "Previous Premium",
+  "no_previous_subscriptions": "No previous subscription",
+  "view_subscriptions": "View all type Premium",
+
+  "no_folders_message": "No folders found.",
+  "no_question_sets_message_lib": "No question sets found.",
+  "no_resources_message_lib": "No resources found.",
+  "no_shared_yet_lib": "No shared sets found.",
+
+  "no_folders_message_fav": "No favorite folders found.",
+  "no_question_sets_message_fav": "No favorite question sets found.",
+  "no_resources_message_fav": "No favorite resources found."
 }

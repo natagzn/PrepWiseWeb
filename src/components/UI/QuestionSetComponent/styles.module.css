@@ -89,7 +89,7 @@
 
 .levelValue {
   font-weight: 500;
-  color: #333;
+  color: var(--maingray);
 }
 
 .categories {
@@ -131,7 +131,7 @@
 
 .date {
   font-size: var(--web-18-regular-font-size);
-  color: #5a5a5a;
+  color: var(--maingray);
 }
 
 @media (max-width: 600px) {

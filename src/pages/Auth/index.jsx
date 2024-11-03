@@ -5,18 +5,18 @@ import LanguageSwitcher from '../../components/UI/LanguageSwitcher';
 import PasswordReset from './PasswordReset';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import NewPassword from './NewPassword'; // Import NewPassword component
+import NewPassword from './NewPassword';
 
 const AuthPage = () => {
   const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [isPasswordReset, setIsPasswordReset] = useState(false);
-  const [isNewPassword, setIsNewPassword] = useState(false); // State for NewPassword component
+  const [isNewPassword, setIsNewPassword] = useState(false);
 
   const toggleAuthMode = () => {
     setIsLogin((prev) => !prev);
     setIsPasswordReset(false);
-    setIsNewPassword(false); // Reset NewPassword state
+    setIsNewPassword(false);
   };
 
   const handlePasswordReset = () => {
@@ -25,7 +25,7 @@ const AuthPage = () => {
 
   const handleCancelPasswordReset = () => {
     setIsPasswordReset(false);
-    setIsNewPassword(false); // Ensure NewPassword is not shown when canceled
+    setIsNewPassword(false);
   };
 
   const handleConfirmPasswordReset = () => {

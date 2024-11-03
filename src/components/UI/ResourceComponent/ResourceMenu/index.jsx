@@ -13,7 +13,6 @@ const ResourceMenu = ({ id }) => {
   const menuRef = useRef(null);
   const iconRef = useRef(null);
 
-  // Function to open/close menu
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
 
   const handleDelete = () => {
@@ -40,7 +39,7 @@ const ResourceMenu = ({ id }) => {
     },
   ];
 
-  // Effect to handle clicks outside the menu
+  // Функція при натиску за межі меню
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -61,12 +60,12 @@ const ResourceMenu = ({ id }) => {
 
   return (
     <div className={styles.menuWrapper}>
-      {/* Icon with three dots */}
+      {/* Іконка 3 крапок */}
       <button ref={iconRef} onClick={toggleMenu} className={styles.dotsButton}>
         ⋮
       </button>
 
-      {/* Options menu */}
+      {/* Варіанти меню */}
       {isMenuOpen && (
         <div ref={menuRef} className={styles.menuContainer}>
           <div className={styles.menuList}>

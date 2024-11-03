@@ -1,0 +1,9 @@
+.emailLink {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.emailLink:hover {
+  color: #0056b3;
+}
