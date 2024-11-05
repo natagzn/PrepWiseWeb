@@ -40,6 +40,11 @@ function ResourceComponent(props) {
           ) : (
             <div className={styles.categoryText}>{t('without_category')}</div>
           )}
+          {props.level ? (
+            <div className={styles.categoryText}>{props.level}</div>
+          ) : (
+            <div className={styles.categoryText}>{t('without_level')}</div>
+          )}
         </div>
 
         <div className={styles.articleInfo}>

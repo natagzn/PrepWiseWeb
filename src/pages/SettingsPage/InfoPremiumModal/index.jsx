@@ -9,9 +9,9 @@ const fetchSubscriptions = (user_id) => {
   // Приклад фіктивних даних
   const subscriptions = {
     currentSubscription:
-      user_id === 1 ? { purchaseDate: '2024-10-15', type: 'monthly' } : null,
+      user_id === 2 ? { purchaseDate: '2024-10-15', type: 'monthly' } : null,
     previousSubscriptions:
-      user_id === 1
+      user_id === 2
         ? [
             { purchaseDate: '2024-05-01', type: 'monthly' },
             { purchaseDate: '2023-12-01', type: 'annual' },
