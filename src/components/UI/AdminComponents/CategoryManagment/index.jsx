@@ -1,23 +1,87 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import HeaderAdmin from '../Header';
+import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
 const CategoryManagement = () => {
   const { t } = useTranslation();
-  const [categories, setCategories] = useState([
-    { id: 1, name: 'Категорія 1' },
-    { id: 2, name: 'Категорія 2' },
-    { id: 3, name: 'Категорія 3' },
-  ]);
-
+  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // для модального вікна створення
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [editedName, setEditedName] = useState('');
-  const [newCategoryName, setNewCategoryName] = useState(''); // для імені нової категорії
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
+
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/categories`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      const data = await response.json();
+      setCategories(data.categories);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      toast.error(t('Error fetching categories. Please try again.'));
+    } finally {
+      setLoading(false); // Завантаження завершено
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, [token]); // залежить від токена
+
+  useEffect(() => {
+    const filtered = categories.filter(
+      (category) =>
+        category.name &&
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredCategories(filtered);
+  }, [categories, searchTerm]);
+
+  const addCategoryToServer = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/categories`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name: newCategoryName }),
+        }
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      await response.json();
+      setIsAddModalOpen(false);
+      setNewCategoryName('');
+      setSearchTerm('');
+      fetchCategories(); // Оновлюємо список категорій
+    } catch (error) {
+      console.error('Error adding category:', error);
+      toast.error(t('Error adding category. Please try again.'));
+    }
+  };
 
   const handleEditClick = (category) => {
     setCurrentCategory(category);
@@ -30,39 +94,67 @@ const CategoryManagement = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveEdit = () => {
-    setCategories((prevCategories) =>
-      prevCategories.map((cat) =>
-        cat.id === currentCategory.id ? { ...cat, name: editedName } : cat
-      )
-    );
-    setIsEditModalOpen(false);
-    setCurrentCategory(null);
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/categories/${currentCategory.category_id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name: editedName }),
+        }
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      await response.json();
+      setIsEditModalOpen(false);
+      setCurrentCategory(null);
+      setEditedName('');
+      fetchCategories(); // Оновлюємо список категорій
+    } catch (error) {
+      console.error('Error updating category:', error);
+      toast.error(t('Error updating category. Please try again.'));
+    }
   };
 
-  const handleDeleteConfirm = () => {
-    setCategories((prevCategories) =>
-      prevCategories.filter((cat) => cat.id !== currentCategory.id)
-    );
-    setIsDeleteModalOpen(false);
-    setCurrentCategory(null);
+  const handleDeleteConfirm = async () => {
+    try {
+      await fetch(
+        `${process.env.REACT_APP_API_URL}/categories/${currentCategory.category_id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setCategories((prevCategories) =>
+        prevCategories.filter(
+          (cat) => cat.category_id !== currentCategory.category_id
+        )
+      );
+      setIsDeleteModalOpen(false);
+      setCurrentCategory(null);
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      toast.error(t('Error deleting category. Please try again.'));
+    }
   };
 
-  // Додавання нової категорії
   const handleAddCategory = () => {
-    const newCategory = {
-      id: categories.length + 1, // створюємо новий ID
-      name: newCategoryName,
-    };
-    setCategories([...categories, newCategory]);
-    setIsAddModalOpen(false);
-    setNewCategoryName('');
+    if (newCategoryName.trim()) {
+      addCategoryToServer();
+    }
   };
 
-  // Фільтрація категорій за назвою
-  const filteredCategories = categories.filter((category) =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleResetSearch = () => {
+    setSearchTerm('');
+    setFilteredCategories(categories);
+  };
 
   return (
     <div>
@@ -70,54 +162,70 @@ const CategoryManagement = () => {
       <div className="container my-4">
         <h2>{t('Manage categories')}</h2>
 
-        {/* Кнопка для додавання категорії */}
-        <button
-          className="btn btn-success my-3"
-          onClick={() => setIsAddModalOpen(true)}
-        >
-          {t('Add category')}
-        </button>
+        <div className="d-flex justify-content-between align-items-center my-3">
+          {/* Поле для пошуку */}
+          <input
+            type="text"
+            placeholder={t('Search by name')}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control mx-2"
+            style={{ width: '800px' }}
+          />
 
-        {/* Поле для пошуку */}
-        <input
-          type="text"
-          placeholder={t('Search by name')}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="form-control my-3"
-        />
+          {/* Кнопка для додавання категорії */}
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              setIsAddModalOpen(true);
+              handleResetSearch();
+            }}
+          >
+            {t('Add category')}
+          </button>
 
-        <table className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>{t('ID')}</th>
-              <th>{t('Category name')}</th>
-              <th>{t('Actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredCategories.map((category) => (
-              <tr key={category.id}>
-                <td>{category.id}</td>
-                <td>{category.name}</td>
-                <td>
-                  <button
-                    className="btn btn-primary btn-sm mx-1"
-                    onClick={() => handleEditClick(category)}
-                  >
-                    {t('Edit')}
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm mx-1"
-                    onClick={() => handleDeleteClick(category)}
-                  >
-                    {t('Delete')}
-                  </button>
-                </td>
+          {/* Кнопка для скидання пошуку */}
+          <button className="btn btn-secondary" onClick={handleResetSearch}>
+            {t('Reset Search')}
+          </button>
+        </div>
+        {loading ? ( // Відображення індикатора завантаження
+          <div className="text-center">
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{t('ID')}</th>
+                <th>{t('Category name')}</th>
+                <th>{t('Actions')}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredCategories.map((category) => (
+                <tr key={category.category_id}>
+                  <td>{category.category_id}</td>
+                  <td>{category.name}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary btn-sm mx-1"
+                      onClick={() => handleEditClick(category)}
+                    >
+                      {t('Edit')}
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm mx-1"
+                      onClick={() => handleDeleteClick(category)}
+                    >
+                      {t('Delete')}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         {/* Модальне вікно для додавання категорії */}
         {isAddModalOpen && (
@@ -136,7 +244,7 @@ const CategoryManagement = () => {
                   className="btn btn-success mx-1"
                   onClick={handleAddCategory}
                 >
-                  {t('Add')}
+                  {t('Create')}
                 </button>
                 <button
                   className="btn btn-secondary mx-1"

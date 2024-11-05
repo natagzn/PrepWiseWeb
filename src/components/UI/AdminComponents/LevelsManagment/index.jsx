@@ -1,23 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import HeaderAdmin from '../Header';
+import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
 const LevelsManagement = () => {
   const { t } = useTranslation();
-  const [levels, setLevels] = useState([
-    { id: 1, name: 'Рівень 1' },
-    { id: 2, name: 'Рівень 2' },
-    { id: 3, name: 'Рівень 3' },
-  ]);
-
+  const [levels, setLevels] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredLevels, setFilteredLevels] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Для модального вікна створення
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(null);
   const [editedName, setEditedName] = useState('');
-  const [newLevelName, setNewLevelName] = useState(''); // Ім'я нового рівня
+  const [newLevelName, setNewLevelName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
+
+  const fetchLevels = async () => {
+    setLoading(true); // Додаємо індикатор завантаження
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/levels`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      const data = await response.json();
+      setLevels(data);
+    } catch (error) {
+      console.error('Error fetching levels:', error);
+      toast.error(t('Error fetching levels. Please try again.'));
+    } finally {
+      setLoading(false); // Завантаження завершено
+    }
+  };
+
+  useEffect(() => {
+    fetchLevels();
+  }, [token]);
+
+  useEffect(() => {
+    const filtered = levels.filter((level) =>
+      level.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredLevels(filtered);
+  }, [levels, searchTerm]); // Додаємо searchTerm до залежностей
 
   const handleEditClick = (level) => {
     setCurrentLevel(level);
@@ -30,39 +62,87 @@ const LevelsManagement = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveEdit = () => {
-    setLevels((prevLevels) =>
-      prevLevels.map((lvl) =>
-        lvl.id === currentLevel.id ? { ...lvl, name: editedName } : lvl
-      )
-    );
-    setIsEditModalOpen(false);
-    setCurrentLevel(null);
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/levels/${currentLevel.level_id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name: editedName }),
+        }
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
+      await response.json();
+      setIsEditModalOpen(false);
+      setCurrentLevel(null);
+      setEditedName('');
+      fetchLevels(); // Оновлюємо список рівнів
+    } catch (error) {
+      console.error('Error updating level:', error);
+      toast.error(t('Error updating level. Please try again.'));
+    }
   };
 
-  const handleDeleteConfirm = () => {
-    setLevels((prevLevels) =>
-      prevLevels.filter((lvl) => lvl.id !== currentLevel.id)
-    );
-    setIsDeleteModalOpen(false);
-    setCurrentLevel(null);
+  const handleDeleteConfirm = async () => {
+    try {
+      await fetch(
+        `${process.env.REACT_APP_API_URL}/levels/${currentLevel.level_id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setLevels((prevLevels) =>
+        prevLevels.filter((lvl) => lvl.level_id !== currentLevel.level_id)
+      );
+      setIsDeleteModalOpen(false);
+      setCurrentLevel(null);
+    } catch (error) {
+      console.error('Error deleting level:', error);
+      toast.error(t('Error deleting level. Please try again.'));
+    }
   };
 
-  // Додавання нового рівня
-  const handleAddLevel = () => {
-    const newLevel = {
-      id: levels.length + 1, // Створюємо новий ID
-      name: newLevelName,
-    };
-    setLevels([...levels, newLevel]);
-    setIsAddModalOpen(false);
-    setNewLevelName('');
+  const handleAddLevel = async () => {
+    if (newLevelName.trim()) {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/levels`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name: newLevelName }),
+          }
+        );
+        if (!response.ok)
+          throw new Error(`HTTP error! Status: ${response.status}`);
+
+        await response.json();
+        setIsAddModalOpen(false);
+        setNewLevelName('');
+        fetchLevels(); // Оновлюємо список рівнів
+      } catch (error) {
+        console.error('Error adding level:', error);
+        toast.error(t('Error adding level. Please try again.'));
+      }
+    }
   };
 
-  // Фільтрація рівнів за назвою
-  const filteredLevels = levels.filter((level) =>
-    level.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Функція для скидання пошуку
+  const handleResetSearch = () => {
+    setSearchTerm('');
+  };
 
   return (
     <div>
@@ -70,54 +150,71 @@ const LevelsManagement = () => {
       <div className="container my-4">
         <h2>{t('Manage levels')}</h2>
 
-        {/* Кнопка для додавання рівня */}
-        <button
-          className="btn btn-success my-3"
-          onClick={() => setIsAddModalOpen(true)}
-        >
-          {t('Add level')}
-        </button>
+        <div className="d-flex justify-content-between align-items-center my-3">
+          {/* Поле для пошуку */}
+          <input
+            type="text"
+            placeholder={t('Search by name')}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control mx-2"
+            style={{ width: '800px' }}
+          />
 
-        {/* Поле для пошуку */}
-        <input
-          type="text"
-          placeholder={t('Search by name')}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="form-control my-3"
-        />
+          {/* Кнопка для додавання рівня */}
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              setIsAddModalOpen(true);
+              handleResetSearch();
+            }}
+          >
+            {t('Add level')}
+          </button>
 
-        <table className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>{t('ID')}</th>
-              <th>{t('Level name')}</th>
-              <th>{t('Actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLevels.map((level) => (
-              <tr key={level.id}>
-                <td>{level.id}</td>
-                <td>{level.name}</td>
-                <td>
-                  <button
-                    className="btn btn-primary btn-sm mx-1"
-                    onClick={() => handleEditClick(level)}
-                  >
-                    {t('Edit')}
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm mx-1"
-                    onClick={() => handleDeleteClick(level)}
-                  >
-                    {t('Delete')}
-                  </button>
-                </td>
+          {/* Кнопка для скидання пошуку */}
+          <button className="btn btn-secondary" onClick={handleResetSearch}>
+            {t('Reset Search')}
+          </button>
+        </div>
+
+        {loading ? ( // Відображення індикатора завантаження
+          <div className="text-center">
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>{t('ID')}</th>
+                <th>{t('Level name')}</th>
+                <th>{t('Actions')}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredLevels.map((level) => (
+                <tr key={level.level_id}>
+                  <td>{level.level_id}</td>
+                  <td>{level.name}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary btn-sm mx-1"
+                      onClick={() => handleEditClick(level)}
+                    >
+                      {t('Edit')}
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm mx-1"
+                      onClick={() => handleDeleteClick(level)}
+                    >
+                      {t('Delete')}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         {/* Модальне вікно для додавання рівня */}
         {isAddModalOpen && (

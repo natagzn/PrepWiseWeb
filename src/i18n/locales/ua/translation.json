@@ -395,5 +395,7 @@
   "Type": "Тип",
   "reset": "Скинути",
   "Add category": "Додати категорію",
-  "Add level": "Додати рівень"
+  "Add level": "Додати рівень",
+  "Search by name": "Пошук за назвою",
+  "Reset Search": "Скинути пошук"
 }
