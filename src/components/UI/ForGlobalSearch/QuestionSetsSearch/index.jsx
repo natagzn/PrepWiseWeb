@@ -15,7 +15,6 @@ const QuestionSetsSearch = () => {
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
     levels: [],
-    visibility: [],
   });
 
   const sortingOptions = [
@@ -43,11 +42,8 @@ const QuestionSetsSearch = () => {
         );
       const matchesLevels =
         filters.levels.length === 0 || filters.levels.includes(set.level);
-      const matchesVisibility =
-        filters.visibility.length === 0 ||
-        filters.visibility.includes(set.visibility);
 
-      return matchesCategories && matchesLevels && matchesVisibility;
+      return matchesCategories && matchesLevels;
     });
 
     const sortedSets = filteredSets.sort((a, b) => {
@@ -115,11 +111,6 @@ const QuestionSetsSearch = () => {
       name: 'levels',
       label: 'level',
       options: ['Junior', 'Middle', 'Senior'],
-    },
-    {
-      name: 'visibility',
-      label: 'Visibility',
-      options: ['Public', 'Private'],
     },
   ];
 

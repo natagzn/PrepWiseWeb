@@ -385,5 +385,8 @@
 
   "no_folders_message_fav": "No favorite folders found.",
   "no_question_sets_message_fav": "No favorite question sets found.",
-  "no_resources_message_fav": "No favorite resources found."
+  "no_resources_message_fav": "No favorite resources found.",
+  "reset": "Reset",
+  "Add category": "Add category",
+  "Add level": "Add level"
 }

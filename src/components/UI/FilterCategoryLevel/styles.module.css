@@ -82,15 +82,26 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   max-width: 500px;
   width: 100%;
-  height: 50vh;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollContainer {
+  flex: 1;
   overflow-y: auto;
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 .modalActions {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+.modalTitle {
+  text-align: center;
+  margin: 0 0 20px;
 }
 
 .modalActions button {
@@ -106,9 +117,15 @@
   font-size: inherit;
 }
 
-.modalActions button:last-child {
+.modalActions button {
   background: transparent;
   border: 1px solid var(--landingdark-blue);
   color: var(--landingdark-blue);
   font-size: inherit;
+}
+
+/* Стиль для кнопки, яка заблокована */
+.modalActions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

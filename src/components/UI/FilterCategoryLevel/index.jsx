@@ -52,6 +52,19 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
     setIsModalOpen(false);
   };
 
+  const handleReset = () => {
+    const initialFilters = {};
+    filters.forEach((filter) => {
+      initialFilters[filter.name] = []; // Скидаємо фільтри до пустого масиву
+    });
+    setLocalSelectedFilters(initialFilters); // Оновлюємо локальні фільтри
+  };
+
+  // Перевірка на наявність вибраних фільтрів
+  const hasSelectedFilters = Object.values(localSelectedFilters).some(
+    (filter) => filter.length > 0
+  );
+
   // Calculate the total number of applied filters
   const appliedFiltersCount = Object.values(selectedFilters).reduce(
     (acc, filter) => acc + filter.length,
@@ -70,36 +83,36 @@ const FilterCategoryLevel = ({ filters, onApply, selectedFilters }) => {
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <h2>{t('filter')}</h2>
-            {filters.map((filter) => (
-              <div key={filter.name}>
-                <h3>{t(filter.label)}:</h3>
-                <div className={styles.checkboxGroup}>
-                  {' '}
-                  {/* Новий контейнер для checkbox'ів */}
-                  {filter.options.map((option) => (
-                    <div key={option} className={styles.checkboxItem}>
-                      {' '}
-                      {/* Доданий клас для кожного checkbox'а */}
-                      <input
-                        type="checkbox"
-                        id={option} // додайте id для зв'язування з label
-                        checked={
-                          localSelectedFilters[filter.name]?.includes(option) ||
-                          false
-                        }
-                        onChange={() => toggleFilter(filter.name, option)}
-                      />
-                      <label htmlFor={option}>{option}</label>{' '}
-                      {/* Використання label для покращення доступності */}
-                    </div>
-                  ))}
+            <h2 className={styles.modalTitle}>{t('filter')}</h2>
+            <div className={styles.scrollContainer}>
+              {filters.map((filter) => (
+                <div key={filter.name}>
+                  <h3>{t(filter.label)}:</h3>
+                  <div className={styles.checkboxGroup}>
+                    {filter.options.map((option) => (
+                      <div key={option} className={styles.checkboxItem}>
+                        <input
+                          type="checkbox"
+                          id={option}
+                          checked={
+                            localSelectedFilters[filter.name]?.includes(
+                              option
+                            ) || false
+                          }
+                          onChange={() => toggleFilter(filter.name, option)}
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-
+              ))}
+            </div>
             <div className={styles.modalActions}>
               <button onClick={handleApply}>{t('apply')}</button>
+              <button onClick={handleReset} disabled={!hasSelectedFilters}>
+                {t('reset')}
+              </button>
               <button onClick={handleClose}>{t('cancel')}</button>
             </div>
           </div>

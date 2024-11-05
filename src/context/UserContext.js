@@ -6,15 +6,22 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   // Ініціалізація станів, перевіряючи Local Storage
-  const [user_id, setUserId] = useState(
-    () => localStorage.getItem('user_id') || null
-  );
-  const [isPremium, setIsPremium] = useState(
-    () => JSON.parse(localStorage.getItem('isPremium')) || false
-  );
-  const [isAdmin, setIsAdmin] = useState(
-    () => JSON.parse(localStorage.getItem('isAdmin')) || false
-  );
+  const [user_id, setUserId] = useState(() => {
+    const storedUserId = localStorage.getItem('user_id');
+    return storedUserId !== 'undefined' ? storedUserId : null;
+  });
+
+  const [isPremium, setIsPremium] = useState(() => {
+    const storedIsPremium = localStorage.getItem('isPremium');
+    return storedIsPremium !== 'undefined'
+      ? JSON.parse(storedIsPremium)
+      : false;
+  });
+
+  const [isAdmin, setIsAdmin] = useState(() => {
+    const storedIsAdmin = localStorage.getItem('isAdmin');
+    return storedIsAdmin !== 'undefined' ? JSON.parse(storedIsAdmin) : false;
+  });
 
   // Зберігаємо дані в Local Storage при кожній зміні
   useEffect(() => {

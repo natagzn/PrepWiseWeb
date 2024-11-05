@@ -14,8 +14,10 @@ const LevelsManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Для модального вікна створення
   const [currentLevel, setCurrentLevel] = useState(null);
   const [editedName, setEditedName] = useState('');
+  const [newLevelName, setNewLevelName] = useState(''); // Ім'я нового рівня
 
   const handleEditClick = (level) => {
     setCurrentLevel(level);
@@ -29,7 +31,6 @@ const LevelsManagement = () => {
   };
 
   const handleSaveEdit = () => {
-    console.log(`Рівень "${currentLevel.name}" змінено на "${editedName}"`);
     setLevels((prevLevels) =>
       prevLevels.map((lvl) =>
         lvl.id === currentLevel.id ? { ...lvl, name: editedName } : lvl
@@ -40,12 +41,22 @@ const LevelsManagement = () => {
   };
 
   const handleDeleteConfirm = () => {
-    console.log(`Рівень "${currentLevel.name}" видалено`);
     setLevels((prevLevels) =>
       prevLevels.filter((lvl) => lvl.id !== currentLevel.id)
     );
     setIsDeleteModalOpen(false);
     setCurrentLevel(null);
+  };
+
+  // Додавання нового рівня
+  const handleAddLevel = () => {
+    const newLevel = {
+      id: levels.length + 1, // Створюємо новий ID
+      name: newLevelName,
+    };
+    setLevels([...levels, newLevel]);
+    setIsAddModalOpen(false);
+    setNewLevelName('');
   };
 
   // Фільтрація рівнів за назвою
@@ -59,6 +70,14 @@ const LevelsManagement = () => {
       <div className="container my-4">
         <h2>{t('Manage levels')}</h2>
 
+        {/* Кнопка для додавання рівня */}
+        <button
+          className="btn btn-success my-3"
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          {t('Add level')}
+        </button>
+
         {/* Поле для пошуку */}
         <input
           type="text"
@@ -71,7 +90,7 @@ const LevelsManagement = () => {
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>{t('ID')}</th> {/* Заголовок для ID */}
+              <th>{t('ID')}</th>
               <th>{t('Level name')}</th>
               <th>{t('Actions')}</th>
             </tr>
@@ -79,7 +98,7 @@ const LevelsManagement = () => {
           <tbody>
             {filteredLevels.map((level) => (
               <tr key={level.id}>
-                <td>{level.id}</td> {/* Відображення ID рівня */}
+                <td>{level.id}</td>
                 <td>{level.name}</td>
                 <td>
                   <button
@@ -100,6 +119,36 @@ const LevelsManagement = () => {
           </tbody>
         </table>
 
+        {/* Модальне вікно для додавання рівня */}
+        {isAddModalOpen && (
+          <div className={`${styles.modalOverlay} ${styles.modal}`}>
+            <div className={styles.modalContent}>
+              <h5>{t('Add level')}</h5>
+              <input
+                type="text"
+                value={newLevelName}
+                onChange={(e) => setNewLevelName(e.target.value)}
+                placeholder={t('Level name')}
+                className="form-control my-2"
+              />
+              <div>
+                <button
+                  className="btn btn-success mx-1"
+                  onClick={handleAddLevel}
+                >
+                  {t('Add')}
+                </button>
+                <button
+                  className="btn btn-secondary mx-1"
+                  onClick={() => setIsAddModalOpen(false)}
+                >
+                  {t('Cancel')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Модальне вікно для редагування */}
         {isEditModalOpen && (
           <div className={`${styles.modalOverlay} ${styles.modal}`}>
@@ -116,13 +165,13 @@ const LevelsManagement = () => {
                   className="btn btn-success mx-1"
                   onClick={handleSaveEdit}
                 >
-                  {t('save')}
+                  {t('Save')}
                 </button>
                 <button
                   className="btn btn-secondary mx-1"
                   onClick={() => setIsEditModalOpen(false)}
                 >
-                  {t('cancel')}
+                  {t('Cancel')}
                 </button>
               </div>
             </div>
@@ -147,7 +196,7 @@ const LevelsManagement = () => {
                   className="btn btn-secondary mx-1"
                   onClick={() => setIsDeleteModalOpen(false)}
                 >
-                  {t('cancel')}
+                  {t('Cancel')}
                 </button>
               </div>
             </div>

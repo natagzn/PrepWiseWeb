@@ -14,8 +14,10 @@ const CategoryManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // для модального вікна створення
   const [currentCategory, setCurrentCategory] = useState(null);
   const [editedName, setEditedName] = useState('');
+  const [newCategoryName, setNewCategoryName] = useState(''); // для імені нової категорії
 
   const handleEditClick = (category) => {
     setCurrentCategory(category);
@@ -29,9 +31,6 @@ const CategoryManagement = () => {
   };
 
   const handleSaveEdit = () => {
-    console.log(
-      `Категорію "${currentCategory.name}" змінено на "${editedName}"`
-    );
     setCategories((prevCategories) =>
       prevCategories.map((cat) =>
         cat.id === currentCategory.id ? { ...cat, name: editedName } : cat
@@ -42,12 +41,22 @@ const CategoryManagement = () => {
   };
 
   const handleDeleteConfirm = () => {
-    console.log(`Категорію "${currentCategory.name}" видалено`);
     setCategories((prevCategories) =>
       prevCategories.filter((cat) => cat.id !== currentCategory.id)
     );
     setIsDeleteModalOpen(false);
     setCurrentCategory(null);
+  };
+
+  // Додавання нової категорії
+  const handleAddCategory = () => {
+    const newCategory = {
+      id: categories.length + 1, // створюємо новий ID
+      name: newCategoryName,
+    };
+    setCategories([...categories, newCategory]);
+    setIsAddModalOpen(false);
+    setNewCategoryName('');
   };
 
   // Фільтрація категорій за назвою
@@ -61,6 +70,14 @@ const CategoryManagement = () => {
       <div className="container my-4">
         <h2>{t('Manage categories')}</h2>
 
+        {/* Кнопка для додавання категорії */}
+        <button
+          className="btn btn-success my-3"
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          {t('Add category')}
+        </button>
+
         {/* Поле для пошуку */}
         <input
           type="text"
@@ -73,7 +90,7 @@ const CategoryManagement = () => {
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>{t('ID')}</th> {/* Новий заголовок для ID */}
+              <th>{t('ID')}</th>
               <th>{t('Category name')}</th>
               <th>{t('Actions')}</th>
             </tr>
@@ -81,7 +98,7 @@ const CategoryManagement = () => {
           <tbody>
             {filteredCategories.map((category) => (
               <tr key={category.id}>
-                <td>{category.id}</td> {/* Відображення ID категорії */}
+                <td>{category.id}</td>
                 <td>{category.name}</td>
                 <td>
                   <button
@@ -102,6 +119,36 @@ const CategoryManagement = () => {
           </tbody>
         </table>
 
+        {/* Модальне вікно для додавання категорії */}
+        {isAddModalOpen && (
+          <div className={`${styles.modalOverlay} ${styles.modal}`}>
+            <div className={styles.modalContent}>
+              <h5>{t('Add category')}</h5>
+              <input
+                type="text"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                placeholder={t('Category name')}
+                className="form-control my-2"
+              />
+              <div>
+                <button
+                  className="btn btn-success mx-1"
+                  onClick={handleAddCategory}
+                >
+                  {t('Add')}
+                </button>
+                <button
+                  className="btn btn-secondary mx-1"
+                  onClick={() => setIsAddModalOpen(false)}
+                >
+                  {t('Cancel')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Модальне вікно для редагування */}
         {isEditModalOpen && (
           <div className={`${styles.modalOverlay} ${styles.modal}`}>
@@ -118,13 +165,13 @@ const CategoryManagement = () => {
                   className="btn btn-success mx-1"
                   onClick={handleSaveEdit}
                 >
-                  {t('save')}
+                  {t('Save')}
                 </button>
                 <button
                   className="btn btn-secondary mx-1"
                   onClick={() => setIsEditModalOpen(false)}
                 >
-                  {t('cancel')}
+                  {t('Cancel')}
                 </button>
               </div>
             </div>
@@ -151,7 +198,7 @@ const CategoryManagement = () => {
                   className="btn btn-secondary mx-1"
                   onClick={() => setIsDeleteModalOpen(false)}
                 >
-                  {t('cancel')}
+                  {t('Cancel')}
                 </button>
               </div>
             </div>

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import FooterComponent from 'components/UI/FooterComponent';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import createPayment from 'context/createPayment';
 
 const MainPage = () => {
   const { t } = useTranslation();
@@ -230,6 +231,7 @@ const MainPage = () => {
           <p className={styles.notFound}>{t('no_resources_message')}</p>
         )}
       </div>
+      <button onClick={() => createPayment(1)}>Оплатити 1 грн</button>
 
       <div className={styles.footer}>
         <FooterComponent />

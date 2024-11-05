@@ -392,5 +392,8 @@
   "no_folders_message_fav": "Не знайдено улюблених папок.",
   "no_question_sets_message_fav": "Не улюблених знайдено модулів.",
   "no_resources_message_fav": "Не знайдено улюблених ресурсів.",
-  "Type": "Тип"
+  "Type": "Тип",
+  "reset": "Скинути",
+  "Add category": "Додати категорію",
+  "Add level": "Додати рівень"
 }

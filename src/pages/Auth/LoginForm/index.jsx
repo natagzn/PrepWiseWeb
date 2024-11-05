@@ -7,10 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 
 const LoginForm = () => {
+  const apiUrl = `${process.env.REACT_APP_API_URL}/auth/login`;
+  const profileUrl = `${process.env.REACT_APP_API_URL}/profile`;
   const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { setUserId, setIsPremium, setIsAdmin } = useUser(); // Використовуємо контекст
+  const { setUserId, setIsPremium, setIsAdmin } = useUser();
 
   const toggleAuthMode = () => {
     setIsLogin((prevMode) => !prevMode);
@@ -25,13 +30,57 @@ const LoginForm = () => {
     navigate('/passwordreset');
   };
 
-  const handleLogIn = () => {
-    // При успішному логіні встановлюємо значення в контекст
-    setUserId(1); // Замініть 1 на реальний user_id після логіну
-    setIsPremium(true); // Змінити на значення з сервера
-    setIsAdmin(false); // Змінити на значення з сервера
+  const handleLogin = async () => {
+    setError(null);
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    navigate('/home');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      const token = data.token.token;
+      localStorage.setItem('token', token);
+
+      await fetchUserProfile(token);
+
+      navigate('/home');
+    } catch (error) {
+      console.error('Помилка підключення до API:', error);
+      setError('Невірний логін або пароль. Будь ласка, спробуйте ще раз.');
+    }
+  };
+
+  const fetchUserProfile = async (token) => {
+    try {
+      console.log(`Bearer ${token}`);
+      const response = await fetch(profileUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `bearer ${token}`, // Додаємо префікс "Bearer"
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const profileData = await response.json();
+      setUserId(profileData.user_id);
+      setIsPremium(profileData.subscription_type !== null);
+      setIsAdmin(profileData.role === 'admin');
+    } catch (error) {
+      console.error('Помилка отримання профілю:', error);
+    }
   };
 
   return (
@@ -48,6 +97,8 @@ const LoginForm = () => {
             type="text"
             placeholder={t('email_or_username')}
             className={styles.input}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </motion.div>
 
@@ -62,8 +113,12 @@ const LoginForm = () => {
             type="password"
             placeholder={t('password')}
             className={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </motion.div>
+
+        {error && <div className={styles.errorMessage}>{error}</div>}
 
         <motion.div
           className={styles.forgotPassword}
@@ -82,7 +137,7 @@ const LoginForm = () => {
           animate="visible"
           variants={inputVariants}
           transition={{ duration: 0.5, delay: 0.6 }}
-          onClick={handleLogIn}
+          onClick={handleLogin}
         >
           {t('log_in')}
         </motion.button>
