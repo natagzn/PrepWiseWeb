@@ -103,11 +103,36 @@ export const updateProfile = async (updatedData, t) => {
 };
 
 export const logout = async () => {
-  sessionStorage.removeItem('token');
-  sessionStorage.removeItem('tokenExpiration');
+  const token = getSessionToken(); // Отримуємо токен вручну
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`, // Заголовок авторизації
+  };
 
-  localStorage.removeItem('isPremium');
-  localStorage.removeItem('isAdmin');
+  try {
+    // Викликаємо API POST /logout
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/logout`,
+      {},
+      { headers }
+    );
 
-  window.location.reload();
+    // Перевіряємо, чи успішно виконано запит
+    console.log(response.data);
+    if (response.data) {
+      // Якщо все успішно, очищаємо sessionStorage та localStorage
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('tokenExpiration');
+
+      localStorage.removeItem('isPremium');
+      localStorage.removeItem('isAdmin');
+
+      // Перезавантажуємо сторінку
+      window.location.reload();
+    } else {
+      console.error('Logout failed:', response.data.message);
+    }
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
 };

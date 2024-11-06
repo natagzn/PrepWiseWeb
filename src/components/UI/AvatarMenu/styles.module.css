@@ -7,6 +7,12 @@
   height: 40px;
   border-radius: 9999px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarInitials {
 }
 
 .menuPanel {
@@ -106,7 +112,6 @@
 
   .menuItem {
     font-size: var(--web-15-regular-font-size);
-    gap: 8px;
   }
 
   .userIcon {
@@ -150,7 +155,6 @@
 
   .menuItem {
     font-size: var(--web-13-regular-font-size);
-    gap: 5px;
   }
 
   .userIcon {

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import InfoPremiumModal from './InfoPremiumModal';
 import { useUser } from 'context/UserContext';
 import { fetchUserProfile } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
+import { generateAvatar } from 'components/generateAvatar';
 
 const SettingsPage = () => {
   const { t, i18n } = useTranslation();
@@ -54,6 +55,8 @@ const SettingsPage = () => {
     setPremiumModalOpen(true);
   };
 
+  const { initials, backgroundColor } = generateAvatar(userData.username);
+
   return (
     <div>
       <HeaderComponent showSearch={true} showPremium={true} />
@@ -68,19 +71,13 @@ const SettingsPage = () => {
           <div className={styles.personalInfoContent}>
             <div className={styles.profilePictureBlock}>
               <div className={styles.profileLabel}>{t('avatar')}</div>
-              {userData.avatar ? (
-                <img
-                  className={styles.profileImage}
-                  src={userData.avatar}
-                  alt="Profile"
-                />
-              ) : (
-                <img
-                  className={styles.profileImage}
-                  src="https://via.placeholder.com/120x120"
-                  alt="Profile"
-                />
-              )}
+              {/* Відображаємо лише згенеровану аватарку */}
+              <div
+                className={styles.profileImage}
+                style={{ backgroundColor }} // Використовуємо генерований колір
+              >
+                <span className={styles.avatarInitials}>{initials}</span>
+              </div>
               <div className={styles.iconEdit}>
                 <img
                   src="/icons/edit.svg"

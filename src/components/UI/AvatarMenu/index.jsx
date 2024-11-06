@@ -4,7 +4,8 @@ import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import SupportRequestModal from '../SupportRequestModal';
-import { logout } from 'api/apiUser';
+import { fetchUserProfile, logout } from 'api/apiUser';
+import { generateAvatar } from 'components/generateAvatar';
 
 const menuIcons = {
   people: require('../../assets/AvatarMenu/people.svg').default,
@@ -29,8 +30,22 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState(null); // Для збереження профілю користувача
   const menuRef = useRef(null);
-  const navigate = useNavigate();
+
+  // Отримуємо дані профілю при завантаженні компонента
+  useEffect(() => {
+    const getUserProfile = async () => {
+      try {
+        const profile = await fetchUserProfile();
+        setUserProfile(profile);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    getUserProfile();
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -57,14 +72,23 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
     console.log('Support request sent:', supportText);
   };
 
+  // Якщо профіль ще не завантажено, відображаємо плейсхолдер
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
+
+  // Генеруємо аватарку з ініціалами та кольором
+  const { initials, backgroundColor } = generateAvatar(userProfile.username);
+
   return (
     <div className={styles.avatarContainer}>
-      <img
+      <div
         className={styles.avatar}
-        src="https://via.placeholder.com/65x65"
-        alt="Avatar"
+        style={{ backgroundColor }}
         onClick={toggleMenu}
-      />
+      >
+        <span className={styles.avatarInitials}>{initials}</span>
+      </div>
       {isOpen && (
         <motion.div
           className={styles.menuPanel}
@@ -76,14 +100,16 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
         >
           <div className={styles.menu}>
             <div className={styles.userInfo}>
-              <img
-                className={styles.userIcon}
-                src="https://via.placeholder.com/50x50"
-                alt="User Icon"
-              />
+              <div
+                className={styles.avatar}
+                style={{ backgroundColor }}
+                onClick={toggleMenu}
+              >
+                <span className={styles.avatarInitials}>{initials}</span>
+              </div>
               <div className={styles.userDetails}>
-                <div className={styles.username}>sofiyalev06</div>
-                <div className={styles.email}>sofiyalev06@email.com</div>
+                <div className={styles.username}>{userProfile.username}</div>
+                <div className={styles.email}>{userProfile.email}</div>
               </div>
             </div>
             <div className={styles.separator} />
