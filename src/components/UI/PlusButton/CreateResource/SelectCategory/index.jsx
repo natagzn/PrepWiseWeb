@@ -3,34 +3,40 @@ import ReactDOM from 'react-dom';
 import styles from './styles.module.css';
 import SearchComponent from 'components/UI/SearchComponent';
 import { useTranslation } from 'react-i18next';
-
-const fetchCategories = async () => {
-  return [
-    { id: 1, title: 'Science' },
-    { id: 2, title: 'Mathematics' },
-    { id: 3, title: 'History' },
-    { id: 4, title: 'Literature' },
-    { id: 5, title: 'Technology' },
-  ];
-};
+import { fetchCategories } from 'api/apiService';
+import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
 const SelectCategoryModal = ({
   isOpen,
   onClose,
   onSelect,
-  initialSelectedCategory, // Змінено на одну категорію
+  initialSelectedCategory,
 }) => {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(
     initialSelectedCategory || null
   );
+  const [isLoading, setIsLoading] = useState(false); // Стан для індикатора завантаження
   const { t } = useTranslation();
 
   useEffect(() => {
     const loadCategories = async () => {
-      const data = await fetchCategories();
-      setCategories(data);
+      setIsLoading(true); // Починаємо завантаження
+      try {
+        const response = await fetchCategories();
+        const formattedCategories = response.map((category) => ({
+          id: category.category_id,
+          title: category.name,
+        }));
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        toast.error('Error downloading categories');
+      } finally {
+        setIsLoading(false); // Закінчуємо завантаження
+      }
     };
 
     if (isOpen) {
@@ -46,11 +52,12 @@ const SelectCategoryModal = ({
   const handleCheckboxChange = (category) => {
     setSelectedCategory((prev) =>
       prev && prev.id === category.id ? null : category
-    ); // Дозволяємо вибір лише однієї категорії
+    );
   };
 
   const handleConfirm = () => {
     onSelect(selectedCategory);
+    setSearchTerm('');
     onClose();
   };
 
@@ -62,22 +69,32 @@ const SelectCategoryModal = ({
         <h2>{t('Choose category')}</h2>
         <SearchComponent value={searchTerm} onClick={setSearchTerm} />
         <div className={styles.categoryList}>
-          {filteredCategories.map((category) => (
-            <div
-              key={category.id}
-              className={styles.categoryItem}
-              onClick={() => handleCheckboxChange(category)} // Обробка натискання на весь блок
-            >
-              <input
-                type="checkbox"
-                checked={
-                  selectedCategory ? selectedCategory.id === category.id : false
-                }
-                onChange={() => handleCheckboxChange(category)} // Додаємо обробник для зміни
-              />
-              <label>{category.title}</label>
+          {isLoading ? ( // Показуємо спінер, коли дані завантажуються
+            <div className={styles.loader}>
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">{t('Loading...')}</span>
+              </Spinner>
             </div>
-          ))}
+          ) : (
+            filteredCategories.map((category) => (
+              <div
+                key={category.id}
+                className={styles.categoryItem}
+                onClick={() => handleCheckboxChange(category)}
+              >
+                <input
+                  type="checkbox"
+                  checked={
+                    selectedCategory
+                      ? selectedCategory.id === category.id
+                      : false
+                  }
+                  onChange={() => handleCheckboxChange(category)}
+                />
+                <label>{category.title}</label>
+              </div>
+            ))
+          )}
         </div>
 
         <div className={styles.buttonsBlock}>

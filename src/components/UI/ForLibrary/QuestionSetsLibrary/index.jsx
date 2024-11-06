@@ -4,16 +4,46 @@ import QuestionSetComponent from '../../QuestionSetComponent';
 import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
-import questionSetsData from '../../../../questionSetsData.json';
 
 import { useTranslation } from 'react-i18next';
+import {
+  fetchAllFavorite,
+  fetchAllSetUser,
+  fetchSetById,
+} from 'api/apiService';
+import { Spinner } from 'react-bootstrap';
 
-const QuestionSetsLibrary = () => {
+const QuestionSetsLibrary = ({ levels, categories }) => {
   const { t } = useTranslation();
   const [questionSets, setQuestionSets] = useState([]);
   const [loadedSets, setLoadedSets] = useState(8);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortedQuestionSets, setSortedQuestionSets] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    levels: [],
+    visibility: [],
+  });
+  const [isLoading, setIsLoading] = useState(true); // Стан для спінера
+
+  const filters = [
+    {
+      name: 'categories',
+      label: 'categories',
+      options: categories,
+    },
+    {
+      name: 'levels',
+      label: 'level',
+      options: levels,
+    },
+    {
+      name: 'visibility',
+      label: 'Visibility',
+      options: ['Public', 'Private'],
+    },
+  ];
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -23,18 +53,86 @@ const QuestionSetsLibrary = () => {
   ];
 
   useEffect(() => {
-    setQuestionSets(questionSetsData); // Встановлюємо дані з JSON-файлу
+    const loadQuestionSets = async () => {
+      try {
+        const response = await fetchAllSetUser();
+        const detailedSets = await Promise.all(
+          response.map(async (set) => {
+            const detailResponse = await fetchSetById(set.question_set_id);
+            return { ...detailResponse, id: set.question_set_id };
+          })
+        );
+        setQuestionSets(detailedSets);
+      } catch (error) {
+        console.error('Error loading question sets:', error);
+      } finally {
+        setIsLoading(false); // При завершенні завантаження встановлюємо isLoading в false
+      }
+    };
+
+    loadQuestionSets();
   }, []);
+
+  useEffect(() => {
+    const applyFiltersAndSorting = () => {
+      let filteredSets = questionSets.filter((set) => {
+        const matchesCategories =
+          selectedFilters.categories.length === 0 ||
+          selectedFilters.categories.some(
+            (category) =>
+              Array.isArray(set.categories) &&
+              set.categories.some(
+                (setCategory) => setCategory.name === category
+              )
+          );
+
+        const matchesLevels =
+          selectedFilters.levels.length === 0 ||
+          selectedFilters.levels.includes(set.level.name);
+
+        const matchesVisibility =
+          selectedFilters.visibility.length === 0 ||
+          selectedFilters.visibility.includes(
+            set.access ? 'public' : 'private'
+          );
+
+        const matchesSearchTerm =
+          set.name && set.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+        return (
+          matchesCategories &&
+          matchesLevels &&
+          matchesVisibility &&
+          matchesSearchTerm
+        );
+      });
+
+      if (selectedSortingOption) {
+        filteredSets = filteredSets.sort((a, b) => {
+          switch (selectedSortingOption) {
+            case 'createdDesc':
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            case 'createdAsc':
+              return new Date(a.createdAt) - new Date(b.createdAt);
+            case 'nameAsc':
+              return a.name.localeCompare(b.name);
+            case 'nameDesc':
+              return b.name.localeCompare(a.name);
+            default:
+              return 0;
+          }
+        });
+      }
+
+      setSortedQuestionSets(filteredSets);
+    };
+
+    applyFiltersAndSorting();
+  }, [questionSets, selectedFilters, selectedSortingOption, searchTerm]);
 
   const handleSortChange = (value) => {
     setSelectedSortingOption(value);
   };
-
-  const [selectedFilters, setSelectedFilters] = useState({
-    categories: [],
-    levels: [],
-    visibility: [],
-  });
 
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
@@ -43,158 +141,67 @@ const QuestionSetsLibrary = () => {
     console.log('Selected Visibility:', filters.visibility);
   };
 
-  const filters = [
-    {
-      name: 'categories',
-      label: 'categories',
-      options: [
-        'JavaScript',
-        'Programming',
-        'CSS',
-        'Design',
-        'React',
-        'Python',
-        'Data Science',
-        'SQL',
-        'Databases',
-        'UI/UX',
-        'Machine Learning',
-        'AI',
-        'Security',
-        'Networking',
-        'Java',
-        'Cloud',
-        'IT',
-        'C++',
-        'Data Structures',
-        'Linux',
-        'Systems',
-        'Algorithms',
-        'HTML',
-        'Web',
-        'Mobile',
-        'App Dev',
-      ],
-    },
-    {
-      name: 'levels',
-      label: 'level',
-      options: ['Junior', 'Middle', 'Senior'],
-    },
-    {
-      name: 'visibility',
-      label: 'Visibility',
-      options: ['Public', 'Private'],
-    },
-  ];
-
-  // Функція для сортування наборів питань
-  const sortedQuestionSets = () => {
-    let filteredSets = questionSets.filter((set) => {
-      const matchesCategories =
-        selectedFilters.categories.length === 0 ||
-        selectedFilters.categories.some((category) =>
-          set.categories.includes(category)
-        );
-
-      const matchesLevels =
-        selectedFilters.levels.length === 0 ||
-        selectedFilters.levels.includes(set.level);
-      const matchesVisibility =
-        selectedFilters.visibility.length === 0 ||
-        selectedFilters.visibility.includes(set.visibility);
-
-      // Додаємо логіку пошуку
-      const matchesSearchTerm = set.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-
-      return (
-        matchesCategories &&
-        matchesLevels &&
-        matchesVisibility &&
-        matchesSearchTerm
-      );
-    });
-
-    // Сортуємо фільтровані набори питань
-    if (selectedSortingOption) {
-      return filteredSets.sort((a, b) => {
-        switch (selectedSortingOption) {
-          case 'createdDesc':
-            return new Date(b.date) - new Date(a.date);
-          case 'createdAsc':
-            return new Date(a.date) - new Date(b.date);
-          case 'nameAsc':
-            return a.title.localeCompare(b.title);
-          case 'nameDesc':
-            return b.title.localeCompare(a.title);
-          default:
-            return 0;
-        }
-      });
-    }
-    return filteredSets; // Якщо не вибрано сортування, повертаємо фільтрований масив
-  };
-
-  // Обробник для оновлення значення пошуку
   const handleSearchClick = (value) => {
     setSearchTerm(value);
   };
 
   return (
     <div className={styles.questionSetsWrapper}>
-      <div className={styles.filterSortWrapper}>
-        <div className={styles.leftGroup}>
-          <div className={styles.sortComponent}>
-            <SortComponent
-              sortingOptions={sortingOptions}
-              onSortChange={handleSortChange}
-            />
-          </div>
-          <div className={styles.filterComponent}>
-            <FilterCategoryLevel
-              filters={filters}
-              onApply={handleApplyFilters}
-              selectedFilters={selectedFilters}
-            />
-          </div>
-        </div>
-        <div className={styles.search}>
-          <SearchComponent
-            placeholder={t('search_sets')}
-            onClick={handleSearchClick} // Передаємо обробник
-          />
-        </div>
-      </div>
-
-      {/* Сети питань */}
-      <div className={styles.questionSetsGrid}>
-        {sortedQuestionSets().length === 0 ? (
-          <div className="noResultsMessage">
-            {t('no_question_sets_message_lib')}
-          </div>
-        ) : (
-          sortedQuestionSets()
-            .slice(0, loadedSets)
-            .map((set) => (
-              <div key={set.id}>
-                <QuestionSetComponent
-                  questionsCount={set.questionsCount}
-                  title={set.title}
-                  categories={set.categories}
-                  username={set.username}
-                  date={set.date}
-                  level={set.level}
-                  isLiked={set.isLiked}
-                  visibility={set.visibility}
-                  style={{ width: '500px' }}
-                  id={set.id}
+      {isLoading ? (
+        <Spinner style={{ alignSelf: 'center' }} /> // Відображаємо спінер, поки isLoading дорівнює true
+      ) : (
+        <>
+          <div className={styles.filterSortWrapper}>
+            <div className={styles.leftGroup}>
+              <div className={styles.sortComponent}>
+                <SortComponent
+                  sortingOptions={sortingOptions}
+                  onSortChange={handleSortChange}
                 />
               </div>
-            ))
-        )}
-      </div>
+              <div className={styles.filterComponent}>
+                <FilterCategoryLevel
+                  filters={filters}
+                  onApply={handleApplyFilters}
+                  selectedFilters={selectedFilters}
+                />
+              </div>
+            </div>
+            <div className={styles.search}>
+              <SearchComponent
+                placeholder={t('search_sets')}
+                onClick={handleSearchClick}
+              />
+            </div>
+          </div>
+
+          <div className={styles.questionSetsGrid}>
+            {sortedQuestionSets.length === 0 ? (
+              <div className="noResultsMessage">
+                {t('no_question_sets_message_lib')}
+              </div>
+            ) : (
+              sortedQuestionSets.slice(0, loadedSets).map((set) => (
+                <div key={set.id}>
+                  <QuestionSetComponent
+                    name={set.name}
+                    categories={set.categories}
+                    author={set.author}
+                    createdAt={set.createdAt}
+                    level={set.level}
+                    isFavourite={set.isFavourite}
+                    access={set.access}
+                    style={{ width: '500px' }}
+                    id={set.id}
+                    questions={set.questions}
+                    key={set.id}
+                  />
+                </div>
+              ))
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

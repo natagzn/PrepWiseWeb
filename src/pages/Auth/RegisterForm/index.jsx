@@ -6,6 +6,7 @@ import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -20,10 +21,35 @@ const RegisterForm = () => {
     setIsLogin((prevMode) => !prevMode);
   };
 
-  const handleRegister = () => {
+  // Перевірка email
+  const isValidEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email);
+  };
+
+  // Заборона пробілів у username та password
+  const handleUsernameChange = (e) => {
+    const value = e.target.value.replace(/\s+/g, ''); // Замінюємо пробіли
+    setUsername(value);
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value.replace(/\s+/g, ''); // Замінюємо пробіли
+    setPassword(value);
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
     // Перевіряємо, чи заповнені всі поля
     if (!username || !email || !password || !confirmPassword) {
       toast.error(t('please_fill_all_fields'));
+      return;
+    }
+
+    // Перевірка на правильність формату email
+    if (!isValidEmail(email)) {
+      toast.error(t('invalid_email'));
       return;
     }
 
@@ -33,8 +59,49 @@ const RegisterForm = () => {
       return;
     }
 
-    // Якщо все гаразд, переходимо на сторінку підтвердження email
-    navigate('/confirmEmail');
+    // Перевірка на мінімальну довжину паролю (опційно)
+    if (password.length < 8) {
+      toast.error(t('password_too_short'));
+      return;
+    }
+
+    try {
+      // Запит на реєстрацію користувача
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/register`,
+        {
+          username,
+          email,
+          password,
+          password_confirmation: confirmPassword,
+        }
+      );
+
+      // Якщо реєстрація успішна, переходимо на сторінку підтвердження email
+      toast.success(t('registration_successful'));
+      navigate('/login');
+    } catch (error) {
+      // Обробка помилок API
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+
+        if (
+          errorData.username &&
+          errorData.username[0] === 'unique validation failure'
+        ) {
+          toast.error(t('username_taken'));
+        } else if (
+          errorData.email &&
+          errorData.email[0] === 'unique validation failure'
+        ) {
+          toast.error(t('email_taken'));
+        } else {
+          toast.error(t('registration_failed'));
+        }
+      } else {
+        toast.error(t('registration_failed'));
+      }
+    }
   };
 
   // Налаштовуємо анімаційні параметри
@@ -58,7 +125,14 @@ const RegisterForm = () => {
             placeholder={t('username')}
             className={styles.input}
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                t('username_required_message') || "Це поле є обов'язковим"
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
 
@@ -75,6 +149,13 @@ const RegisterForm = () => {
             className={styles.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                t('email_required_message') || "Це поле є обов'язковим"
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
 
@@ -90,7 +171,14 @@ const RegisterForm = () => {
             placeholder={t('password')}
             className={styles.input}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                t('password_required_message') || "Це поле є обов'язковим"
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
 
@@ -107,6 +195,14 @@ const RegisterForm = () => {
             className={styles.input}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                t('confirm_password_required_message') ||
+                  "Це поле є обов'язковим"
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
 

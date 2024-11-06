@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
+import { toast } from 'react-toastify';
+import { loginUser } from 'api/apiUser';
+import { Spinner } from 'react-bootstrap'; // Додаємо компонент Spinner
 
 const LoginForm = () => {
   const apiUrl = `${process.env.REACT_APP_API_URL}/auth/login`;
@@ -13,7 +16,7 @@ const LoginForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Стан для відображення спінера
   const navigate = useNavigate();
   const { setUserId, setIsPremium, setIsAdmin } = useUser();
 
@@ -30,51 +33,27 @@ const LoginForm = () => {
     navigate('/passwordreset');
   };
 
-  const handleLogin = async () => {
-    setError(null);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true); // Включаємо спінер
+    document.documentElement.scrollTop = 0; // Прокручуємо сторінку на початок
+
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(data);
-      const token = data.token.token;
-      localStorage.setItem('token', token);
-
-      await fetchUserProfile(token);
-
+      const token = await loginUser(email, password);
+      await fetchUserProfileAndSetState(token);
       navigate('/home');
     } catch (error) {
-      console.error('Помилка підключення до API:', error);
-      setError('Невірний логін або пароль. Будь ласка, спробуйте ще раз.');
+      console.error(error);
+      toast.error('Невірний логін або пароль. Будь ласка, спробуйте ще раз.');
+    } finally {
+      setLoading(false); // Вимикаємо спінер після завершення запиту
     }
   };
 
-  const fetchUserProfile = async (token) => {
+  const fetchUserProfileAndSetState = async (token) => {
     try {
-      console.log(`Bearer ${token}`);
-      const response = await fetch(profileUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `bearer ${token}`, // Додаємо префікс "Bearer"
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const profileData = await response.json();
+      const profileData = await fetchUserProfileAndSetState(token);
+      console.log(profileData);
       setUserId(profileData.user_id);
       setIsPremium(profileData.subscription_type !== null);
       setIsAdmin(profileData.role === 'admin');
@@ -85,7 +64,7 @@ const LoginForm = () => {
 
   return (
     <AuthTemplate isLogin={isLogin} toggleAuthMode={toggleAuthMode}>
-      <div className={styles.inputContainer}>
+      <form onSubmit={handleLogin} className={styles.inputContainer}>
         <motion.div
           className={styles.inputWrapper}
           initial="hidden"
@@ -99,6 +78,11 @@ const LoginForm = () => {
             className={styles.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(t('email_required_message_log'))
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
 
@@ -115,10 +99,13 @@ const LoginForm = () => {
             className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity(t('password_required_message_log'))
+            }
+            onInput={(e) => e.target.setCustomValidity('')}
           />
         </motion.div>
-
-        {error && <div className={styles.errorMessage}>{error}</div>}
 
         <motion.div
           className={styles.forgotPassword}
@@ -137,12 +124,17 @@ const LoginForm = () => {
           animate="visible"
           variants={inputVariants}
           transition={{ duration: 0.5, delay: 0.6 }}
-          onClick={handleLogin}
+          type="submit"
+          disabled={loading} // Вимикає кнопку під час обробки запиту
         >
-          {t('log_in')}
+          {loading ? (
+            <Spinner size="sm" /> // Показуємо спінер
+          ) : (
+            t('log_in') // Показуємо текст кнопки
+          )}
         </motion.button>
 
-        {/* Нижній блок */}
+        {/* Нижній блок 
         <div className={styles.orSeparator}>
           <div className={styles.orLine}></div>
           <span className={styles.orText}>{t('or')}</span>
@@ -150,8 +142,8 @@ const LoginForm = () => {
         <div className={styles.googleButton}>
           <img src="/icons/google.svg" alt="Google Icon" />
           <span>{t('continue_with_google')}</span>
-        </div>
-      </div>
+        </div>*/}
+      </form>
     </AuthTemplate>
   );
 };

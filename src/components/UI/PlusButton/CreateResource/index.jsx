@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import { toast } from 'react-toastify';
 import SelectCategoryModal from './SelectCategory';
+import { fetchLevels, postResource } from 'api/apiService';
 
 const CreateResource = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
@@ -15,15 +16,31 @@ const CreateResource = ({ isOpen, onClose }) => {
   const descriptionRef = useRef(null);
   const { t } = useTranslation();
 
+  const [levels, setLevels] = useState([]); // Стан для зберігання рівнів
+  const [error, setError] = useState(null); // Стан для зберігання помилок
+
   const maxRows = 4;
 
-  const levels = [
-    { id: 1, label: 'Trainee' },
-    { id: 2, label: 'Junior' },
-    { id: 3, label: 'Middle' },
-    { id: 4, label: 'Senior' },
-    { id: 5, label: 'Team Lead' },
-  ];
+  useEffect(() => {
+    const getLevels = async () => {
+      try {
+        const fetchedLevels = await fetchLevels();
+        console.log(fetchedLevels);
+        // Перетворюємо отримані дані у потрібний формат
+        const formattedLevels = fetchedLevels.map((level) => ({
+          id: level.level_id,
+          label: level.name,
+        }));
+        setLevels(formattedLevels);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        setError('Не вдалося завантажити рівні.');
+        toast.error('Не вдалося завантажити рівні.');
+      }
+    };
+
+    getLevels(); // Викликаємо асинхронну функцію
+  }, []); // Пустий масив залежностей - викликати лише при монтуванні
 
   const handleTextChange = (e, setText, ref) => {
     const value = e.target.value;
@@ -43,7 +60,7 @@ const CreateResource = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (
       !name.trim() ||
       !description.trim() ||
@@ -54,13 +71,26 @@ const CreateResource = ({ isOpen, onClose }) => {
       return;
     }
 
-    toast.success(t('Resource created successfully!'));
-    console.log('Name:', name);
-    console.log('Description:', description);
-    console.log('Selected Category:', selectedCategory);
-    console.log('Selected Level ID:', selectedLevel);
+    try {
+      // Викликаємо функцію для створення ресурсу через API
+      const result = await postResource({
+        title: name,
+        description,
+        levelId: selectedLevel,
+        categoryId: selectedCategory.id,
+      });
 
-    handleClose();
+      toast.success(t('Resource created successfully!'));
+      console.log('Created resource:', result);
+
+      handleClose();
+    } catch (error) {
+      const errorData = await error.response?.json();
+      console.error('Error data:', errorData);
+      toast.error(
+        `Failed to create resource: ${errorData?.message || error.message}`
+      );
+    }
   };
 
   const handleClose = () => {
@@ -72,7 +102,7 @@ const CreateResource = ({ isOpen, onClose }) => {
   };
 
   const handleSelectCategory = (category) => {
-    console.log('Selected category:', category); // Додайте лог для перевірки
+    console.log('Selected category:', category);
     setSelectedCategory(category);
   };
 

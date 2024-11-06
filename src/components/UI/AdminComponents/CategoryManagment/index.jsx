@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import HeaderAdmin from '../Header';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
+import { useUser } from 'context/UserContext';
 
 const CategoryManagement = () => {
   const { t } = useTranslation();

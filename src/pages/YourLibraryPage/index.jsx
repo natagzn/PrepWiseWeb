@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import QuestionSetsComponent from '../../components/UI/ForLibrary/QuestionSetsLibrary';
 import FoldersLibrary from '../../components/UI/ForLibrary/FoldersLibrary';
@@ -7,16 +7,52 @@ import ResourcesLibrary from '../../components/UI/ForLibrary/ResourcesLibrary/Re
 import HeaderComponent from '../../components/UI/HeaderComponent';
 import { useTranslation } from 'react-i18next';
 import SharedSetsLibrary from 'components/UI/ForLibrary/SharedSetsLibrary';
+import { fetchCategories, fetchLevels } from 'api/apiService';
+import { toast } from 'react-toastify';
 
 const YourLibraryPage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('questionSets');
 
+  const [levels, setLevels] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getLevels = async () => {
+      try {
+        const fetchedLevels = await fetchLevels();
+        //console.log(fetchedLevels);
+        // Перетворюємо отримані дані у потрібний формат
+        const formattedLevels = fetchedLevels.map((level) => level.name);
+        setLevels(formattedLevels);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        toast.error('Не вдалося завантажити рівні.');
+      }
+    };
+
+    const getCategories = async () => {
+      try {
+        const response = await fetchCategories();
+        const formattedCategories = response.map((category) => category.name); // Залишаємо лише імена
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        toast.error('Error downloading categories');
+      }
+    };
+
+    getLevels();
+    getCategories();
+  }, []);
+
   // Функція для рендерингу компонентів залежно від активної вкладки
   const renderActiveTabContent = () => {
     switch (activeTab) {
       case 'questionSets':
-        return <QuestionSetsComponent />;
+        return (
+          <QuestionSetsComponent levels={levels} categories={categories} />
+        );
       case 'folders':
         return <FoldersLibrary />;
       case 'shared':

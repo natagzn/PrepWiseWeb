@@ -388,5 +388,20 @@
   "no_resources_message_fav": "No favorite resources found.",
   "reset": "Reset",
   "Add category": "Add category",
-  "Add level": "Add level"
+  "Add level": "Add level",
+
+  "email_required_message_log": "Please enter your email or username.",
+  "password_required_message_log": "Please enter your password.",
+
+  "please_fill_all_fields": "Please fill in all fields.",
+  "password_too_short": "Password is too short. Minimum 8 characters.",
+  "registration_successful": "Registration successful!",
+  "registration_failed": "Registration failed. Please try again.",
+  "username_taken": "This username is already taken. Please choose another one.",
+  "email_taken": "This email is already registered.",
+  "username_required_message": "Username is a required field.",
+  "email_required_message": "Email is a required field.",
+  "password_required_message": "Password is a required field.",
+  "confirm_password_required_message": "Confirm password is a required field.",
+  "invalid_email": "Please enter a valid email address"
 }

@@ -397,5 +397,28 @@
   "Add category": "Додати категорію",
   "Add level": "Додати рівень",
   "Search by name": "Пошук за назвою",
-  "Reset Search": "Скинути пошук"
+  "Reset Search": "Скинути пошук",
+  "Select categories": "Оберіть категорії",
+
+  "Liked!": "Лайкнуто!",
+  "Unliked!": "Лайк знято!",
+  "Failed to like set": "Не вдалося поставити лайк сету",
+  "Failed to unlike set": "Не вдалося видалити лайк з сету",
+  "Error liking": "Помилка при додаванні лайку",
+  "Error unliking": "Помилка при видаленні лайку",
+
+  "email_required_message_log": "Будь ласка, введіть вашу електронну пошту або ім'я користувача.",
+  "password_required_message_log": "Будь ласка, введіть пароль.",
+
+  "please_fill_all_fields": "Будь ласка, заповніть всі поля.",
+  "password_too_short": "Пароль занадто короткий. Мінімум 8 символів.",
+  "registration_successful": "Реєстрація успішна!",
+  "registration_failed": "Не вдалося зареєструватися. Спробуйте ще раз.",
+  "username_taken": "Цей логін уже зайнятий. Виберіть інший.",
+  "email_taken": "Ця електронна пошта вже зареєстрована.",
+  "username_required_message": "Логін є обов'язковим полем.",
+  "email_required_message": "Електронна пошта є обов'язковим полем.",
+  "password_required_message": "Пароль є обов'язковим полем.",
+  "confirm_password_required_message": "Підтвердження паролю є обов'язковим полем.",
+  "invalid_email": "Будь ласка, введіть коректну адресу електронної пошти"
 }

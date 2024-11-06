@@ -13,7 +13,6 @@ const SortComponent = ({ sortingOptions, onSortChange }) => {
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     onSortChange(option.value);
-    setIsOptionsVisible(false);
   };
 
   const handleClickOutside = (event) => {
@@ -40,7 +39,6 @@ const SortComponent = ({ sortingOptions, onSortChange }) => {
         src="/icons/SortComponent/open.svg"
         alt="Open"
         className={styles.openIcon}
-        onClick={toggleOptionsVisibility}
       />
 
       {isOptionsVisible && (

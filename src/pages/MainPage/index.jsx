@@ -16,14 +16,17 @@ const MainPage = () => {
 
   const questionSets = Array.from({ length: 6 }, (_, index) => ({
     id: index,
-    questionsCount: 10,
-    categories: ['Category 1', 'Category 2'],
-    username: 'User ' + (index + 1),
-    date: '2024-10-19',
-    level: 'Easy',
-    isLiked: index % 2 === 0,
-    visibility: 'Public',
-    title: 'Name of set ' + index,
+    questions: ['22222', '1211313', '2312323123'],
+    categories: [
+      { id: 1, name: 'Category 1' },
+      { id: 2, name: 'Category 2' },
+    ],
+    author: { username: 'User ' + (index + 1) },
+    createdAt: '2024-10-19',
+    level: { id: 1, name: 'Middle' },
+    isFavourite: index % 2 === 0,
+    access: true,
+    name: 'Name of set ' + index,
   }));
 
   const resourceTitles = [
@@ -150,14 +153,14 @@ const MainPage = () => {
                 >
                   <QuestionSetComponent
                     id={set.id}
-                    questionsCount={set.questionsCount}
-                    categories={set.categories}
-                    username={set.username}
-                    date={set.date}
+                    name={set.name}
                     level={set.level}
-                    isLiked={set.isLiked}
-                    visibility={set.visibility}
-                    title={set.title}
+                    categories={set.categories}
+                    author={set.author}
+                    createdAt={set.createdAt}
+                    questions={set.questions}
+                    access={set.access}
+                    isFavourite={set.isFavourite}
                   />
                 </div>
               ))}

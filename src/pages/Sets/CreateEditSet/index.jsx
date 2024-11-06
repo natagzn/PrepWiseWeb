@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent';
 import VisibilityLevelCategories from './VisibilityLevelCategories';
 import CreateQuestionAnswer from './CreateQuestionAnswer';
+import { createSet } from 'api/apiService';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
@@ -61,7 +62,7 @@ function CreateEditSet({ editOrCreate }) {
 
   const handleTitleChange = (e) => setSetTitle(e.target.value);
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!setTitle.trim()) {
       toast.error(t('Please enter a title.'));
       return;
@@ -75,9 +76,32 @@ function CreateEditSet({ editOrCreate }) {
       return;
     }
 
-    console.log(setTitle, questions);
-    toast.success(t('Set created successfully!'));
-    navigate(-1);
+    const access = visibility === 'public'; // Обчислюємо доступ
+    const levelId = level.id; // Ваш вибраний рівень
+    const categoriesIds = categories.map((cat) => cat.id); // Витягуємо ID категорій
+
+    console.log(setTitle, access, levelId, categoriesIds, questions);
+
+    try {
+      const result = await createSet(
+        setTitle,
+        access,
+        levelId,
+        categoriesIds,
+        questions
+      );
+      if (result.success) {
+        console.log('Set created successfully:', result.message);
+        toast.success(t('Set created successfully!'));
+        navigate(-1);
+      } else {
+        console.error('Error creating set:', result.message);
+        toast.error(t('Error creating set'));
+      }
+    } catch (error) {
+      toast.error(t('Error creating set'));
+      console.error(error);
+    }
   };
 
   const handleUpdate = () => {
@@ -148,7 +172,7 @@ function CreateEditSet({ editOrCreate }) {
     const newId = -1 * (questions.length + 1); // Генерація мінусового ID
     setQuestions((prevQuestions) => [
       ...prevQuestions,
-      { id: newId, question: '', answer: '' },
+      { id: newId, question: '', answer: '', status: 'Still learning' },
     ]);
   };
 

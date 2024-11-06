@@ -2,62 +2,92 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { FaPen } from 'react-icons/fa';
+import { fetchCategories, fetchLevels } from 'api/apiService';
+import { toast } from 'react-toastify';
 
 function VisibilityLevelCategories({
-  onCategoryChange, // Callback для передачі обраних категорій
-  onLevelChange, // Callback для передачі обраного рівня
-  onVisibilityChange, // Callback для передачі обраної видимості
-  initialLevel, // Початковий рівень, переданий через пропси
-  initialVisibility, // Початкова видимість, передана через пропси
-  initialCategories, // Початкові категорії, передані через пропси
+  onCategoryChange,
+  onLevelChange,
+  onVisibilityChange,
+  initialLevel,
+  initialVisibility,
+  initialCategories,
 }) {
-  const { t } = useTranslation(); // Функція для перекладу
-  const [visibility, setVisibility] = useState(initialVisibility || 'public'); // Стан для зберігання видимості
-  const [level, setLevel] = useState(
-    initialLevel || { id: 1, name: 'trainee' }
-  ); // Стан для зберігання рівня
+  const { t } = useTranslation();
+  const [visibility, setVisibility] = useState(initialVisibility || 'public');
+  const [levels, setLevels] = useState([]); // ініціалізуйте як масив
+  const [level, setLevel] = useState(initialLevel || {}); // і початковий рівень
   const [selectedCategoryIds, setSelectedCategoryIds] = useState(
-    initialCategories ? initialCategories.map((cat) => cat.id) : [] // Стан для зберігання ID обраних категорій
+    initialCategories ? initialCategories.map((cat) => cat.id) : []
   );
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // Стан для контролю модального вікна
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    // Оновлюємо стан при зміні початкових значень пропсів
     setVisibility(initialVisibility);
     setLevel(initialLevel);
-    setSelectedCategoryIds(initialCategories.map((cat) => cat.id));
+    setSelectedCategoryIds(
+      initialCategories ? initialCategories.map((cat) => cat.id) : []
+    );
   }, [initialVisibility, initialLevel, initialCategories]);
 
-  // Доступні категорії
-  const categories = [
-    { id: 1, name: 'C#' },
-    { id: 2, name: 'ASP .NET' },
-    { id: 3, name: 'JavaScript' },
-    { id: 4, name: 'Python' },
-    { id: 5, name: 'Java' },
-  ];
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await fetchCategories();
+        const formattedCategories = response.map((category) => ({
+          id: category.category_id,
+          title: category.name,
+        }));
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        toast.error('Error downloading categories');
+      }
+    };
 
-  // Доступні рівні
-  const levels = [
-    { id: 1, name: 'trainee' },
-    { id: 2, name: 'junior' },
-    { id: 3, name: 'middle' },
-    { id: 4, name: 'senior' },
-    { id: 5, name: 'team_lead' },
-  ];
+    const getLevels = async () => {
+      try {
+        const fetchedLevels = await fetchLevels();
+        const formattedLevels = fetchedLevels.map((level) => ({
+          id: level.level_id,
+          label: level.name,
+        }));
+        setLevels(formattedLevels);
+        console.log(formattedLevels);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        toast.error('Не вдалося завантажити рівні.');
+      }
+    };
+
+    getLevels();
+    loadCategories();
+  }, []); // Пустий масив залежностей - викликати лише при монтуванні
 
   // Обробник для зміни видимості
   const handleVisibilityChange = (e) => {
     const selectedVisibility = e.target.value;
     setVisibility(selectedVisibility);
-    onVisibilityChange(selectedVisibility); // Передаємо вибрану видимість
+    onVisibilityChange(selectedVisibility);
   };
 
   // Обробник для зміни рівня
   const handleLevelChange = (e) => {
-    const selectedLevel = levels.find((lvl) => lvl.name === e.target.value);
-    setLevel(selectedLevel);
-    onLevelChange(selectedLevel); // Передаємо вибраний рівень
+    const selectedLevelId = String(e.target.value);
+    console.log(selectedLevelId);
+
+    // Перевірка наявності рівня
+    const selectedLevel = levels.find((lvl) => lvl.id == selectedLevelId);
+
+    if (selectedLevel) {
+      setLevel(selectedLevel);
+      onLevelChange(selectedLevel); // Передача оновленого рівня
+    } else {
+      // Логіка для випадку, коли рівень не знайдений
+      console.error('Level not found');
+      toast.error('lnf');
+    }
   };
 
   // Відкриває/закриває модальне вікно для вибору категорій
@@ -75,11 +105,10 @@ function VisibilityLevelCategories({
       setSelectedCategoryIds(updatedCategoryIds);
       onCategoryChange(
         categories.filter((cat) => updatedCategoryIds.includes(cat.id))
-      ); // Передаємо вибрані категорії
+      );
     }
   };
 
-  // Застосовує вибрані категорії та закриває модальне вікно
   const handleApplyCategories = () => toggleCategoryModal();
 
   return (
@@ -101,15 +130,19 @@ function VisibilityLevelCategories({
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Level of set')}:</div>
         <select
-          value={level.name}
+          value={level.id || ''}
           onChange={handleLevelChange}
           className={styles.dropdown}
         >
-          {levels.map((lvl) => (
-            <option key={lvl.id} value={lvl.name}>
-              {t(lvl.name)}
-            </option>
-          ))}
+          {levels.length > 0 ? (
+            levels.map((lvl) => (
+              <option key={lvl.id} value={lvl.id}>
+                {t(lvl.label)}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('Loading levels...')}</option>
+          )}
         </select>
       </div>
 
@@ -117,13 +150,17 @@ function VisibilityLevelCategories({
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Category of set')}:</div>
         <div className={styles.categoryList}>
-          {categories
-            .filter((cat) => selectedCategoryIds.includes(cat.id))
-            .map((category) => (
-              <div key={category.id} className={styles.categoryItem}>
-                {category.name}
-              </div>
-            ))}
+          {categories.length > 0 ? (
+            categories
+              .filter((cat) => selectedCategoryIds.includes(cat.id))
+              .map((category) => (
+                <div key={category.id} className={styles.categoryItem}>
+                  {category.title}
+                </div>
+              ))
+          ) : (
+            <div>{t('Loading categories...')}</div>
+          )}
           <button onClick={toggleCategoryModal} className={styles.editButton}>
             {selectedCategoryIds.length === 0 ? '+' : <FaPen />}
           </button>
@@ -132,31 +169,35 @@ function VisibilityLevelCategories({
 
       {/* Модальне вікно для вибору категорій */}
       {isCategoryModalOpen && (
-        <div className={styles.modalBackdrop}>
-          <div className={styles.modal}>
-            <h3>{t('Select categories')}</h3>
-            <div className={styles.categoryOptions}>
-              {categories.map((category) => (
-                <label key={category.id} className={styles.categoryOption}>
-                  <input
-                    type="checkbox"
-                    checked={selectedCategoryIds.includes(category.id)}
-                    onChange={() => handleCategorySelection(category.id)}
-                    disabled={
-                      !selectedCategoryIds.includes(category.id) &&
-                      selectedCategoryIds.length >= 3
-                    }
-                  />
-                  {category.name}
-                </label>
-              ))}
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2 className={styles.modalTitle}>{t('Select categories')}</h2>
+            <div className={styles.scrollContainer}>
+              {categories && categories.length > 0 ? (
+                categories.map((category) => (
+                  <div
+                    key={category.id}
+                    className={styles.checkboxItem}
+                    onClick={() => handleCategorySelection(category.id)}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedCategoryIds.includes(category.id)}
+                      disabled={
+                        !selectedCategoryIds.includes(category.id) &&
+                        selectedCategoryIds.length >= 3
+                      }
+                    />
+                    <label>{category.title}</label>
+                  </div>
+                ))
+              ) : (
+                <div>{t('Loading categories...')}</div>
+              )}
             </div>
-            <button
-              onClick={handleApplyCategories}
-              className={styles.applyButton}
-            >
-              {t('apply')}
-            </button>
+            <div className={styles.modalActions}>
+              <button onClick={handleApplyCategories}>{t('apply')}</button>
+            </div>
           </div>
         </div>
       )}
