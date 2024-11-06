@@ -6,7 +6,7 @@ import AuthTemplate from '../../../components/layout/AuthTemplate';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 import { toast } from 'react-toastify';
-import { loginUser } from 'api/apiUser';
+import { fetchUserProfile, loginUser } from 'api/apiUser';
 import { Spinner } from 'react-bootstrap'; // Додаємо компонент Spinner
 
 const LoginForm = () => {
@@ -52,9 +52,8 @@ const LoginForm = () => {
 
   const fetchUserProfileAndSetState = async (token) => {
     try {
-      const profileData = await fetchUserProfileAndSetState(token);
+      const profileData = await fetchUserProfile(token);
       console.log(profileData);
-      setUserId(profileData.user_id);
       setIsPremium(profileData.subscription_type !== null);
       setIsAdmin(profileData.role === 'admin');
     } catch (error) {

@@ -15,18 +15,6 @@ const QuestionSetComponent = ({
   isFavourite,
 }) => {
   const { t } = useTranslation();
-  console.log(
-    'QS',
-    id,
-    name,
-    level,
-    categories,
-    author,
-    createdAt,
-    questions,
-    access,
-    isFavourite
-  );
 
   // return (
   //     <div className={styles.container}>

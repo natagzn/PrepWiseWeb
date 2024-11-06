@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import SupportRequestModal from '../SupportRequestModal';
+import { logout } from 'api/apiUser';
 
 const menuIcons = {
   people: require('../../assets/AvatarMenu/people.svg').default,
@@ -32,7 +33,7 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate('/login');
+    logout();
   };
 
   const toggleMenu = () => {

@@ -5,40 +5,33 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  // Ініціалізація станів, перевіряючи Local Storage
-  const [user_id, setUserId] = useState(() => {
-    const storedUserId = localStorage.getItem('user_id');
-    return storedUserId !== 'undefined' ? storedUserId : null;
-  });
-
   const [isPremium, setIsPremium] = useState(() => {
     const storedIsPremium = localStorage.getItem('isPremium');
-    return storedIsPremium !== 'undefined'
-      ? JSON.parse(storedIsPremium)
-      : false;
+    // Перевіряємо, чи є значення в localStorage, і якщо ні, ставимо за замовчуванням false
+    return storedIsPremium !== null ? JSON.parse(storedIsPremium) : false;
   });
 
   const [isAdmin, setIsAdmin] = useState(() => {
     const storedIsAdmin = localStorage.getItem('isAdmin');
-    return storedIsAdmin !== 'undefined' ? JSON.parse(storedIsAdmin) : false;
+    // Перевіряємо, чи є значення в localStorage, і якщо ні, ставимо за замовчуванням false
+    return storedIsAdmin !== null ? JSON.parse(storedIsAdmin) : false;
   });
 
-  // Зберігаємо дані в Local Storage при кожній зміні
   useEffect(() => {
-    localStorage.setItem('user_id', user_id);
-  }, [user_id]);
-
-  useEffect(() => {
-    localStorage.setItem('isPremium', JSON.stringify(isPremium));
+    // Перевіряємо, чи потрібно зберігати значення в localStorage
+    if (isPremium !== null) {
+      localStorage.setItem('isPremium', JSON.stringify(isPremium));
+    }
   }, [isPremium]);
 
   useEffect(() => {
-    localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+    // Перевіряємо, чи потрібно зберігати значення в localStorage
+    if (isAdmin !== null) {
+      localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+    }
   }, [isAdmin]);
 
   const value = {
-    user_id,
-    setUserId,
     isPremium,
     setIsPremium,
     isAdmin,

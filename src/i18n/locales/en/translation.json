@@ -403,5 +403,6 @@
   "email_required_message": "Email is a required field.",
   "password_required_message": "Password is a required field.",
   "confirm_password_required_message": "Confirm password is a required field.",
-  "invalid_email": "Please enter a valid email address"
+  "invalid_email": "Please enter a valid email address",
+  "select_country": "Select your location"
 }

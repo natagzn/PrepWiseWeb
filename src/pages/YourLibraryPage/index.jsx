@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import SharedSetsLibrary from 'components/UI/ForLibrary/SharedSetsLibrary';
 import { fetchCategories, fetchLevels } from 'api/apiService';
 import { toast } from 'react-toastify';
+import { getSessionToken } from 'api/apiUser';
 
 const YourLibraryPage = () => {
   const { t } = useTranslation();
@@ -20,7 +21,8 @@ const YourLibraryPage = () => {
   useEffect(() => {
     const getLevels = async () => {
       try {
-        const fetchedLevels = await fetchLevels();
+        const token = getSessionToken();
+        const fetchedLevels = await fetchLevels(token);
         //console.log(fetchedLevels);
         // Перетворюємо отримані дані у потрібний формат
         const formattedLevels = fetchedLevels.map((level) => level.name);

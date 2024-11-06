@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast, ToastContainer } from 'react-toastify';
 import styles from './styles.module.css';
+import { updateProfile } from 'api/apiUser';
 
 const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   const { t } = useTranslation();
@@ -9,6 +9,12 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   const [avatar, setAvatar] = useState(null);
   const [countries, setCountries] = useState([]); // Стан для країн
   const [locationInput, setLocationInput] = useState(''); // Стан для вибору країни
+  const [message, setMessage] = useState(''); // Стан для повідомлення
+
+  useEffect(() => {
+    // Оновлення formData, коли userData змінюється
+    setFormData(userData);
+  }, [userData]);
 
   useEffect(() => {
     // Отримання списку країн
@@ -26,7 +32,105 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
+  const handleLocationChange = (e) => {
+    setLocationInput(e.target.value); // Зберігаємо вибране значення
+  };
+
+  const handleSave = async () => {
+    const updatedData = {
+      ...formData,
+      avatar,
+      location: locationInput || '',
+      bio: formData.description || '',
+    };
+
+    const result = await updateProfile(updatedData, t);
+    setMessage(result.message);
+    if (result.success) {
+      onSave(result.data);
+    }
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <h2>{t('edit_information')}</h2>
+        {/*<div>
+          <label>{t('avatar')}:</label>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {avatar && (
+            <img
+              src={avatar}
+              alt={t('avatar_preview')}
+              className={styles.avatarPreview}
+            />
+          )}
+        </div>*/}
+        <div>
+          <label>{t('username')}:</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            disabled // Блокуємо поле
+          />
+        </div>
+        <div>
+          <label>{t('email')}:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            disabled // Блокуємо поле
+          />
+        </div>
+        <div>
+          <label>{t('description')}:</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>{t('location')}:</label>
+          <select
+            name="location"
+            value={locationInput}
+            onChange={handleLocationChange}
+          >
+            <option value="">{t('select_country')}</option>
+            {countries.map((country, index) => (
+              <option key={index} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={styles.buttons}>
+          <button onClick={handleSave} className={styles.saveButton}>
+            {t('save')}
+          </button>
+          <button onClick={onClose} className={styles.cancelButton}>
+            {t('cancel')}
+          </button>
+        </div>
+
+        {/* Виводимо повідомлення у модальному вікні */}
+        {message && <div className={styles.message}>{message}</div>}
+      </div>
+    </div>
+  );
+};
+
+export default EditModal;
+
+/*const handleFileChange = (e) => {
     const file = e.target.files[0];
     const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
@@ -45,94 +149,4 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
       };
       fileReader.readAsDataURL(file);
     }
-  };
-
-  const handleLocationChange = (e) => {
-    setLocationInput(e.target.value); // Зберігаємо вибране значення
-  };
-
-  const handleSave = () => {
-    // чи введена країна є в списку
-    if (!countries.includes(locationInput)) {
-      toast.error(t('invalid_location')); // Відображаємо повідомлення про помилку
-      return;
-    }
-
-    const updatedData = { ...formData, avatar, location: locationInput };
-    onSave(updatedData);
-    onClose();
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <h2>{t('edit_information')}</h2>
-        <div>
-          <label>{t('avatar')}:</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-          {avatar && (
-            <img
-              src={avatar}
-              alt={t('avatar_preview')}
-              className={styles.avatarPreview}
-            />
-          )}
-        </div>
-        <div>
-          <label>{t('username')}:</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>{t('email')}:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>{t('description')}:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>{t('location')}:</label>
-          <select
-            name="location"
-            value={locationInput}
-            onChange={handleLocationChange}
-          >
-            <option value="">{t('select_country')}</option>{' '}
-            {/* Заглушка для випадаючого списку */}
-            {countries.map((country, index) => (
-              <option key={index} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className={styles.buttons}>
-          <button onClick={handleSave} className={styles.saveButton}>
-            {t('save')}
-          </button>
-          <button onClick={onClose} className={styles.cancelButton}>
-            {t('cancel')}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default EditModal;
+  };*/

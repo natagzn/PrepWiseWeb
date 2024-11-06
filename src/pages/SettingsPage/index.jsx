@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent';
@@ -6,21 +6,35 @@ import EditModal from './EditModal';
 import { motion } from 'framer-motion';
 import InfoPremiumModal from './InfoPremiumModal';
 import { useUser } from 'context/UserContext';
+import { fetchUserProfile } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
 
 const SettingsPage = () => {
   const { t, i18n } = useTranslation();
+  const { user_id, token } = useUser(); // Отримуємо токен користувача
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isPremiumModalOpen, setPremiumModalOpen] = useState(false);
   const [userData, setUserData] = useState({
-    username: 'sofiyalev06',
-    email: 'sofiyalev06@gmail.com',
-    description: 'I’m student aaaaaaaa . . .',
-    location: 'Ukraine',
+    username: '',
+    email: '',
+    description: '',
+    location: '',
     avatar: null,
   });
 
-  const { user_id } = useUser();
+  // Завантажуємо профіль користувача
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+        const profile = await fetchUserProfile();
+        setUserData(profile);
+      } catch (error) {
+        console.error('Помилка завантаження профілю:', error);
+      }
+    };
+
+    loadUserProfile();
+  }, []);
 
   const handleLanguageChange = (event) => {
     const selectedLanguage = event.target.value;
@@ -72,7 +86,7 @@ const SettingsPage = () => {
                   src="/icons/edit.svg"
                   onClick={handleClick}
                   alt="Edit icon"
-                />{' '}
+                />
               </div>
             </div>
             <div className={styles.separator}></div>
@@ -131,7 +145,7 @@ const SettingsPage = () => {
           <div className={styles.logoutTitle}>{t('logout')}:</div>
           <motion.div
             className={styles.logoutButton}
-            whileHover={{ scale: 1.05, backgroundColor: '#dbc946' }} // Анімація при наведенні
+            whileHover={{ scale: 1.05, backgroundColor: '#dbc946' }}
             transition={{ duration: 0.15 }}
           >
             {t('logout')}

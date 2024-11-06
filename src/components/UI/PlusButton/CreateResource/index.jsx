@@ -24,14 +24,18 @@ const CreateResource = ({ isOpen, onClose }) => {
   useEffect(() => {
     const getLevels = async () => {
       try {
-        const fetchedLevels = await fetchLevels();
-        console.log(fetchedLevels);
-        // Перетворюємо отримані дані у потрібний формат
-        const formattedLevels = fetchedLevels.map((level) => ({
-          id: level.level_id,
-          label: level.name,
-        }));
-        setLevels(formattedLevels);
+        // Затримка перед отриманням рівнів (наприклад, 1 секунда)
+        setTimeout(async () => {
+          const fetchedLevels = await fetchLevels();
+          console.log(fetchedLevels);
+
+          // Перетворюємо отримані дані у потрібний формат
+          const formattedLevels = fetchedLevels.map((level) => ({
+            id: level.level_id,
+            label: level.name,
+          }));
+          setLevels(formattedLevels);
+        }, 1000); // 1000 мс = 1 секунда
       } catch (error) {
         console.error('Error fetching levels:', error);
         setError('Не вдалося завантажити рівні.');
@@ -40,7 +44,7 @@ const CreateResource = ({ isOpen, onClose }) => {
     };
 
     getLevels(); // Викликаємо асинхронну функцію
-  }, []); // Пустий масив залежностей - викликати лише при монтуванні
+  }, []); // Пустий масив залежностей - викликати лише при монтуванні*/
 
   const handleTextChange = (e, setText, ref) => {
     const value = e.target.value;
