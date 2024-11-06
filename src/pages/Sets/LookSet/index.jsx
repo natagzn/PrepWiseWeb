@@ -81,12 +81,14 @@ function LookSet() {
           id={id}
           createdAt={createdAt}
           isLiked={isFavourite}
+          questions={questions}
         />
         <div className={styles.separator} />
         <SetQuickReviewComponent
           questionsAnswers={questions}
           setId={id}
           isAuthor={isAuthor}
+          setTitle={name}
         />
         <div className={styles.separator} />
         <CardBlock questionsAnswers={questions} isAuthor={isAuthor} />

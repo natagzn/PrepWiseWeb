@@ -421,5 +421,6 @@
   "password_required_message": "Пароль є обов'язковим полем.",
   "confirm_password_required_message": "Підтвердження паролю є обов'язковим полем.",
   "invalid_email": "Будь ласка, введіть коректну адресу електронної пошти",
-  "select_country": "Оберіть локацію"
+  "select_country": "Оберіть локацію",
+  "You already know all the cards. You can reset your progress and start learning from the beginning.": "Ви вже знаєте всі картки. Можете скинути прогрес та почати вивчати заново."
 }

@@ -7,8 +7,9 @@ import ReportComponent from 'components/UI/ReportComponent';
 import { useTranslation } from 'react-i18next';
 import SelectFolderModal from '../SelectFolderModal';
 import SettingsShare from '../SettingShare';
+import { resetProgressForAllQuestions } from 'api/apiSet';
 
-const SetMenu = ({ id, isAuthor, isCoauthor }) => {
+const SetMenu = ({ id, isAuthor, isCoauthor, questions }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -66,10 +67,19 @@ const SetMenu = ({ id, isAuthor, isCoauthor }) => {
     setShareOpen(false);
   };
 
-  const handleModalConfirmReset = () => {
+  const handleModalConfirmReset = async () => {
     console.log('Reset progress confirmed');
-    toast.success(t('Progress has been reset successfully!'));
-    handleModalCancel();
+
+    try {
+      const updatedQuestions = await resetProgressForAllQuestions(questions);
+      //toast.success(t('Progress has been reset successfully!'));
+      window.location.reload();
+      handleModalCancel();
+    } catch (error) {
+      // Якщо сталася помилка, відображаємо повідомлення про помилку
+      console.error('Error resetting progress:', error);
+      toast.error(t('Failed to reset progress. Please try again.'));
+    }
   };
 
   const handleModalConfirmDelete = () => {

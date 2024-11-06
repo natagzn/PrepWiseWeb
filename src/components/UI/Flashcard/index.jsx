@@ -7,7 +7,7 @@ const Flashcard = ({ flashcard, flip }) => {
   // Скидання перевертання при зміні картки
   useEffect(() => {
     setIsFlipped(false);
-  }, [flashcard.id]);
+  }, [flashcard.question_id]);
 
   const handleCardClick = () => {
     setIsFlipped((prev) => !prev);
@@ -23,12 +23,12 @@ const Flashcard = ({ flashcard, flip }) => {
           {flip ? (
             <p className={styles.answer}>{flashcard.answer}</p>
           ) : (
-            <p className={styles.question}>{flashcard.question}</p>
+            <p className={styles.content}>{flashcard.content}</p>
           )}
         </div>
         <div className={styles.cardBack}>
           {flip ? (
-            <p className={styles.question}>{flashcard.question}</p>
+            <p className={styles.content}>{flashcard.content}</p>
           ) : (
             <p className={styles.answer}>{flashcard.answer}</p>
           )}

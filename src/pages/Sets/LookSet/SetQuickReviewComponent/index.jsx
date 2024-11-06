@@ -3,8 +3,14 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
 import { FaDisplay } from 'react-icons/fa6';
+import { toast } from 'react-toastify';
 
-function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
+function SetQuickReviewComponent({
+  questionsAnswers,
+  setId,
+  isAuthor,
+  setTitle,
+}) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
@@ -29,11 +35,33 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
   };
 
   const handleFlashcardsStudy = () => {
-    navigate('/flashcards', { state: { setId, viewOrStudy: 'study' } });
+    if (stillLearningCount !== 0) {
+      navigate('/flashcards', {
+        state: {
+          initialFlashcards: questionsAnswers,
+          viewOrStudy: 'study',
+          setId,
+        },
+      });
+    } else {
+      toast.error(
+        t(
+          'You already know all the cards. You can reset your progress and start learning from the beginning.'
+        )
+      );
+    }
   };
 
   const handleFlashcardsView = () => {
-    navigate('/flashcards', { state: { setId, viewOrStudy: 'view' } });
+    console.log('startin:', questionsAnswers);
+    navigate('/flashcards', {
+      state: {
+        initialFlashcards: questionsAnswers,
+        viewOrStudy: 'view',
+        setId,
+        setTitle,
+      },
+    });
   };
 
   return (

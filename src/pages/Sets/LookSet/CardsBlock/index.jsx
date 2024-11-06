@@ -59,7 +59,8 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
         <div>
           {/* Перевірка на відсутність Still learning */}
           {stillLearningQuestions.length === 0 ? (
-            <p className={styles.categoryMessage}>{t('noLearningYet')}</p>
+            /*<p className={styles.categoryMessage}>{t('noLearningYet')}</p>*/
+            console.log('')
           ) : (
             <div className={styles.categoryBlock}>
               <h3
@@ -90,7 +91,8 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
 
           {/* Перевірка на відсутність Already know */}
           {alreadyKnowQuestions.length === 0 ? (
-            <p className={styles.categoryMessage}>{t('notKnown')}</p>
+            /*<p className={styles.categoryMessage}>{t('notKnown')}</p>*/
+            console.log('')
           ) : (
             <div className={styles.categoryBlock}>
               <h3

@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import Flashcard from 'components/UI/Flashcard';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { updateQuestionStatus } from 'api/apiSet';
 
-function FlashcardPage({ setId }) {
+function FlashcardPage() {
   const [flashcards, setFlashcards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [setTitle, setSetTitle] = useState('');
   const [stillLearningCount, setStillLearningCount] = useState(0);
   const [knowCount, setKnowCount] = useState(0);
   const [statusHistory, setStatusHistory] = useState([]);
@@ -15,76 +15,36 @@ function FlashcardPage({ setId }) {
   const [flip, setFlip] = useState(false);
 
   const location = useLocation();
-  const { viewOrStudy } = location.state || {};
+  const { viewOrStudy, initialFlashcards, setId, setTitle } =
+    location.state || {};
+  console.log('Initial:', initialFlashcards);
 
   const { t } = useTranslation();
 
   const navigate = useNavigate();
 
   const onClose = () => {
-    navigate(`/lookSet`, {
-      state: {
-        setId: setId,
-      },
-    });
+    navigate(`/lookSet/${setId}`);
   };
 
   useEffect(() => {
-    console.log('Init set');
-
-    setSetTitle('title');
-
-    const initialFlashcards = [
-      {
-        id: 0,
-        question: 'What is JavaScript?',
-        answer: 'A programming language',
-        status: 'know',
-      },
-      {
-        id: 1,
-        question: 'What is a closure?',
-        answer: 'A function with its own lexical scope.',
-        status: 'stilllearning',
-      },
-      {
-        id: 2,
-        question: 'Explain event delegation.',
-        answer: 'A technique to manage events efficiently.',
-        status: 'know',
-      },
-      {
-        id: 3,
-        question: 'What is a promise?',
-        answer:
-          'An object representing the eventual completion of an asynchronous operation.',
-        status: 'stilllearning',
-      },
-      {
-        id: 4,
-        question: 'What is the difference between let and var?',
-        answer: 'let is block scoped, var is function scoped.',
-        status: 'know',
-      },
-    ];
-
     setFlashcards((prevCards) =>
       shuffleFlashcards(
         viewOrStudy === 'study'
-          ? initialFlashcards.filter((card) => card.status === 'stilllearning')
+          ? initialFlashcards.filter((card) => card.status === false)
           : initialFlashcards
       )
     );
-  }, [setId, viewOrStudy]);
+  }, [initialFlashcards, viewOrStudy]);
 
   const handleStatusChange = (newStatus) => {
     const currentFlashcard = flashcards[currentIndex];
     const oldStatus = currentFlashcard.status;
 
     // Оновлюємо лічильники
-    if (newStatus === 'stilllearning') {
+    if (newStatus === false) {
       setStillLearningCount((prev) => prev + 1);
-    } else if (newStatus === 'know') {
+    } else if (newStatus === true) {
       setKnowCount((prev) => prev + 1);
     }
 
@@ -98,11 +58,11 @@ function FlashcardPage({ setId }) {
     // Зберігаємо історію статусів
     setStatusHistory((prev) => [
       ...prev,
-      { id: currentFlashcard.id, oldStatus, newStatus },
+      { question_id: currentFlashcard.question_id, oldStatus, newStatus },
     ]);
 
     // Імітуємо запит на оновлення статусу в БД
-    updateStatusInDB(currentFlashcard.id, newStatus);
+    updateStatusInDB(currentFlashcard.question_id, newStatus);
 
     // Переходимо до наступної картки
     setCurrentIndex((prevIndex) => {
@@ -113,10 +73,8 @@ function FlashcardPage({ setId }) {
           state: {
             setId: setId,
             stillLearningCount:
-              newStatus === 'stilllearning'
-                ? stillLearningCount + 1
-                : stillLearningCount,
-            knowCount: newStatus === 'know' ? knowCount + 1 : knowCount,
+              newStatus === false ? stillLearningCount + 1 : stillLearningCount,
+            knowCount: newStatus === true ? knowCount + 1 : knowCount,
             viewOrStudy: viewOrStudy,
           },
         });
@@ -138,6 +96,7 @@ function FlashcardPage({ setId }) {
               setId: setId,
               viewOrStudy: viewOrStudy,
               countAll: flashcards.length,
+              setTitle: setTitle,
             },
           });
           return prevIndex; // Залишаємо індекс незмінним, бо відбудеться перенаправлення
@@ -148,15 +107,22 @@ function FlashcardPage({ setId }) {
     });
   };
 
-  const updateStatusInDB = (id, newStatus) => {
-    console.log(`Updating card ID: ${id} to new status: ${newStatus}`);
+  const updateStatusInDB = async (question_id, newStatus) => {
+    console.log(`Updating card ID: ${question_id} to new status: ${newStatus}`);
 
-    // Імітація асинхронного запиту
-    setTimeout(() => {
+    try {
+      // Викликаємо функцію updateQuestionStatus для оновлення статусу
+      const result = await updateQuestionStatus(question_id, newStatus);
+
+      // Виводимо результат успішного оновлення
       console.log(
-        `Card ID: ${id} updated successfully to status: ${newStatus} (simulated).`
+        `Card ID: ${question_id} updated successfully to status: ${newStatus}.`,
+        result
       );
-    }, 1000);
+    } catch (error) {
+      // Виводимо помилку, якщо виникла
+      console.error(`Failed to update card ID: ${question_id}.`, error);
+    }
   };
 
   const handleBack = () => {
@@ -164,9 +130,9 @@ function FlashcardPage({ setId }) {
       const lastStatus = statusHistory.pop();
 
       // Зменшити лічильник для останнього статусу
-      if (lastStatus.newStatus === 'stilllearning') {
+      if (lastStatus.newStatus === false) {
         setStillLearningCount((prev) => prev - 1);
-      } else if (lastStatus.newStatus === 'know') {
+      } else if (lastStatus.newStatus === true) {
         setKnowCount((prev) => prev - 1);
       }
 
@@ -276,13 +242,13 @@ function FlashcardPage({ setId }) {
             <>
               <button
                 className={`${styles.footerButton} ${styles.incorrectButton}`}
-                onClick={() => handleStatusChange('stilllearning')}
+                onClick={() => handleStatusChange(false)}
               >
                 X
               </button>
               <button
                 className={`${styles.footerButton} ${styles.correctButton}`}
-                onClick={() => handleStatusChange('know')}
+                onClick={() => handleStatusChange(true)}
               >
                 ✓
               </button>

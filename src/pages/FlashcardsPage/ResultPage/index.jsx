@@ -18,9 +18,10 @@ function ResultFlashcards() {
     knowCount = 0,
     viewOrStudy,
     countAll = 0,
+    setTitle,
   } = location.state || {};
 
-  const setName = t('setName', { setId });
+  const setName = setTitle;
   const totalCount = stillLearningCount + knowCount;
   const knowPercentage =
     viewOrStudy === 'study'
@@ -86,11 +87,7 @@ function ResultFlashcards() {
   };
 
   const handleReturnToSet = () => {
-    navigate(`/lookSet`, {
-      state: {
-        setId: setId,
-      },
-    });
+    navigate(`/lookSet/${setId}`);
   };
 
   return (
