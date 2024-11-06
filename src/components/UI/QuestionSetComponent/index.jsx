@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 import { SaveNot } from '../SaveNot';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionSetComponent = ({
   id,
@@ -15,6 +16,7 @@ const QuestionSetComponent = ({
   isFavourite,
 }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   // return (
   //     <div className={styles.container}>
@@ -104,7 +106,12 @@ const QuestionSetComponent = ({
   // );
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      onClick={() => {
+        navigate(`/lookSet/${id}`);
+      }}
+    >
       {/* Заголовок */}
       <div className={styles.header}>
         <div className={styles.iconContainer}>
@@ -138,7 +145,12 @@ const QuestionSetComponent = ({
 
         {/* Іконка лайку, якщо є */}
         {typeof isFavourite !== 'undefined' && (
-          <div className={styles.likeIcon}>
+          <div
+            className={styles.likeIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <SaveNot state={isFavourite} type="set" id={id} />
           </div>
         )}

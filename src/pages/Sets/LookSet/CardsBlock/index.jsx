@@ -26,12 +26,10 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
     let sortedArray = [...questionsAnswers];
 
     if (sortOption === 'alphabetical') {
-      sortedArray.sort((a, b) => a.question.localeCompare(b.question));
+      sortedArray.sort((a, b) => a.content.localeCompare(b.content));
     } else if (sortOption === 'yourStats') {
-      const stillLearning = questionsAnswers.filter(
-        (q) => q.status === 'stilllearning'
-      );
-      const alreadyKnow = questionsAnswers.filter((q) => q.status === 'know');
+      const stillLearning = questionsAnswers.filter((q) => q.status === false);
+      const alreadyKnow = questionsAnswers.filter((q) => q.status === true);
       sortedArray = [...stillLearning, ...alreadyKnow];
     }
 
@@ -41,11 +39,9 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
   };
 
   const stillLearningQuestions = sortedQuestions.filter(
-    (q) => q.status === 'stilllearning'
+    (q) => q.status === false
   );
-  const alreadyKnowQuestions = sortedQuestions.filter(
-    (q) => q.status === 'know'
-  );
+  const alreadyKnowQuestions = sortedQuestions.filter((q) => q.status === true);
 
   return (
     <div>
@@ -77,11 +73,12 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
                 {t('learningEncouragement')}
               </p>
               <div className={styles.cardBlockContainer}>
+                {console.log('qa', stillLearningQuestions)}
                 {stillLearningQuestions.map((item) => (
                   <QuestionAnswerComponent
                     id={item.id}
                     key={item.id}
-                    question={item.question}
+                    question={item.content}
                     answer={item.answer}
                     status={item.status}
                     help={isAuthor}
@@ -107,7 +104,7 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
                   <QuestionAnswerComponent
                     id={item.id}
                     key={item.id}
-                    question={item.question}
+                    question={item.content}
                     answer={item.answer}
                     status={item.status}
                     help={isAuthor}
@@ -123,7 +120,7 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
             <QuestionAnswerComponent
               id={item.id}
               key={item.id}
-              question={item.question}
+              question={item.content}
               answer={item.answer}
               status={item.status}
               help={isAuthor}

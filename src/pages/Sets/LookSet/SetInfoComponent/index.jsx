@@ -14,10 +14,11 @@ const SetInfoComponent = (props) => {
     visibility,
     isLiked,
     id,
+    createdAt,
   } = props;
 
   const { t } = useTranslation();
-  const date = '2024-10-10';
+  const date = createdAt;
 
   return (
     <>
@@ -61,19 +62,19 @@ const SetInfoComponent = (props) => {
             {questionCount} {t('questions')}
           </span>
           <span className={styles.separator}>|</span>
-          <span>{date}</span>
+          <span>{date.slice(0, 10)}</span>
         </div>
 
         <div className={styles.level}>
           <span className={styles.bold}>{t('level')}:</span>{' '}
-          <span className={styles.category}>{level}</span>
+          <span className={styles.category}>{level.name}</span>
         </div>
 
         <div className={styles.categories}>
           <span className={styles.bold}>{t('categories')}:</span>
           {categories.map((category, index) => (
-            <span key={index} className={styles.category}>
-              {category}
+            <span key={category.id} className={styles.category}>
+              {category.name}
             </span>
           ))}
         </div>

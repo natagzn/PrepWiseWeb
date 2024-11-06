@@ -107,7 +107,7 @@ function App() {
           />
 
           <Route path="/favorite" element={<FavoritePage />} />
-          <Route path="/lookSet" element={<LookSet />} />
+          <Route path="/lookSet/:id" element={<LookSet />} />
 
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/flashcards" element={<FlashcardPage setId={1} />} />

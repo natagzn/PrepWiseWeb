@@ -9,9 +9,9 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
-  const knownCount = questionsAnswers.filter((q) => q.status === 'know').length;
+  const knownCount = questionsAnswers.filter((q) => q.status === true).length;
   const stillLearningCount = questionsAnswers.filter(
-    (q) => q.status === 'stilllearning'
+    (q) => q.status === false
   ).length;
   const totalCount = knownCount + stillLearningCount;
 
@@ -51,7 +51,7 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
           }}
         >
           <div className={styles.buttonIcon}>
-            <img src="icons/flashcards_blue.svg" alt="flashcards" />
+            <img src="/icons/flashcards_blue.svg" alt="flashcards" />
           </div>
           <div className={styles.buttonText}>{t('viewFlashcards')}</div>
         </div>
@@ -67,7 +67,7 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
               &lt;
             </div>
             <div className={styles.cardText}>
-              {questionsAnswers[currentIndex].question}
+              {questionsAnswers[currentIndex].content}
             </div>
             <div className={styles.navigationButton} onClick={nextQuestion}>
               &gt;
@@ -127,7 +127,7 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
 
             <div className={styles.studyButton} onClick={handleFlashcardsStudy}>
               <div className={styles.buttonIcon}>
-                <img src="icons/flashcards.svg" alt="flashcards" />
+                <img src="/icons/flashcards.svg" alt="flashcards" />
               </div>
               <div className={styles.buttonText}>{t('studyFlashcards')}</div>
             </div>
@@ -138,7 +138,7 @@ function SetQuickReviewComponent({ questionsAnswers, setId, isAuthor }) {
               style={{ height: isAuthor ? 'auto' : '71px' }}
             >
               <div className={styles.buttonIcon}>
-                <img src="icons/flashcards_blue.svg" alt="flashcards" />
+                <img src="/icons/flashcards_blue.svg" alt="flashcards" />
               </div>
               <div className={styles.buttonText}>{t('viewFlashcards')}</div>
             </div>

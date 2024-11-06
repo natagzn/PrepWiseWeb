@@ -10,6 +10,8 @@
   margin: 10px;
   gap: 10px;
   font-family: var(--web-font-family);
+
+  cursor: pointer;
 }
 
 .header {
