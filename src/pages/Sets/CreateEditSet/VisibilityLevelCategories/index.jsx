@@ -15,8 +15,8 @@ function VisibilityLevelCategories({
 }) {
   const { t } = useTranslation();
   const [visibility, setVisibility] = useState(initialVisibility || 'public');
-  const [levels, setLevels] = useState([]); // ініціалізуйте як масив
-  const [level, setLevel] = useState(initialLevel || {}); // і початковий рівень
+  const [levels, setLevels] = useState([]);
+  const [level, setLevel] = useState(initialLevel || null); // Початкове значення null
   const [selectedCategoryIds, setSelectedCategoryIds] = useState(
     initialCategories ? initialCategories.map((cat) => cat.id) : []
   );
@@ -54,7 +54,16 @@ function VisibilityLevelCategories({
           label: level.name,
         }));
         setLevels(formattedLevels);
-        console.log(formattedLevels);
+
+        // Встановлення початкового рівня, якщо `initialLevel` не задано
+        if (
+          formattedLevels.length > 0 &&
+          Object.keys(initialLevel).length === 0 &&
+          initialLevel.constructor === Object
+        ) {
+          setLevel(formattedLevels[0]);
+          onLevelChange(formattedLevels[0]);
+        }
       } catch (error) {
         console.error('Error fetching levels:', error);
         toast.error('Не вдалося завантажити рівні.');
@@ -63,7 +72,7 @@ function VisibilityLevelCategories({
 
     getLevels();
     loadCategories();
-  }, []); // Пустий масив залежностей - викликати лише при монтуванні
+  }, []);
 
   // Обробник для зміни видимості
   const handleVisibilityChange = (e) => {
@@ -74,19 +83,21 @@ function VisibilityLevelCategories({
 
   // Обробник для зміни рівня
   const handleLevelChange = (e) => {
-    const selectedLevelId = String(e.target.value);
+    const selectedLevelId = e.target.value;
+    console.log(levels);
     console.log(selectedLevelId);
 
     // Перевірка наявності рівня
-    const selectedLevel = levels.find((lvl) => lvl.id == selectedLevelId);
+    const selectedLevel = levels.find(
+      (lvl) => String(lvl.id) === selectedLevelId
+    );
 
     if (selectedLevel) {
       setLevel(selectedLevel);
-      onLevelChange(selectedLevel); // Передача оновленого рівня
+      onLevelChange(selectedLevel);
     } else {
-      // Логіка для випадку, коли рівень не знайдений
       console.error('Level not found');
-      toast.error('lnf');
+      toast.error('Level not found');
     }
   };
 
@@ -100,7 +111,6 @@ function VisibilityLevelCategories({
       ? selectedCategoryIds.filter((id) => id !== categoryId)
       : [...selectedCategoryIds, categoryId];
 
-    // Обмеження до 3 категорій
     if (updatedCategoryIds.length <= 3) {
       setSelectedCategoryIds(updatedCategoryIds);
       onCategoryChange(
@@ -130,7 +140,7 @@ function VisibilityLevelCategories({
       <div className={styles.optionRow}>
         <div className={styles.label}>{t('Level of set')}:</div>
         <select
-          value={level.id || ''}
+          value={level ? level.id : ''}
           onChange={handleLevelChange}
           className={styles.dropdown}
         >

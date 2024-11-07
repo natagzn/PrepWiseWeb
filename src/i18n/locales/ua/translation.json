@@ -422,5 +422,15 @@
   "confirm_password_required_message": "Підтвердження паролю є обов'язковим полем.",
   "invalid_email": "Будь ласка, введіть коректну адресу електронної пошти",
   "select_country": "Оберіть локацію",
-  "You already know all the cards. You can reset your progress and start learning from the beginning.": "Ви вже знаєте всі картки. Можете скинути прогрес та почати вивчати заново."
+  "You already know all the cards. You can reset your progress and start learning from the beginning.": "Ви вже знаєте всі картки. Можете скинути прогрес та почати вивчати заново.",
+
+  "Error updating set": "Помилка оновлення сету",
+  "Error deleting old categories": "Помилка зміни старих категорій",
+  "Error adding new categories": "Помилка додавання нових категорій",
+  "Set updated successfully!": "Модуль оновлено успішно!",
+  "No changes made.": "Змін не було зроблено",
+
+  "Please select at least one category.": "Будь ласка оберіть хоча б 1 категорію",
+  "There must be at least one question.": "Повинно бути як мінімум одне питання",
+  "All questions must have content.": "Всі питання повинні бути заповнені."
 }

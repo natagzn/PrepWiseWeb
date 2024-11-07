@@ -73,6 +73,7 @@
   width: 90%;
   text-align: center;
   text-wrap: wrap;
+  word-break: break-word;
   overflow: hidden;
 
   max-height: 90%;

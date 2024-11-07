@@ -118,7 +118,7 @@ export const addQuestion = async (listId, content, answer) => {
   try {
     const response = await axios.post(
       url,
-      { list_id: listId, status: 'Still learning', content, answer },
+      { list_id: listId, status: 'false', content, answer },
       {
         headers: {
           'Content-Type': 'application/json',

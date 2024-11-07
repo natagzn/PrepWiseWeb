@@ -23,14 +23,14 @@ const Flashcard = ({ flashcard, flip }) => {
           {flip ? (
             <p className={styles.answer}>{flashcard.answer}</p>
           ) : (
-            <p className={styles.content}>{flashcard.content}</p>
+            <p className={styles.question}>{flashcard.content}</p>
           )}
         </div>
         <div className={styles.cardBack}>
           {flip ? (
             <p className={styles.content}>{flashcard.content}</p>
           ) : (
-            <p className={styles.answer}>{flashcard.answer}</p>
+            <p className={styles.question}>{flashcard.answer}</p>
           )}
         </div>
       </div>

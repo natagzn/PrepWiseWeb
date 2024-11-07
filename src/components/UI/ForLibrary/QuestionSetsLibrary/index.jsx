@@ -62,7 +62,7 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
             return { ...detailResponse, id: set.question_set_id };
           })
         );
-        setQuestionSets(detailedSets);
+        setQuestionSets(detailedSets.reverse());
       } catch (error) {
         console.error('Error loading question sets:', error);
       } finally {

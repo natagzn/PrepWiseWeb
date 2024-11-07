@@ -41,6 +41,7 @@
 
 .cardFront {
   background-color: #f9f9f9;
+  word-break: break-word;
 }
 
 .cardBack {
@@ -54,6 +55,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  word-break: break-word;
   -webkit-line-clamp: 12;
   -webkit-box-orient: vertical;
   font-size: var(--web-30-regular-font-size);

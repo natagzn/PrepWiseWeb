@@ -19,9 +19,10 @@
   flex: 1;
   font-size: var(--web-23-regular-font-size);
   font-family: var(--web-font-family);
-  word-wrap: break-word;
   font-weight: 400;
   color: black;
+  height: auto;
+  word-break: break-word; /* Додаємо word-break */
 }
 
 .question {

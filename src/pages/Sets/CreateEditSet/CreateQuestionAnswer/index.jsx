@@ -73,7 +73,6 @@ const CreateQuestionAnswer = ({
               placeholder={t('enterAnswer')}
               value={answer}
               onChange={(e) => onAnswerChange(e.target.value)}
-              і
               ref={answerRef} // Реф для автозміни висоти
               rows={1} // Початкова кількість рядків
             />

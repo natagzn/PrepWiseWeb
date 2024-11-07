@@ -102,7 +102,7 @@ function App() {
           />
 
           <Route
-            path="/editSet/:id"
+            path="/editSet/:setId"
             element={<CreateEditSet editOrCreate={'edit'} />}
           />
 

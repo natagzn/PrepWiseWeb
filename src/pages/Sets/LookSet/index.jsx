@@ -75,7 +75,7 @@ function LookSet() {
           questionCount={questions.length}
           level={level}
           categories={categories}
-          visibility={access ? 'Public' : 'Private'}
+          visibility={access === 'public' ? 'Public' : 'Private'}
           onSave={() => alert('Set saved!')}
           isAuthor={isAuthor}
           id={id}

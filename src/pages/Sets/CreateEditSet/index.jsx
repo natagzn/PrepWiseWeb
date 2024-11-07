@@ -7,12 +7,22 @@ import styles from './styles.module.css';
 import HeaderComponent from '../../../components/UI/HeaderComponent';
 import VisibilityLevelCategories from './VisibilityLevelCategories';
 import CreateQuestionAnswer from './CreateQuestionAnswer';
-import { createSet } from 'api/apiService';
+import { createSet, fetchSetById } from 'api/apiService';
+import {
+  addSetCategories,
+  createQuestion,
+  deleteQuestion,
+  deleteSetCategories,
+  updateQuestion,
+  updateSet,
+} from 'api/apiSet';
+import { Spinner } from 'react-bootstrap';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [setTitle, setSetTitle] = useState('');
   const [questions, setQuestions] = useState([
@@ -24,32 +34,30 @@ function CreateEditSet({ editOrCreate }) {
   const [initialData, setInitialData] = useState({});
 
   useEffect(() => {
-    if (editOrCreate === 'edit' && setId) {
-      fetchSetDataById(setId);
-    }
+    const fetchData = async () => {
+      if (editOrCreate === 'edit' && setId) {
+        const data = await fetchSetById(setId);
+        setInfoEdit(data);
+      }
+    };
+
+    fetchData();
   }, [editOrCreate, setId]);
 
-  const fetchSetDataById = (id) => {
+  const setInfoEdit = (data) => {
     const fetchedData = {
-      title: 'Set number 1',
-      visibility: 'private',
-      level: { id: 2, name: 'junior' },
-      categories: [
-        { id: 1, name: 'C#' },
-        { id: 3, name: 'JavaScript' },
-      ],
-      questions: [
-        {
-          id: 1,
-          question: 'What is React?',
-          answer: 'A JavaScript library for building user interfaces',
-        },
-        {
-          id: 2,
-          question: 'What is JSX?',
-          answer: 'A syntax extension for JavaScript',
-        },
-      ],
+      title: data.name,
+      visibility: data.access,
+      level: {
+        id: data.level.levelId,
+        name: data.level.name,
+      },
+      categories: data.categories,
+      questions: data.questions.map((q) => ({
+        id: q.question_id, // замість question_id використовуємо id
+        question: q.content, // замість content використовуємо question
+        answer: q.answer, // answer залишаємо без змін
+      })),
     };
 
     setSetTitle(fetchedData.title);
@@ -63,16 +71,20 @@ function CreateEditSet({ editOrCreate }) {
   const handleTitleChange = (e) => setSetTitle(e.target.value);
 
   const handleCreate = async () => {
+    setIsLoading(true);
     if (!setTitle.trim()) {
       toast.error(t('Please enter a title.'));
+      setIsLoading(false);
       return;
     }
     if (questions.some((q) => !q.question.trim())) {
       toast.error(t('All questions must be filled.'));
+      setIsLoading(false);
       return;
     }
     if (questions.length === 0) {
       toast.error(t("You can't create set without questions"));
+      setIsLoading(false);
       return;
     }
 
@@ -97,53 +109,156 @@ function CreateEditSet({ editOrCreate }) {
       } else {
         console.error('Error creating set:', result.message);
         toast.error(t('Error creating set'));
+        setIsLoading(false);
+        setIsLoading(false);
       }
     } catch (error) {
       toast.error(t('Error creating set'));
       console.error(error);
+      setIsLoading(false);
     }
   };
 
-  const handleUpdate = () => {
-    const updatedData = { setTitle, visibility, level, categories, questions };
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    const updatedData = {
+      title: setTitle,
+      visibility,
+      level: { id: level.id, name: level.name },
+      categories: categories.map((cat) => ({ id: cat.id, name: cat.name })),
+      questions: questions.map((q) => ({
+        id: q.id,
+        question: q.question,
+        answer: q.answer,
+      })),
+    };
 
-    // Зберігаємо ID запитань
+    // Перевірка на обов'язкові поля
+    if (!updatedData.title) {
+      toast.error(t('Please enter a title.'));
+      setIsLoading(false);
+      return;
+    }
+    if (!updatedData.categories || updatedData.categories.length === 0) {
+      toast.error(t('Please select at least one category.'));
+      setIsLoading(false);
+      return;
+    }
+    if (!updatedData.questions || updatedData.questions.length === 0) {
+      toast.error(t('There must be at least one question.'));
+      setIsLoading(false);
+      return;
+    }
+
+    // Перевірка на порожні поля "question" у питаннях
+    const emptyQuestions = updatedData.questions.filter((q) => !q.question);
+    if (emptyQuestions.length > 0) {
+      toast.error(t('All questions must have content.'));
+      setIsLoading(false);
+      return;
+    }
+
+    console.log('Initial Data:', initialData);
+    console.log('Updated Data:', updatedData);
+
     const initialQuestionsIds = initialData.questions.map((q) => q.id);
     const updatedQuestionsIds = updatedData.questions.map((q) => q.id);
 
-    console.log('Initial: ', initialQuestionsIds);
-    console.log('Update: ', updatedQuestionsIds);
+    const newQuestions = updatedData.questions.filter(
+      (q) => !initialQuestionsIds.includes(q.id)
+    );
 
-    // Оновлюємо існуючі запитання
-    updatedData.questions.forEach((question) => {
+    const deletedQuestions = initialData.questions.filter(
+      (q) => !updatedQuestionsIds.includes(q.id)
+    );
+
+    const updatedQuestions = updatedData.questions.filter((q) => {
       const initialQuestion = initialData.questions.find(
-        (q) => q.id === question.id
+        (initQ) => initQ.id === q.id
       );
-      if (initialQuestion) {
-        // Логіка оновлення запитань у базі даних
-        console.log(`Updating question ID ${question.id}`);
-        // API для оновлення запитання
-      } else {
-        // Логіка для створення нового запитання
-        console.log('Creating new question:', question);
-        //API для створення нового запитання
-      }
+      return (
+        initialQuestion &&
+        (initialQuestion.question !== q.question ||
+          initialQuestion.answer !== q.answer)
+      );
     });
 
-    // Видалення запитань, яких немає в оновлених даних
-    initialQuestionsIds.forEach((id) => {
-      if (!updatedQuestionsIds.includes(id)) {
-        console.log(`Deleting question ID ${id}`);
-        // API для видалення запитання
-      }
-    });
+    console.log('New Questions:', newQuestions);
+    console.log('Deleted Questions:', deletedQuestions);
+    console.log('Updated Questions:', updatedQuestions);
 
-    // Перевірка на зміни
-    if (JSON.stringify(initialData) !== JSON.stringify(updatedData)) {
+    const hasMainFieldsChanges =
+      initialData.title !== updatedData.title ||
+      initialData.visibility !== updatedData.visibility ||
+      JSON.stringify(initialData.level) !== JSON.stringify(updatedData.level) ||
+      JSON.stringify(initialData.categories) !==
+        JSON.stringify(updatedData.categories);
+
+    if (hasMainFieldsChanges) {
+      console.log('Updating main fields...');
+      console.log('Main fields updated data:', {
+        title: updatedData.title,
+        visibility: updatedData.visibility,
+        level: updatedData.level,
+        categories: updatedData.categories,
+      });
+
+      const updateResult = await updateSet(
+        setId,
+        updatedData.title,
+        updatedData.visibility,
+        updatedData.level.id
+      );
+      if (!updateResult.success) {
+        toast.error(t('Error updating set'));
+        setIsLoading(false);
+        return;
+      }
+
+      const deleteResult = await deleteSetCategories(
+        setId,
+        initialData.categories.map((cat) => cat.id)
+      );
+      if (!deleteResult.success) {
+        toast.error(t('Error deleting old categories'));
+        setIsLoading(false);
+        return;
+      }
+
+      const addResult = await addSetCategories(
+        setId,
+        updatedData.categories.map((cat) => cat.id)
+      );
+      if (!addResult.success) {
+        toast.error(t('Error adding new categories'));
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    for (const question of updatedQuestions) {
+      await updateQuestion(question.id, question);
+    }
+
+    for (const question of newQuestions) {
+      await createQuestion(setId, question);
+    }
+
+    for (const question of deletedQuestions) {
+      await deleteQuestion(question.id);
+    }
+
+    if (
+      hasMainFieldsChanges ||
+      updatedQuestions.length > 0 ||
+      newQuestions.length > 0 ||
+      deletedQuestions.length > 0
+    ) {
       toast.success(t('Set updated successfully!'));
     } else {
       toast.info(t('No changes made.'));
     }
+
     navigate(-1);
   };
 
@@ -172,7 +287,7 @@ function CreateEditSet({ editOrCreate }) {
     const newId = -1 * (questions.length + 1); // Генерація мінусового ID
     setQuestions((prevQuestions) => [
       ...prevQuestions,
-      { id: newId, question: '', answer: '', status: 'Still learning' },
+      { id: newId, question: '', answer: '', status: false },
     ]);
   };
 
@@ -233,7 +348,13 @@ function CreateEditSet({ editOrCreate }) {
           onClick={editOrCreate === 'edit' ? handleUpdate : handleCreate}
           className={styles.createUpdateButtonFooter}
         >
-          {editOrCreate === 'edit' ? t('Update') : t('Create')}
+          {isLoading ? (
+            <Spinner animation="border" size="sm" /> // Спінер на кнопці
+          ) : editOrCreate === 'edit' ? (
+            t('Update')
+          ) : (
+            t('Create')
+          )}
         </button>
         <button onClick={handleCancel} className={styles.cancelButton}>
           {t('cancel')}
