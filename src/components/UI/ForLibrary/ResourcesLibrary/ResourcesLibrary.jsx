@@ -5,13 +5,15 @@ import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
 import { useTranslation } from 'react-i18next';
-import resourcesData from '../../../../resources.json';
+import { fetchAllResourceUser, fetchResourceById } from 'api/apiResource';
+import Spinner from 'react-bootstrap/Spinner';
 
-const ResourcesLibrary = () => {
+const ResourcesLibrary = ({ categories, levels }) => {
   const { t } = useTranslation();
   const [resources, setResources] = useState([]);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -23,25 +25,47 @@ const ResourcesLibrary = () => {
   const handleSortChange = (value) => {
     setSelectedSortingOption(value);
   };
-
-  useEffect(() => {
-    setResources(resourcesData);
-  }, []);
-
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
+    levels: [],
   });
 
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
   };
 
+  const handleDelete = (id) => {
+    setResources((prevResources) =>
+      prevResources.filter((resource) => resource.id !== id)
+    );
+  };
+
+  useEffect(() => {
+    const loadResource = async () => {
+      try {
+        const response = await fetchAllResourceUser();
+        const detailedResources = await Promise.all(
+          response.map(async (resource) => {
+            const detailResponse = await fetchResourceById(
+              resource.resource_id
+            );
+            return { ...detailResponse, id: resource.resource_id };
+          })
+        );
+        setResources(detailedResources.reverse());
+      } catch (error) {
+        console.error('Error loading resources:', error);
+      } finally {
+        setIsLoading(false); // Завершення завантаження
+      }
+    };
+
+    loadResource();
+  }, []);
+
   const filters = [
-    {
-      name: 'categories',
-      label: 'categories',
-      options: ['Development', 'Design', 'Marketing', 'Science', 'Arts'],
-    },
+    { name: 'categories', label: 'categories', options: categories },
+    { name: 'levels', label: 'level', options: levels },
   ];
 
   const filteredResources = () => {
@@ -49,12 +73,13 @@ const ResourcesLibrary = () => {
       const matchesCategory =
         selectedFilters.categories.length === 0 ||
         selectedFilters.categories.includes(resource.category);
-
+      const matchesLevels =
+        selectedFilters.levels.length === 0 ||
+        selectedFilters.levels.includes(resource.level);
       const matchesSearchTerm = resource.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-
-      return matchesCategory && matchesSearchTerm;
+      return matchesCategory && matchesSearchTerm && matchesLevels;
     });
 
     if (selectedSortingOption) {
@@ -107,7 +132,9 @@ const ResourcesLibrary = () => {
       </div>
 
       <div className={styles.resourcesList}>
-        {filteredResources().length === 0 ? (
+        {isLoading ? (
+          <Spinner style={{ alignSelf: 'center' }} animation="border" />
+        ) : filteredResources().length === 0 ? (
           <div className="noResultsMessage">
             {t('no_resources_message_lib')}
           </div>
@@ -122,6 +149,11 @@ const ResourcesLibrary = () => {
               date={resource.date}
               description={resource.description}
               isLiked={resource.isLiked}
+              level={resource.level}
+              likes={resource.likes}
+              dislikes={resource.dislikes}
+              isAuthor={resource.isAuthor}
+              onRemove={() => handleDelete(resource.id)}
             />
           ))
         )}

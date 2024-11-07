@@ -432,5 +432,12 @@
 
   "Please select at least one category.": "Будь ласка оберіть хоча б 1 категорію",
   "There must be at least one question.": "Повинно бути як мінімум одне питання",
-  "All questions must have content.": "Всі питання повинні бути заповнені."
+  "All questions must have content.": "Всі питання повинні бути заповнені.",
+
+  "like_removed": "Лайк успішно видалено!",
+  "like_added": "Лайк успішно додано!",
+  "like_error": "Сталася помилка при обробці лайку!",
+  "dislike_removed": "Дизлайк успішно видалено!",
+  "dislike_added": "Дизлайк успішно додано!",
+  "dislike_error": "Сталася помилка при обробці дизлайку!"
 }

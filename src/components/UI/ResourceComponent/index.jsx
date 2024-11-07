@@ -30,7 +30,7 @@ function ResourceComponent(props) {
             </button>
           ) : (
             <div className={styles.icon}>
-              <ResourceMenu id={props.id} />
+              <ResourceMenu id={props.id} onRemove={props.onRemove} />
             </div>
           )}
         </div>
@@ -62,6 +62,8 @@ function ResourceComponent(props) {
               id={props.id}
               isLiked={props.isLiked}
               onRemove={props.onRemove}
+              likes={props.likes}
+              dislikes={props.dislikes}
             />
           </div>
         </div>

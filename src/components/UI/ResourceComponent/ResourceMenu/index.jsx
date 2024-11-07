@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 import styles from './styles.module.css';
 import ConfirmationModal from 'components/UI/ConfirmModal';
 import { useTranslation } from 'react-i18next';
+import { deleteResource } from 'api/apiResource';
 
-const ResourceMenu = ({ id }) => {
+const ResourceMenu = ({ id, onRemove }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -24,13 +25,19 @@ const ResourceMenu = ({ id }) => {
     setDeleteModalOpen(false);
   };
 
-  const handleModalConfirmDelete = () => {
-    console.log('Delete action confirmed');
-    toast.success(t('Resource has been deleted successfully!'));
-    handleModalCancel();
-    window.location.reload();
-  };
+  const handleModalConfirmDelete = async () => {
+    try {
+      console.log('Delete action confirmed');
+      await deleteResource(id);
 
+      toast.success(t('Resource has been deleted successfully!'));
+      handleModalCancel();
+      onRemove();
+    } catch (error) {
+      toast.error(t('Failed to delete resource.'));
+      console.error('Error deleting resource:', error);
+    }
+  };
   const menuItems = [
     {
       icon: '/icons/menu/IconDelete.svg',

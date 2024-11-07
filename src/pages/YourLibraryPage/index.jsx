@@ -60,7 +60,7 @@ const YourLibraryPage = () => {
       case 'shared':
         return <SharedSetsLibrary />;
       case 'resources':
-        return <ResourcesLibrary />;
+        return <ResourcesLibrary levels={levels} categories={categories} />;
       default:
         return null;
     }

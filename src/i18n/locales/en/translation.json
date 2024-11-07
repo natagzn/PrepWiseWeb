@@ -404,5 +404,12 @@
   "password_required_message": "Password is a required field.",
   "confirm_password_required_message": "Confirm password is a required field.",
   "invalid_email": "Please enter a valid email address",
-  "select_country": "Select your location"
+  "select_country": "Select your location",
+
+  "like_removed": "Like removed successfully!",
+  "like_added": "Like added successfully!",
+  "like_error": "Error while processing your like!",
+  "dislike_removed": "Dislike removed successfully!",
+  "dislike_added": "Dislike added successfully!",
+  "dislike_error": "Error while processing your dislike!"
 }

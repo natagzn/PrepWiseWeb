@@ -1,51 +1,63 @@
 import React, { useState } from 'react';
 import LikeButton from './LikeButton';
 import DislikeButton from './DislikeButton';
+import { addFavoriteResource, removeFavoriteResource } from 'api/apiResource';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
-function LikeDislikeToggle({ id, isLiked, onRemove }) {
+function LikeDislikeToggle({ id, isLiked, onRemove, likes, dislikes }) {
   const [liked, setLiked] = useState(isLiked === true);
   const [disliked, setDisliked] = useState(isLiked === false);
-  const [likeCount, setLikeCount] = useState(10);
-  const [dislikeCount, setDislikeCount] = useState(2);
+  const [likeCount, setLikeCount] = useState(likes);
+  const [dislikeCount, setDislikeCount] = useState(dislikes);
 
-  const like = () => {
-    setLiked(true);
-    setLikeCount(likeCount + 1);
-    console.log('Like ' + id);
-  };
+  const { t } = useTranslation();
 
-  const dislike = () => {
-    setDisliked(true);
-    setDislikeCount(dislikeCount + 1);
-    console.log('Dislike ' + id);
-    if (onRemove) onRemove(); // виклик onRemove при дизлайку
-  };
-
-  const deleteLike = () => {
-    setLiked(false);
-    setLikeCount(likeCount - 1);
-    console.log('Delete like ' + id);
-    if (onRemove) onRemove(); // виклик onRemove при знятті лайку
-  };
-
-  const deleteDislike = () => {
-    setDisliked(false);
-    setDislikeCount(dislikeCount - 1);
-    console.log('Delete dislike ' + id);
-  };
-
-  const handleLike = () => {
-    if (disliked) {
-      deleteDislike();
+  const handleLike = async () => {
+    try {
+      if (liked) {
+        await removeFavoriteResource(id);
+        setLiked(false);
+        setLikeCount(likeCount - 1);
+        toast.success(t('like_removed'));
+      } else {
+        await addFavoriteResource(id, true);
+        setLiked(true);
+        setLikeCount(likeCount + 1);
+        if (disliked) {
+          setDisliked(false);
+          setDislikeCount(dislikeCount - 1);
+        }
+        toast.success(t('like_added'));
+      }
+    } catch (error) {
+      console.error('Error updating like:', error);
+      toast.error(t('like_error'));
     }
-    liked ? deleteLike() : like();
   };
 
-  const handleDislike = () => {
-    if (liked) {
-      deleteLike();
+  const handleDislike = async () => {
+    try {
+      if (disliked) {
+        await removeFavoriteResource(id);
+        setDisliked(false);
+        setDislikeCount(dislikeCount - 1);
+        toast.success(t('dislike_removed'));
+      } else {
+        await addFavoriteResource(id, false);
+        setDisliked(true);
+        setDislikeCount(dislikeCount + 1);
+        if (liked) {
+          setLiked(false);
+          setLikeCount(likeCount - 1);
+        }
+        toast.success(t('dislike_added'));
+      }
+    } catch (error) {
+      console.error('Error updating dislike:', error);
+      toast.error(t('dislike_error'));
     }
-    disliked ? deleteDislike() : dislike();
   };
 
   return (
