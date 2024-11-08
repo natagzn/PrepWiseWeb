@@ -132,7 +132,7 @@
   "Create": "Створити",
   "Update": "Оновити",
   "Was chosen": "Було обрано",
-  "sets": "модулів",
+  "sets": "модулі",
 
   "create_a_set": "Створення модуля",
   "update_a_set": "Оновлення модуля",
@@ -281,7 +281,6 @@
   "You can't create set without questions": "Ви не можете створити модуль без питань.",
   "Set created successfully!": "Модуль створено успішно!",
 
-  "Please enter a title and select at least one set.": "Будь ласка введеіть заголовок та хоча би 1 сет",
   "Folder created successfully": "Папку створено успішно",
   "Folder updated successfully": "Папку оновлено успішно",
 
@@ -439,5 +438,8 @@
   "like_error": "Сталася помилка при обробці лайку!",
   "dislike_removed": "Дизлайк успішно видалено!",
   "dislike_added": "Дизлайк успішно додано!",
-  "dislike_error": "Сталася помилка при обробці дизлайку!"
+  "dislike_error": "Сталася помилка при обробці дизлайку!",
+
+  "Error creating folder. Please try again.": "Помилка створення папки. Спробуйте знову.",
+  "no_sets_in_folder_message": "У цій папці немає наборів."
 }

@@ -1,29 +1,20 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { likeSet, unlikeSet } from 'api/apiLike';
+import { likeFolder, unlikeFolder } from 'api/apiLike';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 export const SaveNot = ({ state, type, id }) => {
   const [isSaved, setIsSaved] = useState(state);
   const { t } = useTranslation();
-  // Функції для додавання та видалення лайку
-  const likeResource = (id) => console.log(`Liked resource with id ${id}`);
-  const unlikeResource = (id) => console.log(`Unliked resource with id ${id}`);
-
-  const likeFolder = (id) => console.log(`Liked folder with id ${id}`);
-  const unlikeFolder = (id) => console.log(`Unliked folder with id ${id}`);
 
   const likeSetHandler = async (id) => {
     try {
       const result = await likeSet(id);
-
-      // Виведення id в консоль
       console.log(`Set with id ${id} liked`);
-
-      // Якщо результат містить певне повідомлення про успіх
       if (result.message && result.message.includes('successfully')) {
-        toast.success(t('Liked!')); // Лаконічне повідомлення
+        toast.success(t('Liked!'));
       } else {
         toast.error(t('Failed to like set'));
       }
@@ -36,13 +27,9 @@ export const SaveNot = ({ state, type, id }) => {
   const unlikeSetHandler = async (id) => {
     try {
       const result = await unlikeSet(id);
-
-      // Виведення id в консоль
       console.log(`Set with id ${id} unliked`);
-
-      // Якщо результат містить певне повідомлення про успіх
       if (result.message && result.message.includes('successfully')) {
-        toast.success(t('Unliked!')); // Лаконічне повідомлення
+        toast.success(t('Unliked!'));
       } else {
         toast.error(t('Failed to unlike set'));
       }
@@ -52,28 +39,57 @@ export const SaveNot = ({ state, type, id }) => {
     }
   };
 
-  // Функція обробки лайку/дизлайку
+  const likeFolderHandler = async (id) => {
+    try {
+      const result = await likeFolder(id);
+      console.log(`Folder with id ${id} liked`);
+      if (result.message && result.message.includes('successfully')) {
+        toast.success(t('Liked!'));
+      } else {
+        toast.error(t('Failed to like folder'));
+      }
+    } catch (error) {
+      console.error(`Error liking folder with id ${id}:`, error);
+      toast.error(t('Error liking'));
+    }
+  };
+
+  const unlikeFolderHandler = async (id) => {
+    try {
+      const result = await unlikeFolder(id);
+      console.log(`Folder with id ${id} unliked`);
+      if (result.message && result.message.includes('successfully')) {
+        toast.success(t('Unliked!'));
+      } else {
+        toast.error(t('Failed to unlike folder'));
+      }
+    } catch (error) {
+      console.error(`Error unliking folder with id ${id}:`, error);
+      toast.error(t('Error unliking'));
+    }
+  };
+
   const handleToggleSave = () => {
     if (isSaved) {
-      // Якщо елемент вже збережено, видаляємо лайк
+      // Видаляємо лайк
       if (type === 'resource') {
-        unlikeResource(id);
+        //unlikeResource(id);
       } else if (type === 'folder') {
-        unlikeFolder(id);
+        unlikeFolderHandler(id);
       } else if (type === 'set') {
         unlikeSetHandler(id);
       }
     } else {
-      // Якщо елемент ще не збережено, додаємо лайк
+      // Додаємо лайк
       if (type === 'resource') {
-        likeResource(id);
+        //likeResource(id);
       } else if (type === 'folder') {
-        likeFolder(id);
+        likeFolderHandler(id);
       } else if (type === 'set') {
         likeSetHandler(id);
       }
     }
-    setIsSaved((prev) => !prev); // Перемикає стан збереження
+    setIsSaved((prev) => !prev);
   };
 
   return (

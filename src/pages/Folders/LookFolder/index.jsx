@@ -1,133 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { SaveNot } from '../../../components/UI/SaveNot';
 import HeaderComponent from '../../../components/UI/HeaderComponent';
 import SortComponent from '../../../components/UI/SortComponent';
 import QuestionSetsComponentForFolders from '../../../components/UI/QuestionSetsComponentForFolders';
 import { useTranslation } from 'react-i18next';
-import { FolderComponent } from 'components/UI/FolderComponent';
+import { useParams } from 'react-router-dom';
+import { fetchLookFolder } from 'api/apiFolder'; // Імпортуємо функцію fetchLookFolder
+import { Spinner } from 'react-bootstrap'; // Використовуємо спінер з react-bootstrap
 import FolderMenu from '../FolderMenu';
 
-const LookFolder = ({ folderName, visibility, count, countQ }) => {
+const LookFolder = () => {
   const { t } = useTranslation();
-  const id = 2;
-  const date = '2024-10-10';
+  const { id } = useParams();
 
-  // Початковий порядок sets
-  const initialQuestionSetsData = [
-    {
-      id: 1,
-      name: 'Set 1',
-      count: 10,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 2,
-      name: 'Set 2',
-      count: 15,
-      isAdded: false,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 3,
-      name: 'Set 3',
-      count: 20,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 4,
-      name: 'Set 1',
-      count: 10,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 5,
-      name: 'Set 2',
-      count: 15,
-      isAdded: false,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 6,
-      name: 'Set 3',
-      count: 20,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 7,
-      name: 'Set 1',
-      count: 10,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 8,
-      name: 'Set 2',
-      count: 15,
-      isAdded: false,
-      author: 'me',
-      date: '10-11-2024',
-    },
-    {
-      id: 9,
-      name: 'Set 3',
-      count: 20,
-      isAdded: true,
-      author: 'me',
-      date: '10-11-2024',
-    },
-  ];
+  const [folderData, setFolderData] = useState(null);
+  const [loading, setLoading] = useState(true); // Стан для спінера
+  const [questionSetsData, setQuestionSetsData] = useState([]);
 
-  const [questionSetsData, setQuestionSetsData] = useState(
-    initialQuestionSetsData
-  );
+  // Завантаження даних при першому рендері
+  useEffect(() => {
+    const loadFolderData = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchLookFolder(id);
+        setFolderData(data);
+        setQuestionSetsData(data.sets);
+        console.log(data.sets);
+      } catch (error) {
+        console.error('Error fetching folder data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFolderData();
+  }, [id]);
 
   // Функція для обробки сортування
-  const handleSortChange = (sortOrder) => {
+  const handleSortChange = (selectedSortingOption) => {
     const sortedData = [...questionSetsData].sort((a, b) => {
-      if (sortOrder === 'asc') return a.name.localeCompare(b.name);
-      if (sortOrder === 'desc') return b.name.localeCompare(a.name);
-      return 0;
+      switch (selectedSortingOption) {
+        case 'createdDesc':
+          return new Date(b.date) - new Date(a.date);
+        case 'createdAsc':
+          return new Date(a.date) - new Date(b.date);
+        case 'nameAsc':
+          return a.name.localeCompare(b.name);
+        case 'nameDesc':
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
     });
     setQuestionSetsData(sortedData);
   };
+
+  if (loading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
+
+  if (!folderData) {
+    return <div>{t('Error loading folder data')}</div>;
+  }
 
   return (
     <div className={styles.container}>
       <HeaderComponent />
       <div className={styles.group}>
         <div className={styles.columnLeft}>
-          <div className={styles.folderName}>{folderName}</div>
+          <div className={styles.folderName}>{folderData.title}</div>
           <div className={styles.setsCount}>
-            {count} {t('sets')} • {countQ} {t('questions')} • {date}
+            {folderData.itemsCount} {t('sets')} • {folderData.countQ}{' '}
+            {t('questions')} • {folderData.date}
           </div>
         </div>
         <div className={styles.columnRight}>
           <div className={styles.groupInfo}>
             <div className={styles.saveNot}>
-              <SaveNot />
+              <SaveNot state={folderData.isLiked} type="folder" id={id} />
             </div>
             <img
-              src={
-                visibility === 'Public'
-                  ? '/icons/public.svg'
-                  : '/icons/private.svg'
-              }
+              src={'/icons/private.svg'}
               alt="visibility"
               className={styles.icon}
             />
-            <div className={styles.visibility}>{visibility}</div>
+            <div className={styles.visibility}>{t('Private')}</div>
             <div className={styles.threeDots}>
               <FolderMenu id={id} />
             </div>
@@ -135,8 +99,10 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
           <div className={styles.sortContainer}>
             <SortComponent
               sortingOptions={[
-                { label: t('A-Z'), value: 'asc' },
-                { label: t('Z-A'), value: 'desc' },
+                { label: t('created_new_old'), value: 'createdDesc' },
+                { label: t('created_old_new'), value: 'createdAsc' },
+                { label: t('name_A_Z'), value: 'nameAsc' },
+                { label: t('name_Z_A'), value: 'nameDesc' },
               ]}
               onSortChange={handleSortChange}
             />
@@ -144,16 +110,22 @@ const LookFolder = ({ folderName, visibility, count, countQ }) => {
         </div>
       </div>
       <div className={styles.questionSets}>
-        {questionSetsData.map((set) => (
-          <QuestionSetsComponentForFolders
-            key={set.id}
-            name={set.name}
-            questionCount={set.count}
-            author={set.author}
-            link={'#'}
-            date={set.date}
-          />
-        ))}
+        {questionSetsData.length === 0 ? (
+          <div className="noResultsMessage">
+            {t('no_sets_in_folder_message')}
+          </div>
+        ) : (
+          questionSetsData.map((set) => (
+            <QuestionSetsComponentForFolders
+              key={set.id}
+              id={set.id}
+              name={set.name}
+              questionCount={set.count}
+              date={set.date}
+              link={true}
+            />
+          ))
+        )}
       </div>
     </div>
   );

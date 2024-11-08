@@ -4,15 +4,15 @@ import { getSessionToken } from './apiUser';
 // Функція для отримання категорій
 export const fetchCategories = async () => {
   const url = `${process.env.REACT_APP_API_URL}/categories`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+        Authorization: `Bearer ${token}`,
       },
     });
-    return response.data.categories; // Повертаємо категорії
+    return response.data.categories;
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw error;
@@ -22,15 +22,15 @@ export const fetchCategories = async () => {
 // Функція для отримання рівнів
 export const fetchLevels = async () => {
   const url = `${process.env.REACT_APP_API_URL}/levels`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+        Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; // Повертаємо рівні
+    return response.data;
   } catch (error) {
     console.error('Error fetching levels:', error);
     throw error;
@@ -45,7 +45,7 @@ export const postResource = async ({
   categoryId,
 }) => {
   const url = `${process.env.REACT_APP_API_URL}/resources`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.post(
       url,
@@ -53,7 +53,7 @@ export const postResource = async ({
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -74,7 +74,7 @@ export const createSet = async (
   questions
 ) => {
   const url = `${process.env.REACT_APP_API_URL}/sets`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const setResponse = await axios.post(
       url,
@@ -82,7 +82,7 @@ export const createSet = async (
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -114,7 +114,7 @@ export const createSet = async (
 // Функція для додавання питання до сета
 export const addQuestion = async (listId, content, answer) => {
   const url = `${process.env.REACT_APP_API_URL}/questions`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.post(
       url,
@@ -122,7 +122,7 @@ export const addQuestion = async (listId, content, answer) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -136,12 +136,12 @@ export const addQuestion = async (listId, content, answer) => {
 // Функція для отримання сета за його ID
 export const fetchSetById = async (id) => {
   const url = `${process.env.REACT_APP_API_URL}/sets/${id}`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -161,12 +161,12 @@ export const fetchSetById = async (id) => {
 // Функція для отримання всіх сетів користувача
 export const fetchAllSetUser = async () => {
   const url = `${process.env.REACT_APP_API_URL}/setsAll`;
-  const token = getSessionToken(); // Отримуємо токен вручну
+  const token = getSessionToken();
   try {
     const response = await axios.get(url, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Ручний заголовок авторизації
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;

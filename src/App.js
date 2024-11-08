@@ -76,17 +76,7 @@ function App() {
           <Route path="/lookPremium" element={<BuyPremium />} />
           <Route path="/profileUser/:id" element={<PeopleProfilePage />} />
 
-          <Route
-            path="/lookFolder"
-            element={
-              <LookFolder
-                folderName="Folder name"
-                visibility="Public"
-                count="2"
-                countQ="11"
-              />
-            }
-          />
+          <Route path="/lookFolder/:id" element={<LookFolder />} />
 
           <Route
             path="/createFolder"

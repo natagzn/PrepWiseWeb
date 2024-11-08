@@ -21,7 +21,7 @@
   .sortContainer {
     font-size: var(--web-15-regular-font-size);
     padding: 5px 15px;
-    width: 90%;
+    width: 100%;
   }
 }
 

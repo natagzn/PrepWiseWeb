@@ -281,7 +281,6 @@
   "You can't create set without questions": "You can't create set without questions",
   "Set created successfully!": "Set created successfully!",
 
-  "Please enter a title and select at least one set.": "Please enter a title and select at least one set.",
   "Folder created successfully": "Folder created successfully",
   "Folder updated successfully": "Folder updated successfully",
 
@@ -411,5 +410,7 @@
   "like_error": "Error while processing your like!",
   "dislike_removed": "Dislike removed successfully!",
   "dislike_added": "Dislike added successfully!",
-  "dislike_error": "Error while processing your dislike!"
+  "dislike_error": "Error while processing your dislike!",
+
+  "no_sets_in_folder_message": "There are no sets in this folder."
 }

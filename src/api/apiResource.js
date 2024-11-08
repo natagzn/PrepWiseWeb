@@ -53,7 +53,7 @@ export const fetchResourceById = async (id) => {
       isAuthor: data.isAuthor,
     };
 
-    console.log('fpormdata', formattedData);
+    //console.log('fpormdata', formattedData);
     return formattedData;
   } catch (error) {
     console.error('Error fetching set:', error);

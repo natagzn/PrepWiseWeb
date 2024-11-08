@@ -10,8 +10,6 @@ import { fetchUserProfile, loginUser } from 'api/apiUser';
 import { Spinner } from 'react-bootstrap'; // Додаємо компонент Spinner
 
 const LoginForm = () => {
-  const apiUrl = `${process.env.REACT_APP_API_URL}/auth/login`;
-  const profileUrl = `${process.env.REACT_APP_API_URL}/profile`;
   const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');

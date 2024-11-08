@@ -7,93 +7,172 @@ import { useTranslation } from 'react-i18next';
 import SearchComponent from 'components/UI/SearchComponent';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+  addSetToFolder,
+  createFolder,
+  deleteSetFromFolder,
+  fetchFolderById,
+  fetchSetForFolders,
+  updateFolderById,
+} from 'api/apiFolder';
+import { Spinner } from 'react-bootstrap';
 
-const CreateEditFolder = ({
-  folderName,
-  visibility,
-  questionSetsData,
-  editOrCreate,
-}) => {
-  questionSetsData = [
-    { id: 1, name: 'Set 1', count: 10, isAdded: true, author: 'me' },
-    { id: 2, name: 'Set 2', count: 15, isAdded: false, author: 'me' },
-    { id: 3, name: 'Set 3', count: 20, isAdded: true, author: 'me' },
-    { id: 4, name: 'Set 4', count: 15, isAdded: false, author: 'me' },
-    { id: 5, name: 'Set 5', count: 20, isAdded: true, author: 'me' },
-    { id: 6, name: 'Set 6', count: 15, isAdded: false, author: 'me' },
-    { id: 7, name: 'Set 7', count: 20, isAdded: true, author: 'me' },
-  ];
-
+const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-
+  const [questionSetsData, setQuestionSetsData] = useState([]);
+  const [filteredQuestionSets, setFilteredQuestionSets] = useState([]);
   const [folderTitle, setFolderTitle] = useState(folderName || '');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSets, setSelectedSets] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false); // Track data loading state
+  const [isProcessing, setIsProcessing] = useState(false); // Track if a process is in progress
+
+  const [originalSets, setOriginalSets] = useState([]); // Stores the original set IDs
+  const [addedSets, setAddedSets] = useState([]); // Stores newly added set IDs
+  const [removedSets, setRemovedSets] = useState([]); // Stores removed set IDs
 
   const count = selectedSets.length;
   const countQ = selectedSets.reduce((acc, set) => acc + set.count, 0);
 
+  // Fetch all available sets on mount
   useEffect(() => {
-    if (editOrCreate === 'edit') {
-      fetchFolderData(id); // Витягуємо дані про папку
-    }
-  }, [editOrCreate, id]);
-
-  const fetchFolderData = (id) => {
-    // Фіктивна функція для отримання даних про папку за ID
-    const folderData = {
-      title: 'Example Folder Title', // Приклад заголовка
-      addedSetIds: [1, 3, 5], // Приклад ID доданих сетів
+    const fetchData = async () => {
+      const sets = await fetchSetForFolders();
+      const formattedSets = sets.map((set) => ({
+        ...set,
+        isAdded: false,
+      }));
+      setQuestionSetsData(formattedSets);
+      setFilteredQuestionSets(formattedSets); // Initialize filtered sets
+      setIsDataLoaded(true); // Set data loaded to true
     };
+    fetchData();
+  }, []);
 
-    setFolderTitle(folderData.title); // Встановлюємо заголовок
-    const addedSets = questionSetsData.filter((set) =>
-      folderData.addedSetIds.includes(set.id)
-    );
-    setSelectedSets(addedSets); // Встановлюємо вибрані сети
-  };
+  // Fetch folder data if in edit mode and data is loaded
+  useEffect(() => {
+    const loadFolderData = async () => {
+      if (editOrCreate === 'edit' && isDataLoaded) {
+        const folderData = await fetchFolderById(id);
+        if (folderData) {
+          setFolderTitle(folderData.title);
+
+          // Initialize original sets with the folder's current sets
+          const initialSetIds = folderData.sets;
+
+          setOriginalSets(initialSetIds);
+
+          const addedSets = questionSetsData.filter((set) =>
+            folderData.sets.includes(set.id)
+          );
+          setSelectedSets(addedSets);
+          setQuestionSetsData((prevData) =>
+            prevData.map((set) => ({
+              ...set,
+              isAdded: folderData.sets.includes(set.id),
+            }))
+          );
+        }
+      }
+    };
+    loadFolderData();
+  }, [editOrCreate, id, isDataLoaded]);
 
   const toggleSetSelection = (setId) => {
     setSelectedSets((prevSelectedSets) => {
       const isAlreadySelected = prevSelectedSets.some(
         (set) => set.id === setId
       );
+
       if (isAlreadySelected) {
+        if (originalSets.includes(setId)) {
+          setRemovedSets((prev) =>
+            prev.includes(setId) ? prev : [...prev, setId]
+          );
+        }
+        setAddedSets((prev) => prev.filter((id) => id !== setId));
+
         return prevSelectedSets.filter((set) => set.id !== setId);
       } else {
+        if (originalSets.includes(setId)) {
+          setRemovedSets((prev) => prev.filter((id) => id !== setId));
+        } else {
+          setAddedSets((prev) => [...prev, setId]);
+        }
+
         const newSet = questionSetsData.find((set) => set.id === setId);
         return [...prevSelectedSets, newSet];
       }
     });
   };
 
-  const handleCreate = () => {
-    if (!folderTitle.trim() || selectedSets.length === 0) {
-      toast.error(t('Please enter a title and select at least one set.'));
+  const handleCreate = async () => {
+    if (!folderTitle.trim()) {
+      toast.error(t('Please enter a title.'));
       return;
     }
 
-    console.log('Creating folder with sets:', selectedSets, folderTitle);
-    // Логіка створення папки
-
-    toast.success(t('Folder created successfully'));
-    navigate('/home');
+    const idsList = selectedSets.map((set) => set.id);
+    try {
+      setIsProcessing(true); // Start processing
+      const response = await createFolder(folderTitle, idsList);
+      if (response.folder) {
+        toast.success(response.message || t('Folder created successfully'));
+        navigate('/home');
+      } else {
+        toast.error(t('Error creating folder. Please try again.'));
+      }
+    } catch (error) {
+      toast.error(t(`Error: ${error.message}`));
+    } finally {
+      setIsProcessing(false); // End processing
+    }
   };
 
-  const handleUpdate = () => {
-    if (!folderTitle.trim() || selectedSets.length === 0) {
-      toast.error(t('Please enter a title and select at least one set.'));
+  const handleUpdate = async () => {
+    if (!folderTitle.trim()) {
+      toast.error(t('Please enter a title.'));
       return;
     }
 
-    console.log('Updating folder with sets:', selectedSets, folderTitle);
-    // Логіка оновлення папки
+    try {
+      setIsProcessing(true); // Start processing
+      // Оновлюємо назву папки
+      const updateFolderResponse = await updateFolderById(id, folderTitle);
+      if (updateFolderResponse.success) {
+        // Update success
+      } else {
+        toast.error(t('Failed to update folder title'));
+        return;
+      }
 
-    toast.success(t('Folder updated successfully'));
-    navigate('/home');
+      // Додаємо нові сети
+      for (const setId of addedSets) {
+        const addSetResponse = await addSetToFolder(id, setId);
+        if (!addSetResponse.success) {
+          toast.error(t(`Failed to add set ID ${setId}`));
+        }
+      }
+
+      // Видаляємо видалені сети
+      for (const setId of removedSets) {
+        const deleteSetResponse = await deleteSetFromFolder(id, setId);
+        if (!deleteSetResponse.success) {
+          toast.error(t(`Failed to remove set ID ${setId}`));
+        }
+      }
+
+      toast.success(t('Folder updated successfully'));
+      navigate(-1);
+    } catch (error) {
+      console.error('Error updating folder:', error);
+      toast.error(t('Error updating folder. Please try again.'));
+    } finally {
+      setIsProcessing(false); // End processing
+    }
   };
 
   const handleCancel = () => {
@@ -108,8 +187,16 @@ const CreateEditFolder = ({
     setFilteredQuestionSets(filteredSets);
   };
 
-  const [filteredQuestionSets, setFilteredQuestionSets] =
-    useState(questionSetsData);
+  // Render a spinner if data is not yet loaded
+  if (!isDataLoaded) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -129,20 +216,27 @@ const CreateEditFolder = ({
             placeholder={t('enter_a_title')}
           />
         </div>
-
         <div className={styles.columnRight}>
           <div className={styles.buttonBlock}>
             <button
               onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}
               className={styles.createUpdateButton}
+              disabled={isProcessing}
             >
-              {editOrCreate === 'create' ? t('Create') : t('Update')}
+              {isProcessing ? (
+                <Spinner animation="border" role="status" size="sm">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              ) : editOrCreate === 'create' ? (
+                t('Create')
+              ) : (
+                t('Update')
+              )}
             </button>
             <button onClick={handleCancel} className={styles.cancelButton}>
               {t('cancel')}
             </button>
           </div>
-
           <div className={styles.setsCount}>
             {t('Was chosen')}: {count} {t('sets')} • {countQ} {t('questions')}
           </div>
@@ -151,7 +245,9 @@ const CreateEditFolder = ({
       <div className={styles.questionSets}>
         <div className={styles.search}>
           <div className={styles.textSearch}>
-            {searchTerm.length > 0 ? `Searched by name: ${searchTerm}` : ''}
+            {searchTerm.length > 0
+              ? `${t('Searched by name')}: ${searchTerm}`
+              : ''}
           </div>
           <div className={styles.searchComponentContainer}>
             <SearchComponent
@@ -174,12 +270,21 @@ const CreateEditFolder = ({
       <div className={styles.footer}>
         <button
           onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}
-          className={styles.createUpdateButtonFooter}
+          className={styles.createUpdateButton}
+          disabled={isProcessing}
         >
-          {editOrCreate === 'create' ? t('Create') : t('Update')}
+          {isProcessing ? (
+            <Spinner animation="border" role="status" size="sm">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : editOrCreate === 'create' ? (
+            t('Create')
+          ) : (
+            t('Update')
+          )}
         </button>
         <button onClick={handleCancel} className={styles.cancelButton}>
-          Cancel
+          {t('cancel')}
         </button>
       </div>
     </div>

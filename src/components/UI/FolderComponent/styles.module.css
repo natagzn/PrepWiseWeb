@@ -12,6 +12,7 @@
   align-items: flex-start;
   margin: 10px;
   font-family: var(--web-font-family);
+  cursor: pointer;
 }
 
 .header {

@@ -3,14 +3,16 @@ import styles from './styles.module.css';
 import { FolderComponent } from '../../FolderComponent';
 import SortComponent from '../../SortComponent';
 import SearchComponent from '../../SearchComponent';
-import foldersData from '../../../../foldersData.json';
 import { useTranslation } from 'react-i18next';
+import { fetchAllFolderUser, fetchFolderById } from 'api/apiFolder';
+import Spinner from 'react-bootstrap/Spinner'; // Підключення спінера, якщо використовуєте react-bootstrap
 
 const FoldersLibrary = () => {
   const { t } = useTranslation();
-  const [folders, setFolders] = useState(foldersData);
+  const [folders, setFolders] = useState([]);
   const [selectedSortingOption, setSelectedSortingOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -22,6 +24,28 @@ const FoldersLibrary = () => {
   const handleSearchClick = (value) => {
     setSearchTerm(value);
   };
+
+  useEffect(() => {
+    const loadFolders = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetchAllFolderUser();
+        const detailedFolders = await Promise.all(
+          response.map(async (folder) => {
+            const detailResponse = await fetchFolderById(folder.folder_id);
+            return { ...detailResponse, id: folder.folder_id };
+          })
+        );
+        setFolders(detailedFolders.reverse());
+      } catch (error) {
+        console.error('Error loading folders:', error);
+      } finally {
+        setIsLoading(false); // Завершення завантаження
+      }
+    };
+
+    loadFolders();
+  }, []);
 
   const sortedFolders = () => {
     let filteredFolders = folders.filter((folder) =>
@@ -68,7 +92,15 @@ const FoldersLibrary = () => {
         </div>
       </div>
       <div className={styles.foldersList}>
-        {displayedFolders.length === 0 ? (
+        {isLoading ? (
+          <Spinner
+            style={{ alignSelf: 'center' }}
+            animation="border"
+            role="status"
+          >
+            <span className="visually-hidden">{t('loading')}</span>
+          </Spinner>
+        ) : displayedFolders.length === 0 ? (
           <div className="noResultsMessage">{t('no_folders_message')}</div>
         ) : (
           displayedFolders.map((folder) => (

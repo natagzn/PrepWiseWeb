@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import styles from './styles.module.css';
 import ConfirmationModal from 'components/UI/ConfirmModal';
 import { useTranslation } from 'react-i18next';
+import { deleteFolder } from 'api/apiFolder';
 
 const FolderMenu = ({ id, isAuthor, isCoauthor }) => {
   const navigate = useNavigate();
@@ -38,11 +39,17 @@ const FolderMenu = ({ id, isAuthor, isCoauthor }) => {
     setShareOpen(false);
   };
 
-  const handleModalConfirmDelete = () => {
-    console.log('Delete action confirmed');
-    toast.success(t('Folder has been deleted successfully!'));
+  const handleModalConfirmDelete = async () => {
+    const result = await deleteFolder(id);
+
+    if (result.success) {
+      toast.success(t('Folder has been deleted successfully!'));
+      navigate(-1);
+    } else {
+      toast.error(t(`Error deleting folder: ${result.message}`));
+    }
+
     handleModalCancel();
-    navigate(-1);
   };
 
   const menuItems = [

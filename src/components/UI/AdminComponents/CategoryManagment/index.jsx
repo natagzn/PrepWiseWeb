@@ -5,6 +5,7 @@ import HeaderAdmin from '../Header';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
 import { useUser } from 'context/UserContext';
+import { fetchCategories } from 'api/apiService';
 
 const CategoryManagement = () => {
   const { t } = useTranslation();
@@ -20,22 +21,12 @@ const CategoryManagement = () => {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
 
-  const fetchCategories = async () => {
+  const fetchCategoriesA = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/categories`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
-
-      const data = await response.json();
-      setCategories(data.categories);
+      const response = await fetchCategories();
+      setCategories(response);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching categories:', error);
       toast.error(t('Error fetching categories. Please try again.'));
@@ -45,8 +36,8 @@ const CategoryManagement = () => {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, [token]); // залежить від токена
+    fetchCategoriesA();
+  }, []); // залежить від токена
 
   useEffect(() => {
     const filtered = categories.filter(

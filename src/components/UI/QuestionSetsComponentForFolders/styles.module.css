@@ -13,6 +13,10 @@
   min-height: 70px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .iconContainer {
   width: 56px;
   height: 53px;
