@@ -4,21 +4,26 @@ import styles from './styles.module.css';
 import SearchComponent from 'components/UI/SearchComponent';
 import SetsData from '../../../../../questionSetsData.json';
 import { useTranslation } from 'react-i18next';
+import { getAllSetsName } from 'api/apiSet';
+import { Spinner } from 'react-bootstrap';
 
 const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
   const [sets, setSets] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation();
 
   useEffect(() => {
     const fetchSets = async () => {
+      setIsLoading(true); // Початок завантаження
       try {
-        const response = SetsData; //  шлях до  файлу
-        const data = SetsData;
-        setSets(data);
+        const response = await getAllSetsName();
+        setSets(response);
       } catch (error) {
         console.error('Error fetching the sets:', error);
+      } finally {
+        setIsLoading(false); // Завершення завантаження
       }
     };
 
@@ -30,7 +35,7 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
   if (!isOpen) return null;
 
   const filteredSets = sets.filter((set) =>
-    set.title.toLowerCase().includes(searchTerm.toLowerCase())
+    set.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleClose = () => {
@@ -43,24 +48,28 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
       <div className={styles.modalContent}>
         <h2>{t('Select a Set')}</h2>
         <SearchComponent value={searchTerm} onClick={setSearchTerm} />
-        <div className={styles.setList}>
-          {filteredSets.map(
-            (
-              set // Показуємо тільки 5 наборів
-            ) => (
+
+        {isLoading ? (
+          <div className={styles.spinner}>
+            <Spinner />
+          </div> // Показуємо спінер
+        ) : (
+          <div className={styles.setList}>
+            {filteredSets.map((set) => (
               <div
                 key={set.id}
                 className={styles.setItem}
                 onClick={() => {
-                  onSelect(set.title);
+                  onSelect(set);
                   handleClose();
                 }}
               >
-                {set.title}
+                {set.name}
               </div>
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        )}
+
         <button className={styles.close} onClick={handleClose}>
           {t('Close')}
         </button>

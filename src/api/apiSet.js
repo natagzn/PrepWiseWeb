@@ -254,7 +254,7 @@ export const createQuestion = async (setId, question) => {
         },
       }
     );
-    return response.data;
+    return { success: true };
   } catch (error) {
     console.error('Error creating question:', error);
     return { success: false, message: error.message };
@@ -320,6 +320,30 @@ export const getTypeAccessToSet = async (setId) => {
     return response.data;
   } catch (error) {
     console.error('Error getting type access:', error);
+    return { success: false, message: error.message };
+  }
+};
+
+export const getAllSetsName = async () => {
+  const url = `${process.env.REACT_APP_API_URL}/setsAll`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // Перетворення даних у потрібний формат
+    const formattedData = response.data.map((set) => ({
+      id: set.question_set_id,
+      name: set.name,
+    }));
+
+    return formattedData;
+  } catch (error) {
+    console.error('Error fetching sets:', error);
     return { success: false, message: error.message };
   }
 };

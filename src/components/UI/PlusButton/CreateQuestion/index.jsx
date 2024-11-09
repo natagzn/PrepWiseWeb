@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 import SelectSetModal from './SelectSetModal';
+import { createQuestion } from 'api/apiSet';
 import { toast } from 'react-toastify';
 
 const CreateQuestion = ({ isOpen, onClose }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
-  const [selectedSet, setSelectedSet] = useState(''); // Стан для вибору сету
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false); // Стан для модального вікна
+  const [selectedSet, setSelectedSet] = useState('');
+  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state
   const questionRef = useRef(null);
   const answerRef = useRef(null);
   const { t } = useTranslation();
@@ -26,47 +28,42 @@ const CreateQuestion = ({ isOpen, onClose }) => {
       window.getComputedStyle(ref.current).lineHeight
     );
     const maxHeight = maxRows * lineHeight;
-    if (ref.current.scrollHeight > maxHeight) {
-      ref.current.style.height = `${maxHeight}px`;
-      ref.current.style.overflowY = 'auto';
-    } else {
-      ref.current.style.overflowY = 'hidden';
-    }
+    ref.current.style.overflowY =
+      ref.current.scrollHeight > maxHeight ? 'auto' : 'hidden';
   };
 
-  useEffect(() => {
-    if (questionRef.current) {
-      questionRef.current.style.height = 'auto';
-      questionRef.current.style.height = `${questionRef.current.scrollHeight}px`;
-    }
-    if (answerRef.current) {
-      answerRef.current.style.height = 'auto';
-      answerRef.current.style.height = `${answerRef.current.scrollHeight}px`;
-    }
-  }, []);
-
-  const handleCreate = () => {
-    if (!question.trim()) {
-      toast.error(t('Question is required!'));
+  const handleCreate = async () => {
+    if (!question.trim() || !selectedSet) {
+      toast.error(t('All fields are required!'));
       return;
     }
 
-    toast.success(t('Question created successfully!'));
-    console.log('Question:', question);
-    console.log('Answer:', answer);
-    console.log('Selected Set:', selectedSet);
-    onClose();
+    setLoading(true);
+    try {
+      console.log('selectedSet', selectedSet);
+      const result = await createQuestion(selectedSet.id, { question, answer });
+      if (result.success) {
+        toast.success(t('Question created successfully!'));
+        handleClose();
+      } else {
+        toast.error(result.message || t('Failed to create question'));
+      }
+    } catch (error) {
+      toast.error(t('An error occurred while creating the question.'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
     setAnswer('');
     setQuestion('');
-    setSelectedSet(''); // Скидаємо вибраний сет
+    setSelectedSet('');
     onClose();
   };
 
-  const handleSelectSet = (setName) => {
-    setSelectedSet(setName); // Оновлюємо вибраний сет
+  const handleSelectSet = (set) => {
+    setSelectedSet(set);
   };
 
   if (!isOpen) return null;
@@ -102,7 +99,7 @@ const CreateQuestion = ({ isOpen, onClose }) => {
         <div className={styles.footer}>
           <div className={styles.chooseSet}>
             <button onClick={() => setIsSelectModalOpen(true)}>
-              {selectedSet ? selectedSet : t('Choose set')}
+              {selectedSet ? selectedSet.name : t('Choose set')}
             </button>
             <SelectSetModal
               isOpen={isSelectModalOpen}
@@ -111,8 +108,12 @@ const CreateQuestion = ({ isOpen, onClose }) => {
             />
           </div>
           <div className={styles.buttonBlock}>
-            <button className={styles.createButton} onClick={handleCreate}>
-              {t('Create')}
+            <button
+              className={styles.createButton}
+              onClick={handleCreate}
+              disabled={loading}
+            >
+              {loading ? <span className={styles.spinner}></span> : t('Create')}
             </button>
             <button className={styles.cancelButton} onClick={handleClose}>
               {t('Cancel')}
