@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getSessionToken } from './apiUser';
 import { isClickableInput } from '@testing-library/user-event/dist/utils';
-import { fetchSetById } from './apiService';
+import { fetchSetById } from './apiSet';
 
 // Функція для отримання всіх сетів користувача для папок
 export const fetchSetForFolders = async () => {

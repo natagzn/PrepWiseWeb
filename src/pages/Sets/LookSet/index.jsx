@@ -1,25 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SetInfoComponent from './SetInfoComponent';
 import SetQuickReviewComponent from './SetQuickReviewComponent';
 import HeaderComponent from 'components/UI/HeaderComponent';
 import CardBlock from './CardsBlock';
 import styles from './styles.module.css';
 import Spinner from 'react-bootstrap/Spinner'; // Імпорт спінера з Bootstrap
-import { fetchSetById } from 'api/apiService';
+import { fetchSetById, getTypeAccessToSet } from 'api/apiSet';
 
 function LookSet() {
   const { id } = useParams();
   const [setInfo, setSetInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadSetInfo = async () => {
       try {
         const data = await fetchSetById(id);
-        setSetInfo(data);
-        console.log(data);
+        const accessData = await getTypeAccessToSet(id);
+
+        const combinedData = {
+          ...data,
+          ...accessData,
+        };
+
+        if (
+          !combinedData.isAuthor &&
+          combinedData.UserCanEdit === null &&
+          combinedData.access === 'private'
+        ) {
+          navigate(-1);
+        }
+
+        setSetInfo(combinedData);
+        console.log(combinedData);
         setLoading(false);
       } catch (error) {
         console.error('Помилка завантаження набору:', error);
@@ -61,10 +77,11 @@ function LookSet() {
     questions,
     access,
     isFavourite,
+    isAuthor,
+    UserCanEdit,
   } = setInfo;
   console.log(setInfo);
 
-  const isAuthor = true;
   return (
     <div>
       <HeaderComponent showPremium={true} />
@@ -78,6 +95,7 @@ function LookSet() {
           visibility={access === 'public' ? 'Public' : 'Private'}
           onSave={() => alert('Set saved!')}
           isAuthor={isAuthor}
+          UserCanEdit={UserCanEdit}
           id={id}
           createdAt={createdAt}
           isLiked={isFavourite}

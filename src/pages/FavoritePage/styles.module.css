@@ -4,6 +4,19 @@
   align-self: center;
 }
 
+.spinnerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: black;
+}
+
 .header {
   font-size: var(--web-35-regular-font-size);
   margin-bottom: 10px;

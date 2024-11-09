@@ -16,6 +16,8 @@ const SetInfoComponent = (props) => {
     id,
     createdAt,
     questions,
+    UserCanEdit,
+    isAuthor,
   } = props;
 
   const { t } = useTranslation();
@@ -51,7 +53,12 @@ const SetInfoComponent = (props) => {
               )}
             </div>
             <div className={styles.optionsIcon}>
-              <SetMenu questions={questions} id={id} />
+              <SetMenu
+                questions={questions}
+                id={id}
+                isAuthor={isAuthor}
+                UserCanEdit={UserCanEdit}
+              />
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ import SelectFolderModal from '../SelectFolderModal';
 import SettingsShare from '../SettingShare';
 import { resetProgressForAllQuestions } from 'api/apiSet';
 
-const SetMenu = ({ id, isAuthor, isCoauthor, questions }) => {
+const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -69,14 +69,11 @@ const SetMenu = ({ id, isAuthor, isCoauthor, questions }) => {
 
   const handleModalConfirmReset = async () => {
     console.log('Reset progress confirmed');
-
     try {
       const updatedQuestions = await resetProgressForAllQuestions(questions);
-      //toast.success(t('Progress has been reset successfully!'));
       window.location.reload();
       handleModalCancel();
     } catch (error) {
-      // Якщо сталася помилка, відображаємо повідомлення про помилку
       console.error('Error resetting progress:', error);
       toast.error(t('Failed to reset progress. Please try again.'));
     }
@@ -90,38 +87,54 @@ const SetMenu = ({ id, isAuthor, isCoauthor, questions }) => {
   };
 
   const menuItems = [
-    { icon: '/icons/menu/IconEdit.svg', label: t('edit'), action: handleEdit },
-    {
-      icon: '/icons/menu/IconShare.svg',
-      label: t('share'),
-      action: handleShare,
-    },
-    {
-      icon: '/icons/menu/IconPdf.svg',
-      label: t('export to pdf'),
-      action: handleExport,
-    },
-    {
-      icon: '/icons/menu/IconReset.svg',
-      label: t('reset progress'),
-      action: handleReset,
-    },
-    {
-      icon: '/icons/menu/IconFolder.svg',
-      label: t('add to folder'),
-      action: handleAddToFolder,
-    },
+    isAuthor || UserCanEdit
+      ? {
+          icon: '/icons/menu/IconEdit.svg',
+          label: t('edit'),
+          action: handleEdit,
+        }
+      : null,
+    isAuthor
+      ? {
+          icon: '/icons/menu/IconShare.svg',
+          label: t('share'),
+          action: handleShare,
+        }
+      : null,
+    isAuthor
+      ? {
+          icon: '/icons/menu/IconPdf.svg',
+          label: t('export to pdf'),
+          action: handleExport,
+        }
+      : null,
+    isAuthor
+      ? {
+          icon: '/icons/menu/IconReset.svg',
+          label: t('reset progress'),
+          action: handleReset,
+        }
+      : null,
+    isAuthor
+      ? {
+          icon: '/icons/menu/IconFolder.svg',
+          label: t('add to folder'),
+          action: handleAddToFolder,
+        }
+      : null,
     {
       icon: '/icons/menu/IconReport.svg',
       label: t('report'),
       action: handleReport,
     },
-    {
-      icon: '/icons/menu/IconDelete.svg',
-      label: t('delete'),
-      action: handleDelete,
-    },
-  ];
+    isAuthor
+      ? {
+          icon: '/icons/menu/IconDelete.svg',
+          label: t('delete'),
+          action: handleDelete,
+        }
+      : null,
+  ].filter(Boolean); // Фільтруємо null значення
 
   // Effect to handle clicks outside the menu
   useEffect(() => {

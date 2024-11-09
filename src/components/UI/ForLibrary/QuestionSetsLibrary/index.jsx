@@ -6,11 +6,8 @@ import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
 
 import { useTranslation } from 'react-i18next';
-import {
-  fetchAllFavorite,
-  fetchAllSetUser,
-  fetchSetById,
-} from 'api/apiService';
+import { fetchAllFavorite } from 'api/apiService';
+import { fetchAllSetUser, fetchSetById } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
 
 const QuestionSetsLibrary = ({ levels, categories }) => {

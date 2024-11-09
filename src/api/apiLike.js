@@ -1,25 +1,6 @@
 import axios from 'axios';
 import { getSessionToken } from './apiUser';
 
-// Функція для отримання всіх улюблених
-export const fetchAllFavorite = async () => {
-  const url = `${process.env.REACT_APP_API_URL}/favorites`;
-  const token = getSessionToken(); // Отримуємо токен вручну
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`, // Заголовок авторизації з токеном
-  };
-
-  try {
-    const response = await axios.get(url, { headers });
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching favorites:', error);
-    return { success: false, message: error.message };
-  }
-};
-
 // Функція для додавання лайку на сет
 export const likeSet = async (setId) => {
   const url = `${process.env.REACT_APP_API_URL}/favorites/set`;
