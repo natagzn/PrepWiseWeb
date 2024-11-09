@@ -6,15 +6,15 @@ import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
 
 import { useTranslation } from 'react-i18next';
-import { fetchAllFavorite } from 'api/apiService';
-import { fetchAllSetUser, fetchSetById } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
+import { fetchAllSetUser, fetchSetById } from 'api/apiSet';
 
 const QuestionSetsLibrary = ({ levels, categories }) => {
   const { t } = useTranslation();
   const [questionSets, setQuestionSets] = useState([]);
   const [loadedSets, setLoadedSets] = useState(8);
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortedQuestionSets, setSortedQuestionSets] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -59,7 +59,7 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
             return { ...detailResponse, id: set.question_set_id };
           })
         );
-        setQuestionSets(detailedSets.reverse());
+        setQuestionSets(detailedSets);
       } catch (error) {
         console.error('Error loading question sets:', error);
       } finally {
@@ -89,8 +89,11 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
 
         const matchesVisibility =
           selectedFilters.visibility.length === 0 ||
+          /*selectedFilters.visibility.includes(
+            set.access ? 'Public' : 'Private'
+          );*/
           selectedFilters.visibility.includes(
-            set.access ? 'public' : 'private'
+            set.access === 'public' ? 'Public' : 'Private'
           );
 
         const matchesSearchTerm =

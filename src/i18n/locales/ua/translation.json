@@ -443,5 +443,6 @@
   "Error creating folder. Please try again.": "Помилка створення папки. Спробуйте знову.",
   "no_sets_in_folder_message": "У цій папці немає наборів.",
 
-  "noAnswer": "Відповідь відсутня"
+  "noAnswer": "Відповідь відсутня",
+  "no_questions_in_set": "Відсутні питання в модулі."
 }

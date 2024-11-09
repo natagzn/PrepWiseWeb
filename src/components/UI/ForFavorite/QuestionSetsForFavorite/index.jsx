@@ -4,18 +4,25 @@ import QuestionSetComponent from '../../QuestionSetComponent';
 import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
-import questionSetsData from '../../../../questionSetsData.json';
-
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { fetchSetById } from 'api/apiSet';
+import { fetchAllFavorite } from 'api/apiFavorite';
+import { Spinner } from 'react-bootstrap';
 
-const QuestionSetsForFavorite = () => {
+const QuestionSetsForFavorite = ({ levels, categories }) => {
   const { t } = useTranslation();
-  const [questionSets, setQuestionSets] = useState(
-    questionSetsData.filter((set) => set.isLiked)
-  );
-  const [loadedSets, setLoadedSets] = useState(8);
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [sets, setSets] = useState([]); // ID улюблених наборів
+  const [questionSets, setQuestionSets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    levels: [],
+    visibility: [],
+  });
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -24,60 +31,56 @@ const QuestionSetsForFavorite = () => {
     { label: t('name_Z_A'), value: 'nameDesc' },
   ];
 
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+
+      try {
+        const data = await fetchAllFavorite();
+        console.log('Fetched IDs:', data.sets);
+        setSets(data.sets);
+
+        const setsData = await Promise.all(
+          data.sets.map(async (id) => {
+            const setData = await fetchSetById(id);
+            if (setData.success !== false) {
+              return { ...setData, id };
+            }
+            return null;
+          })
+        );
+
+        const validSets = setsData.filter((set) => set !== null);
+        setQuestionSets(validSets);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        toast.error(t('Failed to load data. Please try again.'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, [t]);
+
   const handleSortChange = (value) => {
     setSelectedSortingOption(value);
   };
 
-  const [selectedFilters, setSelectedFilters] = useState({
-    categories: [],
-    levels: [],
-    visibility: [],
-  });
-
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
-    console.log('Selected Categories:', filters.categories);
-    console.log('Selected Levels:', filters.levels);
-    console.log('Selected Visibility:', filters.visibility);
   };
 
   const filters = [
     {
       name: 'categories',
       label: 'categories',
-      options: [
-        'JavaScript',
-        'Programming',
-        'CSS',
-        'Design',
-        'React',
-        'Python',
-        'Data Science',
-        'SQL',
-        'Databases',
-        'UI/UX',
-        'Machine Learning',
-        'AI',
-        'Security',
-        'Networking',
-        'Java',
-        'Cloud',
-        'IT',
-        'C++',
-        'Data Structures',
-        'Linux',
-        'Systems',
-        'Algorithms',
-        'HTML',
-        'Web',
-        'Mobile',
-        'App Dev',
-      ],
+      options: categories,
     },
     {
       name: 'levels',
       label: 'level',
-      options: ['Junior', 'Middle', 'Senior'],
+      options: levels,
     },
     {
       name: 'visibility',
@@ -86,26 +89,30 @@ const QuestionSetsForFavorite = () => {
     },
   ];
 
-  // Функція для сортування наборів питань
   const sortedQuestionSets = () => {
     let filteredSets = questionSets.filter((set) => {
       const matchesCategories =
         selectedFilters.categories.length === 0 ||
-        selectedFilters.categories.some((category) =>
-          set.categories.includes(category)
+        selectedFilters.categories.some(
+          (category) =>
+            Array.isArray(set.categories) &&
+            set.categories.some((setCategory) => setCategory.name === category)
         );
 
       const matchesLevels =
         selectedFilters.levels.length === 0 ||
-        selectedFilters.levels.includes(set.level);
+        selectedFilters.levels.includes(set.level.name);
+
       const matchesVisibility =
         selectedFilters.visibility.length === 0 ||
-        selectedFilters.visibility.includes(set.visibility);
+        //selectedFilters.visibility.includes(set.visibility);
+        selectedFilters.visibility.includes(
+          set.access === 'public' ? 'Public' : 'Private'
+        );
 
-      // Додаємо логіку пошуку
-      const matchesSearchTerm = set.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      const matchesSearchTerm = set.name
+        ? set.name.toLowerCase().includes(searchTerm.toLowerCase())
+        : true;
 
       return (
         matchesCategories &&
@@ -115,35 +122,37 @@ const QuestionSetsForFavorite = () => {
       );
     });
 
-    // Сортуємо фільтровані набори питань
     if (selectedSortingOption) {
       return filteredSets.sort((a, b) => {
         switch (selectedSortingOption) {
           case 'createdDesc':
-            return new Date(b.date) - new Date(a.date);
+            return new Date(b.createdAt) - new Date(a.createdAt);
           case 'createdAsc':
-            return new Date(a.date) - new Date(b.date);
+            return new Date(a.createdAt) - new Date(b.createdAt);
           case 'nameAsc':
-            return a.title.localeCompare(b.title);
+            return a.name.localeCompare(b.name);
           case 'nameDesc':
-            return b.title.localeCompare(a.title);
+            return b.name.localeCompare(a.name);
           default:
             return 0;
         }
       });
     }
-    return filteredSets; // Якщо не вибрано сортування, повертаємо фільтрований масив
+    return filteredSets;
   };
 
-  // Обробник для оновлення значення пошуку
   const handleSearchClick = (value) => {
     setSearchTerm(value);
   };
 
-  // Функція для видалення лайку
-  /*const handleUnlikeSet = (id) => {
-    setQuestionSets((prevSets) => prevSets.filter((set) => set.id !== id));
-  };*/
+  if (isLoading) {
+    return (
+      <div className={styles.spinner}>
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.questionSetsWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -166,6 +175,7 @@ const QuestionSetsForFavorite = () => {
           <SearchComponent
             placeholder={t('search_favorite_sets')}
             onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>
@@ -176,24 +186,21 @@ const QuestionSetsForFavorite = () => {
             {t('no_question_sets_message_fav')}
           </div>
         ) : (
-          sortedQuestionSets()
-            .slice(0, loadedSets)
-            .map((set) => (
-              <div key={set.id}>
-                <QuestionSetComponent
-                  questionsCount={set.questionsCount}
-                  title={set.title}
-                  categories={set.categories}
-                  username={set.username}
-                  date={set.date}
-                  level={set.level}
-                  isLiked={set.isLiked}
-                  visibility={set.visibility}
-                  style={{ width: '500px' }}
-                  id={set.id}
-                />
-              </div>
-            ))
+          sortedQuestionSets().map((set) => (
+            <QuestionSetComponent
+              name={set.name}
+              categories={set.categories}
+              author={set.author}
+              createdAt={set.createdAt}
+              level={set.level}
+              isFavourite={set.isFavourite}
+              access={set.access}
+              style={{ width: '500px' }}
+              id={set.id}
+              questions={set.questions}
+              key={set.id}
+            />
+          ))
         )}
       </div>
     </div>

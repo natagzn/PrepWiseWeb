@@ -7,6 +7,7 @@ import QuestionSetsForFavorite from '../../components/UI/ForFavorite/QuestionSet
 import ResourcesForFavorite from '../../components/UI/ForFavorite/ResourcesForFavorite';
 import { toast } from 'react-toastify';
 import { fetchAllFavorite } from 'api/apiFavorite';
+import { fetchCategories, fetchLevels } from 'api/apiService';
 
 const FavoritePage = () => {
   const { t } = useTranslation();
@@ -17,8 +18,10 @@ const FavoritePage = () => {
     resources: [],
   });
   const [loading, setLoading] = useState(true);
+  const [levels, setLevels] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  // Завантажуємо дані з fetchAllFavorite при монтуванні компонента
+  /*
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -34,17 +37,48 @@ const FavoritePage = () => {
     };
 
     loadData();
-  }, [t]);
+  }, [t]);*/
+
+  useEffect(() => {
+    const getLevels = async () => {
+      try {
+        const response = await fetchLevels();
+        const formattedLevels = response.map((level) => level.name);
+        //console.log(response);
+        setLevels(formattedLevels);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        toast.error('Error downloading levels');
+      }
+    };
+
+    const getCategories = async () => {
+      try {
+        const response = await fetchCategories();
+        const formattedCategories = response.map((category) => category.name);
+        setCategories(formattedCategories);
+        //console.log(response);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        toast.error('Error downloading categories');
+      }
+    };
+
+    getLevels();
+    getCategories();
+  }, []);
 
   // Функція для рендерингу компонентів залежно від активної вкладки
   const renderActiveTabContent = () => {
     switch (activeTab) {
       case 'questionSets':
-        return <QuestionSetsForFavorite sets={favorites.sets} />;
+        return (
+          <QuestionSetsForFavorite levels={levels} categories={categories} />
+        );
       case 'folders':
-        return <FoldersFavorite folders={favorites.folders} />;
+        return <FoldersFavorite />;
       case 'resources':
-        return <ResourcesForFavorite resources={favorites.resources} />;
+        return <ResourcesForFavorite levels={levels} categories={categories} />;
       default:
         return null;
     }
@@ -77,15 +111,7 @@ const FavoritePage = () => {
         </div>
 
         {/* Показуємо спінер під час завантаження */}
-        {loading ? (
-          <div className={styles.spinnerWrapper}>
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.tabContent}>{renderActiveTabContent()}</div>
-        )}
+        <div className={styles.tabContent}>{renderActiveTabContent()}</div>
       </div>
     </div>
   );

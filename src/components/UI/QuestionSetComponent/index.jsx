@@ -18,6 +18,18 @@ const QuestionSetComponent = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  console.log(
+    id,
+    name,
+    level,
+    categories,
+    author,
+    createdAt,
+    questions,
+    access,
+    isFavourite
+  );
+
   // return (
   //     <div className={styles.container}>
   //       {/* Заголовок */}
@@ -121,7 +133,7 @@ const QuestionSetComponent = ({
         <div className={styles.savedIcon}>
           {/* Відображення статусу public/private */}
           <div className={styles.visibilityContainer}>
-            {access ? (
+            {access === 'public' ? (
               <>
                 <img
                   src="/icons/QuestionSetComponent/public-icon.svg"

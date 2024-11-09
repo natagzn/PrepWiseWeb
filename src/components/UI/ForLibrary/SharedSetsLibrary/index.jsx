@@ -159,7 +159,6 @@ const SharedSetsLibrary = () => {
             <SortComponent
               sortingOptions={sortingOptions}
               onSortChange={handleSortChange}
-              onEnter={handleSearchClick}
             />
           </div>
           <div className={styles.filterComponent}>
@@ -173,7 +172,8 @@ const SharedSetsLibrary = () => {
         <div className={styles.search}>
           <SearchComponent
             placeholder={t('search_sets')}
-            onClick={handleSearchClick} // Передаємо обробник
+            onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>

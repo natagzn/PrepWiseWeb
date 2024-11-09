@@ -5,14 +5,18 @@ import SortComponent from '../../SortComponent';
 import SearchComponent from '../../SearchComponent';
 import foldersData from '../../../../foldersData.json';
 import { useTranslation } from 'react-i18next';
+import { fetchAllFavorite } from 'api/apiFavorite';
+import { fetchFolderById } from 'api/apiFolder';
+import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
 const FoldersFavorite = () => {
   const { t } = useTranslation();
-  const [folders, setFolders] = useState(
-    foldersData.filter((folder) => folder.isLiked) // Ініціалізація тільки лайкнутими елементами
-  );
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [folders, setFolders] = useState([]);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -24,6 +28,38 @@ const FoldersFavorite = () => {
   const handleSearchClick = (value) => {
     setSearchTerm(value);
   };
+
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+
+      try {
+        const data = await fetchAllFavorite();
+        console.log('Fetched IDs:', data.folders);
+        setFolders(data.folders);
+
+        const folderData = await Promise.all(
+          data.folders.map(async (id) => {
+            const setData = await fetchFolderById(id);
+            if (setData.success !== false) {
+              return { ...setData, id };
+            }
+            return null;
+          })
+        );
+
+        const validated = folderData.filter((set) => set !== null);
+        setFolders(validated);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        toast.error(t('Failed to load data. Please try again.'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, [t]);
 
   /*const handleLikeFolder = (id) => {
     setFolders((prevFolders) =>
@@ -55,6 +91,14 @@ const FoldersFavorite = () => {
     return filteredFolders;
   };
 
+  if (isLoading) {
+    return (
+      <div className={styles.spinner}>
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.foldersWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -70,6 +114,7 @@ const FoldersFavorite = () => {
           <SearchComponent
             placeholder={t('search_favorite_folders')}
             onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>

@@ -7,6 +7,7 @@ import CardBlock from './CardsBlock';
 import styles from './styles.module.css';
 import Spinner from 'react-bootstrap/Spinner'; // Імпорт спінера з Bootstrap
 import { fetchSetById, getTypeAccessToSet } from 'api/apiSet';
+import { useTranslation } from 'react-i18next';
 
 function LookSet() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ function LookSet() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const loadSetInfo = async () => {
@@ -102,14 +104,23 @@ function LookSet() {
           questions={questions}
         />
         <div className={styles.separator} />
-        <SetQuickReviewComponent
-          questionsAnswers={questions}
-          setId={id}
-          isAuthor={isAuthor}
-          setTitle={name}
-        />
-        <div className={styles.separator} />
-        <CardBlock questionsAnswers={questions} isAuthor={isAuthor} />
+        {questions.length !== 0 && (
+          <>
+            <SetQuickReviewComponent
+              questionsAnswers={questions}
+              setId={id}
+              isAuthor={isAuthor}
+              setTitle={name}
+            />
+            <div className={styles.separator} />
+            <CardBlock questionsAnswers={questions} isAuthor={isAuthor} />
+          </>
+        )}
+        {questions.length === 0 && (
+          <div className={`noResultsMessage ${styles.message}`}>
+            {t('no_questions_in_set')}
+          </div>
+        )}
       </div>
     </div>
   );

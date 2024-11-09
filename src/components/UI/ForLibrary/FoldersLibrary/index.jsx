@@ -10,7 +10,8 @@ import Spinner from 'react-bootstrap/Spinner'; // Підключення спі�
 const FoldersLibrary = () => {
   const { t } = useTranslation();
   const [folders, setFolders] = useState([]);
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 

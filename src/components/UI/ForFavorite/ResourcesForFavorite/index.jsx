@@ -6,12 +6,18 @@ import FilterCategoryLevel from '../../FilterCategoryLevel';
 import SearchComponent from '../../SearchComponent';
 import { useTranslation } from 'react-i18next';
 import resourcesData from '../../../../resources.json';
+import { fetchAllFavorite } from 'api/apiFavorite';
+import { fetchResourceById } from 'api/apiResource';
+import { toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
 
-const ResourcesForFavorite = () => {
+const ResourcesForFavorite = ({ levels, categories }) => {
   const { t } = useTranslation();
   const [resources, setResources] = useState([]);
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Початковий стан: завантаження
 
   const sortingOptions = [
     { label: t('created_new_old'), value: 'createdDesc' },
@@ -25,12 +31,41 @@ const ResourcesForFavorite = () => {
   };
 
   useEffect(() => {
-    const likedResources = resourcesData.filter((resource) => resource.isLiked);
-    setResources(likedResources);
-  }, []);
+    const loadData = async () => {
+      setIsLoading(true);
+
+      console.log('іііі', levels, categories);
+
+      try {
+        const data = await fetchAllFavorite();
+        setResources(data.resources);
+
+        const resourcesData = await Promise.all(
+          data.resources.map(async (id) => {
+            const resourceData = await fetchResourceById(id);
+            if (resourceData.success !== false) {
+              return { ...resourceData, id };
+            }
+            return null;
+          })
+        );
+
+        const validated = resourcesData.filter((set) => set !== null);
+        setResources(validated);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        toast.error(t('Failed to load data. Please try again.'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, [t]);
 
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
+    levels: [],
   });
 
   const handleApplyFilters = (filters) => {
@@ -41,7 +76,12 @@ const ResourcesForFavorite = () => {
     {
       name: 'categories',
       label: 'categories',
-      options: ['Development', 'Design', 'Marketing', 'Science', 'Arts'],
+      options: categories,
+    },
+    {
+      name: 'levels',
+      label: 'level',
+      options: levels,
     },
   ];
 
@@ -50,12 +90,13 @@ const ResourcesForFavorite = () => {
       const matchesCategory =
         selectedFilters.categories.length === 0 ||
         selectedFilters.categories.includes(resource.category);
-
+      const matchesLevels =
+        selectedFilters.levels.length === 0 ||
+        selectedFilters.levels.includes(resource.level);
       const matchesSearchTerm = resource.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-
-      return matchesCategory && matchesSearchTerm;
+      return matchesCategory && matchesSearchTerm && matchesLevels;
     });
 
     if (selectedSortingOption) {
@@ -88,6 +129,15 @@ const ResourcesForFavorite = () => {
     );*/
   };
 
+  // Якщо дані ще не завантажені, нічого не рендеримо, тільки спінер
+  if (isLoading) {
+    return (
+      <div className={styles.spinner}>
+        <Spinner animation="border" role="status" />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.resourcesWrapper}>
       <div className={styles.filterSortWrapper}>
@@ -110,6 +160,7 @@ const ResourcesForFavorite = () => {
           <SearchComponent
             placeholder={t('search_favorite_resource')}
             onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>
@@ -129,6 +180,10 @@ const ResourcesForFavorite = () => {
               date={resource.date}
               description={resource.description}
               isLiked={resource.isLiked}
+              level={resource.level}
+              likes={resource.likes}
+              dislikes={resource.dislikes}
+              isAuthor={resource.isAuthor}
               /*onRemove={() => handleRemoveResource(resource.id)} */
             />
           ))
