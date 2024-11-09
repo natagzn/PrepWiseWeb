@@ -159,6 +159,7 @@ const SharedSetsLibrary = () => {
             <SortComponent
               sortingOptions={sortingOptions}
               onSortChange={handleSortChange}
+              onEnter={handleSearchClick}
             />
           </div>
           <div className={styles.filterComponent}>

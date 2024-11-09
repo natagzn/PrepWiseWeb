@@ -412,5 +412,6 @@
   "dislike_added": "Dislike added successfully!",
   "dislike_error": "Error while processing your dislike!",
 
-  "no_sets_in_folder_message": "There are no sets in this folder."
+  "no_sets_in_folder_message": "There are no sets in this folder.",
+  "noAnswer": "No answer available"
 }

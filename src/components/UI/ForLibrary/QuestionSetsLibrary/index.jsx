@@ -171,6 +171,7 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
               <SearchComponent
                 placeholder={t('search_sets')}
                 onClick={handleSearchClick}
+                onEnter={handleSearchClick}
               />
             </div>
           </div>

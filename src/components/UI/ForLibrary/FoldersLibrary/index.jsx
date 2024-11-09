@@ -88,6 +88,7 @@ const FoldersLibrary = () => {
           <SearchComponent
             placeholder={t('search_folders')}
             onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>

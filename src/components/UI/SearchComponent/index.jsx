@@ -1,12 +1,17 @@
 import React, { useRef, useState } from 'react';
 import styles from './styles.module.css';
+import { motion } from 'framer-motion';
 
-const SearchComponent = ({ placeholder, onClick }) => {
+const SearchComponent = ({ placeholder, onClick, onEnter }) => {
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+
+    if (typeof onEnter !== 'undefined') {
+      onEnter(e.target.value);
+    }
   };
 
   const handleBlur = () => {
@@ -33,10 +38,18 @@ const SearchComponent = ({ placeholder, onClick }) => {
         placeholder={inputValue ? '' : placeholder}
         className={styles['search-input']}
       />
-      <div
+      <motion.div
         className={styles['search-icon']}
         onClick={() => onClick(inputValue)}
-      ></div>
+        animate={{
+          scale: inputValue ? 1.3 : 1, // Збільшуємо іконку на 30%, якщо є введений текст
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 20,
+        }}
+      ></motion.div>
     </div>
   );
 };

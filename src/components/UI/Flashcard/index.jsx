@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
 
 const Flashcard = ({ flashcard, flip }) => {
+  const { t } = useTranslation();
   const [isFlipped, setIsFlipped] = useState(false);
 
   // Скидання перевертання при зміні картки
@@ -21,16 +23,24 @@ const Flashcard = ({ flashcard, flip }) => {
       <div className={styles.cardInner}>
         <div className={styles.cardFront}>
           {flip ? (
-            <p className={styles.answer}>{flashcard.answer}</p>
+            <p className={styles.answer}>
+              {flashcard.answer.trim() === ''
+                ? t('noAnswer')
+                : flashcard.answer}
+            </p>
           ) : (
             <p className={styles.question}>{flashcard.content}</p>
           )}
         </div>
         <div className={styles.cardBack}>
           {flip ? (
-            <p className={styles.content}>{flashcard.content}</p>
+            <p className={styles.answer}>{flashcard.content}</p>
           ) : (
-            <p className={styles.question}>{flashcard.answer}</p>
+            <p className={styles.question}>
+              {flashcard.answer.trim() === ''
+                ? t('noAnswer')
+                : flashcard.answer}
+            </p>
           )}
         </div>
       </div>

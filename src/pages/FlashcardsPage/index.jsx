@@ -125,7 +125,7 @@ function FlashcardPage() {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
     if (statusHistory.length > 0) {
       const lastStatus = statusHistory.pop();
 
@@ -146,9 +146,14 @@ function FlashcardPage() {
       setStatusHistory([...statusHistory]);
 
       // Оновлення індексу на попередню картку
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length
-      );
+      const previousIndex =
+        (currentIndex - 1 + flashcards.length) % flashcards.length;
+      const previousFlashcard = flashcards[previousIndex];
+
+      // Викликаємо функцію для оновлення статусу в БД на 'false' для попередньої картки
+      await updateStatusInDB(previousFlashcard.question_id, false);
+
+      setCurrentIndex(previousIndex);
     }
   };
 

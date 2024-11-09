@@ -127,6 +127,7 @@ const ResourcesLibrary = ({ categories, levels }) => {
           <SearchComponent
             placeholder={t('search_resources')}
             onClick={handleSearchClick}
+            onEnter={handleSearchClick}
           />
         </div>
       </div>

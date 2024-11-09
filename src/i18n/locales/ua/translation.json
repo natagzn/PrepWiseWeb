@@ -441,5 +441,7 @@
   "dislike_error": "Сталася помилка при обробці дизлайку!",
 
   "Error creating folder. Please try again.": "Помилка створення папки. Спробуйте знову.",
-  "no_sets_in_folder_message": "У цій папці немає наборів."
+  "no_sets_in_folder_message": "У цій папці немає наборів.",
+
+  "noAnswer": "Відповідь відсутня"
 }
