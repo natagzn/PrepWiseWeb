@@ -9,45 +9,56 @@ import FooterComponent from 'components/UI/FooterComponent';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import createPayment from 'context/createPayment';
+import { getIdsForHomePage } from 'api/apiHome';
+import { fetchSetById } from 'api/apiSet';
+import { fetchResourceById } from 'api/apiResource';
+import { Spinner } from 'react-bootstrap';
 
 const MainPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const questionSets = Array.from({ length: 6 }, (_, index) => ({
-    id: index,
-    questions: ['22222', '1211313', '2312323123'],
-    categories: [
-      { id: 1, name: 'Category 1' },
-      { id: 2, name: 'Category 2' },
-    ],
-    author: { username: 'User ' + (index + 1) },
-    createdAt: '2024-10-19',
-    level: { id: 1, name: 'Middle' },
-    isFavourite: index % 2 === 0,
-    access: true,
-    name: 'Name of set ' + index,
-  }));
+  const [isLoading, setIsLoading] = useState(true);
+  const [questionSets, setQuestionSets] = useState();
+  const [resources, setResources] = useState();
 
-  const resourceTitles = [
-    'Book1 Author A.A.',
-    'Book2 Author B.B.',
-    'Article3 C.C.',
-    'Book4 Author D.D.',
-    'Book5 Author E.E.',
-  ];
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
 
-  const categories = ['Development', 'Design', 'Marketing', 'Science', 'Arts'];
+      try {
+        const data = await getIdsForHomePage();
+        console.log('Fetched IDs:', data);
 
-  const resources = Array.from({ length: 6 }, (_, index) => ({
-    id: index,
-    title: resourceTitles[index % resourceTitles.length],
-    category: categories[index % categories.length],
-    username: 'user' + index,
-    date: '2024-10-19',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    isLiked: index % 2 === 0,
-  }));
+        // Завантаження даних для кожного набору питань
+        const setsData = await Promise.all(
+          data.sets.map(async (id) => {
+            const setData = await fetchSetById(id);
+            setData.id = id;
+            return setData.success !== false ? setData : null; // Фільтруємо невдалі запити
+          })
+        );
+        setQuestionSets(setsData.filter((set) => set !== null));
+
+        // Завантаження даних для кожного ресурсу
+        const resourcesData = await Promise.all(
+          data.resources.map(async (id) => {
+            const resourceData = await fetchResourceById(id);
+            resourceData.id = id;
+            return resourceData.success !== false ? resourceData : null;
+          })
+        );
+        setResources(resourcesData.filter((resource) => resource !== null));
+      } catch (error) {
+        console.error('Error loading data:', error);
+        toast.error(t('Failed to load data. Please try again.'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, [t]);
 
   const [visibleItems, setVisibleItems] = useState(3);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -110,135 +121,155 @@ const MainPage = () => {
 
   return (
     <div className={styles.mainPage}>
-      <HeaderComponent showSearch={true} showPremium={true} showPlus={true} />
-      <div className={styles.search}>
-        <SearchComponent
-          placeholder={t('enter_your_request')}
-          onClick={handleSearch}
-        />
-      </div>
+      {isLoading ? (
+        <div className={styles.spinnerContainer}>
+          <Spinner animation="border" />
+        </div>
+      ) : (
+        <>
+          <HeaderComponent
+            showSearch={true}
+            showPremium={true}
+            showPlus={true}
+          />
+          <div className={styles.search}>
+            <SearchComponent
+              placeholder={t('enter_your_request')}
+              onClick={handleSearch}
+            />
+          </div>
 
-      <h2 className={styles.recommendationTitle}>
-        {t('recommended_from_your_following')}
-      </h2>
+          <h2 className={styles.recommendationTitle}>
+            {t('recommended_from_your_following')}
+          </h2>
 
-      {/*Сети*/}
-      <div className={styles.questionSets}>
-        <h2 className={styles.title}>{t('question_sets')}</h2>
-
-        {questionSets.length > 0 ? (
-          <div className={styles.carousel}>
-            <button
-              onClick={handleQuestionScrollLeft}
-              className={styles.arrowLeft}
-              disabled={currentQuestionIndex === 0}
-            >
-              &lt;
-            </button>
-            <div
-              className={styles.questionSetContainer}
-              style={{
-                display: 'flex',
-                transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
-              }}
-            >
-              {questionSets.map((set) => (
+          {/*Сети*/}
+          <div className={styles.questionSets}>
+            <h2 className={styles.title}>{t('question_sets')}</h2>
+            {questionSets && questionSets.length > 0 ? (
+              <div className={styles.carousel}>
+                <button
+                  onClick={handleQuestionScrollLeft}
+                  className={styles.arrowLeft}
+                  disabled={currentQuestionIndex === 0}
+                >
+                  &lt;
+                </button>
                 <div
-                  key={set.id}
+                  className={styles.questionSetContainer}
                   style={{
-                    flex: `0 0 ${100 / visibleItems}%`,
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyContent: 'space-around',
+                    transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
                   }}
                 >
-                  <QuestionSetComponent
-                    id={set.id}
-                    name={set.name}
-                    level={set.level}
-                    categories={set.categories}
-                    author={set.author}
-                    createdAt={set.createdAt}
-                    questions={set.questions}
-                    access={set.access}
-                    isFavourite={set.isFavourite}
-                  />
+                  {questionSets.map((set) => (
+                    <div
+                      key={set.id}
+                      style={{
+                        flex: `0 0 ${100 / visibleItems}%`,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <QuestionSetComponent
+                        name={set.name}
+                        categories={set.categories}
+                        author={set.author}
+                        createdAt={set.createdAt}
+                        level={set.level}
+                        isFavourite={set.isFavourite}
+                        access={set.access}
+                        style={{ width: '500px' }}
+                        id={set.id}
+                        questions={set.questions}
+                        key={set.id}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <button
-              onClick={handleQuestionScrollRight}
-              className={styles.arrowRight}
-              disabled={
-                currentQuestionIndex >= questionSets.length - visibleItems
-              }
-            >
-              &gt;
-            </button>
+                <button
+                  onClick={handleQuestionScrollRight}
+                  className={styles.arrowRight}
+                  disabled={
+                    currentQuestionIndex >= questionSets.length - visibleItems
+                  }
+                >
+                  &gt;
+                </button>
+              </div>
+            ) : (
+              <p className={styles.notFound}>{t('no_question_sets_message')}</p>
+            )}
           </div>
-        ) : (
-          <p className={styles.notFound}>{t('no_question_sets_message')}</p>
-        )}
-      </div>
 
-      {/*Ресурси*/}
-      <div className={styles.resources}>
-        <h2 className={styles.title}>{t('resources')}</h2>
-
-        {resources.length > 0 ? (
-          <div className={styles.carousel}>
-            <button
-              onClick={handleResourceScrollLeft}
-              className={styles.arrowLeft}
-              disabled={currentResourceIndex === 0}
-            >
-              &lt;
-            </button>
-            <div
-              className={styles.resourceContainer}
-              style={{
-                display: 'flex',
-                transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
-              }}
-            >
-              {resources.map((resource) => (
+          {/*Ресурси*/}
+          <div className={styles.resources}>
+            <h2 className={styles.title}>{t('resources')}</h2>
+            {resources && resources.length > 0 ? (
+              <div className={styles.carousel}>
+                <button
+                  onClick={handleResourceScrollLeft}
+                  className={styles.arrowLeft}
+                  disabled={currentResourceIndex === 0}
+                >
+                  &lt;
+                </button>
                 <div
-                  key={resource.id}
+                  className={styles.resourceContainer}
                   style={{
-                    flex: `0 0 ${100 / visibleItems}%`,
                     display: 'flex',
-                    justifyContent: 'center',
+                    transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
+                    justifyContent: 'space-around',
                   }}
                 >
-                  <ResourceComponent
-                    key={resource.id}
-                    id={resource.id}
-                    title={resource.title}
-                    category={resource.category}
-                    username={resource.username}
-                    date={resource.date}
-                    description={resource.description}
-                    report={true}
-                  />
+                  {resources.map((resource) => (
+                    <div
+                      key={resource.id}
+                      style={{
+                        flex: `0 0 ${100 / visibleItems}%`,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <ResourceComponent
+                        key={resource.id}
+                        id={resource.id}
+                        title={resource.title}
+                        category={resource.category}
+                        username={resource.username}
+                        date={resource.date}
+                        description={resource.description}
+                        isLiked={resource.isLiked}
+                        level={resource.level}
+                        likes={resource.likes}
+                        dislikes={resource.dislikes}
+                        report={true}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <button
-              onClick={handleResourceScrollRight}
-              className={styles.arrowRight}
-              disabled={currentResourceIndex >= resources.length - visibleItems}
-            >
-              &gt;
-            </button>
+                <button
+                  onClick={handleResourceScrollRight}
+                  className={styles.arrowRight}
+                  disabled={
+                    currentResourceIndex >= resources.length - visibleItems
+                  }
+                >
+                  &gt;
+                </button>
+              </div>
+            ) : (
+              <p className={styles.notFound}>{t('no_resources_message')}</p>
+            )}
           </div>
-        ) : (
-          <p className={styles.notFound}>{t('no_resources_message')}</p>
-        )}
-      </div>
-      <button onClick={() => createPayment(1)}>Оплатити 1 грн</button>
+          <button onClick={() => createPayment(1)}>Оплатити 1 грн</button>
 
-      <div className={styles.footer}>
-        <FooterComponent />
-      </div>
+          <div className={styles.footer}>
+            <FooterComponent />
+          </div>
+        </>
+      )}
     </div>
   );
 };
