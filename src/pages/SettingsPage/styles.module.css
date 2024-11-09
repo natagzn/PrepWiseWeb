@@ -108,6 +108,7 @@
   text-wrap: wrap;
   white-space: normal;
   overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .languageBlock {
@@ -179,7 +180,7 @@
     var(--landingpurple) 100%
   );
   box-shadow: var(--shadow);
-  padding: 20px;
+  padding: 15px;
   border-radius: 15px;
   color: var(--mainwhite);
   display: flex;

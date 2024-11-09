@@ -18,7 +18,7 @@ const SettingsPage = () => {
   const [userData, setUserData] = useState({
     username: '',
     email: '',
-    description: '',
+    bio: '',
     location: '',
     avatar: null,
   });
@@ -100,9 +100,7 @@ const SettingsPage = () => {
                   </tr>
                   <tr>
                     <td className={styles.detailLabel}>{t('description')}:</td>
-                    <td className={styles.detailValue}>
-                      {userData.description}
-                    </td>
+                    <td className={styles.detailValue}>{userData.bio}</td>
                   </tr>
                   <tr>
                     <td className={styles.detailLabel}>{t('location')}:</td>

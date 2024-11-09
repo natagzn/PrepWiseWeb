@@ -80,19 +80,31 @@ export const fetchUserProfile = async () => {
 // src/api.js
 export const updateProfile = async (updatedData, t) => {
   const token = getSessionToken();
+  let { location, bio } = updatedData;
+
+  if (!location || location.trim() === '') {
+    location = '-';
+  }
+
+  if (!bio || bio.trim() === '') {
+    bio = '- ';
+  }
+
+  console.log(location, bio);
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
-      method: 'PUT',
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/update`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify({ location, bio }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
+      console.log(data.data);
       return { message: t('update_success'), success: true, data: data.data };
     } else {
       return { message: t('update_failed'), success: false };

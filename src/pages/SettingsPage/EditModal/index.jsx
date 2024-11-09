@@ -14,6 +14,10 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   useEffect(() => {
     // Оновлення formData, коли userData змінюється
     setFormData(userData);
+
+    if (userData.location) {
+      setLocationInput(userData.location);
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -33,15 +37,30 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
   };
 
   const handleLocationChange = (e) => {
-    setLocationInput(e.target.value); // Зберігаємо вибране значення
+    const value = e.target.value;
+
+    if (value === 'null') {
+      setLocationInput('');
+    } else {
+      setLocationInput(value);
+    }
+  };
+
+  const handleClose = () => {
+    setFormData(userData);
+
+    if (userData.location) {
+      setLocationInput(userData.location);
+    }
+    onClose();
   };
 
   const handleSave = async () => {
     const updatedData = {
       ...formData,
       avatar,
-      location: locationInput || '',
-      bio: formData.description || '',
+      location: locationInput.trim() === '' ? null : locationInput, // Якщо порожньо, то null
+      bio: formData.bio.trim() === '' ? null : formData.bio, // Якщо bio порожнє або з пробілами, то використовуємо порожній рядок
     };
 
     const result = await updateProfile(updatedData, t);
@@ -91,11 +110,7 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
         </div>
         <div>
           <label>{t('description')}:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
+          <textarea name="bio" value={formData.bio} onChange={handleChange} />
         </div>
         <div>
           <label>{t('location')}:</label>
@@ -104,7 +119,7 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
             value={locationInput}
             onChange={handleLocationChange}
           >
-            <option value="">{t('select_country')}</option>
+            <option value="null">{t('select_country')}</option>
             {countries.map((country, index) => (
               <option key={index} value={country}>
                 {country}
@@ -116,13 +131,13 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
           <button onClick={handleSave} className={styles.saveButton}>
             {t('save')}
           </button>
-          <button onClick={onClose} className={styles.cancelButton}>
+          <button onClick={handleClose} className={styles.cancelButton}>
             {t('cancel')}
           </button>
         </div>
 
-        {/* Виводимо повідомлення у модальному вікні */}
-        {message && <div className={styles.message}>{message}</div>}
+        {/* Виводимо повідомлення у модальному вікні 
+        {message && <div className={styles.message}>{message}</div>}*/}
       </div>
     </div>
   );
