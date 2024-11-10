@@ -93,7 +93,7 @@ export const removeFavoriteResource = async (resourceId) => {
       }
     );
     console.log('remove favorite', response.data);
-    return response.data;
+    return { success: true };
   } catch (error) {
     console.error('Error removing favorite:', error);
     throw error;
@@ -115,5 +115,26 @@ export const deleteResource = async (resourceId) => {
   } catch (error) {
     console.error('Error removing favorite:', error);
     throw error;
+  }
+};
+
+export const deleteResourceByIdAdmin = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/resources-admin/${id}`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting resource:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    };
   }
 };

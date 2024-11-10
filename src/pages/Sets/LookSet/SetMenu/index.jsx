@@ -196,7 +196,7 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
 
       {/* Additional Components */}
       {isReportOpen && (
-        <ReportComponent type="set" onClose={handleModalCancel} />
+        <ReportComponent type="set" onClose={handleModalCancel} id={id} />
       )}
       {isFolderModalOpen && (
         <SelectFolderModal

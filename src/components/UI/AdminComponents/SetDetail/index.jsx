@@ -1,89 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
+import { deleteSetByIdAdmin, fetchSetById } from 'api/apiSet';
+import { deleteSetById } from 'api/apiSet'; // Ваш API для видалення
+import { toast } from 'react-toastify';
 
 const SetDetails = () => {
-  const { questionSetId } = useParams(); // Отримуємо ID набору запитань
+  const { questionSetId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  // Фіктивні дані для набору запитань
-  const questionSet = {
-    questionSet_id: questionSetId,
-    user_id: 'user_1',
-    name: 'Приклад набору запитань',
-    category_id: 'category_1',
-    access: true,
-    data: '2024-11-01',
-    level_id: 1,
-  };
-
-  // Фіктивні дані для запитань у наборі
-  const questions = [
-    {
-      question_id: 1,
-      content: 'Що таке React?',
-      answer: 'Бібліотека для побудови інтерфейсів.',
-    },
-    {
-      question_id: 2,
-      content: 'Що таке компонент?',
-      answer: 'Основна одиниця UI в React.',
-    },
-    {
-      question_id: 3,
-      content: 'Що таке props?',
-      answer: 'Властивості, які передаються компонентам.',
-    },
-    {
-      question_id: 4,
-      content: 'Що таке props4?',
-      answer: 'Властивості, які4s передаються компонентам.',
-    },
-    {
-      question_id: 5,
-      content: 'Що 5таке props4?',
-      answer: 'Власт5ивості, які4s передаються компонентам.',
-    },
-  ];
-
+  const [setData, setSetData] = useState(null); // Стан для даних набору
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // Стан для завантаження
+  const [isDeleting, setIsDeleting] = useState(false); // Стан для видалення
+
+  useEffect(() => {
+    const getSetData = async () => {
+      console.log(questionSetId, 'qs');
+      const data = await fetchSetById(questionSetId);
+      if (data.success !== false) {
+        setSetData(data); // Зберігаємо дані
+      } else {
+        console.error('Error fetching set:', data.message);
+      }
+      setLoading(false); // Завантаження завершене
+    };
+
+    getSetData();
+  }, [questionSetId]);
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    // Логіка для видалення набору запитань
-    console.log(`Набір запитань з ID ${questionSetId} видалено`);
-    setIsDeleteModalOpen(false);
-    handleCancel();
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true); // Починаємо процес видалення
+    try {
+      const result = await deleteSetByIdAdmin(questionSetId);
+      if (result.success) {
+        console.log(`Набір запитань з ID ${questionSetId} видалено`);
+        toast.success(t('Set deleted successfully'));
+        navigate(-1); // Повертаємося назад після видалення
+      } else {
+        toast.error(t('Failed to delete set.'));
+      }
+    } catch (error) {
+      console.error('Error deleting set:', error);
+      toast.error(t('Error deleting set.'));
+    } finally {
+      setIsDeleting(false); // Завершуємо процес видалення
+      setIsDeleteModalOpen(false); // Закриваємо модальне вікно
+    }
   };
 
   const handleCancel = () => {
     navigate(-1);
   };
 
+  // Якщо дані ще завантажуються, показуємо спінер
+  if (loading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <div className={styles.spinner}></div> {/* Ваш спінер */}
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.flexContainer}>
         <div className={styles.leftBlock}>
-          <h2>{questionSet.name}</h2>
+          <h2>{setData.name}</h2>
           <p>
-            {t('user')}: {questionSet.user_id}
+            {t('user')}: {setData.author.username}
           </p>
           <p>
-            {t('category')}: {questionSet.category_id}
+            {t('category')}:{' '}
+            {setData.categories.map((cat) => cat.name).join(', ')}
           </p>
           <p>
-            {t('access')}: {questionSet.access ? t('public') : t('private')}
+            {t('access')}:{' '}
+            {setData.access === 'public' ? t('public') : t('private')}
           </p>
           <p>
-            {t('Date')}: {questionSet.data}
+            {t('Date')}: {new Date(setData.createdAt).toLocaleDateString()}
           </p>
           <p>
-            {t('level')}: {questionSet.level_id}
+            {t('level')}: {setData.level.name}
           </p>
           <button onClick={handleDelete} className={styles.button}>
             {t('delete')}
@@ -96,7 +101,7 @@ const SetDetails = () => {
         <div className={styles.rightBlock}>
           <h3>{t('questions_in_set')}</h3>
           <ul className={styles.questionList}>
-            {questions.map((question) => (
+            {setData.questions.map((question) => (
               <li key={question.question_id} className={styles.questionItem}>
                 <p>
                   <strong>{question.content}</strong>
@@ -119,8 +124,15 @@ const SetDetails = () => {
               <button
                 className="btn btn-danger mx-1"
                 onClick={handleDeleteConfirm}
+                disabled={isDeleting} // Заблокувати кнопку, поки йде процес видалення
               >
-                {t('delete')}
+                {isDeleting ? (
+                  <div className="spinner-border text-light" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  t('delete')
+                )}
               </button>
               <button
                 className="btn btn-secondary mx-1"

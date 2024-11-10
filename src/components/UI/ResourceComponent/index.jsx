@@ -71,7 +71,11 @@ function ResourceComponent(props) {
 
       {/* Відображення модального вікна при відкритті */}
       {isReportModalOpen && (
-        <ReportComponent type="resource" onClose={closeReportModal} />
+        <ReportComponent
+          type="resource"
+          id={props.id}
+          onClose={closeReportModal}
+        />
       )}
     </div>
   );

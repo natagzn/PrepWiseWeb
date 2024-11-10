@@ -415,5 +415,6 @@
   "no_sets_in_folder_message": "There are no sets in this folder.",
   "noAnswer": "No answer available",
 
-  "no_questions_in_set": "There is no questions in set"
+  "no_questions_in_set": "There is no questions in set",
+  "Support Management": "Feedback/Support"
 }

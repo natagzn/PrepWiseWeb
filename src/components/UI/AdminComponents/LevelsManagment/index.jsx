@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import HeaderAdmin from '../Header';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
+import { fetchLevels } from 'api/apiService';
 
 const LevelsManagement = () => {
   const { t } = useTranslation();
@@ -19,30 +20,22 @@ const LevelsManagement = () => {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
 
-  const fetchLevels = async () => {
-    setLoading(true); // Додаємо індикатор завантаження
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/levels`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
-
-      const data = await response.json();
-      setLevels(data);
-    } catch (error) {
-      console.error('Error fetching levels:', error);
-      toast.error(t('Error fetching levels. Please try again.'));
-    } finally {
-      setLoading(false); // Завантаження завершено
-    }
-  };
-
   useEffect(() => {
-    fetchLevels();
-  }, [token]);
+    const loadLevels = async () => {
+      setLoading(true); // Додаємо індикатор завантаження
+      try {
+        const response = await fetchLevels(); // Викликаємо функцію, що отримує рівні
+        setLevels(response);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        toast.error(t('Error fetching levels. Please try again.'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadLevels(); // Викликаємо функцію при завантаженні компонента
+  }, [t]);
 
   useEffect(() => {
     const filtered = levels.filter((level) =>

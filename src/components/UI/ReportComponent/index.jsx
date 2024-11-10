@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.css';
+import { createReport } from 'api/apiReports';
 
-const ReportComponent = ({ type, onClose }) => {
+const ReportComponent = ({ id, type, onClose }) => {
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState('');
   const [otherText, setOtherText] = useState('');
@@ -27,7 +28,7 @@ const ReportComponent = ({ type, onClose }) => {
 
   const reasons = t('reasons', { returnObjects: true });
 
-  const handleReport = () => {
+  const handleReport = async () => {
     let reportFunction;
 
     // Перевірка, чи обрано радіо-баттон
@@ -46,26 +47,34 @@ const ReportComponent = ({ type, onClose }) => {
       return;
     }
 
-    switch (type) {
-      case 'set':
-        reportFunction = () =>
-          console.log('Reporting a set:', selectedOption, otherText);
-        break;
-      case 'resource':
-        reportFunction = () =>
-          console.log('Reporting a resource:', selectedOption, otherText);
-        break;
-      case 'user':
-        reportFunction = () =>
-          console.log('Reporting a user:', selectedOption, otherText);
-        break;
-      default:
-        console.error('Unknown report type:', type);
-        return;
-    }
+    // Формуємо контекст з selectedOption та otherText
+    const context = `${selectedOption} ${otherText}`;
 
-    reportFunction();
-    setIsReported(true);
+    // Викликаємо функцію для створення звіту
+    try {
+      switch (type) {
+        case 'set':
+          await createReport('set', id, context);
+          break;
+        case 'resource':
+          await createReport('resource', id, context);
+          break;
+        case 'user':
+          await createReport('user', id, context);
+          break;
+        default:
+          console.error('Unknown report type:', type);
+          return;
+      }
+
+      toast.success(t('Your report has been sent successfully!'));
+      setIsReported(true); // Встановлюємо, що звіт надіслано
+    } catch (error) {
+      toast.error(
+        t('There was an error submitting your report. Please try again.')
+      );
+      console.error('Error creating report:', error);
+    }
   };
 
   const handleClose = () => {

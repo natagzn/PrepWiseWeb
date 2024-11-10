@@ -444,5 +444,9 @@
   "no_sets_in_folder_message": "У цій папці немає наборів.",
 
   "noAnswer": "Відповідь відсутня",
-  "no_questions_in_set": "Відсутні питання в модулі."
+  "no_questions_in_set": "Відсутні питання в модулі.",
+
+  "Support Management": "Відгуки/Підтримка",
+  "Material Name": "Назва матеріалу",
+  "Set deleted successfully": "Модуль видалено успішно!"
 }

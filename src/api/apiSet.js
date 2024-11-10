@@ -347,3 +347,45 @@ export const getAllSetsName = async () => {
     return { success: false, message: error.message };
   }
 };
+
+export const deleteSetById = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/sets/${id}`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting set:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    };
+  }
+};
+
+export const deleteSetByIdAdmin = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/sets-admin/${id}`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting set:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    };
+  }
+};

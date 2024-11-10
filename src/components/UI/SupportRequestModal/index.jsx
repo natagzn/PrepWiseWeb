@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.css';
+import { createSupporRequest } from 'api/apiSupportRequest';
 
-const SupportRequestModal = ({ onClose, onSendSupportRequest }) => {
+const SupportRequestModal = ({ onClose }) => {
   const [supportText, setSupportText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
@@ -25,24 +26,22 @@ const SupportRequestModal = ({ onClose, onSendSupportRequest }) => {
     setIsLoading(true); // Start loading indicator
 
     try {
-      await onSendSupportRequest(supportText); // Send the support request
-      const message = t('Your support request was sent successfully!');
-      toast.success(message, {
-        position: 'top-right',
-        autoClose: 3000,
-      });
-      onClose();
+      const response = await createSupporRequest(supportText);
+      if (response.success) {
+        const message = t('Your support request was sent successfully!');
+        toast.success(message);
+        onClose();
+      } else {
+        throw new Error(response.message || t('Failed to send request.'));
+      }
     } catch (error) {
       const errorMessage = t(
         'There was an error sending your support request. Please try again.'
       );
-      toast.error(errorMessage, {
-        position: 'top-right',
-        autoClose: 3000,
-      });
+      toast.error(errorMessage);
       console.error('Error sending support request:', error);
     } finally {
-      setIsLoading(false); // Stop loading indicator
+      setIsLoading(false); // Зупиняє індикатор завантаження
     }
   };
 
