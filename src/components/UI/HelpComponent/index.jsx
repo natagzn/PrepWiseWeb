@@ -9,7 +9,7 @@ function HelpComponent({ userId, questionId }) {
   const [showModal, setShowModal] = useState(false);
   const [showAnswersModal, setShowAnswersModal] = useState(false);
   const { t } = useTranslation();
-  const helpRef = useRef(null); // Реф для HelpComponent
+  const helpRef = useRef(null);
 
   const toggleWindow = () => {
     setIsOpen((prev) => !prev);

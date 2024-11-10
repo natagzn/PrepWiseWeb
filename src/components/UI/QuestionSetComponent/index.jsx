@@ -172,8 +172,7 @@ const QuestionSetComponent = ({
       <div className={styles.infoRow}>
         <div className={styles.level}>
           <span className={styles.bold}>{t('level')}:</span>
-          {'     '}
-          <span className={styles.category}>{level.name}</span>
+          {level.name && <span className={styles.category}>{level.name}</span>}
         </div>
         <div className={styles.questionsCount}>
           <span>

@@ -84,6 +84,10 @@
   font-size: var(--web-18-regular-font-size);
 }
 
+.level .bold {
+  margin-right: 10px;
+}
+
 .level,
 .questionsCount {
   font-size: var(--web-15-regular-font-size);

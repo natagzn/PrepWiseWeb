@@ -263,7 +263,7 @@ const MainPage = () => {
               <p className={styles.notFound}>{t('no_resources_message')}</p>
             )}
           </div>
-          <button onClick={() => createPayment(1)}>Оплатити 1 грн</button>
+          {/*<button onClick={() => createPayment(1)}>Оплатити 1 грн</button>*/}
 
           <div className={styles.footer}>
             <FooterComponent />

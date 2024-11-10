@@ -8,6 +8,7 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
   const { t } = useTranslation();
   const [sortedQuestions, setSortedQuestions] = useState(questionsAnswers);
   const [selectedSort, setSelectedSort] = useState('original');
+  console.log(questionsAnswers);
 
   const sortingOptions = [
     { label: t('sortingOptions.original'), value: 'original' },
@@ -77,8 +78,8 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
                 {console.log('qa', stillLearningQuestions)}
                 {stillLearningQuestions.map((item) => (
                   <QuestionAnswerComponent
-                    id={item.id}
-                    key={item.id}
+                    id={item.question_id}
+                    key={item.question_id}
                     question={item.content}
                     answer={item.answer}
                     status={item.status}
@@ -104,8 +105,8 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
               <div className={styles.cardBlockContainer}>
                 {alreadyKnowQuestions.map((item) => (
                   <QuestionAnswerComponent
-                    id={item.id}
-                    key={item.id}
+                    id={item.question_id}
+                    key={item.question_id}
                     question={item.content}
                     answer={item.answer}
                     status={item.status}
@@ -120,8 +121,8 @@ const CardBlock = ({ questionsAnswers, isAuthor }) => {
         <div className={styles.cardBlockContainer}>
           {sortedQuestions.map((item) => (
             <QuestionAnswerComponent
-              id={item.id}
-              key={item.id}
+              id={item.question_id}
+              key={item.question_id}
               question={item.content}
               answer={item.answer}
               status={item.status}

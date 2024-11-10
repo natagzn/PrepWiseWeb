@@ -2,35 +2,87 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import SearchComponent from '../SearchComponent';
 import { useTranslation } from 'react-i18next';
+import { getFriends } from 'api/apiPeople';
+import { getShortUserInfoById } from 'api/apiUser';
+import { generateAvatar } from 'components/generateAvatar';
+import { Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify'; // Імпортуємо toast для повідомлень
+import { sendRequestForHelp } from 'api/apiHelp';
 
-const AskFriendsForHelp = ({ userId, questionId, onClose }) => {
-  const [askedFriends, setAskedFriends] = useState([]);
-  const [friends, setFriends] = useState([]);
-  const [filteredFriends, setFilteredFriends] = useState([]);
+const AskFriendsForHelp = ({ questionId, onClose }) => {
+  const [askedFriends, setAskedFriends] = useState([]); // Список друзів, яких вже запитали
+  const [friends, setFriends] = useState([]); // Загальний список друзів
+  const [filteredFriends, setFilteredFriends] = useState([]); // Список друзів після фільтрації
+  const [isLoading, setIsLoading] = useState(true); // Статус завантаження
+  const [loadingFriendId, setLoadingFriendId] = useState(null); // ID друга, для якого йде обробка запиту
 
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Ініціалізація перекладу
 
-  // Генерація друзів для демонстрації
   useEffect(() => {
-    const generatedFriends = [
-      { id: 1, name: 'John Doe', avatar: '/avatars/john.png' },
-      { id: 2, name: 'Jane Smith', avatar: '/avatars/jane.png' },
-      { id: 3, name: 'Alice Johnson', avatar: '/avatars/alice.png' },
-      { id: 4, name: 'Jane Smith2', avatar: '/avatars/jane.png' },
-      { id: 5, name: 'Alice Johnson2', avatar: '/avatars/alice.png' },
-    ];
+    const fetchUsers = async () => {
+      setIsLoading(true);
+      try {
+        const friendsIdsResponse = await getFriends();
+        const friendsIds = Array.isArray(friendsIdsResponse)
+          ? friendsIdsResponse
+          : [friendsIdsResponse]; // Перетворюємо в масив, якщо це не масив
 
-    setFriends(generatedFriends);
-    setFilteredFriends(generatedFriends);
-  }, [userId]);
+        const fetchUserInfo = async (friendsIds) => {
+          const userPromises = friendsIds.map(async (id) => {
+            const userInfo = await getShortUserInfoById(id);
+            return {
+              ...userInfo,
+              avatar: generateAvatar(userInfo.username),
+            };
+          });
+          return await Promise.all(userPromises);
+        };
 
-  const handleAsk = (friendId) => {
+        const users = await fetchUserInfo(friendsIds);
+        setFriends(users); // Оновлюємо загальний список друзів
+        setFilteredFriends(users); // Встановлюємо фільтрованих друзів на початку (всі друзі)
+      } catch (error) {
+        console.error('Помилка завантаження даних:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []); // Завантажуємо дані при монтуванні компонента
+
+  // Функція для обробки запиту до друга
+  const handleAsk = async (friendId) => {
+    if (askedFriends.includes(friendId)) return; // Якщо вже запитано, нічого не робимо
+
+    setLoadingFriendId(friendId); // Встановлюємо ID друга, для якого йде запит
     setAskedFriends((prev) => [...prev, friendId]);
+
+    console.log(friendId, questionId);
+
+    try {
+      const response = await sendRequestForHelp(friendId, questionId);
+      if (response.success) {
+        toast.success(t('Request sent successfully!')); // Показуємо успішне повідомлення
+      } else {
+        toast.error(t('Error sending request!')); // Показуємо помилку
+      }
+    } catch (error) {
+      toast.error(t('Error sending request!')); // Помилка, якщо щось пішло не так
+    } finally {
+      setLoadingFriendId(null); // Скидаємо стан завантаження після завершення запиту
+    }
   };
 
+  // Функція для фільтрації друзів за іменем
   const handleSearch = (searchTerm) => {
+    if (!searchTerm) {
+      setFilteredFriends(friends); // Якщо пошуковий термін порожній, показуємо всіх друзів
+      return;
+    }
+
     const filtered = friends.filter((friend) =>
-      friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+      friend.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredFriends(filtered);
   };
@@ -43,31 +95,56 @@ const AskFriendsForHelp = ({ userId, questionId, onClose }) => {
         </button>
         <h2 className={styles.modalTitle}>{t('Ask friends for help')}</h2>
       </div>
+
+      {/* Компонент пошуку */}
       <SearchComponent
         placeholder={t('Find by username')}
         onClick={handleSearch}
+        onEnter={handleSearch}
       />
-      <div className={styles.friendsList}>
-        {filteredFriends.map((friend) => (
-          <div key={friend.id} className={styles.friendItem}>
-            <div className={styles.friendInfo}>
-              <img
-                src={friend.avatar}
-                alt={friend.name}
-                className={styles.avatar}
-              />
-              <span className={styles.friendName}>{friend.name}</span>
-            </div>
-            <button
-              className={styles.askButton}
-              onClick={() => handleAsk(friend.id)}
-              disabled={askedFriends.includes(friend.id)}
-            >
-              {askedFriends.includes(friend.id) ? '✓' : 'Ask'}
-            </button>
-          </div>
-        ))}
-      </div>
+
+      {/* Показуємо спіннер, якщо завантаження триває */}
+      {isLoading ? (
+        <div className={styles.spinnerContainer}>
+          <Spinner animation="border" />
+        </div>
+      ) : (
+        <div className={styles.friendsList}>
+          {filteredFriends.length > 0 ? (
+            filteredFriends.map((friend) => (
+              <div key={friend.id} className={styles.friendItem}>
+                <div className={styles.friendInfo}>
+                  <div
+                    className={styles.avatar}
+                    style={{ backgroundColor: friend.avatar.backgroundColor }}
+                  >
+                    {friend.avatar.initials}
+                  </div>
+                  <span className={styles.friendName}>{friend.username}</span>
+                </div>
+                <button
+                  className={styles.askButton}
+                  onClick={() => handleAsk(friend.id)}
+                  disabled={
+                    askedFriends.includes(friend.id) ||
+                    loadingFriendId === friend.id
+                  }
+                >
+                  {loadingFriendId === friend.id ? (
+                    <Spinner animation="border" size="sm" />
+                  ) : askedFriends.includes(friend.id) ? (
+                    '✓'
+                  ) : (
+                    'Ask'
+                  )}
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className={styles.notFound}>{t('No friends found')}</div> // Якщо немає знайдених друзів
+          )}
+        </div>
+      )}
     </div>
   );
 };

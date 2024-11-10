@@ -7,7 +7,9 @@ const QuestionAnswerComponent = ({ question, answer, status, id, help }) => {
     <div className={styles.card}>
       <div className={styles.question}>{question}</div>
       <div className={styles.answer}>{answer}</div>
-      <div className={styles.icon}>{help && <HelpComponent id={id} />}</div>
+      <div className={styles.icon}>
+        {help && <HelpComponent questionId={id} />}
+      </div>
     </div>
   );
 };
