@@ -14,10 +14,12 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
   const { t } = useTranslation();
   const [isPeoplePageOpen, setIsPeoplePageOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
-  const openPeoplePage = () => {
+  const openPeoplePage = (username) => {
     setIsPeoplePageOpen(true);
+    setUsername(username);
   };
 
   const closePeoplePage = () => {
@@ -80,7 +82,7 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
         ReactDOM.createPortal(
           <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
-              <PeoplePage username="sofiyalev06" onClose={closePeoplePage} />
+              <PeoplePage username={username} onClose={closePeoplePage} />
             </div>
           </div>,
           document.body

@@ -5,6 +5,13 @@
   min-height: 100vh;
 }
 
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Займає весь екран */
+}
+
 .searchBlock {
   display: none;
   margin-left: auto;

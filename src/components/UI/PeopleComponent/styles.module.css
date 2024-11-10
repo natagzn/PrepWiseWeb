@@ -10,6 +10,8 @@
   justify-content: space-between;
   align-items: center;
   font-family: var(--web-font-family);
+
+  cursor: pointer;
 }
 
 .userInfo {
@@ -22,6 +24,9 @@
   width: 47px;
   height: 47px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .username {

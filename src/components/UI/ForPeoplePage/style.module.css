@@ -12,6 +12,11 @@
   max-height: 330px;
 }
 
+.notFound {
+  width: 100%;
+  text-align: center;
+}
+
 .padding {
   padding: 0px 20px;
   margin-top: 5px;

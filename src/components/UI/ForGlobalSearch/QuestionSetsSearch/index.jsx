@@ -3,15 +3,14 @@ import styles from './styles.module.css';
 import QuestionSetComponent from '../../QuestionSetComponent';
 import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
-import questionSetsData from '../../../../questionSetsData.json';
-
 import { useTranslation } from 'react-i18next';
 
-const QuestionSetsSearch = () => {
+const QuestionSetsSearch = ({ sets, categories, levels }) => {
+  // Деструктуризація пропсів
   const { t } = useTranslation();
-  const [questionSets, setQuestionSets] = useState([]);
-  const [loadedSets, setLoadedSets] = useState(8);
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [questionSets, setQuestionSets] = useState(sets); // ініціалізація з переданих даних
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
     levels: [],
@@ -24,17 +23,12 @@ const QuestionSetsSearch = () => {
     { label: t('name_Z_A'), value: 'nameDesc' },
   ];
 
-  useEffect(() => {
-    setQuestionSets(questionSetsData); // Встановлюємо дані з JSON-файлу
-  }, []);
-
-  // Фіктивна функція для виклику API з фільтрами та сортуванням
+  // Викликаємо фільтрацію та сортування при змінах в сортуванні або фільтрах
   const fetchQuestionSetsFromAPI = (filters, sortingOption) => {
     console.log('Fetching question sets with filters:', filters);
     console.log('Selected sorting option:', sortingOption);
 
-    // Використовуємо дані з локального JSON для імітації відповіді API
-    const filteredSets = questionSetsData.filter((set) => {
+    const filteredSets = sets.filter((set) => {
       const matchesCategories =
         filters.categories.length === 0 ||
         filters.categories.some((category) =>
@@ -49,68 +43,41 @@ const QuestionSetsSearch = () => {
     const sortedSets = filteredSets.sort((a, b) => {
       switch (sortingOption) {
         case 'createdDesc':
-          return new Date(b.date) - new Date(a.date);
+          return new Date(b.createdAt) - new Date(a.createdAt);
         case 'createdAsc':
-          return new Date(a.date) - new Date(b.date);
+          return new Date(a.createdAt) - new Date(b.createdAt);
         case 'nameAsc':
-          return a.title.localeCompare(b.title);
+          return a.name.localeCompare(b.name);
         case 'nameDesc':
-          return b.title.localeCompare(a.title);
+          return b.name.localeCompare(a.name);
         default:
           return 0;
       }
     });
 
-    setQuestionSets(sortedSets);
+    setQuestionSets(sortedSets); // Оновлюємо стан з відфільтрованими і відсортованими наборами
   };
 
   const handleSortChange = (value) => {
     setSelectedSortingOption(value);
-    fetchQuestionSetsFromAPI(selectedFilters, value);
+    fetchQuestionSetsFromAPI(selectedFilters, value); // Викликаємо після зміни сортування
   };
 
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
-    fetchQuestionSetsFromAPI(filters, selectedSortingOption);
+    fetchQuestionSetsFromAPI(filters, selectedSortingOption); // Викликаємо після застосування фільтрів
   };
 
   const filters = [
     {
       name: 'categories',
       label: 'categories',
-      options: [
-        'JavaScript',
-        'Programming',
-        'CSS',
-        'Design',
-        'React',
-        'Python',
-        'Data Science',
-        'SQL',
-        'Databases',
-        'UI/UX',
-        'Machine Learning',
-        'AI',
-        'Security',
-        'Networking',
-        'Java',
-        'Cloud',
-        'IT',
-        'C++',
-        'Data Structures',
-        'Linux',
-        'Systems',
-        'Algorithms',
-        'HTML',
-        'Web',
-        'Mobile',
-        'App Dev',
-      ],
+      options: categories,
     },
     {
       name: 'levels',
       label: 'level',
-      options: ['Junior', 'Middle', 'Senior'],
+      options: levels,
     },
   ];
 
@@ -141,19 +108,19 @@ const QuestionSetsSearch = () => {
             {t('no_question_sets_message_search')}
           </div>
         ) : (
-          questionSets.slice(0, loadedSets).map((set) => (
+          questionSets.map((set) => (
             <div key={set.id}>
               <QuestionSetComponent
-                questionsCount={set.questionsCount}
-                title={set.title}
+                name={set.name}
                 categories={set.categories}
-                username={set.username}
-                date={set.date}
+                author={set.author}
+                createdAt={set.createdAt}
                 level={set.level}
-                isLiked={set.isLiked}
-                visibility={set.visibility}
+                isFavourite={set.isFavourite}
+                access={set.access}
                 style={{ width: '500px' }}
                 id={set.id}
+                questions={set.questions}
               />
             </div>
           ))

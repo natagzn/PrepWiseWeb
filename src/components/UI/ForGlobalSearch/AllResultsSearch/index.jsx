@@ -5,41 +5,17 @@ import ResourceComponent from 'components/UI/ResourceComponent';
 import UserComponentForSearch from 'components/UI/UserComponentForSearch'; // імпорт компоненту
 import { useTranslation } from 'react-i18next';
 
-const AllResultsSearch = ({ isPremium, handleViewAll }) => {
+const AllResultsSearch = ({
+  isPremium,
+  handleViewAll,
+  sets,
+  resources,
+  users,
+}) => {
   const { t } = useTranslation();
-
-  // Приклад даних для наборів питань
-  const questionSets = Array.from({ length: 3 }, (_, index) => ({
-    id: index,
-    questionsCount: 10,
-    categories: ['Category 1', 'Category 2'],
-    username: 'User ' + (index + 1),
-    date: '2024-10-19',
-    level: 'Easy',
-    isLiked: index % 2 === 0,
-    visibility: 'Public',
-    title: 'Name of set ' + index,
-  }));
-
-  // Приклад даних для ресурсів
-  const resources = Array.from({ length: 3 }, (_, index) => ({
-    id: index,
-    title: `Resource Title ${index + 1}`,
-    category: `Category ${index + 1}`,
-    username: `User ${index + 1}`,
-    date: '2024-10-19',
-    description: 'Lorem ipsum dolor sit amet.',
-    isLiked: index % 2 === 0,
-  }));
-
-  // Приклад даних для користувачів
-  const users = Array.from({ length: 3 }, (_, index) => ({
-    id: index,
-    username: `User ${index + 1}`,
-    setsCount: index * 2 + 1, // наприклад, кількість сетів
-    resourcesCount: index + 1, // кількість ресурсів
-    profileImage: 'https://via.placeholder.com/65', // зображення користувача
-  }));
+  const questionSets = sets.slice(0, 3);
+  const resourcesShow = resources.slice(0, 3);
+  const usersShow = users.slice(0, 3);
 
   const [visibleItems, setVisibleItems] = useState(3);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -152,7 +128,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
             {t('View all')}
           </div>
         </div>
-        {resources.length === 0 ? (
+        {resourcesShow.length === 0 ? (
           <div className="noResultsMessage">
             {t('no_resources_message_search')}
           </div>
@@ -175,7 +151,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
                 transition: 'transform 0.3s ease',
               }}
             >
-              {resources.map((resource) => (
+              {resourcesShow.map((resource) => (
                 <div
                   key={resource.id}
                   style={{
@@ -184,7 +160,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  <ResourceComponent {...resource} />
+                  <ResourceComponent {...resource} report={true} />
                 </div>
               ))}
             </div>
@@ -193,11 +169,13 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
                 handleScrollRight(
                   setCurrentResourceIndex,
                   currentResourceIndex,
-                  resources.length
+                  resourcesShow.length
                 )
               }
               className={styles.arrowRight}
-              disabled={currentResourceIndex >= resources.length - visibleItems}
+              disabled={
+                currentResourceIndex >= resourcesShow.length - visibleItems
+              }
             >
               &gt;
             </button>
@@ -216,7 +194,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
             {t('View all')}
           </div>
         </div>
-        {users.length === 0 ? (
+        {usersShow.length === 0 ? (
           <div className="noResultsMessage">{t('no_users_message_search')}</div>
         ) : (
           <div className={styles.carousel}>
@@ -237,7 +215,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
                 transition: 'transform 0.3s ease',
               }}
             >
-              {users.map((user) => (
+              {usersShow.map((user) => (
                 <div
                   key={user.id}
                   style={{
@@ -255,7 +233,7 @@ const AllResultsSearch = ({ isPremium, handleViewAll }) => {
                 handleScrollRight(
                   setCurrentUserIndex,
                   currentUserIndex,
-                  users.length
+                  usersShow.length
                 )
               }
               className={styles.arrowRight}

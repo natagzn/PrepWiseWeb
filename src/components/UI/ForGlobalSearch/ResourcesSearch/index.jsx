@@ -4,14 +4,14 @@ import ResourceComponent from '../../ResourceComponent';
 import SortComponent from '../../SortComponent';
 import FilterCategoryLevel from '../../FilterCategoryLevel';
 import { useTranslation } from 'react-i18next';
-import resourcesData from '../../../../resources.json';
 
-const ResourcesSearch = () => {
+const ResourcesSearch = ({ levels, categories, resources }) => {
   const { t } = useTranslation();
-  const [resources, setResources] = useState(resourcesData); // Set initial state directly
-  const [selectedSortingOption, setSelectedSortingOption] = useState(null);
+  const [selectedSortingOption, setSelectedSortingOption] =
+    useState('createdDesc');
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
+    levels: [],
   });
   const [filteredResourcesList, setFilteredResourcesList] = useState([]);
 
@@ -27,12 +27,9 @@ const ResourcesSearch = () => {
   };
 
   useEffect(() => {
-    fetchResources(); // Call fetchResources on mount
-  }, []); // Only run on initial mount
-
-  useEffect(() => {
-    fetchResources(); // Call fetchResources when filters or sorting options change
-  }, [selectedFilters, selectedSortingOption]);
+    console.log('res', resources);
+    fetchResources();
+  }, [resources, selectedFilters, selectedSortingOption]);
 
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
@@ -42,70 +39,41 @@ const ResourcesSearch = () => {
     {
       name: 'categories',
       label: 'categories',
-      options: [
-        'JavaScript',
-        'Programming',
-        'CSS',
-        'Design',
-        'React',
-        'Python',
-        'Data Science',
-        'SQL',
-        'Databases',
-        'UI/UX',
-        'Machine Learning',
-        'AI',
-        'Security',
-        'Networking',
-        'Java',
-        'Cloud',
-        'IT',
-        'C++',
-        'Data Structures',
-        'Linux',
-        'Systems',
-        'Algorithms',
-        'HTML',
-        'Web',
-        'Mobile',
-        'App Dev',
-      ],
+      options: categories,
     },
+    { name: 'levels', label: 'level', options: levels },
   ];
 
   const fetchResources = () => {
-    // Simulate an API call to fetch resources based on sorting and filters
-    const filtered = resources.filter((resource) => {
+    let filtered = resources.filter((resource) => {
       const matchesCategory =
         selectedFilters.categories.length === 0 ||
         selectedFilters.categories.includes(resource.category);
-
-      return matchesCategory;
+      const matchesLevels =
+        selectedFilters.levels.length === 0 ||
+        selectedFilters.levels.includes(resource.level);
+      return matchesCategory && matchesLevels;
     });
 
-    // Sort resources if a sorting option is selected
-    const sorted = sortResources(filtered, selectedSortingOption);
+    // Сортуємо ресурси залежно від вибраної опції
+    if (selectedSortingOption) {
+      filtered = filtered.sort((a, b) => {
+        switch (selectedSortingOption) {
+          case 'createdDesc':
+            return new Date(b.date) - new Date(a.date); // Сортуємо по даті від нових до старих
+          case 'createdAsc':
+            return new Date(a.date) - new Date(b.date); // Сортуємо по даті від старих до нових
+          case 'nameAsc':
+            return a.title.localeCompare(b.title); // Сортуємо по назві від А до Я
+          case 'nameDesc':
+            return b.title.localeCompare(a.title); // Сортуємо по назві від Я до А
+          default:
+            return 0;
+        }
+      });
+    }
 
-    setFilteredResourcesList(sorted);
-  };
-
-  const sortResources = (resources, sortingOption) => {
-    if (!sortingOption) return resources;
-
-    return [...resources].sort((a, b) => {
-      switch (sortingOption) {
-        case 'createdDesc':
-          return new Date(b.date) - new Date(a.date);
-        case 'createdAsc':
-          return new Date(a.date) - new Date(b.date);
-        case 'nameAsc':
-          return a.title.localeCompare(b.title);
-        case 'nameDesc':
-          return b.title.localeCompare(a.title);
-        default:
-          return 0;
-      }
-    });
+    setFilteredResourcesList(filtered); // Оновлюємо список відфільтрованих та відсортованих ресурсів
   };
 
   return (
@@ -143,6 +111,10 @@ const ResourcesSearch = () => {
               date={resource.date}
               description={resource.description}
               isLiked={resource.isLiked}
+              level={resource.level}
+              likes={resource.likes}
+              dislikes={resource.dislikes}
+              isAuthor={resource.isAuthor}
               report={true}
             />
           ))

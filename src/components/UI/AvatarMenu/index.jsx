@@ -133,7 +133,7 @@ const AvatarMenu = ({ onOpenPeoplePage, onOpenCalendarModal }) => {
                   <motion.div
                     key={key}
                     className={styles.menuItem}
-                    onClick={onOpenPeoplePage}
+                    onClick={() => onOpenPeoplePage(userProfile.username)}
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >

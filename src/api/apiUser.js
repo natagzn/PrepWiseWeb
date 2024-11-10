@@ -148,3 +148,56 @@ export const logout = async () => {
     console.error('Error during logout:', error);
   }
 };
+
+export const getShortUserInfoById = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/search/${id}`;
+  const token = getSessionToken();
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Отримуємо дані та перетворюємо їх у потрібний формат
+    const data = response.data;
+    return {
+      id: data.id,
+      username: data.username,
+      setsCount: data.publicSets.length,
+      resourcesCount: data.resources.length,
+    };
+  } catch (error) {
+    throw new Error(`Помилка отримання профілю: ${error.message}`);
+  }
+};
+
+export const getFullInfoUser = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/another-profile/${id}`;
+  const token = getSessionToken();
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Отримуємо дані та перетворюємо їх у потрібний формат
+    const data = response.data;
+    return { data };
+  } catch (error) {
+    throw new Error(`Помилка отримання профілю: ${error.message}`);
+  }
+};

@@ -448,5 +448,10 @@
 
   "Support Management": "Відгуки/Підтримка",
   "Material Name": "Назва матеріалу",
-  "Set deleted successfully": "Модуль видалено успішно!"
+  "Set deleted successfully": "Модуль видалено успішно!",
+  "View profile": "Переглянути профіль",
+  "question sets": "модулі",
+  "resources_p": "ресурси",
+  "no_description": "-",
+  "no_location": "-"
 }

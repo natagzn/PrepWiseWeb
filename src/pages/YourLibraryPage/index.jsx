@@ -21,8 +21,7 @@ const YourLibraryPage = () => {
   useEffect(() => {
     const getLevels = async () => {
       try {
-        const token = getSessionToken();
-        const fetchedLevels = await fetchLevels(token);
+        const fetchedLevels = await fetchLevels();
         //console.log(fetchedLevels);
         // Перетворюємо отримані дані у потрібний формат
         const formattedLevels = fetchedLevels.map((level) => level.name);

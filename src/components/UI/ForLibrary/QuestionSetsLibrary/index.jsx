@@ -136,9 +136,9 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
 
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
-    console.log('Selected Categories:', filters.categories);
+    /*console.log('Selected Categories:', filters.categories);
     console.log('Selected Levels:', filters.levels);
-    console.log('Selected Visibility:', filters.visibility);
+    console.log('Selected Visibility:', filters.visibility);*/
   };
 
   const handleSearchClick = (value) => {

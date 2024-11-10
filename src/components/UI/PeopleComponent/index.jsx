@@ -1,15 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 
-const PeopleComponent = ({ username, text }) => {
+const PeopleComponent = ({ username, text, avatar, id }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/profileUser/${id}`);
+  };
+
   return (
-    <div className={styles.peopleContainer}>
+    <div className={styles.peopleContainer} onClick={handleClick}>
       <div className={styles.userInfo}>
-        <img
+        <div
           className={styles.avatar}
-          src="https://via.placeholder.com/47x47"
-          alt="User Avatar"
-        />
+          style={{ backgroundColor: avatar.backgroundColor }}
+        >
+          {avatar.initials}
+        </div>
         <div className={styles.username}>{username}</div>
       </div>
       <div className={styles.followButton}>

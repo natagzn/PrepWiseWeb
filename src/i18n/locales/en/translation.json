@@ -416,5 +416,8 @@
   "noAnswer": "No answer available",
 
   "no_questions_in_set": "There is no questions in set",
-  "Support Management": "Feedback/Support"
+  "Support Management": "Feedback/Support",
+  "resources_p": "resources",
+  "no_description": "-",
+  "no_location": "-"
 }

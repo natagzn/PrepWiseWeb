@@ -20,18 +20,24 @@ function FriendsComponent({ users }) {
 
   return (
     <div className={styles.padding}>
-      <SearchComponent placeholder={t('search_user')} onClick={handleSearch} />{' '}
+      <SearchComponent
+        placeholder={t('search_user')}
+        onClick={handleSearch}
+        onEnter={handleSearch}
+      />{' '}
       <div className={styles.container}>
         {filteredPeople.length > 0 ? (
           filteredPeople.map((person) => (
             <PeopleComponent
-              key={person.username}
+              id={person.id}
+              key={person.id}
               username={person.username}
               text={person.text}
+              avatar={person.avatar}
             />
           ))
         ) : (
-          <p>{t('no_users_found')}</p>
+          <p className={styles.notFound}>{t('no_users_found')}</p>
         )}
       </div>
     </div>

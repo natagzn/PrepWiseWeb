@@ -6,6 +6,13 @@
   height: 100vh;
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .peoplePage {
   width: 600px;
   height: 520px;

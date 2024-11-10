@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import HeaderComponent from '../../components/UI/HeaderComponent';
 import Modal from 'react-modal';
@@ -6,128 +6,133 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import QuestionSetComponent from '../../components/UI/QuestionSetComponent';
 import ResourceComponent from '../../components/UI/ResourceComponent';
-
-const questionSets = [
-  {
-    id: 1,
-    title: 'Основи програмування',
-    questionsCount: 10,
-    categories: ['Програмування', 'Бази даних'],
-    username: 'annanahalka',
-    date: '2024-10-24',
-    level: 'Середній',
-    isLiked: true,
-    visibility: 'Public',
-  },
-  {
-    id: 2,
-    title: 'JavaScript для початківців',
-    questionsCount: 15,
-    categories: ['JavaScript', 'Веб'],
-    username: 'annanahalka',
-    date: '2024-10-23',
-    level: 'Легкий',
-    isLiked: false,
-    visibility: 'Public',
-  },
-  {
-    id: 3,
-    title: 'Алгоритми та структури даних',
-    questionsCount: 12,
-    categories: ['Алгоритми', 'ОПП'],
-    username: 'annanahalka',
-    date: '2024-10-22',
-    level: 'Важкий',
-    isLiked: true,
-    visibility: 'Public',
-  },
-  {
-    id: 4,
-    title: 'Алгоритми та структури даних',
-    questionsCount: 12,
-    categories: ['Алгоритми', 'ОПП'],
-    username: 'annanahalka',
-    date: '2024-10-22',
-    level: 'Важкий',
-    isLiked: true,
-    visibility: 'Public',
-  },
-];
-
-// Фейкові дані для resources
-const resources = [
-  {
-    id: 1,
-    title: 'Вивчення React',
-    category: 'Веб-розробка',
-    username: 'annanahalka',
-    date: '2024-10-20',
-    description: 'Поглиблене керівництво по React для розробників.',
-  },
-  {
-    id: 2,
-    title: 'Довідник з SQL',
-    category: 'Бази даних',
-    username: 'annanahalka',
-    date: '2024-10-18',
-    description: 'Всі основи SQL, які вам потрібно знати.',
-  },
-  {
-    id: 3,
-    title: 'JavaScript: Поглиблене вивчення',
-    category: 'Програмування',
-    username: 'annanahalka',
-    date: '2024-10-16',
-    description: 'Розширене навчання JavaScript.',
-  },
-  {
-    id: 4,
-    title: 'JavaScript: Поглиблене вивчення',
-    category: 'Програмування',
-    username: 'annanahalka',
-    date: '2024-10-16',
-    description: 'Розширене навчання JavaScript.',
-  },
-  {
-    id: 5,
-    title: 'JavaScript: Поглиблене вивчення',
-    category: 'Програмування',
-    username: 'annanahalka',
-    date: '2024-10-16',
-    description: 'Розширене навчання JavaScript.',
-  },
-];
+import { getFullInfoUser } from 'api/apiUser';
+import { fetchSetById } from 'api/apiSet';
+import { fetchResourceById } from 'api/apiResource';
+import { useParams } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
+import { generateAvatar } from 'components/generateAvatar';
+import { toast } from 'react-toastify';
+import { addSubscribe, deleteSubscribe } from 'api/apiPeople';
 
 const PeopleProfilePage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('sets');
-  const [relationshipStatus, setRelationshipStatus] = useState('friends'); // Можливі значення: 'friends', 'follower', 'following', 'follow'
+  const [relationshipStatus, setRelationshipStatus] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [questionSets, setQuestionSets] = useState([]);
+  const [resources, setResources] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
-  const handleFollowClick = () => {
-    if (
-      relationshipStatus === 'friends' ||
-      relationshipStatus === 'following'
-    ) {
-      setIsModalOpen(true); // Відкрити модальне вікно для підтвердження
-    } else if (relationshipStatus === 'follower') {
-      setRelationshipStatus('friends'); // Встановити статус на 'friends' (взаємна підписка)
-    } else if (relationshipStatus === 'follow') {
-      setRelationshipStatus('following'); // Встановити статус на 'following'
+  const { id } = useParams();
+
+  const loadUserProfileData = async () => {
+    setIsLoading(true);
+    try {
+      const userDataResponse = await getFullInfoUser(id);
+      const { data } = userDataResponse;
+      setUserData(data);
+
+      const setsData = await Promise.all(
+        data.publicSetIds.map(async (setId) => {
+          const setData = await fetchSetById(setId);
+          return setData.success !== false ? { ...setData, id: setId } : null;
+        })
+      );
+      setQuestionSets(setsData.filter(Boolean));
+
+      const resourcesData = await Promise.all(
+        data.resourceIds.map(async (resourceId) => {
+          const resourceData = await fetchResourceById(resourceId);
+          return resourceData.success !== false
+            ? { ...resourceData, id: resourceId }
+            : null;
+        })
+      );
+      setResources(resourcesData.filter(Boolean));
+    } catch (error) {
+      console.error('Помилка завантаження даних профілю:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const confirmUnfollow = () => {
-    if (relationshipStatus === 'friends') {
-      setRelationshipStatus('follower'); // Перейти на статус 'follower'
-    } else if (relationshipStatus === 'following') {
-      setRelationshipStatus('follow'); // Перейти на статус 'follow'
+  useEffect(() => {
+    loadUserProfileData();
+  }, [id]);
+
+  // Генеруємо аватарку, коли userData оновлено
+  useEffect(() => {
+    if (userData) {
+      const avatarGenerate = generateAvatar(userData.username);
+      setAvatar(avatarGenerate);
+      switch (userData.relationshipStatus) {
+        case 'friend':
+          setRelationshipStatus('friends');
+          break;
+        case 'subscriber':
+          setRelationshipStatus('follower');
+          break;
+        case 'subscription':
+          setRelationshipStatus('following');
+          break;
+        default:
+          setRelationshipStatus('follow');
+      }
     }
-    setIsModalOpen(false); // Закрити модальне вікно
+  }, [userData]);
+
+  const handleFollowClick = async () => {
+    try {
+      if (
+        relationshipStatus === 'friends' ||
+        relationshipStatus === 'following'
+      ) {
+        setIsModalOpen(true);
+      } else if (relationshipStatus === 'follower') {
+        const response = await addSubscribe(userData.id);
+        if (response.success) {
+          setRelationshipStatus('friends');
+          toast.success('Ви стали друзями!');
+        }
+      } else if (relationshipStatus === 'follow') {
+        const response = await addSubscribe(userData.id);
+        if (response.success) {
+          setRelationshipStatus('following');
+          toast.success('Ви почали стежити за користувачем!');
+        }
+      }
+    } catch (error) {
+      toast.error('Не вдалося підписатися');
+    }
+  };
+
+  const confirmUnfollow = async () => {
+    try {
+      if (relationshipStatus === 'friends') {
+        const response = await deleteSubscribe(userData.id);
+        if (response.success) {
+          setRelationshipStatus('follower');
+          toast.success('Дружба скасована');
+        }
+      } else if (relationshipStatus === 'following') {
+        const response = await deleteSubscribe(userData.id);
+        if (response.success) {
+          setRelationshipStatus('follow');
+          toast.success('Підписку скасовано');
+        }
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error('Не вдалося скасувати підписку');
+      setIsModalOpen(false);
+    }
   };
 
   const cancelUnfollow = () => {
-    setIsModalOpen(false); // Закрити модальне вікно без змін
+    setIsModalOpen(false);
   };
 
   const getButtonText = () => {
@@ -150,23 +155,33 @@ const PeopleProfilePage = () => {
       : styles.followButton;
   };
 
+  if (isLoading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner animation="border" />
+      </div>
+    );
+  }
+
   return (
     <div>
       <HeaderComponent />
       <div className={styles.container}>
-        <img
+        <div
           className={styles.avatar}
-          src="https://via.placeholder.com/120x120"
-          alt="avatar"
-        />
+          style={{ backgroundColor: avatar?.backgroundColor }}
+        >
+          {avatar?.initials || ''}
+        </div>
         <div className={styles.userInfo}>
           <div className={styles.userHeader}>
-            <div className={styles.username}>annanahalka</div>
+            <div className={styles.username}>{userData.username}</div>
             <div className={styles.stats}>
-              10 {t('followers_profile')} | 70 {t('followings')}
+              {userData.subscriberCount} {t('followers_profile')} |{' '}
+              {userData.subscriptionCount} {t('followings')}
             </div>
             <motion.div
-              className={getButtonStyle()} // Визначення стилю кнопки
+              className={getButtonStyle()}
               onClick={handleFollowClick}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -176,15 +191,14 @@ const PeopleProfilePage = () => {
             </motion.div>
           </div>
           <div className={styles.description}>
-            {t('description')}: I am student of HPK
+            {t('description')}: {userData.description || t('no_description')}
           </div>
           <div className={styles.location}>
-            {t('location')}: Хмельницька область
+            {t('location')}: {userData.location || t('no_location')}
           </div>
         </div>
       </div>
 
-      {/* Модальне вікно підтвердження */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={cancelUnfollow}
@@ -204,7 +218,6 @@ const PeopleProfilePage = () => {
         </div>
       </Modal>
 
-      {/* Вкладки (sets та resources) */}
       <div className={styles.tabs}>
         <div
           className={`${styles.tab} ${activeTab === 'sets' ? styles.active : ''}`}
@@ -220,30 +233,17 @@ const PeopleProfilePage = () => {
         </div>
       </div>
 
-      {/* Контент для активної вкладки */}
       <div className={styles.tabContent}>
         {activeTab === 'sets' ? (
           questionSets.length > 0 ? (
             <div className={styles.questionSetsGrid}>
               {questionSets.map((set) => (
-                <div key={set.id}>
-                  <QuestionSetComponent
-                    questionsCount={set.questionsCount}
-                    title={set.title}
-                    categories={set.categories}
-                    username={set.username}
-                    date={set.date}
-                    level={set.level}
-                    isLiked={set.isLiked}
-                    visibility={set.visibility}
-                    style={{ width: '500px' }}
-                  />
-                </div>
+                <QuestionSetComponent key={set.id} {...set} />
               ))}
             </div>
           ) : (
             <div className={`${styles.noResultsMessage} noResultsMessage`}>
-              {t('no_question_sets_profile')}{' '}
+              {t('no_question_sets_profile')}
             </div>
           )
         ) : resources.length > 0 ? (
@@ -251,11 +251,8 @@ const PeopleProfilePage = () => {
             {resources.map((resource) => (
               <ResourceComponent
                 key={resource.id}
-                title={resource.title}
-                category={resource.category}
-                username={resource.username}
-                date={resource.date}
-                description={resource.description}
+                {...resource}
+                report={true}
               />
             ))}
           </div>

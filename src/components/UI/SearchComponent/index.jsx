@@ -9,7 +9,7 @@ const SearchComponent = ({ placeholder, onClick, onEnter }) => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
 
-    if (typeof onEnter !== 'undefined') {
+    if (onEnter) {
       onEnter(e.target.value);
     }
   };
