@@ -419,5 +419,8 @@
   "Support Management": "Feedback/Support",
   "resources_p": "resources",
   "no_description": "-",
-  "no_location": "-"
+  "no_location": "-",
+  "no_folders_found": "No folders found",
+  "limitReached": "Module limit reached for your account",
+  "folderLimitReached": "Folder limit reached for this account."
 }

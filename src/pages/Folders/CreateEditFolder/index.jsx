@@ -11,6 +11,7 @@ import {
   addSetToFolder,
   createFolder,
   deleteSetFromFolder,
+  fetchAllFolderUser,
   fetchFolderById,
   fetchSetForFolders,
   updateFolderById,
@@ -40,15 +41,28 @@ const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   // Fetch all available sets on mount
   useEffect(() => {
     const fetchData = async () => {
+      const isPremium = JSON.parse(localStorage.getItem('isPremium'));
+
+      if (!isPremium && editOrCreate === 'create') {
+        const response = await fetchAllFolderUser();
+        if (response.length >= 5) {
+          toast.error(t('folderLimitReached'));
+          navigate(-1);
+          return;
+        }
+      }
+
       const sets = await fetchSetForFolders();
       const formattedSets = sets.map((set) => ({
         ...set,
         isAdded: false,
       }));
+
       setQuestionSetsData(formattedSets);
-      setFilteredQuestionSets(formattedSets); // Initialize filtered sets
-      setIsDataLoaded(true); // Set data loaded to true
+      setFilteredQuestionSets(formattedSets);
+      setIsDataLoaded(true);
     };
+
     fetchData();
   }, []);
 

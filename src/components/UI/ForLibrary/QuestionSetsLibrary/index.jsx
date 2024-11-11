@@ -12,7 +12,6 @@ import { fetchAllSetUser, fetchSetById } from 'api/apiSet';
 const QuestionSetsLibrary = ({ levels, categories }) => {
   const { t } = useTranslation();
   const [questionSets, setQuestionSets] = useState([]);
-  const [loadedSets, setLoadedSets] = useState(8);
   const [selectedSortingOption, setSelectedSortingOption] =
     useState('createdDesc');
   const [searchTerm, setSearchTerm] = useState('');
@@ -182,7 +181,7 @@ const QuestionSetsLibrary = ({ levels, categories }) => {
                 {t('no_question_sets_message_lib')}
               </div>
             ) : (
-              sortedQuestionSets.slice(0, loadedSets).map((set) => (
+              sortedQuestionSets.map((set) => (
                 <div key={set.id}>
                   <QuestionSetComponent
                     name={set.name}

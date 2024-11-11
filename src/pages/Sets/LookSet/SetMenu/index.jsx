@@ -7,7 +7,8 @@ import ReportComponent from 'components/UI/ReportComponent';
 import { useTranslation } from 'react-i18next';
 import SelectFolderModal from '../SelectFolderModal';
 import SettingsShare from '../SettingShare';
-import { resetProgressForAllQuestions } from 'api/apiSet';
+import { deleteSetById, resetProgressForAllQuestions } from 'api/apiSet';
+import { addSetToFolder } from 'api/apiFolder';
 
 const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
   const navigate = useNavigate();
@@ -23,6 +24,16 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
 
   // Function to open/close menu
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
+
+  const handleAddToFolderSet = async (folderTitle, folderId) => {
+    try {
+      await addSetToFolder(folderId, id); // Use folderId here
+      toast.success(`${t('Set added to')} '${folderTitle}'`);
+      handleModalCancel();
+    } catch (error) {
+      toast.error(t('Failed to add set to folder. Please try again.'));
+    }
+  };
 
   const handleEdit = () => {
     navigate(`/editSet/${id}`);
@@ -79,11 +90,16 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
     }
   };
 
-  const handleModalConfirmDelete = () => {
-    console.log('Delete action confirmed');
-    toast.success(t('Set has been deleted successfully!'));
-    handleModalCancel();
-    navigate(-1);
+  const handleModalConfirmDelete = async () => {
+    try {
+      await deleteSetById(id);
+      toast.success(t('Set has been deleted successfully!'));
+      handleModalCancel();
+      navigate(-1);
+    } catch (error) {
+      console.error('Error deleting set:', error);
+      toast.error(t('Failed to delete the set. Please try again.'));
+    }
   };
 
   const menuItems = [
@@ -202,10 +218,7 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
         <SelectFolderModal
           isOpen={isFolderModalOpen}
           onClose={handleModalCancel}
-          onSelect={(folderTitle) => {
-            toast.success(`${t('Set added to')} '${folderTitle}'`);
-            handleModalCancel();
-          }}
+          onSelect={handleAddToFolderSet}
         />
       )}
       {isShareOpen && <SettingsShare onClose={handleModalCancel} setId={id} />}

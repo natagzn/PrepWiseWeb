@@ -13,6 +13,18 @@
   z-index: 1000;
 }
 
+.spinnerContainer {
+  margin: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.noFoldersFound {
+  width: 100%;
+  text-align: center;
+}
+
 .modalContent {
   background-color: white;
   padding: 20px;

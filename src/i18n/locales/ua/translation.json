@@ -455,5 +455,10 @@
   "no_description": "-",
   "no_location": "-",
 
-  "No friends found": "Друзів не знайдено"
+  "No friends found": "Друзів не знайдено",
+  "no_folders_found": "Папок не знайдено",
+  "You have reached the limit of 20 questions. Upgrade to Premium for more.": "Ви досягли ліміту з 20 питань. Оновіть до Premium для додавання більше.",
+  "You have reached the maximum number of questions.": "Ви досягли максимальної кількості питань.",
+  "limitReached": "Досягнуто ліміту модулів для акаунту",
+  "folderLimitReached": "Досягнуто ліміту папок для цього акаунту."
 }

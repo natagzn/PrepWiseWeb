@@ -16,8 +16,10 @@ import {
   deleteSetCategories,
   updateQuestion,
   updateSet,
+  fetchAllSetUser,
 } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
+import ModalPremium from 'pages/GlobalSearch/ModalPremium';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
@@ -34,16 +36,38 @@ function CreateEditSet({ editOrCreate }) {
   const [categories, setCategories] = useState([]);
   const [initialData, setInitialData] = useState({});
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // Стан для модального вікна
+  const [isPremium, setIsPremium] = useState(
+    localStorage.getItem('isPremium') === 'true'
+  );
+  const maxQuestions = isPremium ? 100 : 20;
+
   useEffect(() => {
     const fetchData = async () => {
-      if (editOrCreate === 'edit' && setId) {
-        const data = await fetchSetById(setId);
-        setInfoEdit(data);
+      try {
+        const isPremium = JSON.parse(localStorage.getItem('isPremium'));
+
+        if (!isPremium && editOrCreate === 'create') {
+          const response = await fetchAllSetUser();
+
+          if (response.length === 20) {
+            toast.error(t('limitReached'));
+            navigate(-1);
+            return;
+          }
+        }
+
+        if (editOrCreate === 'edit' && setId) {
+          const data = await fetchSetById(setId);
+          setInfoEdit(data);
+        }
+      } catch (error) {
+        console.error('Помилка завантаження набору:', error);
       }
     };
 
     fetchData();
-  }, [editOrCreate, setId]);
+  }, [editOrCreate, setId, navigate]);
 
   const setInfoEdit = (data) => {
     const fetchedData = {
@@ -78,13 +102,15 @@ function CreateEditSet({ editOrCreate }) {
       setIsLoading(false);
       return;
     }
-    if (questions.some((q) => !q.question.trim())) {
-      toast.error(t('All questions must be filled.'));
+
+    if (!categories || categories.length === 0) {
+      toast.error(t('Please select at least one category.'));
       setIsLoading(false);
       return;
     }
-    if (questions.length === 0) {
-      toast.error(t("You can't create set without questions"));
+
+    if (questions.some((q) => !q.question.trim())) {
+      toast.error(t('All questions must be filled.'));
       setIsLoading(false);
       return;
     }
@@ -145,22 +171,19 @@ function CreateEditSet({ editOrCreate }) {
       setIsLoading(false);
       return;
     }
-    if (!updatedData.questions || updatedData.questions.length === 0) {
-      toast.error(t('There must be at least one question.'));
-      setIsLoading(false);
-      return;
-    }
 
     // Перевірка на порожні поля "question" у питаннях
-    const emptyQuestions = updatedData.questions.filter((q) => !q.question);
+    const emptyQuestions = updatedData.questions.filter(
+      (q) => !q.question.trim()
+    );
     if (emptyQuestions.length > 0) {
       toast.error(t('All questions must have content.'));
       setIsLoading(false);
       return;
     }
 
-    console.log('Initial Data:', initialData);
-    console.log('Updated Data:', updatedData);
+    //console.log('Initial Data:', initialData);
+    //console.log('Updated Data:', updatedData);
 
     const initialQuestionsIds = initialData.questions.map((q) => q.id);
     const updatedQuestionsIds = updatedData.questions.map((q) => q.id);
@@ -184,9 +207,9 @@ function CreateEditSet({ editOrCreate }) {
       );
     });
 
-    console.log('New Questions:', newQuestions);
+    /*console.log('New Questions:', newQuestions);
     console.log('Deleted Questions:', deletedQuestions);
-    console.log('Updated Questions:', updatedQuestions);
+    console.log('Updated Questions:', updatedQuestions);*/
 
     const hasMainFieldsChanges =
       initialData.title !== updatedData.title ||
@@ -285,11 +308,30 @@ function CreateEditSet({ editOrCreate }) {
   };
 
   const addQuestionCard = () => {
+    if (questions.length >= maxQuestions) {
+      if (isPremium) {
+        // Якщо досягнуто ліміту 100 карток, блокуємо кнопку
+        alert(t('You have reached the maximum number of questions.'));
+      } else {
+        // Якщо досягнуто ліміту 20 карток, показуємо модальне вікно
+        setIsModalOpen(true);
+      }
+      return;
+    }
+
     const newId = -1 * (questions.length + 1); // Генерація мінусового ID
     setQuestions((prevQuestions) => [
       ...prevQuestions,
       { id: newId, question: '', answer: '', status: false },
     ]);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalConfirm = () => {
+    navigate('/lookPremium');
   };
 
   return (
@@ -344,6 +386,16 @@ function CreateEditSet({ editOrCreate }) {
           </div>
         </div>
       </div>
+
+      <ModalPremium
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        //onConfirm={handleModalConfirm}
+        text={t(
+          'You have reached the limit of 20 questions. Upgrade to Premium for more.'
+        )}
+      />
+
       <div className={styles.footer}>
         <button
           onClick={editOrCreate === 'edit' ? handleUpdate : handleCreate}

@@ -21,15 +21,17 @@ const ModalPremium = ({ isOpen, onRequestClose, onConfirm, text }) => {
         <h2 className={styles.modalTitle}>PrepWise Premium</h2>
         <div className={styles.modalText}>{text}</div>
         <div className={styles.buttonContainer}>
-          <motion.button
-            onClick={onConfirm}
-            className={styles.yes}
-            whileHover={{ scale: 1.05, backgroundColor: '#150d3a' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-          >
-            {t('Look')}
-          </motion.button>
+          {onConfirm && (
+            <motion.button
+              onClick={onConfirm}
+              className={styles.yes}
+              whileHover={{ scale: 1.05, backgroundColor: '#150d3a' }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              {t('Look')}
+            </motion.button>
+          )}
           <motion.button
             onClick={onRequestClose}
             className={styles.no}

@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import SearchComponent from 'components/UI/SearchComponent';
 import SetsData from '../../../../../questionSetsData.json';
 import { useTranslation } from 'react-i18next';
-import { getAllSetsName } from 'api/apiSet';
+import { fetchAllSetUser, fetchSetById, getAllSetsName } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
 
 const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
@@ -14,7 +14,7 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
 
   const { t } = useTranslation();
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchSets = async () => {
       setIsLoading(true); // Початок завантаження
       try {
@@ -30,6 +30,48 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
     if (isOpen) {
       fetchSets();
     }
+  }, [isOpen]);*/
+
+  useEffect(() => {
+    const loadQuestionSets = async () => {
+      try {
+        const response = await fetchAllSetUser();
+        const detailedSets = await Promise.all(
+          response.map(async (set) => {
+            const detailResponse = await fetchSetById(set.question_set_id);
+
+            // Вибірка лише необхідних полів
+            const { name, questions } = detailResponse;
+            const detailedSet = {
+              id: set.question_set_id,
+              name: name,
+              questionsCount: questions.length, // Кількість питань
+            };
+            console.log(detailedSet);
+            return detailedSet;
+          })
+        );
+
+        // Отримання статусу isPremium з localStorage
+        const isPremium = JSON.parse(localStorage.getItem('isPremium'));
+
+        // Фільтрація залежно від статусу isPremium
+        const filteredSets = detailedSets.filter((set) => {
+          if (isPremium) {
+            return set.questionsCount < 100; // Якщо Premium, дозволяємо до 100 питань
+          }
+          return set.questionsCount < 20; // Якщо не Premium, дозволяємо до 20 питань
+        });
+
+        setSets(filteredSets);
+      } catch (error) {
+        console.error('Error loading question sets:', error);
+      } finally {
+        setIsLoading(false); // При завершенні завантаження встановлюємо isLoading в false
+      }
+    };
+
+    loadQuestionSets();
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -47,10 +89,14 @@ const SelectSetModal = ({ isOpen, onClose, onSelect }) => {
     <div className={styles.overlay}>
       <div className={styles.modalContent}>
         <h2>{t('Select a Set')}</h2>
-        <SearchComponent value={searchTerm} onClick={setSearchTerm} />
+        <SearchComponent
+          value={searchTerm}
+          onClick={setSearchTerm}
+          onEnter={setSearchTerm}
+        />
 
         {isLoading ? (
-          <div className={styles.spinner}>
+          <div className={styles.spinner} role="status">
             <Spinner />
           </div> // Показуємо спінер
         ) : (
