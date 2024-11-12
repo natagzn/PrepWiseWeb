@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { sendCodeRegister } from 'api/apiWithEmail';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const location = useLocation();
 
   const toggleAuthMode = () => {
     setIsLogin((prevMode) => !prevMode);
@@ -41,66 +43,61 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Перевіряємо, чи заповнені всі поля
     if (!username || !email || !password || !confirmPassword) {
       toast.error(t('please_fill_all_fields'));
       return;
     }
 
-    // Перевірка на правильність формату email
     if (!isValidEmail(email)) {
       toast.error(t('invalid_email'));
       return;
     }
 
-    // Перевірка паролів
     if (password !== confirmPassword) {
       toast.error(t('passwords_do_not_match'));
       return;
     }
 
-    // Перевірка на мінімальну довжину паролю (опційно)
     if (password.length < 8) {
       toast.error(t('password_too_short'));
       return;
     }
 
     try {
-      // Запит на реєстрацію користувача
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/register`,
-        {
-          username,
-          email,
-          password,
-          password_confirmation: confirmPassword,
-        }
-      );
+      // Send verification code to email
+      const response = await sendCodeRegister(email);
+      if (!response.success) {
+        toast.error('Not found user');
+        return;
+      }
 
-      // Якщо реєстрація успішна, переходимо на сторінку підтвердження email
+      // Redirect to ConfirmEmail page, passing email
+      navigate('/confirmEmail', {
+        state: { email, username, password, confirmPassword },
+      });
+    } catch (error) {
+      toast.error(t('registration_failed'));
+    }
+  };
+
+  useEffect(() => {
+    if (location.state?.autoRegister) {
+      handleAutoRegister(location.state);
+    }
+  }, [location.state]);
+
+  const handleAutoRegister = async (data) => {
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
+      });
       toast.success(t('registration_successful'));
       navigate('/login');
     } catch (error) {
-      // Обробка помилок API
-      if (error.response && error.response.data) {
-        const errorData = error.response.data;
-
-        if (
-          errorData.username &&
-          errorData.username[0] === 'unique validation failure'
-        ) {
-          toast.error(t('username_taken'));
-        } else if (
-          errorData.email &&
-          errorData.email[0] === 'unique validation failure'
-        ) {
-          toast.error(t('email_taken'));
-        } else {
-          toast.error(t('registration_failed'));
-        }
-      } else {
-        toast.error(t('registration_failed'));
-      }
+      toast.error(t('registration_failed'));
     }
   };
 

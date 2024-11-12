@@ -422,5 +422,8 @@
   "no_location": "-",
   "no_folders_found": "No folders found",
   "limitReached": "Module limit reached for your account",
-  "folderLimitReached": "Folder limit reached for this account."
+  "folderLimitReached": "Folder limit reached for this account.",
+  "From": "From",
+  "can_you_help_me_with_question": "Can you help me with question?",
+  "look_question": "Look question ->"
 }

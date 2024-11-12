@@ -105,7 +105,7 @@
     font-size: var(--web-13-regular-font-size);
   }
 
-  .avatar img {
+  .avatar .avatarContainer {
     width: 40px;
     height: 40px;
   }
@@ -128,7 +128,7 @@
     font-size: var(--web-13-regular-font-size);
   }
 
-  .avatar img {
+  .avatar .avatarContainer {
     width: 40px;
     height: 40px;
   }

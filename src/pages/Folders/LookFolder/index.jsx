@@ -72,7 +72,7 @@ const LookFolder = () => {
 
   return (
     <div className={styles.container}>
-      <HeaderComponent />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.group}>
         <div className={styles.columnLeft}>
           <div className={styles.folderName}>{folderData.title}</div>

@@ -10,6 +10,7 @@ import SharedSetsLibrary from 'components/UI/ForLibrary/SharedSetsLibrary';
 import { fetchCategories, fetchLevels } from 'api/apiService';
 import { toast } from 'react-toastify';
 import { getSessionToken } from 'api/apiUser';
+import FooterComponent from 'components/UI/FooterComponent';
 
 const YourLibraryPage = () => {
   const { t } = useTranslation();
@@ -67,7 +68,7 @@ const YourLibraryPage = () => {
 
   return (
     <div>
-      <HeaderComponent />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.libraryPage}>
         <h1 className={styles.header}>{t('your_library')}</h1>{' '}
         <div className={styles.tabs}>

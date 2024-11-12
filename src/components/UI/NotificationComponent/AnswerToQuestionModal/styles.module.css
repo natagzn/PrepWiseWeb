@@ -14,11 +14,13 @@
 .modal {
   width: 90%;
   max-width: 600px;
+  max-height: 80vh; /* Maximum height for modal */
   background: white;
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
 }
 
 .from {
@@ -29,14 +31,18 @@
 
 .question {
   font-size: 1.2rem;
-  color: var(--maingray);
+  color: var(--mainblack);
   margin-bottom: 20px;
+  max-height: 150px; /* Limit height of question text */
+  overflow-y: auto; /* Enable vertical scroll for question if content overflows */
 }
 
 .answerLabel {
   font-size: 1.2rem;
-  color: var(--maingray);
+  font-weight: 700;
+  color: var(--mainblack);
   margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .answerInput {

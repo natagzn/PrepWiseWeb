@@ -41,6 +41,7 @@ const AskFriendsForHelp = ({ questionId, onClose }) => {
         const users = await fetchUserInfo(friendsIds);
         setFriends(users); // Оновлюємо загальний список друзів
         setFilteredFriends(users); // Встановлюємо фільтрованих друзів на початку (всі друзі)
+        console.log('users', users);
       } catch (error) {
         console.error('Помилка завантаження даних:', error);
       } finally {

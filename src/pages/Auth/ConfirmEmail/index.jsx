@@ -3,12 +3,18 @@ import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import AuthTemplate from '../../../components/layout/AuthTemplate';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { check } from 'prettier';
+import { checkCodeRegister } from 'api/apiWithEmail';
+import { toast } from 'react-toastify';
 
 const ConfirmEmail = () => {
   const { t } = useTranslation();
   const [code, setCode] = useState(['', '', '', '']); // Зберігаємо значення 4 інпутів
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { email, username, password, confirmPassword } = location.state;
 
   // Функція для оновлення введеного коду
   const handleInputChange = (e, index) => {
@@ -25,13 +31,26 @@ const ConfirmEmail = () => {
     }
   };
 
-  const handleConfirm = () => {
-    if (code.join('').length === 4) {
-      console.log('Code confirmed:', code.join(''));
-      // Перевірка введеного коду або інша логіка
-      navigate('/home'); // редирект після успіху
+  const handleConfirm = async () => {
+    const enteredCode = code.join('');
+    if (enteredCode.length === 4) {
+      const result = await checkCodeRegister(email, enteredCode);
+
+      if (result.success) {
+        navigate('/register', {
+          state: {
+            email,
+            username,
+            password,
+            confirmPassword,
+            autoRegister: true,
+          },
+        });
+      } else {
+        toast.error(t('invalid_code'));
+      }
     } else {
-      console.log('Invalid code');
+      toast.error(t('invalid_code'));
     }
   };
 

@@ -460,5 +460,11 @@
   "You have reached the limit of 20 questions. Upgrade to Premium for more.": "Ви досягли ліміту з 20 питань. Оновіть до Premium для додавання більше.",
   "You have reached the maximum number of questions.": "Ви досягли максимальної кількості питань.",
   "limitReached": "Досягнуто ліміту модулів для акаунту",
-  "folderLimitReached": "Досягнуто ліміту папок для цього акаунту."
+  "folderLimitReached": "Досягнуто ліміту папок для цього акаунту.",
+  "From": "Від",
+  "can_you_help_me_with_question": "Чи можеш допомогти з питанням?",
+  "look_question": "Переглянути питання ->",
+
+  "No answers yet": "Ще немає відповідей",
+  "View all": "Переглянути все"
 }

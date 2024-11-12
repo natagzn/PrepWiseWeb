@@ -92,7 +92,7 @@ function ResultFlashcards() {
 
   return (
     <div className={styles.resultContainer}>
-      <HeaderComponent />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.contentWrapper}>
         <div className={styles.infoBlock}>
           <h2 className={styles.setTitle}>{setName}</h2>

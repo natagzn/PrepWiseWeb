@@ -6,6 +6,12 @@
   justify-content: center;
 }
 
+.spinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .title {
   margin-top: 30px;
   font-size: var(--web-30-regular-font-size);

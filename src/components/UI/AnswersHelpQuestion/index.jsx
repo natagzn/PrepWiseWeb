@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
+import { getAnswersFromFriendByQuestionId } from 'api/apiHelp';
+import { Spinner } from 'react-bootstrap';
 
-const AnswerCard = ({ avatar, username, date, answer }) => (
+const AnswerCard = ({ username, date, answer }) => (
   <div className={styles.answerCard}>
     <div className={styles.userInfo}>
-      {/*<img
-        className={styles.avatar}
-        src={avatar}
-        alt={`${username}'s avatar`}
-      />*/}
       <div className={styles.userInfoColumn}>
         <div className={styles.username}>{username}</div>
         <div className={styles.date}>{date}</div>
@@ -19,40 +16,39 @@ const AnswerCard = ({ avatar, username, date, answer }) => (
   </div>
 );
 
-const AnswersModal = ({ questionID, onClose }) => {
+const AnswersModal = ({ questionId, onClose }) => {
   const { t } = useTranslation();
-  const answers = [
-    {
-      avatar: '/path/to/avatar1.jpg',
-      username: 'VeryLongUsernameThatExceedsNormalLength1',
-      date: '2024-10-29 22:22',
-      text: 'This is a very long answer to the question that has been asked. It goes into great detail and provides a comprehensive explanation of the topic at hand.',
-    },
-    {
-      avatar: '/path/to/avatar2.jpg',
-      username: 'AnotherLongUsernameThatShouldBeChecked2',
-      date: '2024-10-28 20:20',
-      text: 'Here is another lengthy response, which includes multiple points and thorough discussions about various aspects of the question. It is essential to provide detailed information for clarity.',
-    },
-    {
-      avatar: '/path/to/avatar3.jpg',
-      username: 'YetAnotherUsernameThatIsLong3',
-      date: '2024-10-27 20:20',
-      text: 'An insightful answer that elaborates on the original question with rich context and examples. The length of this answer is deliberate to ensure complete understanding.',
-    },
-    {
-      avatar: '/path/to/avatar4.jpg',
-      username: 'UserWithAnExtremelyLongNameThatMightCauseLayoutIssues4',
-      date: '2024-10-26 20:20',
-      text: 'A concise yet profound answer that captures the essence of the query while maintaining a good length for discussion. It encourages further conversation about the topic.',
-    },
-    {
-      avatar: '/path/to/avatar5.jpg',
-      username: 'FinalLongUsernameToCheckAdaptivity5',
-      date: '2024-10-25 20:20',
-      text: 'This response is meant to provide an exhaustive insight into the subject, covering all necessary details to help others understand the complexity of the question.',
-    },
-  ];
+  const [answers, setAnswers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const day = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
+  };
+
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      setIsLoading(true);
+      const result = await getAnswersFromFriendByQuestionId(questionId);
+      if (result.success) {
+        const formattedAnswers = result.data.map((answer) => ({
+          ...answer,
+          date: formatDate(answer.date),
+        }));
+        setAnswers(formattedAnswers);
+      } else {
+        console.error('Failed to fetch answers:', result.message);
+      }
+      setIsLoading(false);
+    };
+
+    fetchAnswers();
+  }, [questionId]);
 
   return (
     <div className={styles.modalContainer}>
@@ -63,15 +59,22 @@ const AnswersModal = ({ questionID, onClose }) => {
         </button>
       </div>
       <div className={styles.answersList}>
-        {answers.map((answer, index) => (
-          <AnswerCard
-            key={index}
-            avatar={answer.avatar}
-            username={answer.username}
-            date={answer.date}
-            answer={answer.text}
-          />
-        ))}
+        {isLoading ? (
+          <div className={styles.spinnerContainer}>
+            <Spinner animation="border" />
+          </div>
+        ) : answers.length > 0 ? (
+          answers.map((answer, index) => (
+            <AnswerCard
+              key={index}
+              username={answer.username}
+              date={answer.date}
+              answer={answer.content}
+            />
+          ))
+        ) : (
+          <div className={styles.noAnswersMessage}>{t('No answers yet')}</div>
+        )}
       </div>
     </div>
   );

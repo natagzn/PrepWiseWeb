@@ -8,6 +8,7 @@ import InfoPremiumModal from './InfoPremiumModal';
 import { useUser } from 'context/UserContext';
 import { fetchUserProfile } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
 import { generateAvatar } from 'components/generateAvatar';
+import FooterComponent from 'components/UI/FooterComponent';
 
 const SettingsPage = () => {
   const { t, i18n } = useTranslation();
@@ -59,7 +60,7 @@ const SettingsPage = () => {
 
   return (
     <div>
-      <HeaderComponent showSearch={true} showPremium={true} />
+      <HeaderComponent showPlus={true} showSearch={true} />
 
       <div className={styles.settingsContainer}>
         <h1 className={styles.title}>{t('settings')}</h1>

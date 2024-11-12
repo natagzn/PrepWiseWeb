@@ -8,6 +8,7 @@ import styles from './styles.module.css';
 import Spinner from 'react-bootstrap/Spinner'; // Імпорт спінера з Bootstrap
 import { fetchSetById, getTypeAccessToSet } from 'api/apiSet';
 import { useTranslation } from 'react-i18next';
+import FooterComponent from 'components/UI/FooterComponent';
 
 function LookSet() {
   const { id } = useParams();
@@ -86,7 +87,7 @@ function LookSet() {
 
   return (
     <div>
-      <HeaderComponent showPremium={true} />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.container}>
         <SetInfoComponent
           title={name}

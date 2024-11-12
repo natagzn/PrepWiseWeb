@@ -11,6 +11,8 @@ function HelpComponent({ userId, questionId }) {
   const { t } = useTranslation();
   const helpRef = useRef(null);
 
+  console.log(questionId);
+
   const toggleWindow = () => {
     setIsOpen((prev) => !prev);
   };
@@ -97,20 +99,7 @@ function HelpComponent({ userId, questionId }) {
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <AnswersModal
-              answers={[
-                {
-                  avatar: '/path/to/avatar1.jpg',
-                  username: 'User1',
-                  date: '2024-10-29',
-                  text: 'This is the first answer.',
-                },
-                {
-                  avatar: '/path/to/avatar2.jpg',
-                  username: 'User2',
-                  date: '2024-10-29',
-                  text: 'This is the second answer.',
-                },
-              ]}
+              questionId={questionId}
               onClose={handleCloseAnswersModal}
             />
           </div>

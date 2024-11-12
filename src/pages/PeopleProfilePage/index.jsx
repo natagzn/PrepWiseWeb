@@ -14,6 +14,7 @@ import { Spinner } from 'react-bootstrap';
 import { generateAvatar } from 'components/generateAvatar';
 import { toast } from 'react-toastify';
 import { addSubscribe, deleteSubscribe } from 'api/apiPeople';
+import FooterComponent from 'components/UI/FooterComponent';
 
 const PeopleProfilePage = () => {
   const { t } = useTranslation();
@@ -41,7 +42,12 @@ const PeopleProfilePage = () => {
           return setData.success !== false ? { ...setData, id: setId } : null;
         })
       );
-      setQuestionSets(setsData.filter(Boolean));
+      // Сортуємо setsData за createdAt від найновішого до найстарішого
+      setQuestionSets(
+        setsData
+          .filter(Boolean)
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      );
 
       const resourcesData = await Promise.all(
         data.resourceIds.map(async (resourceId) => {
@@ -51,7 +57,12 @@ const PeopleProfilePage = () => {
             : null;
         })
       );
-      setResources(resourcesData.filter(Boolean));
+      // Сортуємо resourcesData за date від найновішого до найстарішого
+      setResources(
+        resourcesData
+          .filter(Boolean)
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+      );
     } catch (error) {
       console.error('Помилка завантаження даних профілю:', error);
     } finally {
@@ -165,7 +176,7 @@ const PeopleProfilePage = () => {
 
   return (
     <div>
-      <HeaderComponent />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.container}>
         <div
           className={styles.avatar}

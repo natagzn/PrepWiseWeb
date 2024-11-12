@@ -86,7 +86,7 @@ const FavoritePage = () => {
 
   return (
     <div>
-      <HeaderComponent />
+      <HeaderComponent showPlus={true} showSearch={true} />
       <div className={styles.libraryPage}>
         <h1 className={styles.header}>{t('favorite')}</h1>
         <div className={styles.tabs}>

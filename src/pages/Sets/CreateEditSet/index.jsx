@@ -20,6 +20,7 @@ import {
 } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
 import ModalPremium from 'pages/GlobalSearch/ModalPremium';
+import FooterComponent from 'components/UI/FooterComponent';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
