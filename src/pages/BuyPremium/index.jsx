@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -6,25 +7,58 @@ import FooterComponent from '../../components/UI/FooterComponent';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from 'context/UserContext';
 import GooglePayButton from '@google-pay/button-react';
+import { toast } from 'react-toastify';
+import { addSubscription } from 'api/apiPremium';
+
+function Modal({ isOpen, onClose, children }) {
+  if (!isOpen) return null;
+  return ReactDOM.createPortal(
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <button onClick={onClose} className={styles.closeButton}>
+          &times;
+        </button>
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
 
 function BuyPremium() {
   const { t } = useTranslation();
   const { isPremium } = useUser();
-
   const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1);
   };
 
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  const handlePaymentSuccess = async (paymentRequest) => {
+    try {
+      const response = await addSubscription();
+      if (response.success) {
+        closeModal();
+        toast.success(t('Successfully upgraded to a premium account!'));
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      toast.error(t('Failed to upgrade to a premium account. Try again.'));
+      console.error('Error during subscription:', error);
+    }
+  };
+
   return (
     <div className={styles.premiumPage}>
-      {/* Header Block */}
       <div className={styles.header}>
         <div>PrepWise</div>
       </div>
 
-      {/* Premium Info Block */}
       <div className={styles.premiumInfo}>
         <div className={styles.topBar}>
           <img
@@ -40,7 +74,6 @@ function BuyPremium() {
         </div>
 
         <div className={styles.mainContent}>
-          {/* Left - Premium Features */}
           <div className={styles.featuresList}>
             <h3>{t('you_will_receive')}:</h3>
             <ul>
@@ -63,9 +96,7 @@ function BuyPremium() {
             </ul>
           </div>
 
-          {/* Right - Subscription Options */}
           <div className={styles.subscriptionOptions}>
-            {/* Annual Subscription Block */}
             <motion.div
               className={styles.subscriptionBlock}
               initial={{ opacity: 0, y: 20 }}
@@ -94,7 +125,6 @@ function BuyPremium() {
               )}
             </motion.div>
 
-            {/* Monthly Subscription Block */}
             <motion.div
               className={styles.subscriptionBlock}
               initial={{ opacity: 0, y: 20 }}
@@ -109,6 +139,7 @@ function BuyPremium() {
               {!isPremium && (
                 <motion.button
                   className={styles.secondButton}
+                  onClick={openModal}
                   whileHover={{
                     scale: 1.05,
                     backgroundColor: 'rgba(255, 255, 0, 0.8)',
@@ -123,43 +154,47 @@ function BuyPremium() {
         </div>
       </div>
 
-      <GooglePayButton
-        environment="TEST"
-        paymentRequest={{
-          apiVersion: 2,
-          apiVersionMinor: 0,
-          allowedPaymentMethods: [
-            {
-              type: 'CARD',
-              parameters: {
-                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                allowedCardNetworks: ['MASTERCARD', 'VISA'],
-              },
-              tokenizationSpecification: {
-                type: 'PAYMENT_GATEWAY',
-                parameters: {
-                  gateway: 'example',
-                  gatewayMerchantId: 'exampleGatewayMerchantId',
+      {/* Modal for Payment Options */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <div className={styles.column}>
+          <h3>{t('Оберіть спосіб оплати')}</h3>
+          <GooglePayButton
+            environment="TEST"
+            paymentRequest={{
+              apiVersion: 2,
+              apiVersionMinor: 0,
+              allowedPaymentMethods: [
+                {
+                  type: 'CARD',
+                  parameters: {
+                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                    allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                  },
+                  tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    parameters: {
+                      gateway: 'example',
+                      gatewayMerchantId: 'exampleGatewayMerchantId',
+                    },
+                  },
                 },
+              ],
+              merchantInfo: {
+                merchantId: '12345678901234567890',
+                merchantName: 'Demo Merchant',
               },
-            },
-          ],
-          merchantInfo: {
-            merchantId: '12345678901234567890',
-            merchantName: 'Demo Merchant',
-          },
-          transactionInfo: {
-            totalPriceStatus: 'FINAL',
-            totalPriceLabel: 'Total',
-            totalPrice: '100.00',
-            currencyCode: 'USD',
-            countryCode: 'US',
-          },
-        }}
-        onLoadPaymentData={(paymentRequest) => {
-          console.log('load payment data', paymentRequest);
-        }}
-      />
+              transactionInfo: {
+                totalPriceStatus: 'FINAL',
+                totalPriceLabel: 'Total',
+                totalPrice: '1.99',
+                currencyCode: 'USD',
+                countryCode: 'US',
+              },
+            }}
+            onLoadPaymentData={handlePaymentSuccess} // Викликаємо обробник після успішної оплати
+          />
+        </div>
+      </Modal>
 
       <FooterComponent />
     </div>

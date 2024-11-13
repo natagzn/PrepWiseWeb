@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   font-family: var(--web-font-family);
+  margin-bottom: 20px;
 }
 
 .title {

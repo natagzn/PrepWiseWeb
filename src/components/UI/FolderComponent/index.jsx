@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import { SaveNot } from '../SaveNot';
 import { useTranslation } from 'react-i18next';
+import { formatDate } from 'components/formatDate';
 
 export const FolderComponent = (props) => {
   const { folderName, itemsCount, date, isLiked, id } = props;
@@ -35,7 +36,7 @@ export const FolderComponent = (props) => {
         <div className={styles.items}>
           {itemsCount} {t('sets')}
         </div>
-        <div className={styles.date}>{date}</div>
+        <div className={styles.date}>{formatDate(date)}</div>
       </div>
     </div>
   );

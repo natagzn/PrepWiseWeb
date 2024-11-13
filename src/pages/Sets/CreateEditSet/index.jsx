@@ -17,16 +17,19 @@ import {
   updateQuestion,
   updateSet,
   fetchAllSetUser,
+  getTypeAccessToSet,
 } from 'api/apiSet';
 import { Spinner } from 'react-bootstrap';
 import ModalPremium from 'pages/GlobalSearch/ModalPremium';
 import FooterComponent from 'components/UI/FooterComponent';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 function CreateEditSet({ editOrCreate }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
 
   const [setTitle, setSetTitle] = useState('');
   const [questions, setQuestions] = useState([
@@ -51,6 +54,12 @@ function CreateEditSet({ editOrCreate }) {
         if (!isPremium && editOrCreate === 'create') {
           const response = await fetchAllSetUser();
 
+          if (response.success === false) {
+            toast.error('Data not found.');
+            navigate(-1);
+            return;
+          }
+
           if (response.length === 20) {
             toast.error(t('limitReached'));
             navigate(-1);
@@ -60,10 +69,26 @@ function CreateEditSet({ editOrCreate }) {
 
         if (editOrCreate === 'edit' && setId) {
           const data = await fetchSetById(setId);
-          setInfoEdit(data);
+
+          const accessData = await getTypeAccessToSet(setId);
+
+          const combinedData = {
+            ...data,
+            ...accessData,
+          };
+
+          console.log(combinedData);
+
+          if (!combinedData.isAuthor && combinedData.UserCanEdit === null) {
+            navigate(-1);
+          } else setInfoEdit(data);
         }
       } catch (error) {
-        console.error('Помилка завантаження набору:', error);
+        //console.error('Помилка завантаження набору:', error);
+        toast.error('Error fetching data.');
+        navigate(-1);
+      } finally {
+        setIsLoadingPage(false);
       }
     };
 
@@ -335,86 +360,97 @@ function CreateEditSet({ editOrCreate }) {
     navigate('/lookPremium');
   };
 
+  if (isLoadingPage) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner animation="border" role="status" />
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.container}>
-      <HeaderComponent />
-      <div className={styles.group}>
-        <div className={styles.columnLeft}>
-          <div className={styles.setTitle}>
-            {editOrCreate === 'edit' ? t('update_a_set') : t('create_a_set')}
-          </div>
-          <div className={styles.inputField}>
-            <div className={styles.label}>{t('Title')}:</div>
-            <input
-              type="text"
-              value={setTitle}
-              onChange={handleTitleChange}
-              className={styles.inputText}
-              placeholder={t('enter_a_title')}
+    <LayoutFooter>
+      <div className={styles.container}>
+        <div className={styles.group}>
+          <div className={styles.columnLeft}>
+            <div className={styles.setTitle}>
+              {editOrCreate === 'edit' ? t('update_a_set') : t('create_a_set')}
+            </div>
+            <div className={styles.inputField}>
+              <div className={styles.label}>{t('Title')}:</div>
+              <input
+                type="text"
+                value={setTitle}
+                onChange={handleTitleChange}
+                className={styles.inputText}
+                placeholder={t('enter_a_title')}
+              />
+            </div>
+            <VisibilityLevelCategories
+              onLevelChange={setLevel}
+              onCategoryChange={setCategories}
+              onVisibilityChange={setVisibility}
+              initialLevel={level}
+              initialVisibility={visibility}
+              initialCategories={categories}
             />
           </div>
-          <VisibilityLevelCategories
-            onLevelChange={setLevel}
-            onCategoryChange={setCategories}
-            onVisibilityChange={setVisibility}
-            initialLevel={level}
-            initialVisibility={visibility}
-            initialCategories={categories}
-          />
         </div>
-      </div>
-      <div className={styles.questions}>
-        {questions.map((question, index) => (
-          <CreateQuestionAnswer
-            key={question.id}
-            id={question.id}
-            index={index + 1}
-            question={question.question}
-            answer={question.answer}
-            onDelete={handleDeleteQuestion}
-            onQuestionChange={(newQuestion) =>
-              handleQuestionChange(question.id, newQuestion)
-            }
-            onAnswerChange={(newAnswer) =>
-              handleAnswerChange(question.id, newAnswer)
-            }
-          />
-        ))}
-        <div className={styles.addQuestionButton} onClick={addQuestionCard}>
-          <div className={styles.buttonText}>
-            <div className={styles.buttonLabel}>+ {t('ADD QUESTION CARD')}</div>
-            <div className={styles.buttonBorder}></div>
+        <div className={styles.questions}>
+          {questions.map((question, index) => (
+            <CreateQuestionAnswer
+              key={question.id}
+              id={question.id}
+              index={index + 1}
+              question={question.question}
+              answer={question.answer}
+              onDelete={handleDeleteQuestion}
+              onQuestionChange={(newQuestion) =>
+                handleQuestionChange(question.id, newQuestion)
+              }
+              onAnswerChange={(newAnswer) =>
+                handleAnswerChange(question.id, newAnswer)
+              }
+            />
+          ))}
+          <div className={styles.addQuestionButton} onClick={addQuestionCard}>
+            <div className={styles.buttonText}>
+              <div className={styles.buttonLabel}>
+                + {t('ADD QUESTION CARD')}
+              </div>
+              <div className={styles.buttonBorder}></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <ModalPremium
-        isOpen={isModalOpen}
-        onRequestClose={handleModalClose}
-        //onConfirm={handleModalConfirm}
-        text={t(
-          'You have reached the limit of 20 questions. Upgrade to Premium for more.'
-        )}
-      />
-
-      <div className={styles.footer}>
-        <button
-          onClick={editOrCreate === 'edit' ? handleUpdate : handleCreate}
-          className={styles.createUpdateButtonFooter}
-        >
-          {isLoading ? (
-            <Spinner animation="border" size="sm" /> // Спінер на кнопці
-          ) : editOrCreate === 'edit' ? (
-            t('Update')
-          ) : (
-            t('Create')
+        <ModalPremium
+          isOpen={isModalOpen}
+          onRequestClose={handleModalClose}
+          //onConfirm={handleModalConfirm}
+          text={t(
+            'You have reached the limit of 20 questions. Upgrade to Premium for more.'
           )}
-        </button>
-        <button onClick={handleCancel} className={styles.cancelButton}>
-          {t('cancel')}
-        </button>
+        />
+
+        <div className={styles.footer}>
+          <button
+            onClick={editOrCreate === 'edit' ? handleUpdate : handleCreate}
+            className={styles.createUpdateButtonFooter}
+          >
+            {isLoading ? (
+              <Spinner animation="border" size="sm" /> // Спінер на кнопці
+            ) : editOrCreate === 'edit' ? (
+              t('Update')
+            ) : (
+              t('Create')
+            )}
+          </button>
+          <button onClick={handleCancel} className={styles.cancelButton}>
+            {t('cancel')}
+          </button>
+        </div>
       </div>
-    </div>
+    </LayoutFooter>
   );
 }
 

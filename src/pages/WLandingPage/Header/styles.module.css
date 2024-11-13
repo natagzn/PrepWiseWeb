@@ -1,0 +1,80 @@
+.header {
+  width: 100%;
+  padding: 15px;
+  background: var(--landingdark-blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-family: var(--web-font-family);
+}
+
+.logo {
+  color: white;
+  font-size: 30px;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  flex-wrap: wrap;
+}
+
+.navItem {
+  color: white;
+  font-size: 23px;
+  font-weight: 500;
+  word-wrap: break-word;
+  display: flex;
+}
+
+.loginButton {
+  width: 124px;
+  height: 44px;
+  background: #ffe8a3;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 23px;
+  font-weight: 500;
+  color: black;
+  word-wrap: break-word;
+  cursor: pointer;
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .logo {
+    font-size: 26px;
+  }
+
+  .nav {
+    gap: 20px;
+  }
+
+  .navItem {
+    font-size: 20px;
+  }
+
+  .loginButton {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 885px) {
+  .navItem {
+    display: none;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .loginButton {
+    font-size: 18px;
+  }
+}

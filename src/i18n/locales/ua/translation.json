@@ -466,5 +466,9 @@
   "look_question": "Переглянути питання ->",
 
   "No answers yet": "Ще немає відповідей",
-  "View all": "Переглянути все"
+  "View all": "Переглянути все",
+  "max_characters_allowed": "Дозволено максимум {{maxLength}} символів!",
+  "This account does not have access to these features": "Цей акаунт не має доступу до цих можливостей",
+  "Successfully upgraded to a premium account!": "Успішно оновлено до преміум акаунту!",
+  "Failed to upgrade to a premium account. Try again.": "Не вдалося оновити до преміум акаунту. Спробуйте ще раз."
 }

@@ -35,6 +35,8 @@ import ComplaintsManagement from 'components/UI/AdminComponents/ComplaintsManage
 import ResourceDetail from 'components/UI/AdminComponents/ResourceDetail';
 import SetDetails from 'components/UI/AdminComponents/SetDetail';
 import SupportManagement from 'components/UI/AdminComponents/SupportManagment';
+import AdminRoute from 'components/AdminRoute';
+import LandingPage from 'pages/WLandingPage';
 
 function App() {
   return (
@@ -60,11 +62,11 @@ function App() {
             )
           }
         />
-
         {/* Загальні маршрути (доступні без авторизації) */}
         <Route path="/confirmEmail" element={<ConfirmEmail />} />
         <Route path="/passwordreset" element={<PasswordReset />} />
         <Route path="/newpassword" element={<NewPassword />} />
+        <Route path="/prepWise" element={<LandingPage />} />
 
         {/* Приватні маршрути обгортаємо в PrivateRoute */}
         <Route element={<PrivateRoute />}>
@@ -105,17 +107,32 @@ function App() {
 
           <Route path="/search/:searchBy" element={<GlobalSearchPage />} />
 
-          <Route path="/admin/categories" element={<CategoryManagement />} />
-          <Route path="/admin/levels" element={<LevelsManagement />} />
-          <Route path="/admin/complaints" element={<ComplaintsManagement />} />
+          {/* Адміністративні маршрути обгортаємо в AdminRoute */}
+          <Route
+            path="/admin/categories"
+            element={<AdminRoute element={<CategoryManagement />} />}
+          />
+          <Route
+            path="/admin/levels"
+            element={<AdminRoute element={<LevelsManagement />} />}
+          />
+          <Route
+            path="/admin/complaints"
+            element={<AdminRoute element={<ComplaintsManagement />} />}
+          />
           <Route
             path="/admin/resources/:resourceId"
-            element={<ResourceDetail />}
+            element={<AdminRoute element={<ResourceDetail />} />}
           />
-          <Route path="/admin/set/:questionSetId" element={<SetDetails />} />
-          <Route path="/admin/supports" element={<SupportManagement />} />
+          <Route
+            path="/admin/set/:questionSetId"
+            element={<AdminRoute element={<SetDetails />} />}
+          />
+          <Route
+            path="/admin/supports"
+            element={<AdminRoute element={<SupportManagement />} />}
+          />
         </Route>
-
         {/* Перенаправлення на логін, якщо маршрут не знайдений */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

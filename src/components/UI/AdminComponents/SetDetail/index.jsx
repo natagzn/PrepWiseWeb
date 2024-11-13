@@ -23,7 +23,9 @@ const SetDetails = () => {
       if (data.success !== false) {
         setSetData(data); // Зберігаємо дані
       } else {
-        console.error('Error fetching set:', data.message);
+        //console.error('Error fetching set:', data.message);
+        toast.error('Error fetching data.');
+        navigate(-1);
       }
       setLoading(false); // Завантаження завершене
     };

@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import { SaveNot } from '../SaveNot';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'components/formatDate';
 
 const QuestionSetComponent = ({
   id,
@@ -18,7 +19,7 @@ const QuestionSetComponent = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  console.log(
+  /*console.log(
     id,
     name,
     level,
@@ -28,7 +29,7 @@ const QuestionSetComponent = ({
     questions,
     access,
     isFavourite
-  );
+  );*/
 
   // return (
   //     <div className={styles.container}>
@@ -197,7 +198,7 @@ const QuestionSetComponent = ({
           <div className={styles.userIcon}></div>
           <div className={styles.username}>{author.username}</div>
         </div>
-        <div className={styles.date}>{createdAt.slice(0, 10)}</div>
+        <div className={styles.date}>{formatDate(createdAt.slice(0, 10))}</div>
       </div>
     </div>
   );

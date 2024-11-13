@@ -15,6 +15,7 @@ import { generateAvatar } from 'components/generateAvatar';
 import { toast } from 'react-toastify';
 import { addSubscribe, deleteSubscribe } from 'api/apiPeople';
 import FooterComponent from 'components/UI/FooterComponent';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const PeopleProfilePage = () => {
   const { t } = useTranslation();
@@ -175,8 +176,7 @@ const PeopleProfilePage = () => {
   }
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.container}>
         <div
           className={styles.avatar}
@@ -273,7 +273,7 @@ const PeopleProfilePage = () => {
           </div>
         )}
       </div>
-    </div>
+    </LayoutFooter>
   );
 };
 

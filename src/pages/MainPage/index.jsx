@@ -13,6 +13,7 @@ import { getIdsForHomePage } from 'api/apiHome';
 import { fetchSetById } from 'api/apiSet';
 import { fetchResourceById } from 'api/apiResource';
 import { Spinner } from 'react-bootstrap';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const MainPage = () => {
   const { t } = useTranslation();
@@ -120,157 +121,152 @@ const MainPage = () => {
   };
 
   return (
-    <div className={styles.mainPage}>
-      {isLoading ? (
-        <div className={styles.spinnerContainer}>
-          <Spinner animation="border" />
-        </div>
-      ) : (
-        <>
-          <HeaderComponent
-            showSearch={true}
-            showPremium={true}
-            showPlus={true}
-          />
-          <div className={styles.search}>
-            <SearchComponent
-              placeholder={t('enter_your_request')}
-              onClick={handleSearch}
-            />
+    <LayoutFooter showSearch={true} showPremium={true} showPlus={true}>
+      <div className={styles.mainPage}>
+        {isLoading ? (
+          <div className={styles.spinnerContainer}>
+            <Spinner animation="border" />
           </div>
+        ) : (
+          <>
+            <div className={styles.search}>
+              <SearchComponent
+                placeholder={t('enter_your_request')}
+                onClick={handleSearch}
+              />
+            </div>
 
-          <h2 className={styles.recommendationTitle}>
-            {t('recommended_from_your_following')}
-          </h2>
+            <h2 className={styles.recommendationTitle}>
+              {t('recommended_from_your_following')}
+            </h2>
 
-          {/*Сети*/}
-          <div className={styles.questionSets}>
-            <h2 className={styles.title}>{t('question_sets')}</h2>
-            {questionSets && questionSets.length > 0 ? (
-              <div className={styles.carousel}>
-                <button
-                  onClick={handleQuestionScrollLeft}
-                  className={styles.arrowLeft}
-                  disabled={currentQuestionIndex === 0}
-                >
-                  &lt;
-                </button>
-                <div
-                  className={styles.questionSetContainer}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
-                  }}
-                >
-                  {questionSets.map((set) => (
-                    <div
-                      key={set.id}
-                      style={{
-                        flex: `0 0 ${100 / visibleItems}%`,
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <QuestionSetComponent
-                        name={set.name}
-                        categories={set.categories}
-                        author={set.author}
-                        createdAt={set.createdAt}
-                        level={set.level}
-                        isFavourite={set.isFavourite}
-                        access={set.access}
-                        style={{ width: '500px' }}
-                        id={set.id}
-                        questions={set.questions}
+            {/*Сети*/}
+            <div className={styles.questionSets}>
+              <h2 className={styles.title}>{t('question_sets')}</h2>
+              {questionSets && questionSets.length > 0 ? (
+                <div className={styles.carousel}>
+                  <button
+                    onClick={handleQuestionScrollLeft}
+                    className={styles.arrowLeft}
+                    disabled={currentQuestionIndex === 0}
+                  >
+                    &lt;
+                  </button>
+                  <div
+                    className={styles.questionSetContainer}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-around',
+                      transform: `translateX(-${currentQuestionIndex * (100 / visibleItems)}%)`,
+                    }}
+                  >
+                    {questionSets.map((set) => (
+                      <div
                         key={set.id}
-                      />
-                    </div>
-                  ))}
+                        style={{
+                          flex: `0 0 ${100 / visibleItems}%`,
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <QuestionSetComponent
+                          name={set.name}
+                          categories={set.categories}
+                          author={set.author}
+                          createdAt={set.createdAt}
+                          level={set.level}
+                          isFavourite={set.isFavourite}
+                          access={set.access}
+                          style={{ width: '500px' }}
+                          id={set.id}
+                          questions={set.questions}
+                          key={set.id}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={handleQuestionScrollRight}
+                    className={styles.arrowRight}
+                    disabled={
+                      currentQuestionIndex >= questionSets.length - visibleItems
+                    }
+                  >
+                    &gt;
+                  </button>
                 </div>
-                <button
-                  onClick={handleQuestionScrollRight}
-                  className={styles.arrowRight}
-                  disabled={
-                    currentQuestionIndex >= questionSets.length - visibleItems
-                  }
-                >
-                  &gt;
-                </button>
-              </div>
-            ) : (
-              <p className={styles.notFound}>{t('no_question_sets_message')}</p>
-            )}
-          </div>
+              ) : (
+                <p className={styles.notFound}>
+                  {t('no_question_sets_message')}
+                </p>
+              )}
+            </div>
 
-          {/*Ресурси*/}
-          <div className={styles.resources}>
-            <h2 className={styles.title}>{t('resources')}</h2>
-            {resources && resources.length > 0 ? (
-              <div className={styles.carousel}>
-                <button
-                  onClick={handleResourceScrollLeft}
-                  className={styles.arrowLeft}
-                  disabled={currentResourceIndex === 0}
-                >
-                  &lt;
-                </button>
-                <div
-                  className={styles.resourceContainer}
-                  style={{
-                    display: 'flex',
-                    transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
-                    justifyContent: 'space-around',
-                  }}
-                >
-                  {resources.map((resource) => (
-                    <div
-                      key={resource.id}
-                      style={{
-                        flex: `0 0 ${100 / visibleItems}%`,
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <ResourceComponent
+            {/*Ресурси*/}
+            <div className={styles.resources}>
+              <h2 className={styles.title}>{t('resources')}</h2>
+              {resources && resources.length > 0 ? (
+                <div className={styles.carousel}>
+                  <button
+                    onClick={handleResourceScrollLeft}
+                    className={styles.arrowLeft}
+                    disabled={currentResourceIndex === 0}
+                  >
+                    &lt;
+                  </button>
+                  <div
+                    className={styles.resourceContainer}
+                    style={{
+                      display: 'flex',
+                      transform: `translateX(-${currentResourceIndex * (100 / visibleItems)}%)`,
+                      justifyContent: 'space-around',
+                    }}
+                  >
+                    {resources.map((resource) => (
+                      <div
                         key={resource.id}
-                        id={resource.id}
-                        title={resource.title}
-                        category={resource.category}
-                        username={resource.username}
-                        date={resource.date}
-                        description={resource.description}
-                        isLiked={resource.isLiked}
-                        level={resource.level}
-                        likes={resource.likes}
-                        dislikes={resource.dislikes}
-                        report={true}
-                      />
-                    </div>
-                  ))}
+                        style={{
+                          flex: `0 0 ${100 / visibleItems}%`,
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <ResourceComponent
+                          key={resource.id}
+                          id={resource.id}
+                          title={resource.title}
+                          category={resource.category}
+                          username={resource.username}
+                          date={resource.date}
+                          description={resource.description}
+                          isLiked={resource.isLiked}
+                          level={resource.level}
+                          likes={resource.likes}
+                          dislikes={resource.dislikes}
+                          report={true}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={handleResourceScrollRight}
+                    className={styles.arrowRight}
+                    disabled={
+                      currentResourceIndex >= resources.length - visibleItems
+                    }
+                  >
+                    &gt;
+                  </button>
                 </div>
-                <button
-                  onClick={handleResourceScrollRight}
-                  className={styles.arrowRight}
-                  disabled={
-                    currentResourceIndex >= resources.length - visibleItems
-                  }
-                >
-                  &gt;
-                </button>
-              </div>
-            ) : (
-              <p className={styles.notFound}>{t('no_resources_message')}</p>
-            )}
-          </div>
-          {/*<button onClick={() => createPayment(1)}>Оплатити 1 грн</button>*/}
-
-          <div className={styles.footer}>
-            <FooterComponent />
-          </div>
-        </>
-      )}
-    </div>
+              ) : (
+                <p className={styles.notFound}>{t('no_resources_message')}</p>
+              )}
+            </div>
+            {/*<button onClick={() => createPayment(1)}>Оплатити 1 грн</button>*/}
+          </>
+        )}
+      </div>
+    </LayoutFooter>
   );
 };
 

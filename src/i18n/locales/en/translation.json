@@ -425,5 +425,10 @@
   "folderLimitReached": "Folder limit reached for this account.",
   "From": "From",
   "can_you_help_me_with_question": "Can you help me with question?",
-  "look_question": "Look question ->"
+  "look_question": "Look question ->",
+
+  "max_characters_allowed": "Maximum {{maxLength}} characters allowed!",
+  "This account does not have access to these features": "This account does not have access to these features",
+  "Successfully upgraded to a premium account!": "Successfully upgraded to a premium account!",
+  "Failed to upgrade to a premium account. Try again.": "Failed to upgrade to a premium account. Try again."
 }

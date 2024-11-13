@@ -17,6 +17,7 @@ import {
   updateFolderById,
 } from 'api/apiFolder';
 import { Spinner } from 'react-bootstrap';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   const [folderTitle, setFolderTitle] = useState(folderName || '');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSets, setSelectedSets] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false); // Track data loading state
+  const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false); // Track if a process is in progress
 
   const [originalSets, setOriginalSets] = useState([]); // Stores the original set IDs
@@ -38,62 +39,69 @@ const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   const count = selectedSets.length;
   const countQ = selectedSets.reduce((acc, set) => acc + set.count, 0);
 
-  // Fetch all available sets on mount
+  // Fetch folder data if in edit mode and data is loaded
   useEffect(() => {
     const fetchData = async () => {
-      const isPremium = JSON.parse(localStorage.getItem('isPremium'));
+      try {
+        const isPremium = JSON.parse(localStorage.getItem('isPremium'));
 
-      if (!isPremium && editOrCreate === 'create') {
-        const response = await fetchAllFolderUser();
-        if (response.length >= 5) {
-          toast.error(t('folderLimitReached'));
-          navigate(-1);
-          return;
+        if (!isPremium && editOrCreate === 'create') {
+          const response = await fetchAllFolderUser();
+          if (response.length >= 5) {
+            toast.error(t('folderLimitReached'));
+            navigate(-1);
+            return;
+          }
         }
+
+        const sets = await fetchSetForFolders();
+        const formattedSets = sets.map((set) => ({
+          ...set,
+          isAdded: false,
+        }));
+
+        setQuestionSetsData(formattedSets);
+        setFilteredQuestionSets(formattedSets);
+
+        if (editOrCreate === 'edit') {
+          const folderData = await fetchFolderById(id);
+
+          if (folderData.success === false) {
+            toast.error('Data not found.');
+            navigate(-1);
+            return;
+          }
+          if (folderData) {
+            setFolderTitle(folderData.title);
+
+            // Initialize original sets with the folder's current sets
+            const initialSetIds = folderData.sets;
+
+            setOriginalSets(initialSetIds);
+
+            const addedSets = formattedSets.filter((set) =>
+              folderData.sets.includes(set.id)
+            );
+            setSelectedSets(addedSets);
+            setQuestionSetsData((prevData) =>
+              prevData.map((set) => ({
+                ...set,
+                isAdded: folderData.sets.includes(set.id),
+              }))
+            );
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Error fetching data.');
+        navigate(-1);
+      } finally {
+        setIsLoading(false); // Set loading to false after data is fetched
       }
-
-      const sets = await fetchSetForFolders();
-      const formattedSets = sets.map((set) => ({
-        ...set,
-        isAdded: false,
-      }));
-
-      setQuestionSetsData(formattedSets);
-      setFilteredQuestionSets(formattedSets);
-      setIsDataLoaded(true);
     };
 
     fetchData();
-  }, []);
-
-  // Fetch folder data if in edit mode and data is loaded
-  useEffect(() => {
-    const loadFolderData = async () => {
-      if (editOrCreate === 'edit' && isDataLoaded) {
-        const folderData = await fetchFolderById(id);
-        if (folderData) {
-          setFolderTitle(folderData.title);
-
-          // Initialize original sets with the folder's current sets
-          const initialSetIds = folderData.sets;
-
-          setOriginalSets(initialSetIds);
-
-          const addedSets = questionSetsData.filter((set) =>
-            folderData.sets.includes(set.id)
-          );
-          setSelectedSets(addedSets);
-          setQuestionSetsData((prevData) =>
-            prevData.map((set) => ({
-              ...set,
-              isAdded: folderData.sets.includes(set.id),
-            }))
-          );
-        }
-      }
-    };
-    loadFolderData();
-  }, [editOrCreate, id, isDataLoaded]);
+  }, [editOrCreate, id, navigate, t]);
 
   const toggleSetSelection = (setId) => {
     setSelectedSets((prevSelectedSets) => {
@@ -202,7 +210,7 @@ const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   };
 
   // Render a spinner if data is not yet loaded
-  if (!isDataLoaded) {
+  if (isLoading) {
     return (
       <div className={styles.spinnerContainer}>
         <Spinner animation="border" role="status">
@@ -213,95 +221,99 @@ const CreateEditFolder = ({ folderName, visibility, editOrCreate }) => {
   }
 
   return (
-    <div className={styles.container}>
-      <HeaderComponent />
-      <div className={styles.group}>
-        <div className={styles.columnLeft}>
-          <div className={styles.folderTitle}>
-            {editOrCreate === 'create'
-              ? t('create_a_folder')
-              : t('update_a_folder')}
-          </div>
-          <input
-            type="text"
-            value={folderTitle}
-            onChange={(e) => setFolderTitle(e.target.value)}
-            className={styles.inputText}
-            placeholder={t('enter_a_title')}
-          />
-        </div>
-        <div className={styles.columnRight}>
-          <div className={styles.buttonBlock}>
-            <button
-              onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}
-              className={styles.createUpdateButton}
-              disabled={isProcessing}
-            >
-              {isProcessing ? (
-                <Spinner animation="border" role="status" size="sm">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              ) : editOrCreate === 'create' ? (
-                t('Create')
-              ) : (
-                t('Update')
-              )}
-            </button>
-            <button onClick={handleCancel} className={styles.cancelButton}>
-              {t('cancel')}
-            </button>
-          </div>
-          <div className={styles.setsCount}>
-            {t('Was chosen')}: {count} {t('sets')} • {countQ} {t('questions')}
-          </div>
-        </div>
-      </div>
-      <div className={styles.questionSets}>
-        <div className={styles.search}>
-          <div className={styles.textSearch}>
-            {searchTerm.length > 0
-              ? `${t('Searched by name')}: ${searchTerm}`
-              : ''}
-          </div>
-          <div className={styles.searchComponentContainer}>
-            <SearchComponent
-              placeholder={t('search_sets')}
-              onClick={(term) => filterQuestionSets(term)}
+    <LayoutFooter>
+      <div className={styles.container}>
+        <div className={styles.group}>
+          <div className={styles.columnLeft}>
+            <div className={styles.folderTitle}>
+              {editOrCreate === 'create'
+                ? t('create_a_folder')
+                : t('update_a_folder')}
+            </div>
+            <input
+              type="text"
+              value={folderTitle}
+              onChange={(e) => setFolderTitle(e.target.value)}
+              className={styles.inputText}
+              placeholder={t('enter_a_title')}
             />
           </div>
+          <div className={styles.columnRight}>
+            <div className={styles.buttonBlock}>
+              <button
+                onClick={
+                  editOrCreate === 'create' ? handleCreate : handleUpdate
+                }
+                className={styles.createUpdateButton}
+                disabled={isProcessing}
+              >
+                {isProcessing ? (
+                  <Spinner animation="border" role="status" size="sm">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                ) : editOrCreate === 'create' ? (
+                  t('Create')
+                ) : (
+                  t('Update')
+                )}
+              </button>
+              <button onClick={handleCancel} className={styles.cancelButton}>
+                {t('cancel')}
+              </button>
+            </div>
+            <div className={styles.setsCount}>
+              {t('Was chosen')}: {count} {t('sets')} • {countQ} {t('questions')}
+            </div>
+          </div>
         </div>
-        {filteredQuestionSets.map((set) => (
-          <QuestionSetsComponentForFolders
-            key={set.id}
-            name={set.name}
-            questionCount={set.count}
-            author={set.author}
-            isAdded={selectedSets.some((selected) => selected.id === set.id)}
-            onToggle={() => toggleSetSelection(set.id)}
-          />
-        ))}
+        <div className={styles.questionSets}>
+          <div className={styles.search}>
+            <div className={styles.textSearch}>
+              {searchTerm.length > 0
+                ? `${t('Searched by name')}: ${searchTerm}`
+                : ''}
+            </div>
+            <div className={styles.searchComponentContainer}>
+              <SearchComponent
+                placeholder={t('search_sets')}
+                onClick={(term) => filterQuestionSets(term)}
+                onEnter={(term) => filterQuestionSets(term)}
+              />
+            </div>
+          </div>
+          {filteredQuestionSets.map((set) => (
+            <QuestionSetsComponentForFolders
+              key={set.id}
+              name={set.name}
+              questionCount={set.count}
+              author={set.author}
+              isAdded={selectedSets.some((selected) => selected.id === set.id)}
+              onToggle={() => toggleSetSelection(set.id)}
+            />
+          ))}
+        </div>
+        <div className={styles.footer}>
+          <button
+            onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}
+            className={styles.createUpdateButton}
+            disabled={isProcessing}
+          >
+            {isProcessing ? (
+              <Spinner animation="border" role="status" size="sm">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : editOrCreate === 'create' ? (
+              t('Create')
+            ) : (
+              t('Update')
+            )}
+          </button>
+          <button onClick={handleCancel} className={styles.cancelButton}>
+            {t('cancel')}
+          </button>
+        </div>
       </div>
-      <div className={styles.footer}>
-        <button
-          onClick={editOrCreate === 'create' ? handleCreate : handleUpdate}
-          className={styles.createUpdateButton}
-          disabled={isProcessing}
-        >
-          {isProcessing ? (
-            <Spinner animation="border" role="status" size="sm">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          ) : editOrCreate === 'create' ? (
-            t('Create')
-          ) : (
-            t('Update')
-          )}
-        </button>
-        <button onClick={handleCancel} className={styles.cancelButton}>
-          {t('cancel')}
-        </button>
-      </div>
-    </div>
+    </LayoutFooter>
   );
 };
 

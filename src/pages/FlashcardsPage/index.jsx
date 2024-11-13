@@ -15,9 +15,13 @@ function FlashcardPage() {
   const [flip, setFlip] = useState(false);
 
   const location = useLocation();
-  const { viewOrStudy, initialFlashcards, setId, setTitle } =
-    location.state || {};
-  console.log('Initial:', initialFlashcards);
+  const {
+    viewOrStudy,
+    initialFlashcards = [],
+    setId,
+    setTitle,
+  } = location.state || {};
+  //console.log('Initial:', initialFlashcards);
 
   const { t } = useTranslation();
 
@@ -76,6 +80,8 @@ function FlashcardPage() {
               newStatus === false ? stillLearningCount + 1 : stillLearningCount,
             knowCount: newStatus === true ? knowCount + 1 : knowCount,
             viewOrStudy: viewOrStudy,
+            initialFlashcards: flashcards,
+            setTitle: setTitle,
           },
         });
       }
@@ -97,6 +103,7 @@ function FlashcardPage() {
               viewOrStudy: viewOrStudy,
               countAll: flashcards.length,
               setTitle: setTitle,
+              initialFlashcards: initialFlashcards,
             },
           });
           return prevIndex; // Залишаємо індекс незмінним, бо відбудеться перенаправлення
@@ -167,12 +174,12 @@ function FlashcardPage() {
   };
 
   const shuffleFlashcards = (cards) => {
+    if (!Array.isArray(cards)) return []; // Перевірка, чи є cards масивом
     return cards
       .map((card) => ({ ...card, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ sort, ...card }) => card);
   };
-
   const progressPercentage = ((currentIndex + 1) / flashcards.length) * 100;
   const currentFlashcard = flashcards[currentIndex];
 

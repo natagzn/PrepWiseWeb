@@ -9,6 +9,8 @@ import Spinner from 'react-bootstrap/Spinner'; // Імпорт спінера з
 import { fetchSetById, getTypeAccessToSet } from 'api/apiSet';
 import { useTranslation } from 'react-i18next';
 import FooterComponent from 'components/UI/FooterComponent';
+import LayoutFooter from 'components/layout/LayoutFooter';
+import { toast } from 'react-toastify';
 
 function LookSet() {
   const { id } = useParams();
@@ -22,6 +24,13 @@ function LookSet() {
     const loadSetInfo = async () => {
       try {
         const data = await fetchSetById(id);
+
+        if (data.success === false) {
+          toast.error('Data not found.');
+          navigate(-1);
+          return;
+        }
+
         const accessData = await getTypeAccessToSet(id);
 
         const combinedData = {
@@ -44,6 +53,8 @@ function LookSet() {
         console.error('Помилка завантаження набору:', error);
         setError(error.message);
         setLoading(false);
+        toast.error('Error fetching data.');
+        navigate(-1);
       }
     };
 
@@ -86,8 +97,7 @@ function LookSet() {
   console.log(setInfo);
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.container}>
         <SetInfoComponent
           title={name}
@@ -123,7 +133,7 @@ function LookSet() {
           </div>
         )}
       </div>
-    </div>
+    </LayoutFooter>
   );
 }
 

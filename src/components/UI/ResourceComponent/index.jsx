@@ -4,6 +4,7 @@ import LikeDislikeToggle from '../LikeDislike/LikeDislikeToggle';
 import { useTranslation } from 'react-i18next';
 import ReportComponent from '../ReportComponent';
 import ResourceMenu from './ResourceMenu';
+import { formatDate } from 'components/formatDate';
 
 function ResourceComponent(props) {
   const { t } = useTranslation();
@@ -56,7 +57,7 @@ function ResourceComponent(props) {
           <div className={styles.descriptionText}>{props.description}</div>
         </div>
         <div className={styles.dateLikesContainer}>
-          <div className={styles.date}>{props.date}</div>
+          <div className={styles.date}>{formatDate(props.date)}</div>
           <div className={styles.likesContainer}>
             <LikeDislikeToggle
               id={props.id}

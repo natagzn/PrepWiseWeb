@@ -7,6 +7,7 @@ import awardIcon from '../../../assets/NotifactionComponent/award.svg';
 import answerIcon from '../../../assets/NotifactionComponent/answer.svg';
 import peopleIcon from '../../../assets/NotifactionComponent/peple.svg';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'components/formatDate';
 
 const iconSettings = {
   Threat: { color: '#FF9900', icon: threatIcon },

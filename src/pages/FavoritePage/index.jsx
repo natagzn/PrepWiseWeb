@@ -8,6 +8,7 @@ import ResourcesForFavorite from '../../components/UI/ForFavorite/ResourcesForFa
 import { toast } from 'react-toastify';
 import { fetchAllFavorite } from 'api/apiFavorite';
 import { fetchCategories, fetchLevels } from 'api/apiService';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const FavoritePage = () => {
   const { t } = useTranslation();
@@ -85,8 +86,7 @@ const FavoritePage = () => {
   };
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showSearch={true} showPlus={true} showPremium={false}>
       <div className={styles.libraryPage}>
         <h1 className={styles.header}>{t('favorite')}</h1>
         <div className={styles.tabs}>
@@ -113,7 +113,7 @@ const FavoritePage = () => {
         {/* Показуємо спінер під час завантаження */}
         <div className={styles.tabContent}>{renderActiveTabContent()}</div>
       </div>
-    </div>
+    </LayoutFooter>
   );
 };
 

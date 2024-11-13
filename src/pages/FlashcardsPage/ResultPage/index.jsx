@@ -7,6 +7,7 @@ import FooterComponent from 'components/UI/FooterComponent';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 function ResultFlashcards() {
   const { t } = useTranslation();
@@ -19,7 +20,10 @@ function ResultFlashcards() {
     viewOrStudy,
     countAll = 0,
     setTitle,
+    initialFlashcards,
   } = location.state || {};
+
+  console.log('uiii', initialFlashcards);
 
   const setName = setTitle;
   const totalCount = stillLearningCount + knowCount;
@@ -82,6 +86,8 @@ function ResultFlashcards() {
       state: {
         viewOrStudy: viewOrStudy,
         setId: setId,
+        initialFlashcards: initialFlashcards,
+        setTitle: setTitle,
       },
     });
   };
@@ -91,8 +97,7 @@ function ResultFlashcards() {
   };
 
   return (
-    <div className={styles.resultContainer}>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.contentWrapper}>
         <div className={styles.infoBlock}>
           <h2 className={styles.setTitle}>{setName}</h2>
@@ -180,8 +185,7 @@ function ResultFlashcards() {
           </div>
         </div>
       </div>
-      <FooterComponent />
-    </div>
+    </LayoutFooter>
   );
 }
 

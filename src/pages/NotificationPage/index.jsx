@@ -11,6 +11,7 @@ import {
   getInfoAboutRequestForHelpById,
 } from 'api/apiNotifications';
 import { Spinner } from 'react-bootstrap';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const NotificationPage = () => {
   const { t } = useTranslation();
@@ -98,8 +99,7 @@ const NotificationPage = () => {
   };
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.container}>
         <h1 className={styles.title}>{t('notifications')}</h1>
         <div className={styles.notificationsListContainer}>
@@ -143,7 +143,7 @@ const NotificationPage = () => {
           />
         )}
       </div>
-    </div>
+    </LayoutFooter>
   );
 };
 

@@ -46,8 +46,15 @@ const CreateResource = ({ isOpen, onClose }) => {
     getLevels(); // Викликаємо асинхронну функцію
   }, []); // Пустий масив залежностей - викликати лише при монтуванні*/
 
-  const handleTextChange = (e, setText, ref) => {
+  const handleTextChange = (e, setText, ref, maxLength) => {
     const value = e.target.value;
+
+    // Перевірка обмеження кількості символів
+    if (value.length > maxLength) {
+      toast.error(t(`Maximum ${maxLength} characters allowed!`));
+      return;
+    }
+
     setText(value);
 
     ref.current.style.height = 'auto';
@@ -124,7 +131,7 @@ const CreateResource = ({ isOpen, onClose }) => {
           <textarea
             ref={nameRef}
             value={name}
-            onChange={(e) => handleTextChange(e, setName, nameRef)}
+            onChange={(e) => handleTextChange(e, setName, nameRef, 50)}
             placeholder={t('Enter name of the article/book')}
             className={styles.textarea}
             rows={1}
@@ -137,7 +144,7 @@ const CreateResource = ({ isOpen, onClose }) => {
             ref={descriptionRef}
             value={description}
             onChange={(e) =>
-              handleTextChange(e, setDescription, descriptionRef)
+              handleTextChange(e, setDescription, descriptionRef, 200)
             }
             placeholder={t('Enter description')}
             className={styles.textarea}

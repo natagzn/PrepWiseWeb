@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'components/formatDate';
 
 const QuestionSetsComponentForFolders = ({
   name,
@@ -16,6 +17,7 @@ const QuestionSetsComponentForFolders = ({
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const formattedDate = formatDate(date);
 
   const handleNavigate = () => {
     if (link) {
@@ -44,7 +46,7 @@ const QuestionSetsComponentForFolders = ({
         </div>
       </div>
       <div className={styles.rightContainer}>
-        <div className={styles.date}>{date}</div>
+        <div className={styles.date}>{formattedDate}</div>
         {typeof isAdded !== 'undefined' && (
           <motion.div
             className={styles.addedIcon}

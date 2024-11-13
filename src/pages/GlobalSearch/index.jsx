@@ -18,6 +18,7 @@ import { fetchResourceById } from 'api/apiResource';
 import { getShortUserInfoById } from 'api/apiUser';
 import { Spinner } from 'react-bootstrap';
 import { fetchCategories, fetchLevels } from 'api/apiService';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const GlobalSearchPage = () => {
   const { t } = useTranslation();
@@ -129,8 +130,7 @@ const GlobalSearchPage = () => {
   }
 
   return (
-    <div>
-      <HeaderComponent showSearch={true} showPlus={true} />
+    <LayoutFooter showSearch={true} showPlus={true}>
       <div className={styles.searchBlock}>
         <SearchComponent
           onClick={(term) => handleSearch(term)}
@@ -190,16 +190,13 @@ const GlobalSearchPage = () => {
           ) : null}
         </div>
       </div>
-      <div className={styles.footer}>
-        <FooterComponent />
-      </div>
       <ModalPremium
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         onConfirm={() => navigate('/lookPremium')}
         text={t('premium_message')}
       />
-    </div>
+    </LayoutFooter>
   );
 };
 

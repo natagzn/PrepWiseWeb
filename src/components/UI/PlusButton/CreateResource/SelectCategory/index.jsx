@@ -67,7 +67,11 @@ const SelectCategoryModal = ({
     <div className={styles.overlay}>
       <div className={styles.modalContent}>
         <h2>{t('Choose category')}</h2>
-        <SearchComponent value={searchTerm} onClick={setSearchTerm} />
+        <SearchComponent
+          value={searchTerm}
+          onClick={setSearchTerm}
+          onEnter={setSearchTerm}
+        />
         <div className={styles.categoryList}>
           {isLoading ? ( // Показуємо спінер, коли дані завантажуються
             <div className={styles.loader}>

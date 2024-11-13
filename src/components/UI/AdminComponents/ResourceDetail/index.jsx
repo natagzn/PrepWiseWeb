@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from 'react-bootstrap';
 import { deleteResourceByIdAdmin, fetchResourceById } from 'api/apiResource';
+import { toast } from 'react-toastify';
 
 const ResourceDetail = () => {
   const { resourceId } = useParams();
@@ -18,11 +19,19 @@ const ResourceDetail = () => {
     const fetchData = async () => {
       try {
         const data = await fetchResourceById(resourceId);
+        if (data.success === false) {
+          toast.error('Data not found.');
+          navigate(-1);
+          return;
+        }
+
         setResource(data);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching resource:', error);
+        //console.error('Error fetching resource:', error);
         setIsLoading(false);
+        toast.error('Error fetching data.');
+        navigate(-1);
       }
     };
 

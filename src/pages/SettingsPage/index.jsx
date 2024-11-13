@@ -9,6 +9,7 @@ import { useUser } from 'context/UserContext';
 import { fetchUserProfile } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
 import { generateAvatar } from 'components/generateAvatar';
 import FooterComponent from 'components/UI/FooterComponent';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const SettingsPage = () => {
   const { t, i18n } = useTranslation();
@@ -59,9 +60,7 @@ const SettingsPage = () => {
   const { initials, backgroundColor } = generateAvatar(userData.username);
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
-
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.settingsContainer}>
         <h1 className={styles.title}>{t('settings')}</h1>
         {/* Personal Information Block */}
@@ -172,7 +171,7 @@ const SettingsPage = () => {
         onClose={() => setPremiumModalOpen(false)}
         user_id={user_id}
       />
-    </div>
+    </LayoutFooter>
   );
 };
 

@@ -11,6 +11,7 @@ import { fetchCategories, fetchLevels } from 'api/apiService';
 import { toast } from 'react-toastify';
 import { getSessionToken } from 'api/apiUser';
 import FooterComponent from 'components/UI/FooterComponent';
+import LayoutFooter from 'components/layout/LayoutFooter';
 
 const YourLibraryPage = () => {
   const { t } = useTranslation();
@@ -67,8 +68,7 @@ const YourLibraryPage = () => {
   };
 
   return (
-    <div>
-      <HeaderComponent showPlus={true} showSearch={true} />
+    <LayoutFooter showPlus={true} showSearch={true}>
       <div className={styles.libraryPage}>
         <h1 className={styles.header}>{t('your_library')}</h1>{' '}
         <div className={styles.tabs}>
@@ -99,7 +99,7 @@ const YourLibraryPage = () => {
         </div>
         <div className={styles.tabContent}>{renderActiveTabContent()}</div>
       </div>
-    </div>
+    </LayoutFooter>
   );
 };
 
