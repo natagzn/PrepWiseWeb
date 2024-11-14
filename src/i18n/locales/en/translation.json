@@ -18,7 +18,7 @@
   "log_in": "Log In",
   "sign_up": "Sign Up",
 
-  "email_or_username": "Email/Username",
+  "email_or_username": "Email",
   "password": "Password",
   "forgot_password": "Forgot password?",
   "log_in": "Log in",
@@ -290,7 +290,7 @@
   "Progress has been reset successfully!": "Progress has been reset successfully!",
   "edit": "Edit",
   "share": "Share",
-  "export to pdf": "Export to pdf",
+  "export to pdf": "Export",
   "reset progress": "Reset progress",
   "add to folder": "Add to folder",
   "delete": "Delete",
@@ -373,8 +373,8 @@
   "purchase_date": "Purchase date",
   "subscription_type": "Premium type",
   "no_current_subscription": "No current subscription",
-  "previous_subscriptions": "Previous Premium",
-  "no_previous_subscriptions": "No previous subscription",
+  "previous_subscriptions": "Another Premium",
+  "no_previous_subscriptions": "No subscription",
   "view_subscriptions": "View all type Premium",
 
   "no_folders_message": "No folders found.",
@@ -430,5 +430,9 @@
   "max_characters_allowed": "Maximum {{maxLength}} characters allowed!",
   "This account does not have access to these features": "This account does not have access to these features",
   "Successfully upgraded to a premium account!": "Successfully upgraded to a premium account!",
-  "Failed to upgrade to a premium account. Try again.": "Failed to upgrade to a premium account. Try again."
+  "Failed to upgrade to a premium account. Try again.": "Failed to upgrade to a premium account. Try again.",
+  "end_date": "End date",
+
+  "Here is my answer, maybe it will help.": "Here is my answer, maybe it will help.",
+  "Look answer ->": "Look answer in set ->"
 }

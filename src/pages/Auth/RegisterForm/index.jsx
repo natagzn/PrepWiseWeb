@@ -214,7 +214,7 @@ const RegisterForm = () => {
           {t('sign_up')}
         </motion.button>
 
-        {/* Нижній блок */}
+        {/* Нижній блок
         <div className={styles.orSeparator}>
           <div className={styles.orLine}></div>
           <span className={styles.orText}>{t('or')}</span>
@@ -222,7 +222,7 @@ const RegisterForm = () => {
         <div className={styles.googleButton}>
           <img src="/icons/google.svg" alt="Google Icon" />
           <span>{t('continue_with_google')}</span>
-        </div>
+        </div>*/}
       </div>
     </AuthTemplate>
   );

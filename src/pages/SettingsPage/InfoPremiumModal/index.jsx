@@ -3,26 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import styles from './styles.module.css';
-
-// Фіктивна функція для отримання підписок на основі user_id
-const fetchSubscriptions = (user_id) => {
-  // Приклад фіктивних даних
-  const subscriptions = {
-    currentSubscription:
-      user_id === 2 ? { purchaseDate: '2024-10-15', type: 'monthly' } : null,
-    previousSubscriptions:
-      user_id === 2
-        ? [
-            { purchaseDate: '2024-05-01', type: 'monthly' },
-            { purchaseDate: '2023-12-01', type: 'annual' },
-            { purchaseDate: '2023-11-01', type: 'monthly' },
-          ]
-        : [],
-  };
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(subscriptions), 500);
-  });
-};
+import { getUserSubscriptions } from 'api/apiPremium';
+import { formatDate } from 'components/formatDate';
 
 const InfoPremiumModal = ({ isOpen, onClose, user_id }) => {
   const { t } = useTranslation();
@@ -31,15 +13,34 @@ const InfoPremiumModal = ({ isOpen, onClose, user_id }) => {
   const [previousSubscriptions, setPreviousSubscriptions] = useState([]);
 
   useEffect(() => {
-    if (user_id) {
-      fetchSubscriptions(user_id).then(
-        ({ currentSubscription, previousSubscriptions }) => {
-          setCurrentSubscription(currentSubscription);
-          setPreviousSubscriptions(previousSubscriptions);
-        }
-      );
-    }
-  }, [user_id]);
+    const fetchSubscriptions = async () => {
+      const response = await getUserSubscriptions();
+      if (response.success) {
+        const today = new Date();
+        const activeSubscriptions = response.message.subscriptionDetails;
+        console.log('res', response);
+
+        // Определяем текущую подписку и предыдущие подписки
+        const current = activeSubscriptions.find((sub) => {
+          const endDate = new Date(sub.endDate);
+          const startDate = new Date(sub.startDate);
+          return startDate <= today && today <= endDate;
+        });
+
+        const previous = activeSubscriptions.filter((sub) => {
+          const endDate = new Date(sub.endDate);
+          return endDate < today;
+        });
+
+        setCurrentSubscription(current);
+        setPreviousSubscriptions(previous);
+      } else {
+        console.error('Failed to fetch subscriptions:', response.message);
+      }
+    };
+
+    fetchSubscriptions();
+  }, []);
 
   const handleViewSubscriptions = () => {
     navigate('/lookPremium');
@@ -50,20 +51,21 @@ const InfoPremiumModal = ({ isOpen, onClose, user_id }) => {
 
   return ReactDOM.createPortal(
     <div className={styles.overlay} onClick={onClose}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()} // Зупиняємо клік на модальному вікні від закриття
-      >
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.subscriptionContent}>
           <h2>{t('current_subscription')}</h2>
-          {/* Поточна підписка */}
+          {/* Текущая подписка */}
           {currentSubscription ? (
             <div className={styles.subscriptionBlock}>
               <p>
-                {t('purchase_date')}: {currentSubscription.purchaseDate}
+                {t('purchase_date')}:{' '}
+                {formatDate(currentSubscription.startDate)}
               </p>
               <p>
-                {t('subscription_type')}: {t(currentSubscription.type)}
+                {t('subscription_type')}: {t(currentSubscription.typeName)}
+              </p>
+              <p>
+                {t('end_date')}: {formatDate(currentSubscription.endDate)}
               </p>
             </div>
           ) : (
@@ -71,16 +73,18 @@ const InfoPremiumModal = ({ isOpen, onClose, user_id }) => {
           )}
 
           <h3>{t('previous_subscriptions')}</h3>
-
-          {/* Попередні підписки */}
+          {/* інші */}
           {previousSubscriptions && previousSubscriptions.length > 0 ? (
             previousSubscriptions.map((sub, index) => (
               <div key={index} className={styles.subscriptionBlock}>
                 <p>
-                  {t('purchase_date')}: {sub.purchaseDate}
+                  {t('purchase_date')}: {formatDate(sub.startDate)}
                 </p>
                 <p>
-                  {t('subscription_type')}: {t(sub.type)}
+                  {t('subscription_type')}: {t(sub.typeName)}
+                </p>
+                <p>
+                  {t('end_date')}: {formatDate(sub.endDate)}
                 </p>
               </div>
             ))

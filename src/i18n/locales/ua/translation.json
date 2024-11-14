@@ -18,7 +18,7 @@
   "log_in": "Увійти",
   "sign_up": "Зареєструватися",
 
-  "email_or_username": "Пошта/Ім'я користувача",
+  "email_or_username": "Пошта",
   "password": "Пароль",
   "forgot_password": "Забули пароль?",
   "log_in": "Увійти",
@@ -290,7 +290,7 @@
   "Progress has been reset successfully!": "Прогрес успішно скинуто!",
   "edit": "Редагувати",
   "share": "Поширення",
-  "export to pdf": "Експортувати у pdf",
+  "export to pdf": "Експортувати",
   "reset progress": "Скинути прогрес",
   "add to folder": "Додати до папки",
   "delete": "Видалити",
@@ -379,8 +379,8 @@
   "purchase_date": "Дата придбання",
   "subscription_type": "Тип",
   "no_current_subscription": "Немає поточної підписки",
-  "previous_subscriptions": "Попередні підписки Premium",
-  "no_previous_subscriptions": "Немає попередніх підписок",
+  "previous_subscriptions": "Інші підписки Premium",
+  "no_previous_subscriptions": "Немає підписок",
   "view_subscriptions": "Переглянути типи Premium",
 
   "no_folders_message": "Не знайдено папок.",
@@ -470,5 +470,12 @@
   "max_characters_allowed": "Дозволено максимум {{maxLength}} символів!",
   "This account does not have access to these features": "Цей акаунт не має доступу до цих можливостей",
   "Successfully upgraded to a premium account!": "Успішно оновлено до преміум акаунту!",
-  "Failed to upgrade to a premium account. Try again.": "Не вдалося оновити до преміум акаунту. Спробуйте ще раз."
+  "Failed to upgrade to a premium account. Try again.": "Не вдалося оновити до преміум акаунту. Спробуйте ще раз.",
+  "Choose a payment method": "Оберіть спосіб оплати",
+
+  "You already have a subscription, but you can renew it": "Ви вже маєте підписку, але можете прожовжити її",
+  "end_date": "Дата закінчення",
+
+  "Here is my answer, maybe it will help.": "Тут моя відповідь, можливо вона допоможе.",
+  "Look answer ->": "Переглянути відповідь в модулі ->"
 }

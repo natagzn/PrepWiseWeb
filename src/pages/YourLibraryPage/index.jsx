@@ -59,7 +59,7 @@ const YourLibraryPage = () => {
       case 'folders':
         return <FoldersLibrary />;
       case 'shared':
-        return <SharedSetsLibrary />;
+        return <SharedSetsLibrary levels={levels} categories={categories} />;
       case 'resources':
         return <ResourcesLibrary levels={levels} categories={categories} />;
       default:

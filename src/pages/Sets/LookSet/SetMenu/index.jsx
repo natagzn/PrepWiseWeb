@@ -7,10 +7,14 @@ import ReportComponent from 'components/UI/ReportComponent';
 import { useTranslation } from 'react-i18next';
 import SelectFolderModal from '../SelectFolderModal';
 import SettingsShare from '../SettingShare';
-import { deleteSetById, resetProgressForAllQuestions } from 'api/apiSet';
+import {
+  deleteSetById,
+  downloadSetById,
+  resetProgressForAllQuestions,
+} from 'api/apiSet';
 import { addSetToFolder } from 'api/apiFolder';
 
-const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
+const SetMenu = ({ id, isAuthor, UserCanEdit, questions, setName }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -21,6 +25,8 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
   const [isShareOpen, setShareOpen] = useState(false);
   const menuRef = useRef(null);
   const iconRef = useRef(null);
+
+  const isPremium = localStorage.isPremium === 'true';
 
   // Function to open/close menu
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
@@ -45,9 +51,26 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
     setMenuOpen(false);
   };
 
-  const handleExport = () => {
+  const handleExport = async () => {
     console.log('Export to PDF action triggered');
     setMenuOpen(false);
+
+    try {
+      // Приклад виклику з вашими параметрами
+      const exportResult = await downloadSetById('your-path', id, setName);
+      console.log('exRes', exportResult);
+
+      if (exportResult.success) {
+        console.log('Файл успішно завантажено');
+      } else {
+        console.error('Помилка завантаження:', exportResult.message);
+      }
+    } catch (error) {
+      console.error(
+        'Сталася помилка під час експорту:',
+        error.message || error
+      );
+    }
   };
 
   const handleReset = () => {
@@ -110,7 +133,7 @@ const SetMenu = ({ id, isAuthor, UserCanEdit, questions }) => {
           action: handleEdit,
         }
       : null,
-    isAuthor
+    isAuthor && isPremium
       ? {
           icon: '/icons/menu/IconShare.svg',
           label: t('share'),

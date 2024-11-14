@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { getSessionToken } from './apiUser';
 
-export const addSharing = async (setId, userId, edit) => {
+export const addSharing = async (set_id, user_id, edit) => {
+  console.log(set_id, user_id, edit);
+
   const url = `${process.env.REACT_APP_API_URL}/shared-sets`;
   const token = getSessionToken();
   try {
     const setResponse = await axios.post(
       url,
-      { setId, userId, edit },
+      { setId: set_id, userId: user_id, edit },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -18,7 +20,7 @@ export const addSharing = async (setId, userId, edit) => {
 
     return { success: true, message: setResponse.message };
   } catch (error) {
-    console.error('Error creating set:', error);
+    console.error('Error adding share:', error);
     return { success: false, message: error.message };
   }
 };
@@ -54,7 +56,7 @@ export const getSharedSetById = async (id) => {
 
     return { success: true, data: setResponse.data };
   } catch (error) {
-    console.error('Error creating set:', error);
+    console.error('Error getting set:', error);
     return { success: false, message: error.message };
   }
 };
@@ -128,9 +130,16 @@ export const getAllSharedSet = async () => {
       },
     });
 
-    return { success: true, data: setResponse.data };
+    // Відбираємо лише необхідні поля
+    const filteredData = setResponse.data.sharedSets.map((set) => ({
+      setId: set.setInfo.id,
+      author: set.author,
+      sharedWithUsers: set.sharedWithUsers,
+    }));
+
+    return { success: true, data: filteredData };
   } catch (error) {
-    console.error('Error creating set:', error);
+    console.error('Error fetching shared sets:', error);
     return { success: false, message: error.message };
   }
 };
@@ -146,7 +155,15 @@ export const getAllSharingSet = async () => {
       },
     });
 
-    return { success: true, data: setResponse.data };
+    const filteredData = setResponse.data.setsSharedByUser.map((set) => ({
+      setId: set.setInfo.id,
+      author: set.author,
+      sharedWithUsers: set.sharedWithUsers,
+    }));
+
+    console.log('allSharingSet', filteredData);
+
+    return { success: true, data: filteredData };
   } catch (error) {
     console.error('Error creating set:', error);
     return { success: false, message: error.message };

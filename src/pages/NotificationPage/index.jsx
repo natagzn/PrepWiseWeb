@@ -8,6 +8,7 @@ import AnswerToQuestionModal from 'components/UI/NotificationComponent/AnswerToQ
 import FooterComponent from 'components/UI/FooterComponent';
 import {
   getAllNotifications,
+  getInfoAboutAnswerId,
   getInfoAboutRequestForHelpById,
 } from 'api/apiNotifications';
 import { Spinner } from 'react-bootstrap';
@@ -33,13 +34,11 @@ const NotificationPage = () => {
 
           // Обробляємо запити з requestId
           const requests = await Promise.allSettled(
-            sortedData
-              .filter((notif) => notif.requestId !== null)
-              .map(async (notif) => {
+            sortedData.map(async (notif) => {
+              if (notif.requestId !== null) {
                 const response = await getInfoAboutRequestForHelpById(
                   notif.requestId
                 );
-
                 if (response.success && response.data) {
                   const {
                     id,
@@ -62,8 +61,30 @@ const NotificationPage = () => {
                     id,
                   };
                 }
-                return null;
-              })
+              }
+
+              // Обробка для answerId
+              if (notif.answerId !== null) {
+                const response = await getInfoAboutAnswerId(notif.answerId);
+                if (response.success && response.data) {
+                  const { id, date, friendUsername, friendId, setId } =
+                    response.data;
+                  return {
+                    type: 'Answer',
+                    title: `${t('From')} ${friendUsername}`,
+                    message: `${t('Here is my answer, maybe it will help.')}`,
+                    description: `${t('Look answer ->')}`,
+                    date: new Date(date).toLocaleDateString(),
+                    friendUserId: friendId,
+                    friendUsername,
+                    id,
+                    setId,
+                  };
+                }
+              }
+
+              return null;
+            })
           );
 
           // Фільтруємо fulfilled результати і зберігаємо значення value

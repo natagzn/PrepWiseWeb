@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getSessionToken } from './apiUser';
+import { saveAs } from 'file-saver';
 
 // Функція для отримання сета за його ID
 export const fetchSetById = async (id) => {
@@ -383,6 +384,42 @@ export const deleteSetByIdAdmin = async (id) => {
     return { success: true };
   } catch (error) {
     console.error('Error deleting set:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    };
+  }
+};
+
+export const downloadSetById = async (path, setId, setName) => {
+  const url = `${process.env.REACT_APP_API_URL}/questions-export-word/${path}/${setId}`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Accept:
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: 'blob', // Отримуємо файл у вигляді Blob
+    });
+
+    console.log('setNmw', setName);
+
+    // Встановлюємо назву файлу на основі параметра або заголовка відповіді
+    const contentDisposition = response.headers['content-disposition'];
+    const fileName = setName
+      ? `${setName}.docx`
+      : contentDisposition
+        ? contentDisposition.split('filename=')[1]
+        : `exported-set-${setId}.docx`;
+
+    // Завантажуємо файл з обраною назвою
+    saveAs(new Blob([response.data]), fileName);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error downloading set:', error);
     return {
       success: false,
       message: error.response?.data?.message || error.message,

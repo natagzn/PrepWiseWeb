@@ -17,6 +17,8 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
+  const isPremium = localStorage.isPremium === 'true';
+
   const openPeoplePage = (username) => {
     setIsPeoplePageOpen(true);
     setUsername(username);
@@ -62,7 +64,7 @@ const HeaderComponent = ({ showSearch, showPlus, showPremium }) => {
           </div>
         )}
 
-        {showPremium && (
+        {showPremium && !isPremium && (
           <div className={styles['premium-box']}>
             <div className={styles['premium-text']}>{t('free_trial')}</div>
           </div>

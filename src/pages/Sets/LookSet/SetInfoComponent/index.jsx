@@ -58,6 +58,7 @@ const SetInfoComponent = (props) => {
                 id={id}
                 isAuthor={isAuthor}
                 UserCanEdit={UserCanEdit}
+                setName={props.title}
               />
             </div>
           </div>

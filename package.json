@@ -9,6 +9,7 @@
     "bootstrap": "^5.3.3",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
+    "file-saver": "^2.0.5",
     "framer-motion": "^11.11.9",
     "i18next": "^23.16.0",
     "react": "^18.3.1",

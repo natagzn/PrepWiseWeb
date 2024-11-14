@@ -51,3 +51,33 @@ export const getInfoAboutRequestForHelpById = async (id) => {
     return { success: false, message: error.message };
   }
 };
+
+export const getInfoAboutAnswerId = async (id) => {
+  const url = `${process.env.REACT_APP_API_URL}/help-answers/${id}`;
+  const token = getSessionToken();
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log('response', response.data.data);
+
+    const { id, date, friend, question } = response.data.data;
+    const filteredData = {
+      id,
+      date,
+      friendId: friend.user_id,
+      friendUsername: friend.username,
+      setId: question.list_id,
+    };
+
+    //console.log('filteredData', filteredData);
+    return { success: true, data: filteredData };
+  } catch (error) {
+    console.error('Error getting info about request:', error);
+    return { success: false, message: error.message };
+  }
+};

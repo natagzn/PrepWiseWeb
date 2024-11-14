@@ -12,7 +12,7 @@ import { formatDate } from 'components/formatDate';
 const iconSettings = {
   Threat: { color: '#FF9900', icon: threatIcon },
   Award: { color: '#F4E04D', icon: awardIcon },
-  Answer: { color: '#A9BFAA', icon: answerIcon },
+  Answer: { color: '#F4E04D', icon: answerIcon },
   Question: { color: '#A9BFAA', icon: answerIcon },
   People: { color: '#AFBED1', icon: peopleIcon },
 };

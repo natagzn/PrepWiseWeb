@@ -44,7 +44,7 @@ const LoginForm = () => {
       console.error(error);
       toast.error('Невірний логін або пароль. Будь ласка, спробуйте ще раз.');
     } finally {
-      setLoading(false); // Вимикаємо спінер після завершення запиту
+      setLoading(false);
     }
   };
 
@@ -52,7 +52,12 @@ const LoginForm = () => {
     try {
       const profileData = await fetchUserProfile(token);
       console.log(profileData);
-      setIsPremium(profileData.subscription_type !== null);
+      if (profileData.subscription_type === 'premium') {
+        localStorage.isPremium = true;
+      } else {
+        localStorage.isPremium = false;
+      }
+
       setIsAdmin(profileData.role === 'admin');
     } catch (error) {
       console.error('Помилка отримання профілю:', error);

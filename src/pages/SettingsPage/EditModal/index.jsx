@@ -59,8 +59,8 @@ const EditModal = ({ isOpen, onClose, userData, onSave }) => {
     const updatedData = {
       ...formData,
       avatar,
-      location: locationInput.trim() === '' ? null : locationInput, // Якщо порожньо, то null
-      bio: formData.bio.trim() === '' ? null : formData.bio, // Якщо bio порожнє або з пробілами, то використовуємо порожній рядок
+      location: locationInput === null ? null : locationInput, // Якщо порожньо, то null
+      bio: formData.bio === null ? null : formData.bio, // Якщо bio порожнє або з пробілами, то використовуємо порожній рядок
     };
 
     const result = await updateProfile(updatedData, t);

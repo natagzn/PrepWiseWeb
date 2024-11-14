@@ -6,7 +6,7 @@ import EditModal from './EditModal';
 import { motion } from 'framer-motion';
 import InfoPremiumModal from './InfoPremiumModal';
 import { useUser } from 'context/UserContext';
-import { fetchUserProfile } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
+import { fetchUserProfile, logout } from 'api/apiUser'; // Імпортуємо функцію для отримання профілю
 import { generateAvatar } from 'components/generateAvatar';
 import FooterComponent from 'components/UI/FooterComponent';
 import LayoutFooter from 'components/layout/LayoutFooter';
@@ -55,6 +55,10 @@ const SettingsPage = () => {
 
   const handlePremiumClick = () => {
     setPremiumModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   const { initials, backgroundColor } = generateAvatar(userData.username);
@@ -142,11 +146,12 @@ const SettingsPage = () => {
             className={styles.logoutButton}
             whileHover={{ scale: 1.05, backgroundColor: '#dbc946' }}
             transition={{ duration: 0.15 }}
+            onClick={handleLogout}
           >
             {t('logout')}
           </motion.div>
         </div>
-        {/* Delete Account Block */}
+        {/* Delete Account Block 
         <div className={styles.deleteAccountBlock}>
           <div className={styles.deleteLabel}>{t('delete_akk')}:</div>
           <div className={styles.deleteDescription}>{t('delete_desc')}</div>
@@ -157,7 +162,7 @@ const SettingsPage = () => {
           >
             {t('delete_akk')}
           </motion.div>
-        </div>
+        </div>*/}
       </div>
 
       <EditModal

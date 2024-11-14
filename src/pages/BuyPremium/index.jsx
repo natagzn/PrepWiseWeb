@@ -9,6 +9,7 @@ import { useUser } from 'context/UserContext';
 import GooglePayButton from '@google-pay/button-react';
 import { toast } from 'react-toastify';
 import { addSubscription } from 'api/apiPremium';
+import { fetchUserProfile } from 'api/apiUser';
 
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
@@ -41,9 +42,25 @@ function BuyPremium() {
   const handlePaymentSuccess = async (paymentRequest) => {
     try {
       const response = await addSubscription();
+
       if (response.success) {
         closeModal();
         toast.success(t('Successfully upgraded to a premium account!'));
+
+        try {
+          const profileData = await fetchUserProfile();
+          //console.log(profileData);
+
+          // Проверяем тип подписки и обновляем localStorage
+          if (profileData.subscription_type === 'premium') {
+            localStorage.isPremium = true;
+          } else {
+            localStorage.isPremium = false;
+          }
+        } catch (fetchError) {
+          console.error('Error fetching user profile:', fetchError);
+          toast.error(t('Failed to retrieve profile data.'));
+        }
       } else {
         throw new Error(response.message);
       }
@@ -109,20 +126,18 @@ function BuyPremium() {
                 $0.99 / {t('month')}
               </p>
 
-              {!isPremium && (
-                <>
-                  <p>{t('start_with_trial')}</p>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: 'rgba(232, 211, 72, 0.8)',
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {t('start_free_trial')}
-                  </motion.button>
-                </>
-              )}
+              <>
+                <p>{t('start_with_trial')}</p>
+                <motion.button
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(232, 211, 72, 0.8)',
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {t('start_free_trial')}
+                </motion.button>
+              </>
             </motion.div>
 
             <motion.div
@@ -136,19 +151,17 @@ function BuyPremium() {
               <p style={{ fontWeight: 'bold', fontSize: '1.4em' }}>
                 $1.99 / {t('month')}
               </p>
-              {!isPremium && (
-                <motion.button
-                  className={styles.secondButton}
-                  onClick={openModal}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: 'rgba(255, 255, 0, 0.8)',
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {t('get_prepwise_premium')}
-                </motion.button>
-              )}
+              <motion.button
+                className={styles.secondButton}
+                onClick={openModal}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: 'rgba(255, 255, 0, 0.8)',
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                {t('get_prepwise_premium')}
+              </motion.button>
             </motion.div>
           </div>
         </div>
@@ -157,7 +170,12 @@ function BuyPremium() {
       {/* Modal for Payment Options */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div className={styles.column}>
-          <h3>{t('Оберіть спосіб оплати')}</h3>
+          <h3>{t('Choose a payment method')}</h3>
+          {isPremium && (
+            <h6>
+              {t('You already have a subscription, but you can renew it')}
+            </h6>
+          )}
           <GooglePayButton
             environment="TEST"
             paymentRequest={{
